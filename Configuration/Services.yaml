@@ -1,0 +1,118 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  _instanceof:
+    Madj2k\AiAssistant\Indexing\Adapter\AdapterInterface:
+      tags:
+        - name: 'aiassistant.indexing.adapter'
+
+    Madj2k\AiAssistant\Indexing\Indexer\IndexerInterface:
+      tags:
+        - name: 'aiassistant.indexing.indexer'
+
+    Madj2k\AiAssistant\Indexing\Connector\ConnectorInterface:
+      tags:
+        - name: 'aiassistant.indexing.connector'
+
+    Madj2k\AiAssistant\Assistant\Pipeline\Processor\ProcessorInterface:
+      tags:
+        - name: 'aiassistant.assistant.pipeline.processor'
+
+    Madj2k\AiAssistant\Assistant\Prompt\Context\Builder\ContextBuilderInterface:
+      tags:
+        - name: 'aiassistant.assistant.prompt.context_builder'
+
+    Madj2k\AiAssistant\Connection\Ai\AiConnectorInterface:
+      tags:
+        - name: 'aiassistant.connection.ai_connector'
+
+    Madj2k\AiAssistant\Connection\VectorStore\VectorStoreConnectorInterface:
+      tags:
+        - name: 'aiassistant.connection.vector_store_connector'
+
+  Madj2k\AiAssistant\:
+    resource: '../Classes/*'
+    exclude:
+      - '../Classes/Domain/Model/*'
+      - '../Classes/Chat/Domain/Model/*'
+      - '../Classes/Indexing/Domain/Model/*'
+      - '../Classes/Connection/Domain/Model/*'
+      - '../Classes/Config/*'
+
+  Madj2k\AiAssistant\Controller\:
+    resource: '../Classes/Controller/*'
+    public: true
+
+  Madj2k\AiAssistant\Connection\TCA\AiConnectorItems:
+    public: true
+
+  Madj2k\AiAssistant\Connection\TCA\VectorStoreConnectorItems:
+    public: true
+
+  Madj2k\AiAssistant\Assistant\TCA\PipelineProcessorItems:
+    public: true
+
+  Madj2k\AiAssistant\Indexing\TCA\AdapterItems:
+    public: true
+
+  Madj2k\AiAssistant\Indexing\TCA\ConnectorItems:
+    public: true
+
+  Madj2k\AiAssistant\Indexing\TCA\IndexerItems:
+    public: true
+
+  Madj2k\AiAssistant\Assistant\Pipeline\Registry\ProcessorRegistry:
+    arguments:
+      $processors: !tagged_iterator 'aiassistant.assistant.pipeline.processor'
+
+  Madj2k\AiAssistant\Assistant\Prompt\Context\Registry\ContextBuilderRegistry:
+    arguments:
+      $builders: !tagged_iterator 'aiassistant.assistant.prompt.context_builder'
+
+  Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry:
+    arguments:
+      $indexers: !tagged_iterator 'aiassistant.indexing.indexer'
+
+  Madj2k\AiAssistant\Indexing\Registry\AdapterRegistry:
+    arguments:
+      $adapters: !tagged_iterator 'aiassistant.indexing.adapter'
+
+  Madj2k\AiAssistant\Indexing\Registry\ConnectorRegistry:
+    arguments:
+      $connectors: !tagged_iterator 'aiassistant.indexing.connector'
+
+  Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry:
+    arguments:
+      $connectors: !tagged_iterator 'aiassistant.connection.ai_connector'
+
+  Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry:
+    arguments:
+      $connectors: !tagged_iterator 'aiassistant.connection.vector_store_connector'
+
+  Madj2k\AiAssistant\Command\IndexFilesCommand:
+    tags:
+      - name: 'console.command'
+        command: 'aiassistant:index:files'
+
+  Madj2k\AiAssistant\Command\IndexPagesCommand:
+    tags:
+      - name: 'console.command'
+        command: 'aiassistant:index:pages'
+
+  Madj2k\AiAssistant\Command\ShopwareSmokeTestCommand:
+    tags:
+      - name: 'console.command'
+        command: 'aiassistant:shopware:test'
+
+  Madj2k\AiAssistant\Command\ShopwareIndexCommand:
+    tags:
+      - name: 'console.command'
+        command: 'aiassistant:shopware:index'
+
+  Madj2k\AiAssistant\Command\ShopwareCleanupDeletedCommand:
+    tags:
+      - name: 'console.command'
+        command: 'aiassistant:shopware:cleanup-deleted'

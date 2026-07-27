@@ -1,0 +1,133 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+<div class="aiassistant-config">
+    <f:render partial="Backend/Module/Header" arguments="{_all}" />
+    <f:render partial="Backend/Module/Navigation" arguments="{_all}" />
+
+    <div class="aiassistant-config__card">
+        <h2>
+            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge" />
+        </h2>
+        <p class="aiassistant-config__intro">
+            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_intro" />
+        </p>
+        <p class="aiassistant-config__intro">
+            <strong><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_hint_label" /></strong>
+            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_cursor_hint" />
+        </p>
+
+        <f:if condition="{purgeResult}">
+            <div class="aiassistant-config__notice aiassistant-config__notice--{purgeResult.status}">
+                {purgeResult.message}
+            </div>
+        </f:if>
+
+        <div class="aiassistant-config__table-wrap">
+            <table class="aiassistant-config__table">
+                <thead>
+                    <tr>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_connection" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_connector" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_collection" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_remote" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_source_state" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_indexers" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_confirm" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_action" /></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{purgeCollections}" as="collection">
+                        <tr>
+                            <td>
+                                <strong>{collection.connectionTitle}</strong>
+                                <div class="aiassistant-config__hint">UID {collection.connectionUid}</div>
+                                <f:if condition="{collection.endpoint}">
+                                    <div class="aiassistant-config__hint"><code>{collection.endpoint}</code></div>
+                                </f:if>
+                            </td>
+                            <td><code class="aiassistant-config__key">{collection.connectorIdentifier}</code></td>
+                            <td>
+                                <f:if condition="{collection.collection}">
+                                    <f:then><code class="aiassistant-config__key">{collection.collection}</code></f:then>
+                                    <f:else>-</f:else>
+                                </f:if>
+                            </td>
+                            <td>
+                                <f:if condition="{collection.remoteError}">
+                                    <f:then><span class="aiassistant-config__badge aiassistant-config__badge--warn"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_remote_error" /></span></f:then>
+                                    <f:else>
+                                        <f:if condition="{collection.remoteExists}">
+                                            <f:then><span class="aiassistant-config__badge aiassistant-config__badge--ok"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_remote_found" /></span></f:then>
+                                            <f:else>
+                                                <f:if condition="{collection.sourceCount}">
+                                                    <f:then><span class="aiassistant-config__badge aiassistant-config__badge--warn"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_remote_state_without_remote" /></span></f:then>
+                                                    <f:else><span class="aiassistant-config__badge aiassistant-config__badge--empty"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_remote_configured_only" /></span></f:else>
+                                                </f:if>
+                                            </f:else>
+                                        </f:if>
+                                    </f:else>
+                                </f:if>
+                                <f:if condition="{collection.remoteError}">
+                                    <div class="aiassistant-config__hint">{collection.remoteError}</div>
+                                </f:if>
+                            </td>
+                            <td>{collection.sourceCount}</td>
+                            <td>
+                                <span class="aiassistant-config__badge aiassistant-config__badge--soft">{collection.indexerCount}</span>
+                                <f:if condition="{collection.indexerTitles}">
+                                    <div class="aiassistant-config__hint">
+                                        <f:for each="{collection.indexerTitles}" as="indexerTitle" iteration="iterator">
+                                            {indexerTitle}<f:if condition="{iterator.isLast}"><f:else>, </f:else></f:if>
+                                        </f:for>
+                                    </div>
+                                </f:if>
+                            </td>
+                            <td>
+                                <f:if condition="{collection.canPurge}">
+                                    <f:then>
+                                        <form id="aiassistant-purge-{collection.key}" action="{formAction}" method="post" class="aiassistant-config__inline-form">
+                                            <input type="hidden" name="formToken" value="{formToken}" />
+                                            <input type="hidden" name="aiassistantBackendAction" value="purgeVectorCollection" />
+                                            <input type="hidden" name="vectorStoreConnection" value="{collection.connectionUid}" />
+                                            <input type="hidden" name="collection" value="{collection.collection}" />
+                                            <input
+                                                type="text"
+                                                name="confirmCollection"
+                                                value=""
+                                                placeholder="{collection.collection}"
+                                                class="aiassistant-config__input"
+                                                autocomplete="off"
+                                            />
+                                        </form>
+                                    </f:then>
+                                    <f:else>
+                                        <span class="aiassistant-config__badge aiassistant-config__badge--empty"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_missing_connection" /></span>
+                                    </f:else>
+                                </f:if>
+                            </td>
+                            <td>
+                                <f:if condition="{collection.canPurge}">
+                                    <button
+                                        type="submit"
+                                        form="aiassistant-purge-{collection.key}"
+                                        class="aiassistant-config__button aiassistant-config__button--danger"
+                                        data-aiassistant-confirm="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_delete_confirm')}"
+                                    >
+                                        <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_button" />
+                                    </button>
+                                </f:if>
+                            </td>
+                        </tr>
+                    </f:for>
+                    <f:if condition="{purgeCollections -> f:count()} == 0">
+                        <tr>
+                            <td colspan="8"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_empty" /></td>
+                        </tr>
+                    </f:if>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<f:asset.script identifier="aiassistant-backend" src="EXT:ai_assistant/Resources/Public/JavaScript/Backend.js" />

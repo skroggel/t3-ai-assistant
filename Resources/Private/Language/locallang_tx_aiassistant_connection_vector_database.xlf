@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_vector_database.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_connection_vector_database" resname="tx_aiassistant_connection_vector_database">
+				<source>Connection Vector Database</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.additional_options" resname="tx_aiassistant_connection_vector_database.additional_options">
+				<source>Additional Options</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.api_key" resname="tx_aiassistant_connection_vector_database.api_key">
+				<source>Api Key</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.connector_identifier" resname="tx_aiassistant_connection_vector_database.connector_identifier">
+				<source>Connector Identifier</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.default_collection" resname="tx_aiassistant_connection_vector_database.default_collection">
+				<source>Default Collection</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.distance" resname="tx_aiassistant_connection_vector_database.distance">
+				<source>Distance</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.distance.Cosine" resname="tx_aiassistant_connection_vector_database.distance.Cosine">
+				<source>Cosine</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.distance.Dot" resname="tx_aiassistant_connection_vector_database.distance.Dot">
+				<source>Dot</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.distance.Euclid" resname="tx_aiassistant_connection_vector_database.distance.Euclid">
+				<source>Euclid</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.endpoint" resname="tx_aiassistant_connection_vector_database.endpoint">
+				<source>Endpoint</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.tab_credentials" resname="tx_aiassistant_connection_vector_database.tab_credentials">
+				<source>Credentials</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.tab_defaults" resname="tx_aiassistant_connection_vector_database.tab_defaults">
+				<source>Defaults</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.title" resname="tx_aiassistant_connection_vector_database.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.vector_size" resname="tx_aiassistant_connection_vector_database.vector_size">
+				<source>Vector Size</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.title_desc" resname="tx_aiassistant_connection_vector_database.title_desc">
+				<source>Internal name used to identify this vector database connection.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.connector_identifier_desc" resname="tx_aiassistant_connection_vector_database.connector_identifier_desc">
+				<source>Registered vector store connector implementation used for this connection.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.endpoint_desc" resname="tx_aiassistant_connection_vector_database.endpoint_desc">
+				<source>Endpoint URL of the vector database service.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.api_key_desc" resname="tx_aiassistant_connection_vector_database.api_key_desc">
+				<source>API key used to authenticate against the vector database service.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.default_collection_desc" resname="tx_aiassistant_connection_vector_database.default_collection_desc">
+				<source>Default collection used when no collection is explicitly configured by the assistant or indexer.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.vector_size_desc" resname="tx_aiassistant_connection_vector_database.vector_size_desc">
+				<source>Vector dimension used when creating collections for this connection.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.distance_desc" resname="tx_aiassistant_connection_vector_database.distance_desc">
+				<source>Distance metric used by the vector database for similarity search.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.additional_options_desc" resname="tx_aiassistant_connection_vector_database.additional_options_desc">
+				<source>Optional connector-specific vector database settings. Use one key-value pair per line or JSON if supported.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

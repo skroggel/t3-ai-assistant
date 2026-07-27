@@ -1,0 +1,94 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+
+    <f:asset.css
+        identifier="ai-assistant-frontend"
+        href="EXT:ai_assistant/Resources/Public/Styles/Frontend.css"
+    />
+
+    <f:asset.script
+        identifier="ai-assistant-marked"
+        src="EXT:ai_assistant/Resources/Public/Libs/marked-18.0.5.umd.js"
+    />
+
+    <f:asset.script
+        identifier="ai-assistant-purify"
+        src="EXT:ai_assistant/Resources/Public/Libs/purify-3.4.10.min.js"
+    />
+
+    <f:asset.script
+        identifier="ai-assistant-transport"
+        src="EXT:ai_assistant/Resources/Public/JavaScript/AiAssistantTransport.js"
+    />
+
+    <f:asset.script
+        identifier="ai-assistant-chat"
+        src="EXT:ai_assistant/Resources/Public/JavaScript/AiAssistantChatBox.js"
+    />
+
+    <f:asset.script
+        identifier="ai-assistant-frontend"
+        src="EXT:ai_assistant/Resources/Public/JavaScript/Frontend.js"
+    />
+
+    <f:variable name="resolvedAssistantInitialMessage">
+        <f:if condition="{assistantProfile.initialMessage}">
+            <f:then>{assistantProfile.initialMessage}</f:then>
+            <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.initial_message" /></f:else>
+        </f:if>
+    </f:variable>
+
+    <f:variable name="resolvedErrorMessage">
+        <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.error_message" />
+    </f:variable>
+
+    <section class="chat-box container py-4 js-aiassistant-container">
+        <header class="chat-box-header">
+            <p class="chat-box-brand">
+                <f:if condition="{assistantLabel}">
+                    <f:then>{assistantLabel}</f:then>
+                    <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.brand" /></f:else>
+                </f:if>
+            </p>
+            <p class="chat-box-intro">
+                <f:if condition="{assistantIntroText}">
+                    <f:then>{assistantIntroText}</f:then>
+                    <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.intro" /></f:else>
+                </f:if>
+            </p>
+        </header>
+
+        <f:render partial="Index/ChatBox" arguments="{_all}" />
+
+        <f:form
+            action="stream"
+            controller="Chat"
+            extensionName="AiAssistant"
+            pluginName="Chat"
+            pageType="1700000000"
+            method="post"
+            class="chat-box-form mt-4 js-aiassistant-form"
+            additionalAttributes="{data-initial-message: resolvedAssistantInitialMessage, data-error-message: resolvedErrorMessage}"
+            novalidate="novalidate"
+        >
+            <f:form.hidden name="assistantProfile" value="{assistantProfile.uid}" />
+            <f:form.hidden name="chatIdentifier" value="{chatIdentifier}" />
+            <f:form.hidden name="startTimestamp" value="{startTimestamp}" />
+            <f:form.hidden name="settingsJson" value="{settingsJson}" />
+
+            <div class="input-group">
+                <f:form.textfield
+                    name="query"
+                    class="form-control chat-box-input js-aiassistant-input"
+                    placeholder="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.input_placeholder')}"
+                    aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.input_aria_label')}"
+                    required="required"
+                    autocomplete="off"
+                />
+                <button class="btn btn-primary" type="submit"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.submit" /></button>
+            </div>
+        </f:form>
+    </section>
+
+</html>

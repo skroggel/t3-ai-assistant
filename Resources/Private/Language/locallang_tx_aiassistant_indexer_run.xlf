@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_indexer_run.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_indexer_run" resname="tx_aiassistant_indexer_run">
+				<source>AI Chat Index Run</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.chunks_total" resname="tx_aiassistant_indexer_run.chunks_total">
+				<source>Chunks Total</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.finished_at" resname="tx_aiassistant_indexer_run.finished_at">
+				<source>Finished At</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.indexer_uid" resname="tx_aiassistant_indexer_run.indexer_uid">
+				<source>Indexer Uid</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.is_dry_run" resname="tx_aiassistant_indexer_run.is_dry_run">
+				<source>Is Dry Run</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_failed" resname="tx_aiassistant_indexer_run.items_failed">
+				<source>Items Failed</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_indexed" resname="tx_aiassistant_indexer_run.items_indexed">
+				<source>Items Indexed</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_processed" resname="tx_aiassistant_indexer_run.items_processed">
+				<source>Items Processed</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_removed" resname="tx_aiassistant_indexer_run.items_removed">
+				<source>Items Removed</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_skipped" resname="tx_aiassistant_indexer_run.items_skipped">
+				<source>Items Skipped</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.message" resname="tx_aiassistant_indexer_run.message">
+				<source>Message</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.source_type" resname="tx_aiassistant_indexer_run.source_type">
+				<source>Source Type</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.started_at" resname="tx_aiassistant_indexer_run.started_at">
+				<source>Started At</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.status" resname="tx_aiassistant_indexer_run.status">
+				<source>Status</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

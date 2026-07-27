@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_indexer_source.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_indexer_source" resname="tx_aiassistant_indexer_source">
+				<source>AI Chat Index Source</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.collection" resname="tx_aiassistant_indexer_source.collection">
+				<source>Collection</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.content_checksum" resname="tx_aiassistant_indexer_source.content_checksum">
+				<source>Content Checksum</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.file_ctime" resname="tx_aiassistant_indexer_source.file_ctime">
+				<source>File Ctime</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.file_mtime" resname="tx_aiassistant_indexer_source.file_mtime">
+				<source>File Mtime</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.filename" resname="tx_aiassistant_indexer_source.filename">
+				<source>Filename</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.indexer_uid" resname="tx_aiassistant_indexer_source.indexer_uid">
+				<source>Indexer Uid</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.language" resname="tx_aiassistant_indexer_source.language">
+				<source>Language</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.last_changed" resname="tx_aiassistant_indexer_source.last_changed">
+				<source>Last Changed</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.last_error" resname="tx_aiassistant_indexer_source.last_error">
+				<source>Last Error</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.last_indexed" resname="tx_aiassistant_indexer_source.last_indexed">
+				<source>Last Indexed</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.lock_token" resname="tx_aiassistant_indexer_source.lock_token">
+				<source>Lock Token</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.locked_until" resname="tx_aiassistant_indexer_source.locked_until">
+				<source>Locked Until</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.page_id" resname="tx_aiassistant_indexer_source.page_id">
+				<source>Page Id</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.path" resname="tx_aiassistant_indexer_source.path">
+				<source>Path</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.vector_store_connection" resname="tx_aiassistant_indexer_source.vector_store_connection">
+				<source>Vector Store Connection</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.source_hash" resname="tx_aiassistant_indexer_source.source_hash">
+				<source>Source Hash</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.source_id" resname="tx_aiassistant_indexer_source.source_id">
+				<source>Source Id</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.source_type" resname="tx_aiassistant_indexer_source.source_type">
+				<source>Source Type</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.status" resname="tx_aiassistant_indexer_source.status">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_source.storage_source_hash" resname="tx_aiassistant_indexer_source.storage_source_hash">
+				<source>Storage Source Hash</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

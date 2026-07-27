@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_indexer_connector.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_indexer_connector" resname="tx_aiassistant_indexer_connector">
+				<source>Indexer Connector</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.title" resname="tx_aiassistant_indexer_connector.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.type" resname="tx_aiassistant_indexer_connector.type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.type_shopware" resname="tx_aiassistant_indexer_connector.type_shopware">
+				<source>Shopware</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.base_url" resname="tx_aiassistant_indexer_connector.base_url">
+				<source>Base URL</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.client_id" resname="tx_aiassistant_indexer_connector.client_id">
+				<source>Client ID</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.download_base_url" resname="tx_aiassistant_indexer_connector.download_base_url">
+				<source>Product download base URL</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.download_path" resname="tx_aiassistant_indexer_connector.download_path">
+				<source>Product download path</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.client_secret" resname="tx_aiassistant_indexer_connector.client_secret">
+				<source>Client Secret</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.verify_tls" resname="tx_aiassistant_indexer_connector.verify_tls">
+				<source>Verify TLS</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.lookback_days" resname="tx_aiassistant_indexer_connector.lookback_days">
+				<source>Default lookback days</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.custom_fields" resname="tx_aiassistant_indexer_connector.custom_fields">
+				<source>Custom fields</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.indexed_fields" resname="tx_aiassistant_indexer_connector.indexed_fields">
+				<source>Additional indexed fields</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.title_desc" resname="tx_aiassistant_indexer_connector.title_desc">
+				<source>Human-readable name for this external connector.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.type_desc" resname="tx_aiassistant_indexer_connector.type_desc">
+				<source>Connector implementation used to fetch external content.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.base_url_desc" resname="tx_aiassistant_indexer_connector.base_url_desc">
+				<source>Base URL of the Shopware instance, without trailing slash.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.client_id_desc" resname="tx_aiassistant_indexer_connector.client_id_desc">
+				<source>OAuth client ID used for the Shopware API.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.download_base_url_desc" resname="tx_aiassistant_indexer_connector.download_base_url_desc">
+				<source>Optional base URL for the download links stored in the index, without trailing slash. When set, the form reloads and requires a product download path.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.download_path_desc" resname="tx_aiassistant_indexer_connector.download_path_desc">
+				<source>Required when a product download base URL is set. Enter the path between that base URL and the Shopware product ID, for example `/shop/download`. The product ID is always appended automatically.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.client_secret_desc" resname="tx_aiassistant_indexer_connector.client_secret_desc">
+				<source>OAuth client secret used for the Shopware API. The value is stored, but not shown again in plain text when editing the record.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.verify_tls_desc" resname="tx_aiassistant_indexer_connector.verify_tls_desc">
+				<source>Enable TLS certificate verification for outgoing Shopware requests.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.lookback_days_desc" resname="tx_aiassistant_indexer_connector.lookback_days_desc">
+				<source>Default lookback window when no explicit --since value is provided.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.custom_fields_desc" resname="tx_aiassistant_indexer_connector.custom_fields_desc">
+				<source>Comma- or line-separated list of Shopware customField keys to include in indexed text, for example `custom_meta_subheader`, `custom_meta_covertext`, or `custom_product_oai_identifier_journal`.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.custom_fields_placeholder" resname="tx_aiassistant_indexer_connector.custom_fields_placeholder">
+				<source>custom_meta_subheader
+custom_meta_covertext
+custom_product_oai_identifier_journal</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.indexed_fields_desc" resname="tx_aiassistant_indexer_connector.indexed_fields_desc">
+				<source>Comma- or line-separated list of optional Shopware payload paths to append to the indexed text, for example `translated.metaDescription`, `properties[].name`, `manufacturer.translated.customFields.custom_manufacturer_oai_place`, `cover.media.url`, or `states[]`.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.indexed_fields_placeholder" resname="tx_aiassistant_indexer_connector.indexed_fields_placeholder">
+				<source>translated.customSearchKeywords
+translated.metaDescription
+releaseDate
+properties[].name
+manufacturer.translated.customFields.custom_manufacturer_oai_place
+cover.media.url
+states[]</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.tab_connection" resname="tx_aiassistant_indexer_connector.tab_connection">
+				<source>Connection</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_connector.tab_indexing" resname="tx_aiassistant_indexer_connector.tab_indexing">
+				<source>Indexing</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

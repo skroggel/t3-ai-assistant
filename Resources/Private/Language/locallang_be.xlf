@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+		<header/>
+		<body>
+			<trans-unit id="plugin.tx_aiassistant_chat.title">
+				<source>AI Chat</source>
+			</trans-unit>
+			<trans-unit id="plugin.tx_aiassistant_chat..description">
+				<source></source>
+			</trans-unit>
+
+			<trans-unit id="flexform.chat.sheet.general" >
+				<source>Chat Settings</source>
+			</trans-unit>
+			<trans-unit id="flexform.chat.assistant_profile" >
+				<source>Assistant Profile</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

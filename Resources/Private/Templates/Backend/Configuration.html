@@ -1,0 +1,77 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+<div class="aiassistant-config">
+	<f:render partial="Backend/Module/Header" arguments="{_all}" />
+	<f:render partial="Backend/Module/Navigation" arguments="{_all}" />
+
+	<div class="aiassistant-config__card">
+		<h2>Central configuration</h2>
+		<p class="aiassistant-config__intro">
+			Only runtime settings for chat memory and pipeline logging are managed here.
+			Connection data, assistants and indexers are regular TCA records.
+		</p>
+
+		<form action="{formAction}" method="post" class="aiassistant-config__form">
+			<input type="hidden" name="formToken" value="{formToken}" />
+
+			<div class="aiassistant-config__table-wrap">
+				<table class="aiassistant-config__table">
+					<thead>
+						<tr>
+							<th>Setting</th>
+							<th>Value</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<f:for each="{registryFields}" as="field">
+							<tr>
+								<td>
+									<strong>{field.label}</strong>
+									<div class="aiassistant-config__hint">{field.description}</div>
+									<code class="aiassistant-config__key">{field.key}</code>
+								</td>
+								<td>
+									<f:if condition="{field.type} == 'select'">
+										<f:then>
+											<select name="registry[{field.key}]" class="aiassistant-config__input{f:if(condition: field.hasError, then: ' aiassistant-config__input--error')}">
+												<f:for each="{field.options}" as="option">
+													<f:if condition="{option.value} == {field.value}">
+														<f:then><option value="{option.value}" selected="selected">{option.label}</option></f:then>
+														<f:else><option value="{option.value}">{option.label}</option></f:else>
+													</f:if>
+												</f:for>
+											</select>
+										</f:then>
+										<f:else>
+											<input
+												name="registry[{field.key}]"
+												type="{field.type}"
+												value="{field.value}"
+												maxlength="{field.maxLength}"
+												class="aiassistant-config__input{f:if(condition: field.hasError, then: ' aiassistant-config__input--error')}"
+											/>
+										</f:else>
+									</f:if>
+									<f:if condition="{field.hasError}">
+										<div class="aiassistant-config__error">Invalid value.</div>
+									</f:if>
+								</td>
+								<td>
+									<span class="aiassistant-config__badge aiassistant-config__badge--{field.statusClass}">
+										{field.statusLabel}
+									</span>
+								</td>
+							</tr>
+						</f:for>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="aiassistant-config__actions aiassistant-config__actions--card">
+				<button type="submit" class="aiassistant-config__button">Save configuration</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<f:asset.script identifier="aiassistant-backend" src="EXT:ai_assistant/Resources/Public/JavaScript/Backend.js" />

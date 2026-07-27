@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang.xlf" date="2026-03-24T00:00:00Z" product-name="ai_assistant">
+		<header/>
+		<body>
+			<trans-unit id="templates_index_index.lang" resname="templates_index_index.lang">
+				<source>en</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.title" resname="templates_index_index.title">
+				<source>ChatGPT Example with SSE</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.brand" resname="templates_index_index.brand">
+				<source>madj2k Assistant</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.intro" resname="templates_index_index.intro">
+				<source>Ask about the website content or just start a short conversation.</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.initial_message" resname="templates_index_index.initial_message">
+				<source>Hello, I am the madj2k Assistant. How can I help you?</source>
+			</trans-unit>
+			<trans-unit id="chat.recommendation.line" resname="chat.recommendation.line">
+				<source>I found a matching page for you here: %s (%s)</source>
+			</trans-unit>
+			<trans-unit id="chat.recommendation.line_without_reference" resname="chat.recommendation.line_without_reference">
+				<source>I found a matching page for you here: %s</source>
+			</trans-unit>
+			<trans-unit id="chat.recommendation.url" resname="chat.recommendation.url">
+				<source>Link: %s</source>
+			</trans-unit>
+			<trans-unit id="chat.recommendation.reason" resname="chat.recommendation.reason">
+				<source>This fits your request well: %s</source>
+			</trans-unit>
+			<trans-unit id="chat.contact.department" resname="chat.contact.department">
+				<source>Responsible area: %s</source>
+			</trans-unit>
+			<trans-unit id="chat.contact.name" resname="chat.contact.name">
+				<source>Contact person: %s</source>
+			</trans-unit>
+			<trans-unit id="chat.contact.phone" resname="chat.contact.phone">
+				<source>Phone: %s</source>
+			</trans-unit>
+			<trans-unit id="chat.contact.email" resname="chat.contact.email">
+				<source>Email: %s</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.input_placeholder" resname="templates_index_index.input_placeholder">
+				<source>Your message...</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.input_aria_label" resname="templates_index_index.input_aria_label">
+				<source>Enter message</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.submit" resname="templates_index_index.submit">
+				<source>Send</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.error_suffix" resname="templates_index_index.error_suffix">
+				<source>[Error while loading answer.]</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

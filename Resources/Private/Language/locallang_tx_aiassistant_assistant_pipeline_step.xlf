@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_pipeline_step.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step" resname="tx_aiassistant_assistant_pipeline_step">
+				<source>Chat pipeline step</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.assistant_profile" resname="tx_aiassistant_assistant_pipeline_step.assistant_profile">
+				<source>Assistant Profile</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy">
+				<source>Failure Strategy</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.continue" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.continue">
+				<source>Continue</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback">
+				<source>Fallback</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.stop" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.stop">
+				<source>Stop</source>
+			</trans-unit>
+				<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_limit" resname="tx_aiassistant_assistant_pipeline_step.history_limit">
+					<source>History Limit</source>
+				</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_mode" resname="tx_aiassistant_assistant_pipeline_step.history_mode">
+				<source>History Mode</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_mode.last_n" resname="tx_aiassistant_assistant_pipeline_step.history_mode.last_n">
+				<source>Last N messages</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_mode.none" resname="tx_aiassistant_assistant_pipeline_step.history_mode.none">
+				<source>None</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_behavior_rules" resname="tx_aiassistant_assistant_pipeline_step.include_behavior_rules">
+				<source>Include Behavior Rules</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_identity_prompt" resname="tx_aiassistant_assistant_pipeline_step.include_identity_prompt">
+				<source>Include Identity Prompt</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_output_rules" resname="tx_aiassistant_assistant_pipeline_step.include_output_rules">
+				<source>Include Output Rules</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules" resname="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules">
+				<source>Include Retrieval Rules</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_context_characters" resname="tx_aiassistant_assistant_pipeline_step.max_context_characters">
+				<source>Max Context Characters</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_context_chunks" resname="tx_aiassistant_assistant_pipeline_step.max_context_chunks">
+				<source>Max Context Chunks</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_tokens" resname="tx_aiassistant_assistant_pipeline_step.max_tokens">
+				<source>Max Tokens</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.model" resname="tx_aiassistant_assistant_pipeline_step.model">
+				<source>Model</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.processor_identifier" resname="tx_aiassistant_assistant_pipeline_step.processor_identifier">
+				<source>Processor Identifier</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields" resname="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields">
+				<source>Prompt Metadata Fields</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.score_threshold" resname="tx_aiassistant_assistant_pipeline_step.score_threshold">
+				<source>Score Threshold</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage" resname="tx_aiassistant_assistant_pipeline_step.stage">
+				<source>Stage</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.post_answer" resname="tx_aiassistant_assistant_pipeline_step.stage.post_answer">
+				<source>Post answer</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.post_retrieval" resname="tx_aiassistant_assistant_pipeline_step.stage.post_retrieval">
+				<source>Post retrieval</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.pre_answer" resname="tx_aiassistant_assistant_pipeline_step.stage.pre_answer">
+				<source>Pre answer</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.pre_retrieval" resname="tx_aiassistant_assistant_pipeline_step.stage.pre_retrieval">
+				<source>Pre retrieval</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.retrieval" resname="tx_aiassistant_assistant_pipeline_step.stage.retrieval">
+				<source>Retrieval</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_behavior_rules" resname="tx_aiassistant_assistant_pipeline_step.step_behavior_rules">
+				<source>Step Behavior Rules</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_identity" resname="tx_aiassistant_assistant_pipeline_step.step_identity">
+				<source>Step Identity</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_output_rules" resname="tx_aiassistant_assistant_pipeline_step.step_output_rules">
+				<source>Step Output Rules</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_retrieval_rules" resname="tx_aiassistant_assistant_pipeline_step.step_retrieval_rules">
+				<source>Step Retrieval Rules</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_context" resname="tx_aiassistant_assistant_pipeline_step.tab_context">
+				<source>Context</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_llm" resname="tx_aiassistant_assistant_pipeline_step.tab_llm">
+				<source>History and LLM</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_prompt_includes" resname="tx_aiassistant_assistant_pipeline_step.tab_prompt_includes">
+				<source>Assistant prompt includes</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_retrieval" resname="tx_aiassistant_assistant_pipeline_step.tab_retrieval">
+				<source>Retrieval</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_runtime" resname="tx_aiassistant_assistant_pipeline_step.tab_runtime">
+				<source>Runtime</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_step_prompts" resname="tx_aiassistant_assistant_pipeline_step.tab_step_prompts">
+				<source>Step prompts</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.temperature" resname="tx_aiassistant_assistant_pipeline_step.temperature">
+				<source>Temperature</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.title" resname="tx_aiassistant_assistant_pipeline_step.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_retrieval_results" resname="tx_aiassistant_assistant_pipeline_step.max_retrieval_results">
+				<source>Maximum retrieval results</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type" resname="tx_aiassistant_assistant_pipeline_step.type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.answer_generator" resname="tx_aiassistant_assistant_pipeline_step.type.answer_generator">
+				<source>Answer generator</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.context_optimizer" resname="tx_aiassistant_assistant_pipeline_step.type.context_optimizer">
+				<source>Context optimizer</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.quality_gate" resname="tx_aiassistant_assistant_pipeline_step.type.quality_gate">
+				<source>Quality gate</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.query_optimizer" resname="tx_aiassistant_assistant_pipeline_step.type.query_optimizer">
+				<source>Query optimizer</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.retrieval" resname="tx_aiassistant_assistant_pipeline_step.type.retrieval">
+				<source>Retrieval</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.assistant_profile.description" resname="tx_aiassistant_assistant_pipeline_step.assistant_profile.description">
+				<source>Selects the assistant profile this pipeline step belongs to. The assistant profile provides the prompt blocks, connections and collection used during execution.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.title.description" resname="tx_aiassistant_assistant_pipeline_step.title.description">
+				<source>Defines the backend title of this pipeline step. Use a clear name so the execution order is easy to understand.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.description" resname="tx_aiassistant_assistant_pipeline_step.type.description">
+				<source>Defines the semantic role of this step in the assistant pipeline, such as query optimization, retrieval, answer generation or quality validation.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.processor_identifier.description" resname="tx_aiassistant_assistant_pipeline_step.processor_identifier.description">
+				<source>Selects the registered processor service that executes this step. The processor must support the selected step type.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.description" resname="tx_aiassistant_assistant_pipeline_step.stage.description">
+				<source>Groups the step into the execution phase of the pipeline. Sorting still controls the order within the selected stage.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_identity_prompt.description" resname="tx_aiassistant_assistant_pipeline_step.include_identity_prompt.description">
+				<source>Adds the assistant identity prompt to this step. Use it when the processor needs to know who the assistant is.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_behavior_rules.description" resname="tx_aiassistant_assistant_pipeline_step.include_behavior_rules.description">
+				<source>Adds the assistant behavior rules to this step. Use it when the processor should follow the assistant-wide behavior policy.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules.description" resname="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules.description">
+				<source>Adds the assistant retrieval rules to this step. Use it for retrieval and context-related processors.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_output_rules.description" resname="tx_aiassistant_assistant_pipeline_step.include_output_rules.description">
+				<source>Adds the assistant output rules to this step. Use it when the processor creates or validates user-facing output.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_identity.description" resname="tx_aiassistant_assistant_pipeline_step.step_identity.description">
+				<source>Adds an optional identity prompt that applies only to this pipeline step.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_behavior_rules.description" resname="tx_aiassistant_assistant_pipeline_step.step_behavior_rules.description">
+				<source>Adds optional behavior instructions that apply only to this pipeline step.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_retrieval_rules.description" resname="tx_aiassistant_assistant_pipeline_step.step_retrieval_rules.description">
+				<source>Adds optional retrieval or context instructions that apply only to this pipeline step.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_output_rules.description" resname="tx_aiassistant_assistant_pipeline_step.step_output_rules.description">
+				<source>Adds optional output instructions that apply only to this pipeline step.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_mode.description" resname="tx_aiassistant_assistant_pipeline_step.history_mode.description">
+				<source>Controls whether and how previous conversation messages are provided to this step.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_limit.description" resname="tx_aiassistant_assistant_pipeline_step.history_limit.description">
+				<source>Limits how many previous messages are provided when history mode uses the latest messages.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.model.description" resname="tx_aiassistant_assistant_pipeline_step.model.description">
+				<source>Overrides the default AI model for this step. Leave empty to use the model configured by the selected AI connection.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.temperature.description" resname="tx_aiassistant_assistant_pipeline_step.temperature.description">
+				<source>Controls the creativity of the AI response for this step. Lower values are more deterministic, higher values are more creative.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_tokens.description" resname="tx_aiassistant_assistant_pipeline_step.max_tokens.description">
+				<source>Limits the maximum number of tokens generated by the AI model for this step.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_retrieval_results.description" resname="tx_aiassistant_assistant_pipeline_step.max_retrieval_results.description">
+				<source>Defines how many vector search results should be requested from the vector store during retrieval.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.score_threshold.description" resname="tx_aiassistant_assistant_pipeline_step.score_threshold.description">
+				<source>Filters retrieval results by minimum similarity score. Results below this value are ignored.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_context_chunks.description" resname="tx_aiassistant_assistant_pipeline_step.max_context_chunks.description">
+				<source>Limits how many retrieved chunks may be used when building the answer context.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_context_characters.description" resname="tx_aiassistant_assistant_pipeline_step.max_context_characters.description">
+				<source>Limits the maximum character length of the generated answer context.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields.description" resname="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields.description">
+				<source>Defines comma-separated metadata fields that may be included in prompts, for example title or url.</source>
+			</trans-unit>
+				<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.description" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.description">
+					<source>Defines how the pipeline should continue when this step fails.</source>
+				</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields.placeholder" resname="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields.placeholder">
+				<source>title,url</source>
+			</trans-unit>
+			</body>
+	</file>
+</xliff>

@@ -1,0 +1,248 @@
+/* ==========================================================================
+    Chatbox
+  ========================================================================== */
+
+:root {
+    --bs-primary: #205EB5FF;
+    --bs-secondary: #D6D6D6BF;
+}
+
+.chat-box {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.chat-box-header {
+    margin-bottom: 1rem;
+}
+
+.chat-box-brand {
+    margin: 0 0 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bs-primary);
+}
+
+.chat-box-intro {
+    margin: 0;
+    color: var(--bs-secondary-color);
+}
+
+/* ==========================================================================
+    Messages
+  ========================================================================== */
+.chat-box-messages {
+    min-height: 300px;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    overflow-y: auto;
+    display:flex;
+    gap: 32px;
+    flex-direction: column;
+}
+
+.chat-box-message {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    max-width: 80%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.chat-box-message.from-user {
+    align-self: flex-end;
+    background-color: var(--bs-primary);
+    color: #fff;
+}
+
+.chat-box-message.from-bot {
+    align-self: flex-start;
+    background-color: var(--bs-secondary);
+    color: var(--bs-body-color);
+}
+
+.chat-box-message.is-typing {
+    white-space: pre-wrap;
+}
+
+/* ==========================================================================
+    Typing indicator
+  ========================================================================== */
+.chat-box-typing-indicator {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 1rem;
+    align-items: center;
+    height: 1.5rem;
+}
+
+.chat-box-typing-indicator .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: #ccc;
+    border-radius: 50%;
+    animation: aiassistant-blink 1.4s infinite both;
+}
+
+.chat-box-typing-indicator .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.chat-box-typing-indicator .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes aiassistant-blink {
+    0%, 80%, 100% { opacity: 0; }
+    40% { opacity: 1; }
+}
+
+.chat-box-typing-dots {
+    display: inline-flex;
+    gap: 0.25rem;
+    align-items: center;
+    min-height: 1rem;
+    vertical-align: middle;
+}
+
+.chat-box-typing-dots .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: currentColor;
+    border-radius: 50%;
+    animation: aiassistant-blink 1.4s infinite both;
+    opacity: 0.35;
+}
+
+.chat-box-typing-dots .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.chat-box-typing-dots .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* ==========================================================================
+    Content in messages
+  ========================================================================== */
+.chat-box-message-content {
+    display: block;
+}
+
+.chat-box-message-content > :first-child {
+    margin-top: 0;
+}
+
+.chat-box-message-content > :last-child {
+    margin-bottom: 0;
+}
+
+.chat-box-message.from-user .chat-box-message-content {
+    //white-space: pre-wrap;
+}
+
+.chat-box-message-content.is-typing {
+    display: inline-flex;
+    white-space: normal;
+}
+
+/* ==========================================================================
+    Basic formats for content in messages
+  ========================================================================== */
+.chat-box-message-content p {
+    margin: 0 0 1rem;
+}
+
+.chat-box-message-content p:last-child {
+    margin-bottom: 0;
+}
+
+.chat-box-message-content ul,
+.chat-box-message-content ol {
+    margin: 0 0 1rem 1.5rem;
+    padding: 0;
+}
+
+.chat-box-message-content ul:last-child,
+.chat-box-message-content ol:last-child {
+    margin-bottom: 0;
+}
+
+.chat-box-message-content li + li {
+    margin-top: 0.25rem;
+}
+
+.chat-box-message-content h1,
+.chat-box-message-content h2,
+.chat-box-message-content h3,
+.chat-box-message-content h4,
+.chat-box-message-content h5,
+.chat-box-message-content h6 {
+    margin: 0 0 0.75rem;
+    line-height: 1.3;
+}
+
+.chat-box-message-content code {
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    background: rgba(0, 0, 0, 0.08);
+    font-size: 0.9em;
+}
+
+.chat-box-message-content pre {
+    margin: 0 0 1rem;
+    padding: 0.75rem;
+    overflow-x: auto;
+    border-radius: 0.5rem;
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.chat-box-message-content pre:last-child {
+    margin-bottom: 0;
+}
+
+.chat-box-message-content pre code {
+    padding: 0;
+    background: transparent;
+}
+
+.chat-box-message-content blockquote {
+    margin: 0 0 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.chat-box-message-content blockquote:last-child {
+    margin-bottom: 0;
+}
+
+.chat-box-message-content a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+}
+
+.chat-box-message-content a:hover,
+.chat-box-message-content a:focus {
+    text-decoration-thickness: 2px;
+}
+
+.chat-box-message-content table {
+    width: 100%;
+    margin: 0 0 1rem;
+    border-collapse: collapse;
+}
+
+.chat-box-message-content th,
+.chat-box-message-content td {
+    padding: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    text-align: left;
+}
+
+.chat-box-message-content th {
+    font-weight: 600;
+}

@@ -1,0 +1,86 @@
+plugin.tx_aiassistant {
+    view {
+        templateRootPaths.0 = EXT:ai_assistant/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_aiassistant.view.templateRootPath}
+        partialRootPaths.0 = EXT:ai_assistant/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_aiassistant.view.partialRootPath}
+        layoutRootPaths.0 = EXT:ai_assistant/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_aiassistant.view.layoutRootPath}
+    }
+    persistence {
+        storagePid = {$plugin.tx_aiassistant.persistence.storagePid}
+        #recursive = 1
+    }
+    features {
+        #skipDefaultArguments = 1
+        # if set to 1, the enable fields are ignored in BE context
+        ignoreAllEnableFieldsInBe = 0
+    }
+    mvc {
+        #callDefaultActionIfActionCantBeResolved = 1
+    }
+    settings {
+
+    }
+}
+
+# Module configuration
+module.tx_aiassistant {
+    persistence {
+        storagePid = {$module.tx_aiassistant.persistence.storagePid}
+    }
+    view {
+        templateRootPaths.0 = EXT:ai_assistant/Resources/Private/Templates/Backend/
+        templateRootPaths.1 = {$module.tx_aiassistant.view.templateRootPath}
+        partialRootPaths.0 = EXT:ai_assistant/Resources/Private/Partials/
+        partialRootPaths.1 = {$module.tx_aiassistant.view.partialRootPath}
+        layoutRootPaths.0 = EXT:ai_assistant/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$module.tx_aiassistant.view.layoutRootPath}
+    }
+}
+
+
+tt_content.list.20.aiassistant_chat = USER
+tt_content.list.20.aiassistant_chat {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    extensionName = AiAssistant
+    pluginName = Chat
+    vendorName = Madj2k
+}
+
+tt_content.aiassistant_chat = USER
+tt_content.aiassistant_chat {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    extensionName = AiAssistant
+    pluginName = Chat
+    vendorName = Madj2k
+}
+
+
+ajax = PAGE
+ajax {
+    typeNum = 1700000000
+    config {
+        disableAllHeaderCode = 1
+        no_cache = 1
+        additionalHeaders {
+            10.header = Content-Type: text/event-stream; charset=utf-8
+            20.header = Cache-Control: no-cache
+            30.header = X-Accel-Buffering: no
+        }
+    }
+
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        extensionName = AiAssistant
+        pluginName = Chat
+        vendorName = Madj2k
+
+        switchableControllerActions {
+            Chat {
+                1 = stream
+            }
+        }
+    }
+}

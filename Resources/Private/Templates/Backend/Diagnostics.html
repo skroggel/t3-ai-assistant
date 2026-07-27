@@ -1,0 +1,76 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+<div class="aiassistant-config">
+	<f:render partial="Backend/Module/Header" arguments="{_all}" />
+	<f:render partial="Backend/Module/Navigation" arguments="{_all}" />
+
+	<div class="aiassistant-config__card">
+		<h2>Connection diagnostics</h2>
+		<p class="aiassistant-config__intro">
+			Test configured connection records. Disabled records cannot be tested.
+		</p>
+
+		<f:if condition="{connectionTestResult}">
+			<div class="aiassistant-config__notice aiassistant-config__notice--{connectionTestResult.status}">
+				{connectionTestResult.message}
+			</div>
+		</f:if>
+
+		<div class="aiassistant-config__table-wrap">
+			<table class="aiassistant-config__table">
+				<thead>
+					<tr>
+						<th>Connection</th>
+						<th>Kind</th>
+						<th>Type</th>
+						<th>Endpoint</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<f:for each="{connections}" as="connection">
+						<tr>
+							<td>
+								<strong>{connection.title}</strong>
+								<div class="aiassistant-config__hint">UID {connection.uid}</div>
+							</td>
+							<td>{connection.kind}</td>
+								<td><code class="aiassistant-config__key">{connection.type}</code></td>
+							<td>{connection.baseUrl}</td>
+							<td>
+								<f:if condition="{connection.hidden}">
+									<f:then><span class="aiassistant-config__badge aiassistant-config__badge--empty">disabled</span></f:then>
+									<f:else><span class="aiassistant-config__badge aiassistant-config__badge--ok">enabled</span></f:else>
+								</f:if>
+							</td>
+							<td>
+								<div class="aiassistant-config__actions-inline">
+									<a class="aiassistant-config__button aiassistant-config__button--ghost" href="{connection.editUrl}">Edit</a>
+									<f:if condition="{connection.hidden}">
+										<f:then>
+											<button type="button" class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__button--disabled" disabled="disabled">Test</button>
+										</f:then>
+										<f:else>
+											<form action="{formAction}" method="post" class="aiassistant-config__inline-form">
+												<input type="hidden" name="formToken" value="{formToken}" />
+												<input type="hidden" name="testConnection" value="{connection.testIdentifier}" />
+												<button type="submit" class="aiassistant-config__button aiassistant-config__button--ghost">Test</button>
+											</form>
+										</f:else>
+									</f:if>
+								</div>
+							</td>
+						</tr>
+					</f:for>
+					<f:if condition="{connections -> f:count()} == 0">
+						<tr>
+							<td colspan="6">No connection records found.</td>
+						</tr>
+					</f:if>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<f:asset.script identifier="aiassistant-backend" src="EXT:ai_assistant/Resources/Public/JavaScript/Backend.js" />

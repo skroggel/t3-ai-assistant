@@ -1,0 +1,108 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+<p class="aiassistant-config__intro aiassistant-config__intro--section-start">
+	<f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_status_intro" />
+</p>
+
+<div class="aiassistant-config__card aiassistant-config__card--overflow">
+	<div class="aiassistant-config__table-wrap">
+		<table class="aiassistant-config__table">
+			<thead>
+				<tr>
+					<th class="aiassistant-config__cell--compact"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_uid" /></th>
+					<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_title" /></th>
+					<th class="aiassistant-config__cell--compact"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_type" /></th>
+					<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_collection" /></th>
+					<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_status" /></th>
+					<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_status_sources" /></th>
+					<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_status_last_indexed" /></th>
+					<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_last_run" /></th>
+					<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_actions" /></th>
+				</tr>
+			</thead>
+			<tbody>
+				<f:if condition="{indexers}">
+					<f:then>
+						<f:for each="{indexers}" as="indexer">
+							<tr>
+								<td class="aiassistant-config__cell--compact">{indexer.uid}</td>
+								<td>
+									{indexer.title}
+									<f:if condition="{indexer.connector}">
+										<div class="aiassistant-config__hint">{indexer.connector}</div>
+									</f:if>
+								</td>
+								<td class="aiassistant-config__cell--compact">{indexer.type}</td>
+								<td>{indexer.collection}</td>
+								<td>
+									<f:if condition="{indexer.hidden}">
+										<f:then><span class="aiassistant-config__badge aiassistant-config__badge--empty"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_status_disabled" /></span></f:then>
+										<f:else><span class="aiassistant-config__badge aiassistant-config__badge--ok"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_status_enabled" /></span></f:else>
+									</f:if>
+									<f:if condition="{indexer.statsPresentation.isEmpty}">
+										<span class="aiassistant-config__badge aiassistant-config__badge--empty"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_status_no_sources" /></span>
+									</f:if>
+									<f:if condition="{indexer.statsPresentation.isStale}">
+										<span class="aiassistant-config__badge aiassistant-config__badge--empty"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_status_stale" /></span>
+									</f:if>
+								</td>
+								<td>{indexer.stats.sources}</td>
+								<td>
+									<f:if condition="{indexer.stats.last_indexed}">
+										<f:then><f:format.date format="Y-m-d H:i">{indexer.stats.last_indexed}</f:format.date></f:then>
+										<f:else><span class="aiassistant-config__badge aiassistant-config__badge--empty"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.not_available" /></span></f:else>
+									</f:if>
+								</td>
+								<td>
+									<f:if condition="{indexer.lastRun}">
+										<f:then>
+											<f:if condition="{indexer.lastRun.status} == 'error'">
+								<f:then><span class="aiassistant-config__badge aiassistant-config__badge--error">{indexer.lastRun.status}</span></f:then>
+								<f:else><span class="aiassistant-config__badge aiassistant-config__badge--ok">{indexer.lastRun.status}</span></f:else>
+							</f:if>
+											<div class="aiassistant-config__hint">
+												<f:format.date format="Y-m-d H:i">{indexer.lastRun.finished_at}</f:format.date>
+											</div>
+											<div class="aiassistant-config__hint">{indexer.lastRunPresentation.text}</div>
+											<f:if condition="{indexer.lastRunMessages}">
+												<details>
+													<summary class="aiassistant-config__button aiassistant-config__button--ghost">
+														Show messages ({indexer.lastRunPresentation.messageCount})
+													</summary>
+													<f:for each="{indexer.lastRunMessages}" as="message">
+														<div class="aiassistant-config__hint">
+															<span class="aiassistant-config__badge aiassistant-config__badge--{message.badgeClass}">{message.severity}</span>
+															<strong>{message.title}</strong><br />
+															{message.text}
+														</div>
+													</f:for>
+												</details>
+											</f:if>
+										</f:then>
+										<f:else><span class="aiassistant-config__badge aiassistant-config__badge--empty"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.not_available" /></span></f:else>
+									</f:if>
+								</td>
+								<td>
+									<div class="aiassistant-config__actions-inline">
+										<a
+											class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__button--icon"
+											href="{indexer.editUrl}"
+											title="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_edit')}"
+											aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_edit')}"
+										>
+											<core:icon identifier="actions-open" size="small" />
+										</a>
+									</div>
+								</td>
+							</tr>
+						</f:for>
+					</f:then>
+					<f:else>
+						<tr>
+							<td colspan="9"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_status_empty" /></td>
+						</tr>
+					</f:else>
+				</f:if>
+			</tbody>
+		</table>
+	</div>
+</div>

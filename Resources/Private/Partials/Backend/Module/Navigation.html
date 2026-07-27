@@ -1,0 +1,22 @@
+<nav class="aiassistant-config__tabs" aria-label="AI Chat backend module navigation">
+	<f:if condition="{activeDomain} == 'configuration'">
+		<f:then><span class="aiassistant-config__tab is-active">Configuration</span></f:then>
+		<f:else><a class="aiassistant-config__tab" href="{actions.configuration}">Configuration</a></f:else>
+	</f:if>
+	<f:if condition="{activeDomain} == 'diagnostics'">
+		<f:then><span class="aiassistant-config__tab is-active">Diagnostics</span></f:then>
+		<f:else><a class="aiassistant-config__tab" href="{actions.diagnostics}">Diagnostics</a></f:else>
+	</f:if>
+	<f:if condition="{activeDomain} == 'indexerStatus'">
+		<f:then><span class="aiassistant-config__tab is-active">Indexer status</span></f:then>
+		<f:else><a class="aiassistant-config__tab" href="{actions.indexerStatus}">Indexer status</a></f:else>
+	</f:if>
+	<f:if condition="{activeDomain} == 'purge'">
+		<f:then><span class="aiassistant-config__tab is-active"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge" /></span></f:then>
+		<f:else><a class="aiassistant-config__tab" href="{actions.purge}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge" /></a></f:else>
+	</f:if>
+	<f:if condition="{activeDomain} == 'logs'">
+		<f:then><span class="aiassistant-config__tab is-active">Pipeline logs</span></f:then>
+		<f:else><a class="aiassistant-config__tab" href="{actions.logs}">Pipeline logs</a></f:else>
+	</f:if>
+</nav>

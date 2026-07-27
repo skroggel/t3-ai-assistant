@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang.xlf" date="2026-03-24T00:00:00Z" product-name="ai_assistant">
+		<header/>
+		<body>
+			<trans-unit id="templates_index_index.lang" resname="templates_index_index.lang">
+				<source>en</source>
+				<target>de</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.title" resname="templates_index_index.title">
+				<source>ChatGPT Example with SSE</source>
+				<target>ChatGPT-Beispiel mit SSE</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.brand" resname="templates_index_index.brand">
+				<source>madj2k Assistant</source>
+				<target>madj2k-Assistent</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.intro" resname="templates_index_index.intro">
+				<source>Ask about the website content or just start a short conversation.</source>
+				<target>Frage nach Inhalten der Website oder starte einfach eine kurze Unterhaltung.</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.initial_message" resname="templates_index_index.initial_message">
+				<source>Hello, I am the madj2k Assistant. How can I help you?</source>
+				<target>Hallo, ich bin der madj2k-Assistent. Wie kann ich dir helfen?</target>
+			</trans-unit>
+			<trans-unit id="chat.recommendation.line" resname="chat.recommendation.line">
+				<source>I found a matching page for you here: %s (%s)</source>
+				<target>Ich habe hier einen passenden Inhalt für dich gefunden: %s (%s)</target>
+			</trans-unit>
+			<trans-unit id="chat.recommendation.line_without_reference" resname="chat.recommendation.line_without_reference">
+				<source>I found a matching page for you here: %s</source>
+				<target>Ich habe hier einen passenden Inhalt für dich gefunden: %s</target>
+			</trans-unit>
+			<trans-unit id="chat.recommendation.url" resname="chat.recommendation.url">
+				<source>Link: %s</source>
+				<target>Link: %s</target>
+			</trans-unit>
+			<trans-unit id="chat.recommendation.reason" resname="chat.recommendation.reason">
+				<source>This fits your request well: %s</source>
+				<target>Das passt gut zu deiner Anfrage: %s</target>
+			</trans-unit>
+			<trans-unit id="chat.contact.department" resname="chat.contact.department">
+				<source>Responsible area: %s</source>
+				<target>Zuständiger Bereich: %s</target>
+			</trans-unit>
+			<trans-unit id="chat.contact.name" resname="chat.contact.name">
+				<source>Contact person: %s</source>
+				<target>Ansprechpartner: %s</target>
+			</trans-unit>
+			<trans-unit id="chat.contact.phone" resname="chat.contact.phone">
+				<source>Phone: %s</source>
+				<target>Telefon: %s</target>
+			</trans-unit>
+			<trans-unit id="chat.contact.email" resname="chat.contact.email">
+				<source>Email: %s</source>
+				<target>E-Mail: %s</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.input_placeholder" resname="templates_index_index.input_placeholder">
+				<source>Your message...</source>
+				<target>Deine Nachricht...</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.input_aria_label" resname="templates_index_index.input_aria_label">
+				<source>Enter message</source>
+				<target>Nachricht eingeben</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.submit" resname="templates_index_index.submit">
+				<source>Send</source>
+				<target>Senden</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.error_suffix" resname="templates_index_index.error_suffix">
+				<source>[Error while loading answer.]</source>
+				<target>[Fehler beim Laden der Antwort.]</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

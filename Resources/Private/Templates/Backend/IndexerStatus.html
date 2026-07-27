@@ -1,0 +1,118 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+    <div class="aiassistant-config">
+        <f:render partial="Backend/Module/Header" arguments="{_all}" />
+        <f:render partial="Backend/Module/Navigation" arguments="{_all}" />
+
+        <div class="aiassistant-config__card">
+        <h2>
+            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_status" />
+        </h2>
+        <p class="aiassistant-config__intro">
+            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_status_intro" />
+        </p>
+
+        <div class="aiassistant-config__table-wrap">
+            <table class="aiassistant-config__table">
+                <thead>
+                    <tr>
+                        <th>UID</th>
+                        <th>Title</th>
+                        <th class="aiassistant-config__cell--compact" title="Sources" aria-label="Sources">Src</th>
+                        <th class="aiassistant-config__cell--compact" title="Indexed" aria-label="Indexed">Idx</th>
+                        <th class="aiassistant-config__cell--compact" title="Skipped" aria-label="Skipped">Skp</th>
+                        <th class="aiassistant-config__cell--compact" title="Failed" aria-label="Failed">Fail</th>
+                        <th class="aiassistant-config__cell--compact" title="Pending" aria-label="Pending">Pend</th>
+                        <th class="aiassistant-config__cell--compact" title="Processing" aria-label="Processing">Proc</th>
+                        <th>Last indexed</th>
+                        <th>Last run</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{indexers}" as="indexer">
+                        <tr>
+                            <td>{indexer.uid}</td>
+                            <td>
+                                <strong>{indexer.title}</strong>
+                                <div class="aiassistant-config__hint">Type: <code>{indexer.type}</code></div>
+                                <div class="aiassistant-config__hint">Indexer: <code>{indexer.indexerIdentifier}</code></div>
+                                <div class="aiassistant-config__hint">Collection: <code>{indexer.collection}</code></div>
+                            </td>
+                            <td class="aiassistant-config__cell--compact" title="Sources">{indexer.sourceCount}</td>
+                            <td class="aiassistant-config__cell--compact" title="Indexed"><span class="aiassistant-config__badge aiassistant-config__badge--ok">{indexer.indexedCount}</span></td>
+                            <td class="aiassistant-config__cell--compact" title="Skipped"><span class="aiassistant-config__badge aiassistant-config__badge--soft">{indexer.skippedCount}</span></td>
+                            <td class="aiassistant-config__cell--compact" title="Failed"><span class="aiassistant-config__badge aiassistant-config__badge--error">{indexer.failedCount}</span></td>
+                            <td class="aiassistant-config__cell--compact" title="Pending"><span class="aiassistant-config__badge aiassistant-config__badge--empty">{indexer.pendingCount}</span></td>
+                            <td class="aiassistant-config__cell--compact" title="Processing"><span class="aiassistant-config__badge aiassistant-config__badge--warn">{indexer.processingCount}</span></td>
+                            <td>
+                                <f:if condition="{indexer.lastIndexed}">
+                                    <f:then><f:format.date format="Y-m-d H:i:s">{indexer.lastIndexed}</f:format.date></f:then>
+                                    <f:else>-</f:else>
+                                </f:if>
+                            </td>
+                            <td>
+                                <f:if condition="{indexer.lastRunStatus}">
+                                    <f:then>
+                                        <span class="aiassistant-config__badge aiassistant-config__badge--soft">{indexer.lastRunStatus}</span>
+                                        <f:if condition="{indexer.lastRun.finished_at}">
+                                            <div class="aiassistant-config__hint">
+                                                <f:format.date format="Y-m-d H:i:s">{indexer.lastRun.finished_at}</f:format.date>
+                                            </div>
+                                        </f:if>
+                                        <f:if condition="{indexer.lastRunPresentation.text}">
+                                            <div class="aiassistant-config__hint">{indexer.lastRunPresentation.text}</div>
+                                        </f:if>
+                                        <f:if condition="{indexer.lastRunMessages}">
+                                            <button type="button" class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__indexer-message-details">
+                                                Show messages ({indexer.lastRunPresentation.messageCount})
+                                            </button>
+                                            <div class="aiassistant-config__preview-source aiassistant-config__preview-source--hidden">
+                                                <div class="aiassistant-config__result-list">
+                                                    <f:for each="{indexer.lastRunMessages}" as="message">
+                                                        <div class="aiassistant-config__result-item">
+                                                            <div>
+                                                                <span class="aiassistant-config__badge aiassistant-config__badge--{message.badgeClass}">{message.severity}</span>
+                                                            </div>
+                                                            <div>
+                                                                <strong>{message.title}</strong>
+                                                                <div class="aiassistant-config__hint">{message.text}</div>
+                                                            </div>
+                                                        </div>
+                                                    </f:for>
+                                                </div>
+                                            </div>
+                                        </f:if>
+                                    </f:then>
+                                    <f:else>-</f:else>
+                                </f:if>
+                            </td>
+                            <td>
+                                <a class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__button--icon" href="{indexer.editUrl}" target="_top">
+                                    <core:icon identifier="actions-open" size="small" />
+                                    <span class="aiassistant-config__sr-only">Edit</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </f:for>
+                    <f:if condition="{indexers -> f:count()} == 0">
+                        <tr>
+                            <td colspan="11">
+                                <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexers_empty" />
+                            </td>
+                        </tr>
+                    </f:if>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<dialog id="aiassistant-indexer-message-dialog" class="aiassistant-config__dialog">
+    <div class="aiassistant-config__dialog-header">
+        <h3>Indexer messages</h3>
+        <button type="button" class="aiassistant-config__button aiassistant-config__button--ghost" data-aiassistant-indexer-message-close>Close</button>
+    </div>
+    <div data-aiassistant-indexer-message-content></div>
+</dialog>
+
+<f:asset.script identifier="aiassistant-backend" src="EXT:ai_assistant/Resources/Public/JavaScript/Backend.js" />
