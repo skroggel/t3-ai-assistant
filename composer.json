@@ -1,17 +1,17 @@
 {
     "name": "madj2k/ai-assistant",
     "type": "typo3-cms-extension",
-    "description": "TYPO3 extension that integrates OpenAI with a Qdrant vector store for chat.",
+    "description": "AI Assistant is a flexible TYPO3 extension for building AI-powered assistants based on Retrieval-Augmented Generation (RAG), configurable processing pipelines, and pluggable AI and vector store integrations.",
     "authors": [
-		{
-			"name": "Maximilian Fäßler",
-			"role": "Developer"
-		},
         {
             "name": "Steffen Kroggel",
             "role": "Developer"
-        }
-    ],
+        },
+		{
+			"name": "Maximilian Fäßler",
+			"role": "Developer"
+		}
+	],
     "license": "GPL-2.0-or-later",
     "require": {
         "typo3/cms-core": "^13.4 || ^14.3",
@@ -26,23 +26,6 @@
         "psr-4": {
             "Madj2k\\AiAssistant\\": "Classes"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Madj2k\\AiAssistant\\Tests\\": "Tests"
-        }
-    },
-    "replace": {
-        "typo3-ter/ai-assistant": "self.version"
-    },
-    "config": {
-        "vendor-dir": ".Build/vendor",
-        "bin-dir": ".Build/bin"
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
-        ]
     },
     "extra": {
         "typo3/cms": {

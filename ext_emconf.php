@@ -1,17 +1,17 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'Ai Chat',
-    'description' => 'AI Assistant for TYPO3: RAG-based AI chat, semantic search, configurable assistant pipelines, vector store retrieval, content indexing and extensible AI integrations.',
+    'title' => 'Ai Assistant',
+    'description' => 'AI Assistant is a flexible TYPO3 extension for building AI-powered assistants based on Retrieval-Augmented Generation (RAG), configurable processing pipelines, and pluggable AI and vector store integrations.',
     'category' => 'plugin',
-    'author' => 'Maximilian Fäßler',
-    'author_email' => 'maximilian@faesslerweb.de',
+    'author' => 'Steffen Kroggel, Maximilian Fäßler',
+    'author_email' => 'developer@steffenkroggel.de, maximilian@faesslerweb.de',
     'state' => 'alpha',
     'clearCacheOnLoad' => 0,
-    'version' => '1.0.0',
+    'version' => '14.3.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '13.4.0-13.4.99'
+            'typo3' => '13.4.0-14.3.99'
         ],
         'conflicts' => [],
         'suggests' => [],
