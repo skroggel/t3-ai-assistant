@@ -26,8 +26,8 @@
 						<f:for each="{registryFields}" as="field">
 							<tr>
 								<td>
-									<strong>{field.label}</strong>
-									<div class="aiassistant-config__hint">{field.description}</div>
+									<strong><f:translate key="{field.label}" default="{field.label}" /></strong>
+									<div class="aiassistant-config__hint"><f:translate key="{field.description}" default="{field.description}" /></div>
 									<code class="aiassistant-config__key">{field.key}</code>
 								</td>
 								<td>
@@ -36,8 +36,8 @@
 											<select name="registry[{field.key}]" class="aiassistant-config__input{f:if(condition: field.hasError, then: ' aiassistant-config__input--error')}">
 												<f:for each="{field.options}" as="option">
 													<f:if condition="{option.value} == {field.value}">
-														<f:then><option value="{option.value}" selected="selected">{option.label}</option></f:then>
-														<f:else><option value="{option.value}">{option.label}</option></f:else>
+														<f:then><option value="{option.value}" selected="selected"><f:translate key="{option.label}" default="{option.label}" /></option></f:then>
+														<f:else><option value="{option.value}"><f:translate key="{option.label}" default="{option.label}" /></option></f:else>
 													</f:if>
 												</f:for>
 											</select>

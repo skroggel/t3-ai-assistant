@@ -23,13 +23,23 @@ namespace Madj2k\AiAssistant\Backend\Configuration;
 final class BackendRegistryFieldProvider
 {
     /**
+     * @param iterable<\Madj2k\AiAssistant\Backend\Configuration\BackendRegistryFieldContributorInterface> $fieldContributors
+     */
+    public function __construct(
+        private readonly iterable $fieldContributors = []
+    ) {
+
+    }
+
+
+    /**
      * Returns all editable registry fields.
      *
      * @return array<int, array<string, mixed>> Field definitions.
      */
     public function getFields(): array
     {
-        return [
+        $fields = [
             [
                 'key' => 'chat.memory.maxPrompts',
                 'label' => 'Memory prompts',
@@ -89,5 +99,11 @@ final class BackendRegistryFieldProvider
                 'allowDelete' => false,
             ],
         ];
+
+        foreach ($this->fieldContributors as $fieldContributor) {
+            array_push($fields, ...$fieldContributor->getFields());
+        }
+
+        return $fields;
     }
 }
