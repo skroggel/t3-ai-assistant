@@ -18,7 +18,7 @@ Core classes
 ``Madj2k\AiAssistant\Indexing\DTO\IndexableDocument``
     Text plus metadata to be indexed.
 
-``Madj2k\AiAssistant\Indexing\DTO\IndexableMetadata``
+``Madj2k\AiCore\DTO\DocumentMetadata``
     Structured metadata for source identity and payload.
 
 ``Madj2k\AiAssistant\Indexing\Service\TextChunkerService``

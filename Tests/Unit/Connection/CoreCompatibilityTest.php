@@ -21,13 +21,13 @@ use Madj2k\AiAssistant\Indexing\DTO\IndexableMetadata as LegacyIndexableMetadata
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
 use Madj2k\AiAssistant\Indexing\Indexer\IndexerInterface as LegacyIndexerInterface;
 use Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry as LegacyIndexerRegistry;
+use Madj2k\AiCore\DTO\DocumentMetadata;
 use Madj2k\AiCore\Connection\Ai\OpenAiConnector;
 use Madj2k\AiCore\Connection\Configuration\AiConnectionConfigurationInterface;
 use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
 use Madj2k\AiCore\Connection\Resolver\AiConnectorResolver;
 use Madj2k\AiCore\Indexing\TextChunker;
 use Madj2k\AiCore\Indexing\Adapter\PlainAdapter;
-use Madj2k\AiCore\Indexing\DTO\IndexableMetadata;
 use Madj2k\AiCore\Indexing\Configuration\IndexingConfigurationInterface;
 use Madj2k\AiCore\Indexing\Indexer\IndexerInterface;
 use Madj2k\AiCore\Indexing\Registry\IndexerRegistry;
@@ -44,7 +44,7 @@ final class CoreCompatibilityTest extends TestCase
         );
         self::assertInstanceOf(TextChunker::class, new TextChunkerService());
         self::assertInstanceOf(PlainAdapter::class, new LegacyPlainAdapter());
-        self::assertInstanceOf(IndexableMetadata::class, new LegacyIndexableMetadata());
+        self::assertInstanceOf(DocumentMetadata::class, new LegacyIndexableMetadata());
     }
 
     public function testExtbaseModelsImplementCoreConfigurationContracts(): void

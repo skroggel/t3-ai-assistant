@@ -69,9 +69,9 @@ indexable text and may enrich metadata with parser details.
 
 ..  code-block:: php
 
-    use Madj2k\AiAssistant\Indexing\DTO\IndexableMetadata;
+    use Madj2k\AiCore\DTO\DocumentMetadata;
 
-    public function extract(string $path, IndexableMetadata $metadata): string
+    public function extract(string $path, DocumentMetadata $metadata): string
     {
         $metadata->addAdditional('parser', $this->getIdentifier());
 

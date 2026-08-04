@@ -21,7 +21,7 @@ use Madj2k\AiCore\Exception\JsonRecordIdentityException;
 use Madj2k\AiCore\Indexing\Resolver\AdapterResolver as AdapterRegistry;
 use Madj2k\AiCore\Indexing\Adapter\MultiDocumentAdapterInterface;
 use Madj2k\AiCore\Indexing\DTO\IndexableDocument;
-use Madj2k\AiCore\Indexing\DTO\IndexableMetadata;
+use Madj2k\AiCore\DTO\DocumentMetadata;
 use Madj2k\AiCore\Indexing\DTO\IndexingRequest;
 use Madj2k\AiCore\Indexing\DTO\IndexingResult;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
@@ -222,15 +222,14 @@ final class FileIndexer extends AbstractIndexer
      * @param array{sourceIdentifier:string,localPath:string,title:string,path:string,filename:string,mtime:int,extension:string,size:int,url:string,storageUid:int,fileUid:int} $file File information.
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
      * @param string $adapterIdentifier Adapter identifier.
-     * @return \Madj2k\AiCore\Indexing\DTO\IndexableMetadata Metadata.
+     * @return \Madj2k\AiCore\DTO\DocumentMetadata Metadata.
      */
     private function buildMetadata(
         array $file,
         IndexerConfig $configuration,
         string $adapterIdentifier
-    ): IndexableMetadata {
-        /** @var \Madj2k\AiCore\Indexing\DTO\IndexableMetadata $metadata */
-        $metadata = new IndexableMetadata('file', $file['sourceIdentifier']);
+    ): DocumentMetadata {
+        $metadata = new DocumentMetadata('file', $file['sourceIdentifier']);
         $metadata->setTitle($file['title']);
         $metadata->setPath($file['path']);
         $metadata->setFilename($file['filename']);
