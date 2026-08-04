@@ -11,7 +11,7 @@ Resolves AI provider connectors for chat completions and embeddings.
 Required interface
 ------------------
 
-``Madj2k\AiAssistant\Connection\Ai\AiConnectorInterface``
+``Madj2k\AiCore\Connection\Ai\AiConnectorInterface``
 
 Service registration
 --------------------
@@ -37,6 +37,5 @@ Implementation rules
 * Keep services stateless where possible.
 * Read credentials and runtime options from configuration records.
 * Throw meaningful exceptions for invalid configuration.
-* Return extension DTOs rather than provider-specific arrays where interfaces
+* Return core DTOs rather than provider-specific arrays where interfaces
   define DTOs.
-

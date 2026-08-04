@@ -92,6 +92,6 @@ Multi-document adapters
 -----------------------
 
 When one source file contains multiple logical records, implement
-``Madj2k\AiAssistant\Indexing\Adapter\MultiDocumentAdapterInterface`` in
+``Madj2k\AiCore\Indexing\Adapter\MultiDocumentAdapterInterface`` in
 addition to ``AdapterInterface``. The JSON/JSONL adapter uses this pattern to
 turn one file into multiple ``IndexableDocument`` instances.

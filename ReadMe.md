@@ -1,101 +1,72 @@
-# AI Assistant Extension (TYPO3)
-AI Assistant is a flexible TYPO3 extension for building AI-powered assistants based on Retrieval-Augmented Generation (RAG), configurable processing pipelines, and pluggable AI and vector store integrations.
+# AI Assistant Extension for TYPO3
 
-The extension allows editors, integrators and developers to create specialized assistants that answer questions based on TYPO3 content, files, Shopware data, JSON sources or custom data providers. Instead of relying on a fixed workflow, AI Assistant uses configurable pipelines consisting of multiple processing steps such as query optimization, retrieval, context optimization, answer generation and quality assurance.
+AI Assistant provides configurable Retrieval-Augmented Generation (RAG) assistants for TYPO3.
+Editors can combine TYPO3 pages, files and custom data sources with configurable chat pipelines
+and source attribution. Additional source types can be supplied by extensions.
 
-Built for enterprise knowledge assistants and AI search solutions.
+The extension provides the TYPO3 integration: database records, backend configuration, source
+discovery, persistence, commands, session handling, diagnostics and frontend output. The
+framework-independent runtime, pipeline contracts, provider connectors and indexing primitives
+live in `madj2k/ai-core`, which Composer installs as a dependency.
 
-Features
-* Retrieval-Augmented Generation (RAG) for TYPO3
-* Configurable assistant profiles
-* Fully configurable AI processing pipelines
-* Multiple pipeline stages
-* Support for multiple AI providers
-* Support for multiple vector databases
-* Pluggable architecture based on registries
-* TYPO3 page indexing
-* File indexing
-* Shopware indexing
-* Metadata-aware retrieval
-* Source attribution and citation support
-* Chat memory and conversation history
-* Pipeline tracing and debugging
-* Backend monitoring and log analysis
-* Collection-based knowledge separation
-* Multi-assistant setups
-* Custom prompt engineering per assistant and pipeline step
-* Extensible retrieval and ranking strategies
-* Extensible connectors for external systems
-* Extensible custom indexers
-* Extensible file content adapters
+## Features
+
+- Assistant profiles and configurable processing pipelines
+- AI and vector-store connection records
+- TYPO3 page and file indexing, including structured file adapters
+- Metadata-aware retrieval and source links
+- Chat memory, pipeline traces and backend diagnostics
+- Extension points for processors, connectors, indexers and file adapters
 
 ## Requirements
-- TYPO3 installation with this extension installed and activated
-- OpenAI API key stored in the TYPO3 backend module
-- Reachable Qdrant instance with correct `qdrant.host`
 
-## Working with DDEV
-Install a Qdrant-container with:
-```
-ddev get netz98/ddev-qdrant
-```
-then:
-```
-ddev restart
+- TYPO3 13.4 or 14.3
+- PHP 8.2 or newer
+- An AI provider for chat and embeddings
+- A reachable vector store such as Qdrant
+
+## Installation
+
+```bash
+composer require madj2k/ai-assistant
 ```
 
-## Documentation
-see Documentation-folder!
+After installation:
 
-## Local Qdrant (DDEV)
-Install the Qdrant add-on:
+1. Apply the TYPO3 database schema updates.
+2. Create and test an AI connection and a vector-store connection in the backend module.
+3. Create an indexer and index its sources.
+4. Create or import an assistant profile using the same vector-store connection and collection.
+5. Add the chat plugin to a page.
+
+See the [Documentation](Documentation/Index.rst) for configuration, commands and extension points.
+
+## Local Qdrant with DDEV
 
 ```bash
 ddev get netz98/ddev-qdrant
 ddev restart
 ```
 
-Access Qdrant:
+The dashboard is normally available at:
 
 ```text
-https://<yourname>.ddev.site:6333
+https://<project-name>.ddev.site:6333/dashboard
 ```
 
-Dashboard:
+To test API-key authentication locally, add `QDRANT__SERVICE__API_KEY` to the Qdrant service
+environment and enter the same key in the TYPO3 vector-store connection record.
 
-```text
-https://<yourname>.ddev.site:6333/dashboard
-```
+## Diagnostics
 
-## Enable API Key (Local Test)
-To test `qdrant.apiKey`, enable auth locally by adding `QDRANT__SERVICE__API_KEY` to `.ddev/docker-compose.qdrant.yaml`:
+Set `Pipeline log mode` to `verbose` under **AI Assistant > Configuration**, then inspect a chat
+request under **AI Assistant > Diagnostics**. Optional TYPO3 PSR log output is written to
+`var/log/tx_aiassistant.log`; general TYPO3 errors are available in `var/log/typo3_*.log`.
 
-```yaml
-environment:
-  - VIRTUAL_HOST=$DDEV_HOSTNAME
-  - HTTPS_EXPOSE=6334:6334
-  - HTTPS_EXPOSE=6333:6333
-  - QDRANT__SERVICE__API_KEY=mein_geheimer_key
-```
+## Render the documentation
 
-Then restart:
+Run from the extension root:
 
 ```bash
-ddev restart
-```
-
-## Generate the documentation as HTML
-Execute in the extension-root:
-```
 docker run --rm --pull always -v "$(pwd)":/project -it ghcr.io/typo3-documentation/render-guides:latest --config=Documentation
 ```
-
-## Troubleshooting
-**Qdrant returns 401**
-Check that the `qdrant.apiKey` Registry value matches the key configured in `.ddev/docker-compose.qdrant.yaml` and that Qdrant was restarted.
-
-**OpenAI key missing**
-The extension requires `openai.apiKey` to be present in the Registry. Set it via the backend module and save.
-
-**Qdrant host not respected**
-If `qdrant.host` is set in the Registry, it overrides TypoScript. Clear the Registry value to fall back to `plugin.tx_aiassistant_chat.settings.qdrant.host`.

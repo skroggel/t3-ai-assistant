@@ -11,7 +11,7 @@ Resolves assistant pipeline processors by identifier.
 Required interface
 ------------------
 
-``Madj2k\AiAssistant\Assistant\Pipeline\Processor\ProcessorInterface``
+``Madj2k\AiCore\Assistant\Pipeline\Processor\ProcessorInterface``
 
 Service registration
 --------------------
@@ -37,7 +37,7 @@ Implementation rules
 * Keep services stateless where possible.
 * Read credentials and runtime options from configuration records.
 * Throw meaningful exceptions for invalid configuration.
-* Return extension DTOs rather than provider-specific arrays where interfaces
+* Return core DTOs rather than provider-specific arrays where interfaces
   define DTOs.
 
 
@@ -46,7 +46,7 @@ Processor type matching
 
 The registry resolves processors by ``processor_identifier``. The pipeline step
 ``type`` is still important and should always be one of the values defined by
-``Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType``.
+``Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType``.
 
 Processor implementations should use this enum when implementing ``supports()``
 or equivalent matching logic. Static SQL and default configurations should also

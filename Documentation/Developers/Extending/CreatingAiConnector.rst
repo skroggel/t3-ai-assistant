@@ -46,12 +46,12 @@ Skeleton
 
     namespace Vendor\Extension\Connection\Ai;
 
-    use Madj2k\AiAssistant\Connection\Ai\AiConnectorInterface;
-    use Madj2k\AiAssistant\Connection\Ai\DTO\AiRequest;
-    use Madj2k\AiAssistant\Connection\Ai\DTO\AiResponse;
-    use Madj2k\AiAssistant\Connection\Ai\DTO\EmbeddingRequest;
-    use Madj2k\AiAssistant\Connection\Ai\DTO\EmbeddingResponse;
-    use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
+    use Madj2k\AiCore\Connection\Ai\AiConnectorInterface;
+    use Madj2k\AiCore\Connection\Ai\DTO\AiRequest;
+    use Madj2k\AiCore\Connection\Ai\DTO\AiResponse;
+    use Madj2k\AiCore\Connection\Ai\DTO\EmbeddingRequest;
+    use Madj2k\AiCore\Connection\Ai\DTO\EmbeddingResponse;
+    use Madj2k\AiCore\Connection\Configuration\AiConnectionConfigurationInterface;
 
     final class MyAiConnector implements AiConnectorInterface
     {
@@ -60,25 +60,25 @@ Skeleton
             return 'vendor.my_ai';
         }
 
-        public function chat(AiConnection $connection, AiRequest $request): AiResponse
+        public function chat(AiConnectionConfigurationInterface $connection, AiRequest $request): AiResponse
         {
             // Build provider request from the connection and DTO.
             // Return a normalized AiResponse.
         }
 
-        public function streamChat(AiConnection $connection, AiRequest $request, callable $onData): void
+        public function streamChat(AiConnectionConfigurationInterface $connection, AiRequest $request, callable $onData): void
         {
             // Build a streaming provider request and call $onData($chunk)
             // for every emitted text chunk.
         }
 
-        public function embed(AiConnection $connection, EmbeddingRequest $request): EmbeddingResponse
+        public function embed(AiConnectionConfigurationInterface $connection, EmbeddingRequest $request): EmbeddingResponse
         {
             // Build provider embedding request.
             // Return one normalized embedding response.
         }
 
-        public function embedBatch(AiConnection $connection, array $requests): array
+        public function embedBatch(AiConnectionConfigurationInterface $connection, array $requests): array
         {
             // Return one EmbeddingResponse per EmbeddingRequest.
         }

@@ -4,7 +4,7 @@ Creating a pipeline processor
 =============================
 
 Create a service implementing
-``Madj2k\AiAssistant\Assistant\Pipeline\Processor\ProcessorInterface``.
+``Madj2k\AiCore\Assistant\Pipeline\Processor\ProcessorInterface``.
 Processors are resolved through ``ProcessorRegistry`` by their stable identifier
 and the configured pipeline step type.
 
@@ -25,7 +25,7 @@ Step type and enum values
 
 Pipeline processors are selected from pipeline step records. The ``type`` field
 is not an arbitrary string. It must use one of the values defined by
-``Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType``.
+``Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType``.
 
 Use the enum as the source of truth when creating TCA, seed data, SQL imports or
 custom pipeline configurations. This keeps backend records, processor matching
@@ -44,11 +44,11 @@ match only the step types it supports.
 
 ..  code-block:: php
 
-    use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantPipelineStep;
-    use Madj2k\AiAssistant\Assistant\Context\Context;
-    use Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType;
-    use Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData;
-    use Madj2k\AiAssistant\Assistant\Pipeline\Processor\ProcessorInterface;
+    use Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface;
+    use Madj2k\AiCore\Assistant\Context\Context;
+    use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
+    use Madj2k\AiCore\Assistant\Log\PipelineLogMetaData;
+    use Madj2k\AiCore\Assistant\Pipeline\Processor\ProcessorInterface;
 
     final class MyAnswerProcessor implements ProcessorInterface
     {
@@ -62,14 +62,14 @@ match only the step types it supports.
             return $type === AssistantPipelineProcessorType::AnswerGenerator;
         }
 
-        public function canProcess(Context $context, AssistantPipelineStep $step): bool
+        public function canProcess(Context $context, PipelineStepConfigurationInterface $step): bool
         {
             return $context->getCurrentQuery() !== '';
         }
 
         public function process(
             Context $context,
-            AssistantPipelineStep $step,
+            PipelineStepConfigurationInterface $step,
             ?PipelineLogMetaData $logContext = null
         ): void {
             // Read from $context and $step, call connectors if needed,
@@ -96,19 +96,19 @@ Streaming processors
 
 Processors that can emit output chunks during execution should additionally
 implement
-``Madj2k\AiAssistant\Assistant\Pipeline\Processor\ProcessorStreamingInterface``.
+``Madj2k\AiCore\Assistant\Pipeline\Processor\ProcessorStreamingInterface``.
 The regular ``ProcessorInterface`` remains required, because the same processor
 must also work when the pipeline runs without streaming.
 
 ..  code-block:: php
 
-    use Madj2k\AiAssistant\Assistant\Pipeline\Processor\ProcessorStreamingInterface;
+    use Madj2k\AiCore\Assistant\Pipeline\Processor\ProcessorStreamingInterface;
 
     final class MyAnswerProcessor implements ProcessorInterface, ProcessorStreamingInterface
     {
         public function processStream(
             Context $context,
-            AssistantPipelineStep $step,
+            PipelineStepConfigurationInterface $step,
             callable $onData,
             ?PipelineLogMetaData $logContext = null
         ): void {

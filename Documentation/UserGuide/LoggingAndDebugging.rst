@@ -26,7 +26,12 @@ Recommended debug workflow
 Runtime configuration
 ---------------------
 
-Logging settings should be suitable for the environment. Development systems can
-log complete prompts and responses. Production systems should minimize logging
-and mask sensitive content where possible.
+Set ``Pipeline log mode`` under **AI Assistant > Configuration**. ``errors``
+stores failed events; ``verbose`` stores complete traces, including pipeline
+validation warnings. Inspect and filter those records under
+**AI Assistant > Diagnostics**.
 
+Optional PSR log output is written to ``var/log/tx_aiassistant.log``. General
+TYPO3 errors are normally available in ``var/log/typo3_*.log``. Development
+systems can log complete prompts and responses. Production systems should
+minimize logging and mask sensitive content where possible.

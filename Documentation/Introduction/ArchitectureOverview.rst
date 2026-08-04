@@ -3,18 +3,23 @@
 Architecture overview
 =====================
 
-AI Assistant is organized into domains. The following overview uses the target
-namespace and directory layout.
+AI Assistant combines the framework-independent ``madj2k/ai-core`` package with
+TYPO3-specific integration code.
 
 ..  code-block:: text
 
-    Classes/
-    ├── Assistant/      Conversation, context, pipeline, prompts and traces
-    ├── Backend/        Backend module, diagnostics, configuration and logs
-    ├── Connection/     AI and vector store connectors and connection records
-    ├── Indexing/       Indexers, adapters, connectors, chunking and source state
+    madj2k/ai-core
+    ├── Assistant/      Runtime, context, pipelines and prompts
+    ├── Connection/     Provider contracts and clients
+    └── Indexing/       Documents, adapters, chunking and vector writes
+
+    madj2k/ai-assistant
+    ├── Assistant/      TYPO3 profiles, memory and traces
+    ├── Backend/        Configuration and diagnostics
+    ├── Connection/     TYPO3 connection records and registries
+    ├── Indexing/       TYPO3 sources and persisted indexing state
     ├── Controller/     Frontend and backend controllers
-    └── Command/        CLI commands for indexing and maintenance
+    └── Command/        CLI commands
 
 High-level data flow
 --------------------
@@ -41,7 +46,7 @@ Indexing flow
     flowchart LR
         S[Source] --> I[Indexer]
         I --> D[IndexableDocument]
-        D --> C[TextChunkerService]
+        D --> C[TextChunker]
         C --> E[Embedding request]
         E --> AI[AI connection]
         C --> W[VectorDocument]
@@ -55,4 +60,3 @@ Most technical extension points are collected by TYPO3's dependency injection
 container and exposed through registries. This keeps the core pipeline generic:
 new processors, connectors, indexers and adapters can be added without changing
 central orchestration code.
-
