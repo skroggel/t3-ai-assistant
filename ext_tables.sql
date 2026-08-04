@@ -54,7 +54,7 @@ CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
     `max_context_chunks` int(11) DEFAULT '6' NOT NULL,
     `max_context_characters` int(11) DEFAULT '9000' NOT NULL,
     `prompt_metadata_fields` varchar(255) DEFAULT '' NOT NULL,
-    `failure_strategy` varchar(255) DEFAULT 'fallback' NOT NULL
+    `failure_strategy` varchar(255) DEFAULT 'continue' NOT NULL
 );
 
 CREATE TABLE `tx_aiassistant_pipeline_trace` (

@@ -284,11 +284,11 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'default' => 'fallback',
+                'default' => 'continue',
                 'items' => [
                     ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.failure_strategy.continue', 'value' => 'continue'],
                     ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.failure_strategy.stop', 'value' => 'stop'],
-                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback', 'value' => 'fallback']
+                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback', 'value' => 'fallback'],
                 ],
             ],
         ]

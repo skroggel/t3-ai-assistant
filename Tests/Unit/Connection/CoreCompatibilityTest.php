@@ -10,6 +10,7 @@ use Madj2k\AiAssistant\Assistant\Pipeline\Pipeline as LegacyPipeline;
 use Madj2k\AiCore\Assistant\Application\Orchestrator;
 use Madj2k\AiCore\Assistant\Configuration\AssistantConfigurationInterface;
 use Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface;
+use Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy;
 use Madj2k\AiCore\Assistant\Pipeline\Pipeline;
 use Madj2k\AiAssistant\Connection\Ai\OpenAiConnector as LegacyOpenAiConnector;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
@@ -54,6 +55,17 @@ final class CoreCompatibilityTest extends TestCase
         self::assertInstanceOf(AssistantConfigurationInterface::class, new AssistantProfile());
         self::assertInstanceOf(PipelineStepConfigurationInterface::class, new AssistantPipelineStep());
         self::assertInstanceOf(IndexingConfigurationInterface::class, new IndexerConfig());
+    }
+
+    public function testPipelineStepNormalizesLegacyFallbackStrategy(): void
+    {
+        $pipelineStep = new AssistantPipelineStep();
+        self::assertSame(AssistantPipelineFailureStrategy::Continue, $pipelineStep->getFailureStrategy());
+
+        $pipelineStep->setFailureStrategy('fallback');
+
+        self::assertSame(AssistantPipelineFailureStrategy::Continue, $pipelineStep->getFailureStrategy());
+        self::assertSame('continue', $pipelineStep->getFailureStrategyValue());
     }
 
     public function testLegacyAssistantRuntimeNamesResolveToCoreClasses(): void

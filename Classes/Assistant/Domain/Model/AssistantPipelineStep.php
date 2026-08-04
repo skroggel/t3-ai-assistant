@@ -223,7 +223,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
      *
      * @var string
      */
-    protected string $failureStrategy = 'fallback';
+    protected string $failureStrategy = 'continue';
 
 
     /**
@@ -804,7 +804,12 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
      */
     public function getFailureStrategy(): AssistantPipelineFailureStrategy
     {
-        return AssistantPipelineFailureStrategy::tryFrom($this->failureStrategy) ?? AssistantPipelineFailureStrategy::Fallback;
+        $failureStrategy = AssistantPipelineFailureStrategy::tryFrom($this->failureStrategy);
+        if ($failureStrategy === null || $failureStrategy === AssistantPipelineFailureStrategy::Fallback) {
+            return AssistantPipelineFailureStrategy::Continue;
+        }
+
+        return $failureStrategy;
     }
 
 
@@ -816,9 +821,12 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
      */
     public function setFailureStrategy(AssistantPipelineFailureStrategy|string $failureStrategy): void
     {
-        $this->failureStrategy = $failureStrategy instanceof AssistantPipelineFailureStrategy
+        $value = $failureStrategy instanceof AssistantPipelineFailureStrategy
             ? $failureStrategy->value
             : $failureStrategy;
+        $this->failureStrategy = $value === AssistantPipelineFailureStrategy::Fallback->value
+            ? AssistantPipelineFailureStrategy::Continue->value
+            : $value;
     }
 
 
