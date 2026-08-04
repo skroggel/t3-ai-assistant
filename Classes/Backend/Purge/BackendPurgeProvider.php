@@ -11,7 +11,7 @@ namespace Madj2k\AiAssistant\Backend\Purge;
 
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
-use Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry;
+use Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver as VectorStoreConnectorRegistry;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository;
 use Psr\Http\Message\ServerRequestInterface;

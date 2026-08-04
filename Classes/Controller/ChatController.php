@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Controller;
 
-use Madj2k\AiAssistant\Assistant\Application\Orchestrator;
+use Madj2k\AiCore\Assistant\Application\Orchestrator;
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
 use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
-use Madj2k\AiAssistant\Assistant\DTO\AssistantRequest;
+use Madj2k\AiCore\Assistant\DTO\AssistantRequest;
 use Madj2k\AiAssistant\Assistant\Http\SseResponseFactory;
-use Madj2k\AiAssistant\Exception\AppException;
+use Madj2k\AiCore\Exception\AppException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 

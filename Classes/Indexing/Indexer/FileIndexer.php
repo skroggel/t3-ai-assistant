@@ -16,20 +16,18 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Indexing\Indexer;
 
-use Madj2k\AiAssistant\Exception\JsonRecordIdentityException;
-use Madj2k\AiAssistant\Indexing\Registry\AdapterRegistry;
-use Madj2k\AiAssistant\Indexing\Adapter\MultiDocumentAdapterInterface;
+use Madj2k\AiCore\Indexing\VectorDocumentIndexer;
+use Madj2k\AiCore\Exception\JsonRecordIdentityException;
+use Madj2k\AiCore\Indexing\Resolver\AdapterResolver as AdapterRegistry;
+use Madj2k\AiCore\Indexing\Adapter\MultiDocumentAdapterInterface;
+use Madj2k\AiCore\Indexing\DTO\IndexableDocument;
+use Madj2k\AiCore\Indexing\DTO\IndexableMetadata;
+use Madj2k\AiCore\Indexing\DTO\IndexingRequest;
+use Madj2k\AiCore\Indexing\DTO\IndexingResult;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
-use Madj2k\AiAssistant\Indexing\DTO\IndexableDocument;
-use Madj2k\AiAssistant\Indexing\DTO\IndexableMetadata;
-use Madj2k\AiAssistant\Indexing\DTO\IndexingRequest;
-use Madj2k\AiAssistant\Indexing\DTO\IndexingResult;
 use Madj2k\AiAssistant\Indexing\Service\CategoryMetadataService;
 use Madj2k\AiAssistant\Indexing\Service\SourceStateService;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository;
-use Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry;
-use Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry;
-use Madj2k\AiAssistant\Indexing\Service\TextChunkerService;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\Folder;
@@ -69,26 +67,22 @@ final class FileIndexer extends AbstractIndexer
      * Constructor.
      *
      * @inheritDoc
-     * @param \Madj2k\AiAssistant\Indexing\Registry\AdapterRegistry $adapterRegistry Text content adapter registry.
+     * @param \Madj2k\AiCore\Indexing\Resolver\AdapterResolver $adapterRegistry Text content adapter registry.
      * @param \Madj2k\AiAssistant\Indexing\Service\CategoryMetadataService $categoryMetadataService Category metadata service.
      * @param \TYPO3\CMS\Core\Resource\ResourceFactory|null $resourceFactory TYPO3 resource factory.
      */
     public function __construct(
-        AiConnectorRegistry              $aiConnectorRegistry,
-        VectorStoreConnectorRegistry     $vectorStoreConnectorRegistry,
         IndexerConfigRepository          $indexerConfigRepository,
-        TextChunkerService               $textChunkerService,
         SourceStateService               $sourceStateService,
+        VectorDocumentIndexer            $vectorDocumentIndexer,
         AdapterRegistry                  $adapterRegistry,
         private readonly CategoryMetadataService $categoryMetadataService,
         ?ResourceFactory                 $resourceFactory = null
     ) {
         parent::__construct(
-            $aiConnectorRegistry,
-            $vectorStoreConnectorRegistry,
             $indexerConfigRepository,
-            $textChunkerService,
-            $sourceStateService
+            $sourceStateService,
+            $vectorDocumentIndexer,
         );
 
         $this->adapterRegistry = $adapterRegistry;
@@ -228,14 +222,14 @@ final class FileIndexer extends AbstractIndexer
      * @param array{sourceIdentifier:string,localPath:string,title:string,path:string,filename:string,mtime:int,extension:string,size:int,url:string,storageUid:int,fileUid:int} $file File information.
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
      * @param string $adapterIdentifier Adapter identifier.
-     * @return \Madj2k\AiAssistant\Indexing\DTO\IndexableMetadata Metadata.
+     * @return \Madj2k\AiCore\Indexing\DTO\IndexableMetadata Metadata.
      */
     private function buildMetadata(
         array $file,
         IndexerConfig $configuration,
         string $adapterIdentifier
     ): IndexableMetadata {
-        /** @var \Madj2k\AiAssistant\Indexing\DTO\IndexableMetadata $metadata */
+        /** @var \Madj2k\AiCore\Indexing\DTO\IndexableMetadata $metadata */
         $metadata = new IndexableMetadata('file', $file['sourceIdentifier']);
         $metadata->setTitle($file['title']);
         $metadata->setPath($file['path']);

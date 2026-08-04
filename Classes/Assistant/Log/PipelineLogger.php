@@ -16,10 +16,12 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Assistant\Log;
 
+use Madj2k\AiCore\Assistant\Log\PipelineLoggerInterface;
 use Madj2k\AiAssistant\Assistant\Domain\Model\PipelineTrace;
-use Madj2k\AiAssistant\Assistant\DTO\AssistantRequest;
+use Madj2k\AiCore\Assistant\DTO\AssistantRequest;
+use Madj2k\AiCore\Assistant\Log\PipelineLogMetaData;
 use Madj2k\AiAssistant\Config\Config;
-use Madj2k\AiAssistant\Exception\AppException;
+use Madj2k\AiCore\Exception\AppException;
 use Madj2k\AiAssistant\Assistant\Domain\Repository\PipelineTraceRepository;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
@@ -37,7 +39,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package ai_assistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class PipelineLogger
+class PipelineLogger implements PipelineLoggerInterface
 {
     /**
      * @var \Madj2k\AiAssistant\Assistant\Domain\Repository\PipelineTraceRepository

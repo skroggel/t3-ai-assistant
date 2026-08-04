@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Assistant\Domain\Model;
 
+use Madj2k\AiCore\Assistant\Configuration\AssistantConfigurationInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
@@ -28,7 +29,7 @@ use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
  * @package Madj2k\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class AssistantProfile extends AbstractEntity
+class AssistantProfile extends AbstractEntity implements AssistantConfigurationInterface
 {
 
     /**

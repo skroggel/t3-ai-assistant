@@ -16,10 +16,11 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Assistant\Memory;
 
-use Madj2k\AiAssistant\Assistant\Context\Retrieval\RetrievalResult;
-use Madj2k\AiAssistant\Assistant\DTO\LastRetrievalResult;
+use Madj2k\AiCore\Assistant\Memory\MemoryInterface;
+use Madj2k\AiCore\Assistant\Context\Retrieval\RetrievalResult;
+use Madj2k\AiCore\Assistant\DTO\LastRetrievalResult;
 use Madj2k\AiAssistant\Config\Config;
-use Madj2k\AiAssistant\Exception\AppException;
+use Madj2k\AiCore\Exception\AppException;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
@@ -33,7 +34,7 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
  * @package Madj2k\\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-final class SessionMemory
+final class SessionMemory implements MemoryInterface
 {
     private const string SESSION_KEY = 'aiassistant_frontend_conversations';
 

@@ -15,9 +15,9 @@ declare(strict_types=1);
  */
 namespace Madj2k\AiAssistant\Assistant\TCA;
 
-use Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType;
-use Madj2k\AiAssistant\Assistant\Pipeline\Processor\ProcessorInterface;
-use Madj2k\AiAssistant\Assistant\Pipeline\Registry\ProcessorRegistry;
+use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
+use Madj2k\AiCore\Assistant\Pipeline\Processor\ProcessorInterface;
+use Madj2k\AiCore\Assistant\Pipeline\Registry\ProcessorRegistry;
 
 /**
  * Class PipelineProcessorItems

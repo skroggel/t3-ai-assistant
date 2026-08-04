@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Indexing\TCA;
 
-use Madj2k\AiAssistant\Indexing\Registry\AdapterRegistry;
+use Madj2k\AiCore\Indexing\Resolver\AdapterResolver as AdapterRegistry;
 
 /**
  * Class AdapterItems
@@ -27,7 +27,7 @@ final class AdapterItems
     /**
      * Constructor.
      *
-     * @param \Madj2k\AiAssistant\Indexing\Registry\AdapterRegistry $adapterRegistry Adapter registry.
+     * @param \Madj2k\AiCore\Indexing\Resolver\AdapterResolver $adapterRegistry Adapter registry.
      */
     public function __construct(
         protected readonly AdapterRegistry $adapterRegistry

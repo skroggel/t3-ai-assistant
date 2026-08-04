@@ -17,20 +17,18 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Indexing\Indexer;
 
+use Madj2k\AiCore\Indexing\VectorDocumentIndexer;
+use Madj2k\AiCore\DTO\DocumentMetadata;
+use Madj2k\AiCore\Indexing\DTO\IndexableDocument;
+use Madj2k\AiCore\Indexing\DTO\IndexingRequest;
+use Madj2k\AiCore\Indexing\DTO\IndexingResult;
 use Doctrine\DBAL\ArrayParameterType;
-use Madj2k\AiAssistant\DTO\DocumentMetadata;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
-use Madj2k\AiAssistant\Indexing\DTO\IndexableDocument;
-use Madj2k\AiAssistant\Indexing\DTO\IndexingRequest;
-use Madj2k\AiAssistant\Indexing\DTO\IndexingResult;
 use Madj2k\AiAssistant\Indexing\Service\CategoryMetadataService;
 use Madj2k\AiAssistant\Indexing\Service\SourceStateService;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository;
 use Madj2k\AiAssistant\Indexing\Utility\AdditionalFieldParserUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry;
-use Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry;
-use Madj2k\AiAssistant\Indexing\Service\TextChunkerService;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -46,6 +44,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 final class PageIndexer extends AbstractIndexer
 {
+    /**
+     * Database columns cached per table for CLI-safe field validation.
+     *
+     * @var array<string, array<string, true>>
+     */
+    private array $tableColumns = [];
+
 
     /**
      * Constructor.
@@ -56,21 +61,17 @@ final class PageIndexer extends AbstractIndexer
      * @param \Madj2k\AiAssistant\Indexing\Service\CategoryMetadataService $categoryMetadataService Category metadata service.
      */
     public function __construct(
-        AiConnectorRegistry $aiConnectorRegistry,
-        VectorStoreConnectorRegistry $vectorStoreConnectorRegistry,
         IndexerConfigRepository $indexerConfigRepository,
-        TextChunkerService $textChunkerService,
         SourceStateService $indexerSourceStateService,
+        VectorDocumentIndexer $vectorDocumentIndexer,
         private readonly ConnectionPool $connectionPool,
         private readonly AdditionalFieldParserUtility $additionalFieldParserUtility,
         private readonly CategoryMetadataService $categoryMetadataService
     ) {
         parent::__construct(
-            $aiConnectorRegistry,
-            $vectorStoreConnectorRegistry,
             $indexerConfigRepository,
-            $textChunkerService,
-            $indexerSourceStateService
+            $indexerSourceStateService,
+            $vectorDocumentIndexer,
         );
     }
 
@@ -407,7 +408,7 @@ final class PageIndexer extends AbstractIndexer
      * @param array<int, string> $contentFields Content fields.
      * @param array<string, array<int, string>> $relatedFieldsByTable Related fields by table.
      * @param array<int, array<string, mixed>> $relatedSources Related sources.
-     * @return \Madj2k\AiAssistant\DTO\DocumentMetadata Metadata.
+     * @return \Madj2k\AiCore\DTO\DocumentMetadata Metadata.
      */
     private function buildMetadata(
         array $page,
@@ -660,19 +661,30 @@ final class PageIndexer extends AbstractIndexer
      */
     private function fieldExists(string $table, string $field): bool
     {
-        if (!$this->isTableNameValid($table) || !$this->isFieldNameValid($field) || !isset($GLOBALS['TCA'][$table])) {
+        if (!$this->isTableNameValid($table) || !$this->isFieldNameValid($field)) {
             return false;
         }
 
-        if ($field === 'uid' || $field === 'pid') {
-            return true;
+        if (!array_key_exists($table, $this->tableColumns)) {
+            try {
+                $columns = $this->connectionPool
+                    ->getConnectionForTable($table)
+                    ->createSchemaManager()
+                    ->listTableColumns($table);
+
+                $this->tableColumns[$table] = array_fill_keys(
+                    array_map(
+                        static fn ($column): string => $column->getName(),
+                        $columns
+                    ),
+                    true
+                );
+            } catch (\Throwable) {
+                $this->tableColumns[$table] = [];
+            }
         }
 
-        return isset($GLOBALS['TCA'][$table]['columns'][$field])
-            || isset($GLOBALS['TCA'][$table]['ctrl'][$field])
-            || (($GLOBALS['TCA'][$table]['ctrl']['enablecolumns']['disabled'] ?? '') === $field)
-            || (($GLOBALS['TCA'][$table]['ctrl']['delete'] ?? '') === $field)
-            || (($GLOBALS['TCA'][$table]['ctrl']['sortby'] ?? '') === $field);
+        return isset($this->tableColumns[$table][$field]);
     }
 
 

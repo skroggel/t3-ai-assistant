@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Connection\Domain\Model;
 
+use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -22,7 +23,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * @package Madj2k\\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class VectorStoreConnection extends AbstractEntity
+class VectorStoreConnection extends AbstractEntity implements VectorStoreConnectionConfigurationInterface
 {
     /**
      * Title.

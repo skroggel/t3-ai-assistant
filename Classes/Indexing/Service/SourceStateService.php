@@ -10,10 +10,11 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Indexing\Service;
 
+use Madj2k\AiCore\Indexing\Identity\SourceIdentityGenerator;
+use Madj2k\AiCore\Indexing\DTO\IndexableDocument;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerSource;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerSourceRepository;
-use Madj2k\AiAssistant\Indexing\DTO\IndexableDocument;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
@@ -36,7 +37,8 @@ final readonly class SourceStateService
      */
     public function __construct(
         private IndexerSourceRepository $IndexerSourceRepository,
-        private PersistenceManager $persistenceManager
+        private PersistenceManager $persistenceManager,
+        private SourceIdentityGenerator $sourceIdentityGenerator,
     ) {
     }
 
@@ -169,13 +171,7 @@ final readonly class SourceStateService
      */
     public function createSourceHash(IndexableDocument $document): string
     {
-        $metadata = $document->getMetadata();
-
-        return sha1(implode('|', [
-            $metadata->getSourceType(),
-            $metadata->getSourceIdentifier(),
-            (string)$metadata->getLanguage(),
-        ]));
+        return $this->sourceIdentityGenerator->createSourceHash($document);
     }
 
 
