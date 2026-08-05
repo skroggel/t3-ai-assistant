@@ -9,6 +9,9 @@
  * @property {string} botMessageTemplate Assistant message template selector.
  * @property {string} typingTemplate Typing indicator template selector.
  * @property {string} messageContent Message content selector inside the template.
+ * @property {string} consent Consent message selector.
+ * @property {string} chatContent Chat content selector.
+ * @property {string} initButton Init button selector.
  */
 
 /**
@@ -49,6 +52,7 @@
  * @property {string} botOrigin Assistant message origin value.
  * @property {string} defaultEventName Default server-sent event name.
  * @property {string} doneEventName Server-sent event name that finishes the stream.
+ * @property {boolean} autoScroll Whether new message output scrolls into view.
  * @property {ScrollIntoViewOptions} scrollOptions Scroll options for new messages.
  * @property {string} linkTarget Target attribute for rendered links.
  * @property {string} linkRel Rel attribute for rendered links.
@@ -81,6 +85,9 @@ class AiAssistantChatBox {
             botMessageTemplate: '.js-aiassistant-bot-message-template',
             typingTemplate: '.js-aiassistant-typing-template',
             messageContent: '.js-aiassistant-message-content',
+            consent: '.js-aiassistant-consent',
+            chatContent: '.js-aiassistant-chat-content',
+            initButton: '.js-aiassistant-init',
         },
         classes: {
             message: 'chat-box-message',
@@ -106,6 +113,7 @@ class AiAssistantChatBox {
         botOrigin: 'bot',
         defaultEventName: 'message',
         doneEventName: 'done',
+        autoScroll: true,
         scrollOptions: {
             behavior: 'smooth',
             block: 'end',
@@ -186,6 +194,27 @@ class AiAssistantChatBox {
         this.container = this.form.closest(this.options.selectors.container) || this.form;
 
         /**
+         * Optional consent message shown before the chat is initialized.
+         *
+         * @type {Element|null}
+         */
+        this.consent = this.container.querySelector(this.options.selectors.consent);
+
+        /**
+         * Chat content hidden until optional consent is given.
+         *
+         * @type {Element|null}
+         */
+        this.chatContent = this.container.querySelector(this.options.selectors.chatContent);
+
+        /**
+         * Optional button used to initialize the chat after consent.
+         *
+         * @type {Element|null}
+         */
+        this.initButton = this.container.querySelector(this.options.selectors.initButton);
+
+        /**
          * Message output container.
          *
          * @type {Element|null}
@@ -251,8 +280,12 @@ class AiAssistantChatBox {
          */
         this.initialMessage = this.getDatasetValue(this.options.datasetKeys.initialMessage).trim();
 
-        this.renderInitialMessage();
-        this.form.addEventListener('submit', (event) => this.handleSubmit(event));
+        if (this.initButton) {
+            this.initButton.addEventListener('click', () => this.initializeChat());
+            return;
+        }
+
+        this.initializeChat();
     }
 
     /**
@@ -313,6 +346,41 @@ class AiAssistantChatBox {
     }
 
     /**
+     * Initializes the chat after optional consent has been given.
+     *
+     * @return {void}
+     */
+    initializeChat() {
+        if (this.initialized) {
+            return;
+        }
+
+        this.initialized = true;
+        if (this.consent instanceof HTMLElement) {
+            this.consent.hidden = true;
+        }
+        if (this.chatContent instanceof HTMLElement) {
+            this.chatContent.hidden = false;
+        }
+        this.renderInitialMessage();
+        this.form.addEventListener('submit', (event) => this.handleSubmit(event));
+    }
+
+    /**
+     * Scrolls a message into view when automatic scrolling is enabled.
+     *
+     * @param {HTMLElement} message Message element.
+     * @return {void}
+     */
+    scrollMessageIntoView(message) {
+        if (!this.options.autoScroll) {
+            return;
+        }
+
+        message.scrollIntoView(this.options.scrollOptions);
+    }
+
+    /**
      * Renders the initial assistant message once.
      *
      * @return {void}
@@ -350,7 +418,7 @@ class AiAssistantChatBox {
 
         const tick = () => {
             message.textContent = content.slice(0, index);
-            message.scrollIntoView(this.options.scrollOptions);
+            this.scrollMessageIntoView(message);
 
             if (index >= content.length) {
                 this.renderMessageContent(message, content);
@@ -391,7 +459,7 @@ class AiAssistantChatBox {
 
         this.renderMessageContent(contentElement, content);
         this.messagesContainer.appendChild(message);
-        message.scrollIntoView(this.options.scrollOptions);
+        this.scrollMessageIntoView(message);
 
         return contentElement;
     }
@@ -846,7 +914,7 @@ class AiAssistantChatBox {
             const botBuffer = await transport.streamSse(this.streamUrl, formData, (content) => {
                 this.renderPlainMessageContent(message, content);
                 message.classList.add(this.options.classes.typing);
-                message.scrollIntoView(this.options.scrollOptions);
+                this.scrollMessageIntoView(message);
             });
 
             this.removeTypingIndicator(message);
@@ -857,4 +925,3 @@ class AiAssistantChatBox {
         }
     }
 }
-
