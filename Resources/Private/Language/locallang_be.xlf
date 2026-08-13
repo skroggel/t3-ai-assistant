@@ -19,6 +19,14 @@
 			<trans-unit id="flexform.chat.require_consent" >
 				<source>Require consent before starting the chat</source>
 			</trans-unit>
+			<trans-unit id="flexform.chat.sheet.language"><source>Language</source></trans-unit>
+			<trans-unit id="flexform.chat.response_language"><source>Fixed response language</source></trans-unit>
+			<trans-unit id="flexform.chat.response_language.description"><source>Optional language name or BCP 47 code. When empty, the current TYPO3 site language is used.</source></trans-unit>
+			<trans-unit id="flexform.chat.allow_user_language"><source>Allow users to select the response language</source></trans-unit>
+			<trans-unit id="flexform.chat.allow_user_language.description"><source>Shows a searchable, free-text language field. A fixed response language takes priority.</source></trans-unit>
+			<trans-unit id="flexform.chat.sheet.accessibility"><source>Accessibility</source></trans-unit>
+			<trans-unit id="flexform.chat.plain_language"><source>Use plain language</source></trans-unit>
+			<trans-unit id="flexform.chat.plain_language.description"><source>Instructs answer-generating pipeline steps to use familiar words, short sentences and a clear structure.</source></trans-unit>
 		</body>
 	</file>
 </xliff>

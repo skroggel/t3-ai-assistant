@@ -75,6 +75,17 @@
 				<source>Send</source>
 				<target>Senden</target>
 			</trans-unit>
+			<trans-unit id="templates_index_index.response_language" resname="templates_index_index.response_language"><source>Response language</source><target>Antwortsprache</target></trans-unit>
+			<trans-unit id="templates_index_index.response_language_placeholder" resname="templates_index_index.response_language_placeholder"><source>Aa / العربية / 文 / Я</source><target>Aa / العربية / 文 / Я</target></trans-unit>
+			<trans-unit id="templates_index_index.response_language_help" resname="templates_index_index.response_language_help"><source>Choose a suggestion or enter any language in your own script. Leave empty to use the website language.</source><target>Wähle einen Vorschlag oder gib eine beliebige Sprache in deiner eigenen Schrift ein. Leer lassen, um die Sprache der Website zu verwenden.</target></trans-unit>
+			<trans-unit id="templates_index_index.use_browser_language" resname="templates_index_index.use_browser_language"><source>Use browser language</source><target>Browsersprache verwenden</target></trans-unit>
+			<trans-unit id="templates_index_index.use_site_language" resname="templates_index_index.use_site_language"><source>Use website language</source><target>Sprache der Website verwenden</target></trans-unit>
+			<trans-unit id="templates_index_index.apply_language" resname="templates_index_index.apply_language"><source>Use selected language</source><target>Ausgewählte Sprache verwenden</target></trans-unit>
+			<trans-unit id="templates_index_index.chat_history" resname="templates_index_index.chat_history"><source>Chat history</source><target>Chatverlauf</target></trans-unit>
+			<trans-unit id="templates_index_index.user_label" resname="templates_index_index.user_label"><source>User message</source><target>Nutzereingabe</target></trans-unit>
+			<trans-unit id="templates_index_index.assistant_label" resname="templates_index_index.assistant_label"><source>AI assistant</source><target>KI-Assistent</target></trans-unit>
+			<trans-unit id="templates_index_index.loading" resname="templates_index_index.loading"><source>AI assistant is preparing an answer.</source><target>Der KI-Assistent bereitet eine Antwort vor.</target></trans-unit>
+			<trans-unit id="templates_index_index.error_message" resname="templates_index_index.error_message"><source>The answer could not be loaded.</source><target>Die Antwort konnte nicht geladen werden.</target></trans-unit>
 			<trans-unit id="templates_index_index.error_suffix" resname="templates_index_index.error_suffix">
 				<source>[Error while loading answer.]</source>
 				<target>[Fehler beim Laden der Antwort.]</target>

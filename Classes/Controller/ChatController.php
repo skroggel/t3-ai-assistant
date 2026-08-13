@@ -7,7 +7,9 @@ use Madj2k\AiCore\Assistant\Application\Orchestrator;
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
 use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiCore\Assistant\DTO\AssistantRequest;
+use Madj2k\AiCore\Assistant\DTO\DirectInteraction;
 use Madj2k\AiAssistant\Assistant\Http\SseResponseFactory;
+use Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver;
 use Madj2k\AiCore\Exception\AppException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -32,11 +34,13 @@ class ChatController extends AbstractController
      * @param \Madj2k\AiAssistant\Assistant\Application\Orchestrator $orchestrator Chat turn orchestrator.
      * @param \Madj2k\AiAssistant\Assistant\Http\SseResponseFactory $sseResponseFactory SSE response factory.
      * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant profile repository.
+     * @param \Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver $chatOptionsResolver Chat options resolver.
      */
     public function __construct(
         protected readonly Orchestrator               $orchestrator,
         protected readonly SseResponseFactory         $sseResponseFactory,
         protected readonly AssistantProfileRepository $assistantProfileRepository,
+        protected readonly ChatOptionsResolver         $chatOptionsResolver,
     ) {
     }
 
@@ -49,6 +53,8 @@ class ChatController extends AbstractController
      * @param int $assistantProfile Assistant profile selected in the plugin.
      * @param string $chatIdentifier Stable frontend conversation scope.
      * @param string $settingsJson Runtime settings provided by the frontend plugin.
+     * @param string $userLanguage Optional response language selected by the user.
+     * @param string $directInteraction Optional explicit direct interaction identifier.
      * @return \Psr\Http\Message\ResponseInterface SSE response.
      */
     public function streamAction(
@@ -57,6 +63,8 @@ class ChatController extends AbstractController
         int $assistantProfile = 0,
         string $chatIdentifier = '',
         string $settingsJson = '',
+        string $userLanguage = '',
+        string $directInteraction = '',
     ): ResponseInterface {
         /** @var array<string,mixed> $runtimeSettings */
         $runtimeSettings = [];
@@ -78,23 +86,56 @@ class ChatController extends AbstractController
                 throw new AppException('Assistant profile not found');
             }
 
+            $chatOptions = $this->chatOptionsResolver->resolve(
+                $runtimeSettings,
+                $this->resolveSiteLanguage(),
+                $userLanguage,
+            );
+            $isLanguageConfirmation = $directInteraction === 'language_confirmation';
+            if ($directInteraction !== '' && !$isLanguageConfirmation) {
+                throw new AppException('Unsupported direct interaction');
+            }
+            if (
+                $isLanguageConfirmation
+                && !$this->chatOptionsResolver->showLanguageSelector($runtimeSettings)
+            ) {
+                throw new AppException('Language confirmation is not available');
+            }
+
             $assistantRequest = new AssistantRequest(
-                query: $query,
+                query: $isLanguageConfirmation ? $chatOptions->responseLanguage : $query,
                 startTimestamp: $startTimestamp,
                 assistantProfile: $profile,
                 chatIdentifier: $chatIdentifier,
                 serverRequest: $serverRequest,
                 runtimeSettings: $runtimeSettings,
+                chatOptions: $chatOptions,
             );
 
-            $streamProducer = $this->orchestrator->createStreamProducer(
-                $assistantRequest,
-                function (string $chunk): void {
-                    if ($chunk !== '') {
-                        $this->sseResponseFactory->sendData($chunk);
+            if ($isLanguageConfirmation) {
+                $streamProducer = function () use ($assistantRequest): void {
+                    $response = $this->orchestrator->handleDirect(
+                        $assistantRequest,
+                        new DirectInteraction(
+                            instruction: 'Write exactly one short sentence confirming that all following answers will use the language named by the user. Write the sentence in that language and mention only its natural language name. Interpret language, locale and regional codes when provided, but never reproduce or mention those codes in the answer.',
+                            maxTokens: 60,
+                            remember: false,
+                        ),
+                    );
+                    if ($response->answer !== '') {
+                        $this->sseResponseFactory->sendData($response->answer);
                     }
-                }
-            );
+                };
+            } else {
+                $streamProducer = $this->orchestrator->createStreamProducer(
+                    $assistantRequest,
+                    function (string $chunk): void {
+                        if ($chunk !== '') {
+                            $this->sseResponseFactory->sendData($chunk);
+                        }
+                    }
+                );
+            }
         } catch (\Throwable $exception) {
             return $this->sseResponseFactory->createStreamingResponse(function () use ($exception): void {
                 $this->sseResponseFactory->sendPrelude();
