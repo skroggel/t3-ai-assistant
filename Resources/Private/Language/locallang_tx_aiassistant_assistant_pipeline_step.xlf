@@ -16,7 +16,7 @@
 				<source>Continue</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback">
-				<source>Fallback</source>
+				<source>Fallback (deprecated; use Continue instead)</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.stop" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.stop">
 				<source>Stop</source>

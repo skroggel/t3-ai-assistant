@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Madj2k\AiAssistant\Indexing\Service;
 
 use Doctrine\DBAL\ParameterType;
-use Madj2k\AiAssistant\DTO\DocumentMetadata;
+use Madj2k\AiCore\DTO\DocumentMetadata;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
 /**
@@ -46,7 +46,7 @@ final class CategoryMetadataService
     /**
      * Adds category ids and titles to document metadata.
      *
-     * @param \Madj2k\AiAssistant\DTO\DocumentMetadata $metadata Document metadata.
+     * @param \Madj2k\AiCore\DTO\DocumentMetadata $metadata Document metadata.
      * @param string $tableName Related record table name.
      * @param int $recordUid Related record uid.
      * @param string $fieldName Category field name.

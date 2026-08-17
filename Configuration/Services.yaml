@@ -72,17 +72,79 @@ services:
     arguments:
       $builders: !tagged_iterator 'aiassistant.assistant.prompt.context_builder'
 
+  # ai-core owns the framework-independent assistant runtime. These aliases bind
+  # its contracts and collaborators to the TYPO3 services exposed by this extension.
+  Madj2k\AiCore\Assistant\Application\Orchestrator:
+    alias: Madj2k\AiAssistant\Assistant\Application\Orchestrator
+
+  Madj2k\AiCore\Assistant\Context\ContextFactory:
+    alias: Madj2k\AiAssistant\Assistant\Context\ContextFactory
+
+  Madj2k\AiCore\Assistant\Context\Assistant\AssistantContextFactory:
+    alias: Madj2k\AiAssistant\Assistant\Context\Assistant\AssistantContextFactory
+
+  Madj2k\AiCore\Assistant\Pipeline\Pipeline:
+    alias: Madj2k\AiAssistant\Assistant\Pipeline\Pipeline
+
+  Madj2k\AiCore\Assistant\Pipeline\PipelineValidator:
+    alias: Madj2k\AiAssistant\Assistant\Pipeline\PipelineValidator
+
+  Madj2k\AiCore\Assistant\Pipeline\Registry\ProcessorRegistry:
+    alias: Madj2k\AiAssistant\Assistant\Pipeline\Registry\ProcessorRegistry
+
+  Madj2k\AiCore\Assistant\Prompt\PromptBuilder:
+    alias: Madj2k\AiAssistant\Assistant\Prompt\PromptBuilder
+
+  Madj2k\AiCore\Assistant\Prompt\Context\Registry\ContextBuilderRegistry:
+    alias: Madj2k\AiAssistant\Assistant\Prompt\Context\Registry\ContextBuilderRegistry
+
+  Madj2k\AiCore\Assistant\Prompt\Context\Formatter:
+    alias: Madj2k\AiAssistant\Assistant\Prompt\Context\Formatter
+
+  Madj2k\AiCore\Assistant\Context\Retrieval\AnswerContextBuilder:
+    alias: Madj2k\AiAssistant\Assistant\Context\Retrieval\AnswerContextBuilder
+
+  Madj2k\AiCore\Assistant\Log\PipelineLoggerInterface:
+    alias: Madj2k\AiAssistant\Assistant\Log\PipelineLogger
+
+  Madj2k\AiCore\Assistant\Memory\MemoryInterface:
+    alias: Madj2k\AiAssistant\Assistant\Memory\SessionMemory
+
+  Madj2k\AiCore\Connection\Resolver\AiConnectorResolver:
+    alias: Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry
+
+  Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver:
+    alias: Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry
+
   Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry:
     arguments:
       $indexers: !tagged_iterator 'aiassistant.indexing.indexer'
+
+  Madj2k\AiCore\Indexing\Registry\IndexerRegistry:
+    alias: Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry
+
+  Madj2k\AiCore\Indexing\TextChunker:
+    alias: Madj2k\AiAssistant\Indexing\Service\TextChunkerService
+
+  Madj2k\AiCore\Indexing\Identity\SourceIdentityGenerator: ~
+
+  Madj2k\AiCore\Indexing\VectorDocumentIndexer: ~
+
+  Madj2k\AiCore\Connection\Health\ConnectionHealthChecker: ~
 
   Madj2k\AiAssistant\Indexing\Registry\AdapterRegistry:
     arguments:
       $adapters: !tagged_iterator 'aiassistant.indexing.adapter'
 
+  Madj2k\AiCore\Indexing\Resolver\AdapterResolver:
+    alias: Madj2k\AiAssistant\Indexing\Registry\AdapterRegistry
+
   Madj2k\AiAssistant\Indexing\Registry\ConnectorRegistry:
     arguments:
       $connectors: !tagged_iterator 'aiassistant.indexing.connector'
+
+  Madj2k\AiCore\Indexing\Resolver\IndexingConnectorResolver:
+    alias: Madj2k\AiAssistant\Indexing\Registry\ConnectorRegistry
 
   Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry:
     arguments:

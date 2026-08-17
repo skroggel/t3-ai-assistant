@@ -11,7 +11,7 @@ Resolves file/content adapters that extract text from source files.
 Required interface
 ------------------
 
-``Madj2k\AiAssistant\Indexing\Adapter\AdapterInterface``
+``Madj2k\AiCore\Indexing\Adapter\AdapterInterface``
 
 Service registration
 --------------------
@@ -37,6 +37,5 @@ Implementation rules
 * Keep services stateless where possible.
 * Read credentials and runtime options from configuration records.
 * Throw meaningful exceptions for invalid configuration.
-* Return extension DTOs rather than provider-specific arrays where interfaces
+* Return core DTOs rather than provider-specific arrays where interfaces
   define DTOs.
-

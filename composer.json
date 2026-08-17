@@ -14,9 +14,9 @@
 	],
     "license": "GPL-2.0-or-later",
     "require": {
+        "madj2k/ai-core": "@dev",
         "typo3/cms-core": "^13.4 || ^14.3",
-        "hkulekci/qdrant": "^1.0",
-        "openai-php/client": "^0.10"
+        "psr/log": "^3.0"
 	},
     "require-dev": {
         "typo3/testing-framework": "^6.8"

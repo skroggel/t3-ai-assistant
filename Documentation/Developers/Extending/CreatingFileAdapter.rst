@@ -69,9 +69,9 @@ indexable text and may enrich metadata with parser details.
 
 ..  code-block:: php
 
-    use Madj2k\AiAssistant\Indexing\DTO\IndexableMetadata;
+    use Madj2k\AiCore\DTO\DocumentMetadata;
 
-    public function extract(string $path, IndexableMetadata $metadata): string
+    public function extract(string $path, DocumentMetadata $metadata): string
     {
         $metadata->addAdditional('parser', $this->getIdentifier());
 
@@ -92,6 +92,6 @@ Multi-document adapters
 -----------------------
 
 When one source file contains multiple logical records, implement
-``Madj2k\AiAssistant\Indexing\Adapter\MultiDocumentAdapterInterface`` in
+``Madj2k\AiCore\Indexing\Adapter\MultiDocumentAdapterInterface`` in
 addition to ``AdapterInterface``. The JSON/JSONL adapter uses this pattern to
 turn one file into multiple ``IndexableDocument`` instances.

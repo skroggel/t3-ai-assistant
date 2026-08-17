@@ -8,21 +8,23 @@ Indexing converts external or TYPO3-managed content into vector documents.
 Core classes
 ------------
 
-``Madj2k\AiAssistant\Indexing\Indexer\IndexerInterface``
+``Madj2k\AiCore\Indexing\Indexer\IndexerInterface``
     Common interface for indexers.
 
 ``Madj2k\AiAssistant\Indexing\Indexer\AbstractIndexer``
-    Shared indexing logic such as configuration resolution, chunk settings,
-    embeddings and vector writes.
+    TYPO3 adapter for configuration lookup and persisted source state.
 
-``Madj2k\AiAssistant\Indexing\DTO\IndexableDocument``
+``Madj2k\AiCore\Indexing\DTO\IndexableDocument``
     Text plus metadata to be indexed.
 
-``Madj2k\AiAssistant\Indexing\DTO\IndexableMetadata``
+``Madj2k\AiCore\DTO\DocumentMetadata``
     Structured metadata for source identity and payload.
 
-``Madj2k\AiAssistant\Indexing\Service\TextChunkerService``
+``Madj2k\AiCore\Indexing\TextChunker``
     Splits text into chunks.
+
+``Madj2k\AiCore\Indexing\VectorDocumentIndexer``
+    Creates embeddings and replaces vector documents safely.
 
 ``Madj2k\AiAssistant\Indexing\Service\SourceStateService``
     Creates source hashes, content hashes and source state decisions.

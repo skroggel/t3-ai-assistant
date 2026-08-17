@@ -10,14 +10,12 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Backend\Diagnostics;
 
+use Madj2k\AiCore\Connection\Health\ConnectionHealthChecker;
 use Madj2k\AiAssistant\Backend\Response\BackendFlashMessageService;
-use Madj2k\AiAssistant\Connection\Ai\DTO\EmbeddingRequest;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
-use Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry;
-use Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry;
 use Madj2k\AiAssistant\Connection\VectorStore\DTO\VectorCollection;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -46,8 +44,7 @@ final class BackendConnectionTestHandler
     public function __construct(
         private readonly AiConnectionRepository $aiConnectionRepository,
         private readonly VectorStoreConnectionRepository $vectorStoreConnectionRepository,
-        private readonly AiConnectorRegistry $aiConnectorRegistry,
-        private readonly VectorStoreConnectorRegistry $vectorStoreConnectorRegistry,
+        private readonly ConnectionHealthChecker $connectionHealthChecker,
         private readonly BackendFlashMessageService $flashMessageService
     ) {
     }
@@ -118,13 +115,12 @@ final class BackendConnectionTestHandler
         }
 
         try {
-            $connector = $this->aiConnectorRegistry->get($connection->getConnectorIdentifier());
-            $response = $connector->embed(
+            $healthy = $this->connectionHealthChecker->checkAi(
                 $connection,
-                new EmbeddingRequest('TYPO3 AI Chat backend connection test')
+                'TYPO3 AI Chat backend connection test',
             );
 
-            if ($response->getEmbedding() === []) {
+            if (!$healthy) {
                 $this->setResult($state, 'ai:' . $uid, 'error', 'AI connection test returned an empty embedding.');
                 return;
             }
@@ -159,8 +155,7 @@ final class BackendConnectionTestHandler
             : '_aiassistant_connection_test';
 
         try {
-            $connector = $this->vectorStoreConnectorRegistry->get($connection->getConnectorIdentifier());
-            $connector->ensureCollection(
+            $healthy = $this->connectionHealthChecker->checkVectorStore(
                 $connection,
                 new VectorCollection(
                     $collectionName,
@@ -168,6 +163,11 @@ final class BackendConnectionTestHandler
                     $connection->getDistance()
                 )
             );
+
+            if (!$healthy) {
+                $this->setResult($state, 'vector:' . $uid, 'error', 'Vector store connection test failed.');
+                return;
+            }
 
             $this->setResult($state, 'vector:' . $uid, 'ok', 'Vector store connection test succeeded.');
         } catch (\Throwable $exception) {

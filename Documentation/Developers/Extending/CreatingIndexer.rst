@@ -4,7 +4,7 @@ Creating an indexer
 ===================
 
 Create a service implementing
-``Madj2k\AiAssistant\Indexing\Indexer\IndexerInterface``. For most use cases,
+``Madj2k\AiCore\Indexing\Indexer\IndexerInterface``. For most TYPO3 use cases,
 extending the abstract indexer is recommended.
 
 Indexer responsibilities

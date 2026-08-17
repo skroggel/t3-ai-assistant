@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Madj2k\AiAssistant\Command;
 
 use Madj2k\AiAssistant\Indexing\Command\IndexingCommandRunner;
-use Madj2k\AiAssistant\Indexing\DTO\IndexingRequest;
+use Madj2k\AiCore\Indexing\DTO\IndexingRequest;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -106,7 +106,7 @@ final class IndexPagesCommand extends Command
 
         if ((bool)$input->getOption('json')) {
             $output->writeln((string)json_encode([
-                'status' => 'ok',
+                'status' => $result->getFailed() > 0 ? 'error' : 'ok',
                 'source_type' => 'page',
                 'indexer_uid' => $request->getIndexerUid(),
                 'limit' => $request->getLimit(),
@@ -114,7 +114,7 @@ final class IndexPagesCommand extends Command
                 'result' => $result->toArray(),
             ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
 
-            return Command::SUCCESS;
+            return $result->getFailed() > 0 ? Command::FAILURE : Command::SUCCESS;
         }
 
         $output->writeln(sprintf(
@@ -129,6 +129,6 @@ final class IndexPagesCommand extends Command
             $result->hasMore() ? 'yes' : 'no'
         ));
 
-        return Command::SUCCESS;
+        return $result->getFailed() > 0 ? Command::FAILURE : Command::SUCCESS;
     }
 }

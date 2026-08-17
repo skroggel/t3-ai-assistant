@@ -21,7 +21,7 @@ return [
         'searchFields' => 'title,type,stage,processor_identifier',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
     ],
-    'types' => \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType::getTcaTypes(),
+    'types' => \Madj2k\AiAssistant\Assistant\TCA\PipelineStepTypeConfiguration::getTypes(),
     'palettes' => [
         'base' => [
             'showitem' => 'title, --linebreak--, type, --linebreak--, processor_identifier, --linebreak--, enabled, sorting, stage',
@@ -82,7 +82,7 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'required' => true,
-                'items' => \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType::getTcaItems(),
+                'items' => \Madj2k\AiAssistant\Assistant\TCA\PipelineStepTypeConfiguration::getItems(),
                 'default' => \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType::QueryOptimizer->value,
             ],
         ],
@@ -284,11 +284,11 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'default' => 'fallback',
+                'default' => 'continue',
                 'items' => [
                     ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.failure_strategy.continue', 'value' => 'continue'],
                     ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.failure_strategy.stop', 'value' => 'stop'],
-                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback', 'value' => 'fallback']
+                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback', 'value' => 'fallback'],
                 ],
             ],
         ]

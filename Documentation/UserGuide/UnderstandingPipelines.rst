@@ -46,3 +46,17 @@ Not every project needs every step. For small sites, retrieval plus answer
 generation may be sufficient. For ambiguous queries, product data or legal-like
 content, query optimization and quality gates are usually helpful.
 
+Validation and failures
+-----------------------
+
+Before execution, the pipeline checks processor identifiers, step types and
+required predecessors. For example, a context optimizer needs an earlier
+retriever or memory step, and a quality gate needs an earlier answer generator.
+Invalid pipelines stop before the first processor runs.
+
+``stop`` aborts the pipeline when a step fails. ``continue`` records the failure
+and proceeds with the next step. The legacy value ``fallback`` behaves like
+``continue`` and should no longer be selected for new configurations.
+
+Only the final answer-producing step streams its output. This prevents a later
+quality gate from replacing text that has already been shown to the user.

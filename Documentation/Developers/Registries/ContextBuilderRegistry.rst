@@ -17,7 +17,7 @@ or answer generation.
 Required interface
 ------------------
 
-``Madj2k\AiAssistant\Assistant\Prompt\Context\Builder\ContextBuilderInterface``
+``Madj2k\AiCore\Assistant\Prompt\Context\Builder\ContextBuilderInterface``
 
 Service registration
 --------------------
@@ -40,7 +40,7 @@ sections through ``build()``.
 
 ..  code-block:: php
 
-    use Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType;
+    use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
 
     public function supports(AssistantPipelineProcessorType $type): bool
     {

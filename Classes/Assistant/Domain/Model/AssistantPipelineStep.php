@@ -16,10 +16,11 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Assistant\Domain\Model;
 
-use Madj2k\AiAssistant\Assistant\Enum\HistoryMode;
-use Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineFailureStrategy;
-use Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineStage;
-use Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType;
+use Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface;
+use Madj2k\AiCore\Assistant\Enum\HistoryMode;
+use Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy;
+use Madj2k\AiCore\Assistant\Enum\AssistantPipelineStage;
+use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
 
 /**
  * Class AssistantPipelineStep
@@ -31,7 +32,7 @@ use Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType;
  * @package Madj2k\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class AssistantPipelineStep extends AbstractEntity
+class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfigurationInterface
 {
     /**
      * Assistant profile uid.
@@ -222,7 +223,7 @@ class AssistantPipelineStep extends AbstractEntity
      *
      * @var string
      */
-    protected string $failureStrategy = 'fallback';
+    protected string $failureStrategy = 'continue';
 
 
     /**
@@ -803,7 +804,12 @@ class AssistantPipelineStep extends AbstractEntity
      */
     public function getFailureStrategy(): AssistantPipelineFailureStrategy
     {
-        return AssistantPipelineFailureStrategy::tryFrom($this->failureStrategy) ?? AssistantPipelineFailureStrategy::Fallback;
+        $failureStrategy = AssistantPipelineFailureStrategy::tryFrom($this->failureStrategy);
+        if ($failureStrategy === null || $failureStrategy === AssistantPipelineFailureStrategy::Fallback) {
+            return AssistantPipelineFailureStrategy::Continue;
+        }
+
+        return $failureStrategy;
     }
 
 
@@ -815,9 +821,12 @@ class AssistantPipelineStep extends AbstractEntity
      */
     public function setFailureStrategy(AssistantPipelineFailureStrategy|string $failureStrategy): void
     {
-        $this->failureStrategy = $failureStrategy instanceof AssistantPipelineFailureStrategy
+        $value = $failureStrategy instanceof AssistantPipelineFailureStrategy
             ? $failureStrategy->value
             : $failureStrategy;
+        $this->failureStrategy = $value === AssistantPipelineFailureStrategy::Fallback->value
+            ? AssistantPipelineFailureStrategy::Continue->value
+            : $value;
     }
 
 

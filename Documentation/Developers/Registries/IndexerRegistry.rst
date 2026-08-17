@@ -11,7 +11,7 @@ Resolves indexers for configured source types or indexer identifiers.
 Required interface
 ------------------
 
-``Madj2k\AiAssistant\Indexing\Indexer\IndexerInterface``
+``Madj2k\AiCore\Indexing\Indexer\IndexerInterface``
 
 Service registration
 --------------------
@@ -37,7 +37,7 @@ Implementation rules
 * Keep services stateless where possible.
 * Read credentials and runtime options from configuration records.
 * Throw meaningful exceptions for invalid configuration.
-* Return extension DTOs rather than provider-specific arrays where interfaces
+* Return core DTOs rather than provider-specific arrays where interfaces
   define DTOs.
 
 

@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Indexing\TCA;
 
-use Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry;
+use Madj2k\AiCore\Indexing\Registry\IndexerRegistry;
 
 /**
  * Class IndexerItems
@@ -27,7 +27,7 @@ final class IndexerItems
     /**
      * Constructor.
      *
-     * @param \Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry $indexerRegistry Indexer registry.
+     * @param \Madj2k\AiCore\Indexing\Registry\IndexerRegistry $indexerRegistry Indexer registry.
      */
     public function __construct(
         protected readonly IndexerRegistry $indexerRegistry

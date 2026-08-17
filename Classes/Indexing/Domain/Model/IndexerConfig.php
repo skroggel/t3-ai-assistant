@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Indexing\Domain\Model;
 
+use Madj2k\AiCore\Indexing\Configuration\IndexingConfigurationInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
@@ -25,7 +26,7 @@ use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
  * @package Madj2k\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class IndexerConfig extends AbstractEntity
+class IndexerConfig extends AbstractEntity implements IndexingConfigurationInterface
 {
 
     /**

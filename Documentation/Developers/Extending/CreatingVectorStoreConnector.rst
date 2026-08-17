@@ -16,7 +16,7 @@ Responsibilities
 * delete all chunks belonging to a source hash;
 * create or validate collections if supported;
 * preserve metadata payloads;
-* map backend responses to extension DTOs.
+* map backend responses to core DTOs.
 
 Identifier
 ----------
@@ -50,11 +50,15 @@ collection and vector store.
 
 ..  code-block:: php
 
+    use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
+    use Madj2k\AiCore\Connection\VectorStore\DTO\VectorCollection;
+    use Madj2k\AiCore\Connection\VectorStore\DTO\VectorDeleteResult;
+
     public function deleteBySourceHash(
-        VectorStoreConnection $connection,
-        string $collection,
+        VectorStoreConnectionConfigurationInterface $connection,
+        VectorCollection $collection,
         string $sourceHash
-    ): void {
+    ): VectorDeleteResult {
         // Delete all points with payload.source_hash = $sourceHash.
     }
 

@@ -16,7 +16,7 @@ namespace Madj2k\AiAssistant\Config;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Madj2k\AiAssistant\Exception\AppException;
+use Madj2k\AiCore\Exception\AppException;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;

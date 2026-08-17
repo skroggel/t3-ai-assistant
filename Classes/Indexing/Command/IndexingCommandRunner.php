@@ -16,11 +16,11 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Indexing\Command;
 
+use Madj2k\AiCore\Indexing\DTO\IndexingRequest;
+use Madj2k\AiCore\Indexing\DTO\IndexingResult;
+use Madj2k\AiCore\Indexing\Registry\IndexerRegistry;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerRun;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerRunRepository;
-use Madj2k\AiAssistant\Indexing\DTO\IndexingRequest;
-use Madj2k\AiAssistant\Indexing\DTO\IndexingResult;
-use Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
@@ -38,7 +38,7 @@ final readonly class IndexingCommandRunner
     /**
      * Constructor.
      *
-     * @param \Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry $indexerRegistry Indexer registry.
+     * @param \Madj2k\AiCore\Indexing\Registry\IndexerRegistry $indexerRegistry Indexer registry.
      * @param \Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerRunRepository $indexerRunRepository Index run repository.
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager Persistence manager.
      */
@@ -54,8 +54,8 @@ final readonly class IndexingCommandRunner
      * Runs one indexer and persists run statistics.
      *
      * @param string $indexerIdentifier Indexer identifier.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexingRequest $request Indexing request.
-     * @return \Madj2k\AiAssistant\Indexing\DTO\IndexingResult Indexing result.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexingRequest $request Indexing request.
+     * @return \Madj2k\AiCore\Indexing\DTO\IndexingResult Indexing result.
      * @throws \Throwable
      */
     public function run(string $indexerIdentifier, IndexingRequest $request): IndexingResult
@@ -88,7 +88,7 @@ final readonly class IndexingCommandRunner
 
         try {
             $result = $indexer->index($request);
-            $this->finishRun($run, 'ok', $result, $request);
+            $this->finishRun($run, $result->getFailed() > 0 ? 'error' : 'ok', $result, $request);
         } catch (\Throwable $exception) {
             $result->increaseFailed();
             $result->addDetail('exception', $exception->getMessage());
@@ -116,8 +116,8 @@ final readonly class IndexingCommandRunner
      *
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerRun $run Run.
      * @param string $status Run status.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexingResult $result Indexing result.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexingRequest $request Indexing request.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexingResult $result Indexing result.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexingRequest $request Indexing request.
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
@@ -154,7 +154,7 @@ final readonly class IndexingCommandRunner
     /**
      * Resolves the cursor from the latest completed run.
      *
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexingRequest $request Indexing request.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexingRequest $request Indexing request.
      * @return string Stored cursor.
      */
     private function resolveStoredCursor(IndexingRequest $request): string

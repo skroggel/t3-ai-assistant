@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Connection\TCA;
 
-use Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry;
+use Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver as VectorStoreConnectorRegistry;
 
 /**
  * Class VectorStoreConnectorItems

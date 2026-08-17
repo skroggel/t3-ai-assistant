@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Indexing\TCA;
 
-use Madj2k\AiAssistant\Indexing\Registry\ConnectorRegistry;
+use Madj2k\AiCore\Indexing\Resolver\IndexingConnectorResolver as ConnectorRegistry;
 
 /**
  * Class ConnectorItems
@@ -27,7 +27,7 @@ final class ConnectorItems
     /**
      * Constructor.
      *
-     * @param \Madj2k\AiAssistant\Indexing\Registry\ConnectorRegistry $connectorRegistry Connector registry.
+     * @param \Madj2k\AiCore\Indexing\Resolver\IndexingConnectorResolver $connectorRegistry Connector registry.
      */
     public function __construct(
         protected readonly ConnectorRegistry $connectorRegistry
