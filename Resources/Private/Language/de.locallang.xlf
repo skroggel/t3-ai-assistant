@@ -23,6 +23,14 @@
 				<source>Hello, I am the madj2k Assistant. How can I help you?</source>
 				<target>Hallo, ich bin der madj2k-Assistent. Wie kann ich dir helfen?</target>
 			</trans-unit>
+			<trans-unit id="templates_index_index.consent_message" resname="templates_index_index.consent_message">
+				<source>Please note: This chat uses artificial intelligence. AI-generated answers can be incorrect. Please review important information carefully.</source>
+				<target>Bitte beachte: Dieser Chat verwendet künstliche Intelligenz. KI-generierte Antworten können fehlerhaft sein. Prüfe wichtige Informationen daher sorgfältig.</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.consent_button" resname="templates_index_index.consent_button">
+				<source>I understand, start chat</source>
+				<target>Verstanden, Chat starten</target>
+			</trans-unit>
 			<trans-unit id="chat.recommendation.line" resname="chat.recommendation.line">
 				<source>I found a matching page for you here: %s (%s)</source>
 				<target>Ich habe hier einen passenden Inhalt für dich gefunden: %s (%s)</target>

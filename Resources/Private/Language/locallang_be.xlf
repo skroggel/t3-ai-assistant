@@ -16,6 +16,9 @@
 			<trans-unit id="flexform.chat.assistant_profile" >
 				<source>Assistant Profile</source>
 			</trans-unit>
+			<trans-unit id="flexform.chat.require_consent" >
+				<source>Require consent before starting the chat</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

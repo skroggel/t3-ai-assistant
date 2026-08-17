@@ -18,6 +18,12 @@
 			<trans-unit id="templates_index_index.initial_message" resname="templates_index_index.initial_message">
 				<source>Hello, I am the madj2k Assistant. How can I help you?</source>
 			</trans-unit>
+			<trans-unit id="templates_index_index.consent_message" resname="templates_index_index.consent_message">
+				<source>Please note: This chat uses artificial intelligence. AI-generated answers can be incorrect. Please review important information carefully.</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.consent_button" resname="templates_index_index.consent_button">
+				<source>I understand, start chat</source>
+			</trans-unit>
 			<trans-unit id="chat.recommendation.line" resname="chat.recommendation.line">
 				<source>I found a matching page for you here: %s (%s)</source>
 			</trans-unit>
