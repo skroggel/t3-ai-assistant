@@ -32,5 +32,47 @@
                 </el>
             </ROOT>
         </sDEF>
+        <language>
+            <ROOT>
+                <sheetTitle>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.sheet.language</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.language.responseLanguage>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.response_language</label>
+                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.response_language.description</description>
+                        <config>
+                            <type>input</type>
+                            <size>30</size>
+                            <max>80</max>
+                            <eval>trim</eval>
+                        </config>
+                    </settings.language.responseLanguage>
+                    <settings.language.allowUserSelection>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.allow_user_language</label>
+                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.allow_user_language.description</description>
+                        <config>
+                            <type>check</type>
+                            <default>0</default>
+                        </config>
+                    </settings.language.allowUserSelection>
+                </el>
+            </ROOT>
+        </language>
+        <accessibility>
+            <ROOT>
+                <sheetTitle>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.sheet.accessibility</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.accessibility.plainLanguage>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.plain_language</label>
+                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.plain_language.description</description>
+                        <config>
+                            <type>check</type>
+                            <default>0</default>
+                        </config>
+                    </settings.accessibility.plainLanguage>
+                </el>
+            </ROOT>
+        </accessibility>
     </sheets>
 </T3DataStructure>

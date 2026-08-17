@@ -12,6 +12,15 @@
  * @property {string} consent Consent message selector.
  * @property {string} chatContent Chat content selector.
  * @property {string} initButton Init button selector.
+ * @property {string} status Screen-reader status selector.
+ * @property {string} languageToggle Response-language status and toggle button selector.
+ * @property {string} languagePanel Collapsible language controls selector.
+ * @property {string} languageStatus Current response-language label selector.
+ * @property {string} languageInput Optional user language input selector.
+ * @property {string} languageApplyButton Free language selection apply button selector.
+ * @property {string} browserLanguageButton Browser-language suggestion button selector.
+ * @property {string} siteLanguageButton Website-language option button selector.
+ * @property {string} directInteractionInput Direct interaction form field selector.
  */
 
 /**
@@ -48,6 +57,11 @@
  * @property {AiAssistantChatBoxDatasetKeys} datasetKeys Dataset key configuration.
  * @property {AiAssistantChatBoxRequestOptions} request Request configuration.
  * @property {AiAssistantChatBoxDelays} delays Typing delay configuration.
+ * @property {Object} language Language configuration.
+ * @property {string} language.responseLanguage Resolved fallback response language.
+ * @property {string} language.languageCode Resolved fallback BCP 47 language tag.
+ * @property {Object} accessibility Accessibility configuration.
+ * @property {boolean} accessibility.plainLanguage Whether plain language is requested.
  * @property {string} userOrigin User message origin value.
  * @property {string} botOrigin Assistant message origin value.
  * @property {string} defaultEventName Default server-sent event name.
@@ -88,12 +102,21 @@ class AiAssistantChatBox {
             consent: '.js-aiassistant-consent',
             chatContent: '.js-aiassistant-chat-content',
             initButton: '.js-aiassistant-init',
+            status: '.js-aiassistant-status',
+            languageToggle: '.js-aiassistant-language-toggle',
+            languagePanel: '.js-aiassistant-language-panel',
+            languageStatus: '.js-aiassistant-language-status',
+            languageInput: '.js-aiassistant-language',
+            languageApplyButton: '.js-aiassistant-language-apply',
+            browserLanguageButton: '.js-aiassistant-browser-language',
+            siteLanguageButton: '.js-aiassistant-site-language',
+            directInteractionInput: '.js-aiassistant-direct-interaction',
         },
         classes: {
             message: 'chat-box-message',
             fromPrefix: 'from-',
             typing: 'is-typing',
-            hidden: 'visually-hidden',
+            hidden: 'aiassistant-visually-hidden',
             link: 'chat-box-link',
         },
         datasetKeys: {
@@ -108,6 +131,13 @@ class AiAssistantChatBox {
         delays: {
             initialMessage: 22,
             responseMessage: 14,
+        },
+        language: {
+            responseLanguage: '',
+            languageCode: '',
+        },
+        accessibility: {
+            plainLanguage: false,
         },
         userOrigin: 'user',
         botOrigin: 'bot',
@@ -173,7 +203,11 @@ class AiAssistantChatBox {
          *
          * @type {AiAssistantChatBoxOptions}
          */
-        this.options = AiAssistantChatBox.mergeOptions(AiAssistantChatBox.defaults, options);
+        const formOptions = AiAssistantChatBox.parseOptions(form?.dataset?.chatOptions || '');
+        this.options = AiAssistantChatBox.mergeOptions(
+            AiAssistantChatBox.defaults,
+            AiAssistantChatBox.mergeOptions(options, formOptions),
+        );
 
         /**
          * Form element used for requests.
@@ -222,11 +256,69 @@ class AiAssistantChatBox {
         this.messagesContainer = this.container.querySelector(this.options.selectors.messages);
 
         /**
+         * Polite live region used for controlled screen-reader announcements.
+         *
+         * @type {HTMLElement|null}
+         */
+        const status = this.container.querySelector(this.options.selectors.status);
+        this.status = status instanceof HTMLElement ? status : null;
+
+        /**
          * Message input field.
          *
          * @type {HTMLInputElement|HTMLTextAreaElement|null}
          */
         this.input = this.form.querySelector(this.options.selectors.input);
+
+        /** @type {HTMLButtonElement|null} */
+        const languageToggle = this.container.querySelector(this.options.selectors.languageToggle);
+        this.languageToggle = languageToggle instanceof HTMLButtonElement ? languageToggle : null;
+
+        /** @type {HTMLElement|null} */
+        const languagePanel = this.form.querySelector(this.options.selectors.languagePanel);
+        this.languagePanel = languagePanel instanceof HTMLElement ? languagePanel : null;
+
+        /** @type {HTMLElement|null} */
+        const languageStatus = this.container.querySelector(this.options.selectors.languageStatus);
+        this.languageStatus = languageStatus instanceof HTMLElement ? languageStatus : null;
+
+        /**
+         * Optional free-text response language selector.
+         *
+         * @type {HTMLInputElement|null}
+         */
+        const languageInput = this.form.querySelector(this.options.selectors.languageInput);
+        this.languageInput = languageInput instanceof HTMLInputElement ? languageInput : null;
+
+        /** @type {string} */
+        this.appliedLanguage = this.languageInput?.value.trim() || '';
+
+        /** @type {HTMLButtonElement|null} */
+        const languageApplyButton = this.form.querySelector(this.options.selectors.languageApplyButton);
+        this.languageApplyButton = languageApplyButton instanceof HTMLButtonElement
+            ? languageApplyButton
+            : null;
+
+        /** @type {HTMLButtonElement|null} */
+        const browserLanguageButton = this.form.querySelector(this.options.selectors.browserLanguageButton);
+        this.browserLanguageButton = browserLanguageButton instanceof HTMLButtonElement
+            ? browserLanguageButton
+            : null;
+
+        /** @type {string} */
+        this.browserLanguageCode = '';
+
+        /** @type {HTMLButtonElement|null} */
+        const siteLanguageButton = this.form.querySelector(this.options.selectors.siteLanguageButton);
+        this.siteLanguageButton = siteLanguageButton instanceof HTMLButtonElement
+            ? siteLanguageButton
+            : null;
+
+        /** @type {HTMLInputElement|null} */
+        const directInteractionInput = this.form.querySelector(this.options.selectors.directInteractionInput);
+        this.directInteractionInput = directInteractionInput instanceof HTMLInputElement
+            ? directInteractionInput
+            : null;
 
         /**
          * Typing indicator element.
@@ -280,8 +372,11 @@ class AiAssistantChatBox {
          */
         this.initialMessage = this.getDatasetValue(this.options.datasetKeys.initialMessage).trim();
 
+        this.initializeLanguageSelector();
+        this.initializeBrowserLanguageSuggestion();
+
         if (this.initButton) {
-            this.initButton.addEventListener('click', () => this.initializeChat());
+            this.initButton.addEventListener('click', () => this.initializeChat(true));
             return;
         }
 
@@ -336,6 +431,26 @@ class AiAssistantChatBox {
     }
 
     /**
+     * Parses per-form JSON options.
+     *
+     * @param {string} value Serialized options.
+     * @return {Object}
+     */
+    static parseOptions(value) {
+        if (!value) {
+            return {};
+        }
+
+        try {
+            const options = JSON.parse(value);
+
+            return options && typeof options === 'object' && !Array.isArray(options) ? options : {};
+        } catch (error) {
+            return {};
+        }
+    }
+
+    /**
      * Returns a configured dataset value.
      *
      * @param {string} key Dataset key.
@@ -348,9 +463,10 @@ class AiAssistantChatBox {
     /**
      * Initializes the chat after optional consent has been given.
      *
+     * @param {boolean} focusInput Whether focus should move from a dismissed consent prompt.
      * @return {void}
      */
-    initializeChat() {
+    initializeChat(focusInput = false) {
         if (this.initialized) {
             return;
         }
@@ -364,6 +480,9 @@ class AiAssistantChatBox {
         }
         this.renderInitialMessage();
         this.form.addEventListener('submit', (event) => this.handleSubmit(event));
+        if (focusInput) {
+            this.input?.focus();
+        }
     }
 
     /**
@@ -399,7 +518,12 @@ class AiAssistantChatBox {
             return;
         }
 
-        this.typeMessage(message, this.initialMessage, this.options.delays.initialMessage);
+        this.typeMessage(
+            message,
+            this.initialMessage,
+            this.options.delays.initialMessage,
+            () => this.announceMessage(message),
+        );
     }
 
     /**
@@ -488,7 +612,260 @@ class AiAssistantChatBox {
 
         message.classList.add(`${this.options.classes.fromPrefix}${from}`);
 
+        if (from === this.options.botOrigin) {
+            const languageCode = this.resolveLanguageCode();
+            if (languageCode !== '') {
+                message.setAttribute('lang', languageCode);
+            }
+        }
+
         return message;
+    }
+
+    /**
+     * Resolves a BCP 47 tag from the user selection or configured fallback.
+     *
+     * @return {string}
+     */
+    resolveLanguageCode() {
+        const selectedLanguage = this.appliedLanguage;
+        const match = selectedLanguage.match(/\(([a-zA-Z]{2,3}(?:-[a-zA-Z0-9]{2,8})*)\)$/);
+
+        if (match) {
+            return match[1];
+        }
+        if (/^[a-zA-Z]{2,3}(?:-[a-zA-Z0-9]{2,8})*$/.test(selectedLanguage)) {
+            return selectedLanguage;
+        }
+        if (selectedLanguage !== '') {
+            return '';
+        }
+
+        return String(this.options.language?.languageCode || '');
+    }
+
+    /**
+     * Initializes the persistent response-language status and its collapsible controls.
+     *
+     * @return {void}
+     */
+    initializeLanguageSelector() {
+        if (!this.languageToggle || !this.languagePanel || !this.languageInput) {
+            return;
+        }
+
+        this.updateLanguageStatus();
+        this.updateLanguageApplyState();
+        this.initializeSiteLanguageOption();
+        this.languageToggle.addEventListener('click', () => {
+            this.setLanguagePanel(this.languagePanel?.hidden ?? true);
+        });
+        this.languageInput.addEventListener('input', () => {
+            this.updateLanguageApplyState();
+        });
+        this.languageInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                this.applyLanguageInput();
+            }
+        });
+        this.languageApplyButton?.addEventListener('click', () => this.applyLanguageInput());
+        this.languagePanel.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                this.setLanguagePanel(false, true);
+            }
+        });
+    }
+
+    /**
+     * Opens or closes the response-language controls.
+     *
+     * @param {boolean} open Whether the controls should be visible.
+     * @param {boolean} restoreFocus Whether focus should return to the toggle.
+     * @return {void}
+     */
+    setLanguagePanel(open, restoreFocus = false) {
+        if (!this.languageToggle || !this.languagePanel) {
+            return;
+        }
+
+        this.languagePanel.hidden = !open;
+        this.languageToggle.setAttribute('aria-expanded', String(open));
+
+        if (open) {
+            const target = this.browserLanguageButton && !this.browserLanguageButton.hidden
+                ? this.browserLanguageButton
+                : this.languageInput;
+            target?.focus();
+        } else if (restoreFocus) {
+            this.languageToggle.focus();
+        }
+    }
+
+    /**
+     * Updates the persistent status with the effective response language.
+     *
+     * @return {void}
+     */
+    updateLanguageStatus() {
+        if (!this.languageStatus || !this.languageToggle) {
+            return;
+        }
+
+        const language = this.appliedLanguage
+            || String(this.options.language?.responseLanguage || '').trim();
+        const languageName = this.resolveLanguageName(language);
+        const label = this.languageToggle.dataset.label || '';
+        const status = [label, languageName].filter(Boolean).join(': ');
+
+        this.languageStatus.textContent = languageName;
+        this.languageToggle.setAttribute('aria-label', status);
+    }
+
+    /**
+     * Enables the apply action only when a free language value is available.
+     *
+     * @return {void}
+     */
+    updateLanguageApplyState() {
+        if (this.languageApplyButton) {
+            const draftLanguage = this.languageInput?.value.trim() || '';
+            this.languageApplyButton.disabled = draftLanguage === '' || draftLanguage === this.appliedLanguage;
+        }
+    }
+
+    /**
+     * Applies a free language selection and requests a localized confirmation.
+     *
+     * @return {void}
+     */
+    applyLanguageInput() {
+        const language = this.languageInput?.value.trim() || '';
+        if (language === '') {
+            return;
+        }
+
+        this.appliedLanguage = language;
+        this.updateLanguageStatus();
+        this.updateBrowserLanguageOption();
+        this.setLanguagePanel(false, true);
+        this.startDirectInteraction('language_confirmation', this.resolveLanguageName(language));
+    }
+
+    /**
+     * Resolves a readable language name for a configured name or BCP 47 tag.
+     *
+     * @param {string} language Language name or language tag.
+     * @return {string}
+     */
+    resolveLanguageName(language) {
+        const value = String(language || '').trim();
+        const codeMatch = value.match(/(?:^|\()([a-zA-Z]{2,3}(?:-[a-zA-Z0-9]{2,8})*)\)?$/);
+        if (!codeMatch) {
+            return value;
+        }
+
+        try {
+            const languageCode = new Intl.Locale(codeMatch[1]).language;
+
+            return new Intl.DisplayNames([languageCode], {
+                type: 'language',
+                languageDisplay: 'standard',
+            }).of(languageCode) || value;
+        } catch (error) {
+            return value;
+        }
+    }
+
+    /**
+     * Initializes the explicit option for returning to the TYPO3 site language.
+     *
+     * @return {void}
+     */
+    initializeSiteLanguageOption() {
+        if (!this.siteLanguageButton || !this.languageInput) {
+            return;
+        }
+
+        const siteLanguage = String(this.options.language?.responseLanguage || '').trim();
+        const languageName = this.resolveLanguageName(siteLanguage);
+        const accessibleLabel = this.siteLanguageButton.dataset.label || '';
+
+        this.siteLanguageButton.textContent = `🏠 ${languageName}`;
+        this.siteLanguageButton.setAttribute(
+            'aria-label',
+            `${accessibleLabel}: ${languageName}`.replace(/^:\s*/, ''),
+        );
+        this.siteLanguageButton.addEventListener('click', () => {
+            const languageChanged = this.appliedLanguage !== '';
+            this.appliedLanguage = '';
+            this.languageInput.value = '';
+            this.updateLanguageStatus();
+            this.updateLanguageApplyState();
+            this.updateBrowserLanguageOption();
+            this.setLanguagePanel(false, true);
+            if (languageChanged) {
+                this.startDirectInteraction('language_confirmation', languageName);
+            }
+        });
+    }
+
+    /**
+     * Offers the primary browser language when it differs from the site language.
+     *
+     * @return {void}
+     */
+    initializeBrowserLanguageSuggestion() {
+        if (!this.languageInput || !this.browserLanguageButton || typeof navigator === 'undefined') {
+            return;
+        }
+
+        const browserLanguage = String(navigator.languages?.[0] || navigator.language || '').trim();
+        const siteLanguage = String(this.options.language?.languageCode || '').trim();
+        if (
+            browserLanguage === ''
+            || browserLanguage.split('-')[0].toLowerCase() === siteLanguage.split('-')[0].toLowerCase()
+        ) {
+            return;
+        }
+
+        const languageName = this.resolveLanguageName(browserLanguage);
+        const languageValue = `${languageName} (${browserLanguage})`;
+        const accessibleLabel = this.browserLanguageButton.dataset.label || '';
+
+        this.browserLanguageCode = browserLanguage;
+        this.browserLanguageButton.textContent = `🔄 ${languageName}`;
+        this.browserLanguageButton.setAttribute(
+            'aria-label',
+            `${accessibleLabel}: ${languageName}`.replace(/^:\s*/, ''),
+        );
+        this.updateBrowserLanguageOption();
+        this.browserLanguageButton.addEventListener('click', () => {
+            this.appliedLanguage = languageValue;
+            this.languageInput.value = languageValue;
+            this.updateLanguageStatus();
+            this.updateLanguageApplyState();
+            this.updateBrowserLanguageOption();
+            this.setLanguagePanel(false, true);
+            this.startDirectInteraction('language_confirmation', languageName);
+        });
+    }
+
+    /**
+     * Shows the browser language unless it is the currently selected language.
+     *
+     * @return {void}
+     */
+    updateBrowserLanguageOption() {
+        if (!this.browserLanguageButton || this.browserLanguageCode === '') {
+            return;
+        }
+
+        const selectedLanguage = this.appliedLanguage;
+        const selectedCode = this.resolveLanguageCode().split('-')[0].toLowerCase();
+        const browserCode = this.browserLanguageCode.split('-')[0].toLowerCase();
+
+        this.browserLanguageButton.hidden = selectedLanguage !== '' && selectedCode === browserCode;
     }
 
     /**
@@ -535,9 +912,48 @@ class AiAssistantChatBox {
         }
 
         const fragment = this.typingTemplate.content.cloneNode(true);
+        const indicator = fragment.firstElementChild;
 
         message.replaceChildren(fragment);
         message.classList.add(this.options.classes.typing);
+
+        if (indicator instanceof HTMLElement) {
+            this.announceStatus(indicator.getAttribute('aria-label') || '');
+        }
+    }
+
+    /**
+     * Announces one status update without exposing streaming fragments.
+     *
+     * @param {string} content Status text.
+     * @return {void}
+     */
+    announceStatus(content) {
+        if (!this.status) {
+            return;
+        }
+
+        this.status.textContent = '';
+        window.requestAnimationFrame(() => {
+            if (this.status) {
+                this.status.textContent = String(content || '').trim();
+            }
+        });
+    }
+
+    /**
+     * Announces the rendered text of a completed assistant message.
+     *
+     * @param {HTMLElement|null} message Message content element.
+     * @return {void}
+     */
+    announceMessage(message) {
+        const speaker = message
+            ?.closest(`.${this.options.classes.message}`)
+            ?.querySelector(`.${this.options.classes.hidden}`)
+            ?.textContent || '';
+
+        this.announceStatus(`${speaker} ${message?.textContent || ''}`);
     }
 
     /**
@@ -862,6 +1278,67 @@ class AiAssistantChatBox {
     }
 
     /**
+     * Creates request data with the last confirmed response language.
+     *
+     * @return {FormData}
+     */
+    createFormData() {
+        const formData = new FormData(this.form);
+        if (this.languageInput?.name) {
+            formData.set(this.languageInput.name, this.appliedLanguage);
+        }
+
+        return formData;
+    }
+
+    /**
+     * Sends an explicit direct interaction without adding an artificial user message.
+     *
+     * @param {string} interaction Direct interaction identifier.
+     * @param {string} fallbackLanguageName Native language name used when the request fails.
+     * @return {Promise<void>}
+     */
+    async startDirectInteraction(interaction, fallbackLanguageName) {
+        if (!this.streamUrl || !this.form || !this.directInteractionInput) {
+            return;
+        }
+
+        this.directInteractionInput.value = interaction;
+        const formData = this.createFormData();
+        this.directInteractionInput.value = '';
+
+        const message = this.addMessage('', this.options.botOrigin);
+        if (!message) {
+            return;
+        }
+
+        this.renderTypingIndicator(message);
+
+        try {
+            const transport = new AiAssistantTransport({
+                method: this.options.request.method,
+                streamAccept: this.options.request.accept,
+                credentials: this.options.request.credentials,
+                defaultEventName: this.options.defaultEventName,
+                doneEventName: this.options.doneEventName,
+            });
+            const response = await transport.streamSse(this.streamUrl, formData, (content) => {
+                this.renderPlainMessageContent(message, content);
+                message.classList.add(this.options.classes.typing);
+                this.scrollMessageIntoView(message);
+            });
+
+            this.removeTypingIndicator(message);
+            this.renderMessageContent(message, response);
+            this.announceMessage(message);
+        } catch (error) {
+            this.removeTypingIndicator(message);
+            this.renderMessageContent(message, `✓ ${fallbackLanguageName}`);
+            this.announceMessage(message);
+        }
+    }
+
+    /**
      * Handles form submit.
      *
      * @param {SubmitEvent} event Submit event.
@@ -876,6 +1353,7 @@ class AiAssistantChatBox {
             return;
         }
 
+        this.setLanguagePanel(false);
         this.startStream(prompt);
     }
 
@@ -890,7 +1368,7 @@ class AiAssistantChatBox {
             return;
         }
 
-        const formData = new FormData(this.form);
+        const formData = this.createFormData();
 
         this.addMessage(prompt, this.options.userOrigin);
         this.input.value = '';
@@ -919,9 +1397,11 @@ class AiAssistantChatBox {
 
             this.removeTypingIndicator(message);
             this.renderMessageContent(message, botBuffer);
+            this.announceMessage(message);
         } catch (error) {
             this.removeTypingIndicator(message);
             this.renderMessageContent(message, this.errorMessage || message.textContent);
+            this.announceMessage(message);
         }
     }
 }

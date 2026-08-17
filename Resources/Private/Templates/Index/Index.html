@@ -51,24 +51,7 @@
             </div>
         </f:if>
 
-        <div class="js-aiassistant-chat-content" hidden>
-            <header class="chat-box-header">
-                <p class="chat-box-brand">
-                    <f:if condition="{assistantLabel}">
-                        <f:then>{assistantLabel}</f:then>
-                        <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.brand" /></f:else>
-                    </f:if>
-                </p>
-                <p class="chat-box-intro">
-                    <f:if condition="{assistantIntroText}">
-                        <f:then>{assistantIntroText}</f:then>
-                        <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.intro" /></f:else>
-                    </f:if>
-                </p>
-            </header>
-
-            <f:render partial="Index/ChatBox" arguments="{_all}" />
-
+        <div class="js-aiassistant-chat-content" hidden="hidden">
             <f:form
                 action="stream"
                 controller="Chat"
@@ -76,21 +59,117 @@
                 pluginName="Chat"
                 pageType="1700000000"
                 method="post"
-                class="chat-box-form mt-4 js-aiassistant-form"
-                additionalAttributes="{data-initial-message: resolvedAssistantInitialMessage, data-error-message: resolvedErrorMessage}"
+                class="chat-box-form js-aiassistant-form"
+                additionalAttributes="{data-initial-message: resolvedAssistantInitialMessage, data-error-message: resolvedErrorMessage, data-chat-options: chatOptionsJson}"
                 novalidate="novalidate"
             >
+                <header class="chat-box-header">
+                    <div class="chat-box-header-top">
+                        <p class="chat-box-brand">
+                            <f:if condition="{assistantLabel}">
+                                <f:then>{assistantLabel}</f:then>
+                                <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.brand" /></f:else>
+                            </f:if>
+                        </p>
+                        <f:if condition="{showLanguageSelector}">
+                            <div class="chat-box-header-actions">
+                                <button
+                                    class="btn btn-outline-secondary chat-box-language-toggle js-aiassistant-language-toggle"
+                                    type="button"
+                                    aria-expanded="false"
+                                    aria-controls="aiassistant-language-panel-{contentElementUid}"
+                                    data-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.response_language')}"
+                                >
+                                    <span aria-hidden="true">🌐</span>
+                                    <span class="js-aiassistant-language-status"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.response_language" /></span>
+                                </button>
+                                <button
+                                    class="btn btn-outline-secondary chat-box-language-shortcut js-aiassistant-browser-language"
+                                    type="button"
+                                    hidden="hidden"
+                                    data-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.use_browser_language')}"
+                                ></button>
+                            </div>
+                        </f:if>
+                    </div>
+
+                    <f:if condition="{showLanguageSelector}">
+                        <div id="aiassistant-language-panel-{contentElementUid}" class="chat-box-language js-aiassistant-language-panel" hidden="hidden">
+                            <label class="aiassistant-visually-hidden" for="aiassistant-language-{contentElementUid}">
+                                <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.response_language" />
+                            </label>
+                            <div class="chat-box-language-options">
+                                <button
+                                    class="btn btn-outline-secondary chat-box-language-option js-aiassistant-site-language"
+                                    type="button"
+                                    data-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.use_site_language')}"
+                                ></button>
+                                <div class="chat-box-language-input">
+                                    <f:form.textfield
+                                        id="aiassistant-language-{contentElementUid}"
+                                        name="userLanguage"
+                                        class="form-control js-aiassistant-language"
+                                        list="aiassistant-languages-{contentElementUid}"
+                                        maxlength="80"
+                                        autocomplete="off"
+                                        additionalAttributes="{dir: 'auto'}"
+                                        placeholder="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.response_language_placeholder')}"
+                                    />
+                                    <button
+                                        class="btn btn-primary js-aiassistant-language-apply"
+                                        type="button"
+                                        aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.apply_language')}"
+                                        title="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.apply_language')}"
+                                        disabled="disabled"
+                                    >✓</button>
+                                </div>
+                            </div>
+                            <datalist id="aiassistant-languages-{contentElementUid}">
+                                <option value="Deutsch (de)"></option>
+                                <option value="English (en)"></option>
+                                <option value="Español (es)"></option>
+                                <option value="Français (fr)"></option>
+                                <option value="Italiano (it)"></option>
+                                <option value="Polski (pl)"></option>
+                                <option value="Português (pt)"></option>
+                                <option value="Türkçe (tr)"></option>
+                                <option value="العربية (ar)"></option>
+                                <option value="فارسی (fa)"></option>
+                                <option value="اردو (ur)"></option>
+                                <option value="Русский (ru)"></option>
+                                <option value="Українська (uk)"></option>
+                                <option value="हिन्दी (hi)"></option>
+                                <option value="বাংলা (bn)"></option>
+                                <option value="中文 (zh)"></option>
+                                <option value="日本語 (ja)"></option>
+                                <option value="한국어 (ko)"></option>
+                            </datalist>
+                        </div>
+                    </f:if>
+
+                    <p class="chat-box-intro">
+                        <f:if condition="{assistantIntroText}">
+                            <f:then>{assistantIntroText}</f:then>
+                            <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.intro" /></f:else>
+                        </f:if>
+                    </p>
+                </header>
+
                 <f:form.hidden name="assistantProfile" value="{assistantProfile.uid}" />
                 <f:form.hidden name="chatIdentifier" value="{chatIdentifier}" />
                 <f:form.hidden name="startTimestamp" value="{startTimestamp}" />
                 <f:form.hidden name="settingsJson" value="{settingsJson}" />
+                <f:form.hidden name="directInteraction" value="" class="js-aiassistant-direct-interaction" />
 
-                <div class="input-group">
+                <f:render partial="Index/ChatBox" arguments="{_all}" />
+
+                <div class="input-group mt-4">
                     <f:form.textfield
                         name="query"
                         class="form-control chat-box-input js-aiassistant-input"
                         placeholder="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.input_placeholder')}"
                         aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.input_aria_label')}"
+                        additionalAttributes="{dir: 'auto'}"
                         required="required"
                         autocomplete="off"
                     />

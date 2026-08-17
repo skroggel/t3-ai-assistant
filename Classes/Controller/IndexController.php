@@ -5,6 +5,7 @@ namespace Madj2k\AiAssistant\Controller;
 
 use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiAssistant\Assistant\Frontend\PluginConfigurationResolver;
+use Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
@@ -24,6 +25,18 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * Constructor.
+     *
+     * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant repository.
+     * @param \Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver $chatOptionsResolver Chat options resolver.
+     */
+    public function __construct(
+        AssistantProfileRepository $assistantProfileRepository,
+        private readonly ChatOptionsResolver $chatOptionsResolver,
+    ) {
+        parent::__construct($assistantProfileRepository);
+    }
 
     /**
      * Renders the index view.
@@ -36,6 +49,8 @@ class IndexController extends AbstractController
             ? $this->assistantProfileRepository->findByUid((int)$this->settings['assistantProfile'])
             : null;
 
+        $chatOptions = $this->chatOptionsResolver->resolve($this->settings, $this->resolveSiteLanguage());
+
         $this->view->assignMultiple([
             'pageUid' => (int)($this->currentContentObject->data['pid'] ?? 0),
             'contentElementUid' => (int)($this->currentContentObject->data['uid'] ?? 0),
@@ -43,6 +58,8 @@ class IndexController extends AbstractController
             'assistantProfile' => $assistantProfile,
             'startTimestamp' => time(),
             'settingsJson' => $this->jsonEncodeSettings($this->settings),
+            'chatOptionsJson' => $this->jsonEncodeSettings($this->chatOptionsResolver->toFrontendOptions($chatOptions)),
+            'showLanguageSelector' => $this->chatOptionsResolver->showLanguageSelector($this->settings),
         ]);
 
         return $this->htmlResponse();

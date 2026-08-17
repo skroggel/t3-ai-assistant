@@ -7,6 +7,18 @@
     --bs-secondary: #D6D6D6BF;
 }
 
+.aiassistant-visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
 .chat-box {
     max-width: 700px;
     margin: 0 auto;
@@ -14,6 +26,31 @@
 
 .chat-box-header {
     margin-bottom: 1rem;
+}
+
+.chat-box-header-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.chat-box-language-toggle {
+    max-width: 100%;
+    white-space: normal;
+}
+
+.chat-box-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.chat-box-language-shortcut {
+    max-width: 100%;
+    white-space: normal;
 }
 
 .chat-box-brand {
@@ -26,8 +63,49 @@
 }
 
 .chat-box-intro {
-    margin: 0;
+    margin: 0.25rem 0 0;
     color: var(--bs-secondary-color);
+}
+
+.chat-box-language {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.5rem;
+}
+
+.chat-box-language + .chat-box-intro {
+    margin-top: 0.75rem;
+}
+
+.chat-box-language-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 0.5rem;
+}
+
+.chat-box-language-option {
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+}
+
+.chat-box-language-input {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    min-width: 0;
+}
+
+.chat-box-language-input .form-control {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+@media (max-width: 36rem) {
+    .chat-box-language-options {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ==========================================================================

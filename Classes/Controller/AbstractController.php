@@ -7,9 +7,10 @@ use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 
 /**
- * Class IndexController
+ * Class AbstractController
  *
  * Renders the frontend chat plugin and exposes only the assistant selected in
  * the plugin configuration to the JavaScript client.
@@ -96,5 +97,20 @@ abstract class AbstractController extends ActionController
         $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
 
         return $request instanceof ServerRequestInterface ? $request : null;
+    }
+
+
+    /**
+     * Resolves the current TYPO3 site language as a locale identifier.
+     *
+     * @return string Current locale or an empty string when unavailable.
+     */
+    protected function resolveSiteLanguage(): string
+    {
+        $siteLanguage = $this->resolveServerRequest()?->getAttribute('language');
+
+        return $siteLanguage instanceof SiteLanguage
+            ? str_replace('_', '-', (string)$siteLanguage->getLocale())
+            : '';
     }
 }

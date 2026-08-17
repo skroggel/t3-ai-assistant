@@ -8,6 +8,7 @@ Integrators
     :maxdepth: 2
 
     AssistantProfiles
+    ChatConfiguration
     PipelineSteps
     RetrievalConfiguration
     ContextOptimization
@@ -16,4 +17,3 @@ Integrators
     MetadataHandling
     SourceAttribution
     DefaultConfigurations
-

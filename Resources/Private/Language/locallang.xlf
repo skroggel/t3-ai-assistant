@@ -57,6 +57,17 @@
 			<trans-unit id="templates_index_index.submit" resname="templates_index_index.submit">
 				<source>Send</source>
 			</trans-unit>
+			<trans-unit id="templates_index_index.response_language" resname="templates_index_index.response_language"><source>Response language</source></trans-unit>
+			<trans-unit id="templates_index_index.response_language_placeholder" resname="templates_index_index.response_language_placeholder"><source>Aa / العربية / 文 / Я</source></trans-unit>
+			<trans-unit id="templates_index_index.response_language_help" resname="templates_index_index.response_language_help"><source>Choose a suggestion or enter any language in your own script. Leave empty to use the website language.</source></trans-unit>
+			<trans-unit id="templates_index_index.use_browser_language" resname="templates_index_index.use_browser_language"><source>Use browser language</source></trans-unit>
+			<trans-unit id="templates_index_index.use_site_language" resname="templates_index_index.use_site_language"><source>Use website language</source></trans-unit>
+			<trans-unit id="templates_index_index.apply_language" resname="templates_index_index.apply_language"><source>Use selected language</source></trans-unit>
+			<trans-unit id="templates_index_index.chat_history" resname="templates_index_index.chat_history"><source>Chat history</source></trans-unit>
+			<trans-unit id="templates_index_index.user_label" resname="templates_index_index.user_label"><source>User message</source></trans-unit>
+			<trans-unit id="templates_index_index.assistant_label" resname="templates_index_index.assistant_label"><source>AI assistant</source></trans-unit>
+			<trans-unit id="templates_index_index.loading" resname="templates_index_index.loading"><source>AI assistant is preparing an answer.</source></trans-unit>
+			<trans-unit id="templates_index_index.error_message" resname="templates_index_index.error_message"><source>The answer could not be loaded.</source></trans-unit>
 			<trans-unit id="templates_index_index.error_suffix" resname="templates_index_index.error_suffix">
 				<source>[Error while loading answer.]</source>
 			</trans-unit>
