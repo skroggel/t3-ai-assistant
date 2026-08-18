@@ -71,6 +71,8 @@
                                 <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.brand" /></f:else>
                             </f:if>
                         </p>
+
+                        <f:comment><!-- Language selector --></f:comment>
                         <f:if condition="{showLanguageSelector}">
                             <div class="chat-box-header-actions">
                                 <button
@@ -93,6 +95,7 @@
                         </f:if>
                     </div>
 
+                    <f:comment><!-- Language selector menu--></f:comment>
                     <f:if condition="{showLanguageSelector}">
                         <div id="aiassistant-language-panel-{contentElementUid}" class="chat-box-language js-aiassistant-language-panel" hidden="hidden">
                             <label class="aiassistant-visually-hidden" for="aiassistant-language-{contentElementUid}">
@@ -161,8 +164,10 @@
                 <f:form.hidden name="settingsJson" value="{settingsJson}" />
                 <f:form.hidden name="directInteraction" value="" class="js-aiassistant-direct-interaction" />
 
+                <f:comment><!-- chatbox --></f:comment>
                 <f:render partial="Index/ChatBox" arguments="{_all}" />
 
+                <f:comment><!-- input field for chat --></f:comment>
                 <div class="input-group mt-4">
                     <f:form.textfield
                         name="query"

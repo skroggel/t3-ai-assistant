@@ -47,7 +47,7 @@ final readonly class SourceStateService
      * Returns whether a document can be skipped because the source is unchanged.
      *
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexableDocument $document Document.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexableDocument $document Document.
      * @param string $collection Collection name.
      * @param bool $onlyChanged Whether unchanged sources should be skipped.
      * @return bool Skip flag.
@@ -72,7 +72,7 @@ final readonly class SourceStateService
      * Marks a document as indexed.
      *
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexableDocument $document Document.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexableDocument $document Document.
      * @param string $collection Collection name.
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
@@ -102,7 +102,7 @@ final readonly class SourceStateService
      * Marks a document as failed.
      *
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexableDocument $document Document.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexableDocument $document Document.
      * @param string $collection Collection name.
      * @param \Throwable $exception Exception.
      * @return void
@@ -123,7 +123,7 @@ final readonly class SourceStateService
      * Marks a document as removed.
      *
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexableDocument $document Document.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexableDocument $document Document.
      * @param string $collection Collection name.
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
@@ -144,7 +144,7 @@ final readonly class SourceStateService
      * Returns all source hashes that may exist in vector storage for this source.
      *
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexableDocument $document Document.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexableDocument $document Document.
      * @param string $collection Collection name.
      * @return array<int, string> Source hashes for deletion.
      */
@@ -166,7 +166,7 @@ final readonly class SourceStateService
      * This hash identifies the logical source only. It intentionally does not include
      * vector storage, collection, indexer configuration or the content checksum.
      *
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexableDocument $document Document.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexableDocument $document Document.
      * @return string Stable source hash.
      */
     public function createSourceHash(IndexableDocument $document): string
@@ -196,7 +196,7 @@ final readonly class SourceStateService
      * Finds the source state for a document in one vector store collection.
      *
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexableDocument $document Document.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexableDocument $document Document.
      * @param string $collection Collection name.
      * @return \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerSource|null Source state.
      */
@@ -231,7 +231,7 @@ final readonly class SourceStateService
      * Returns an existing state or creates a new one.
      *
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
-     * @param \Madj2k\AiAssistant\Indexing\DTO\IndexableDocument $document Document.
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexableDocument $document Document.
      * @param string $collection Collection name.
      * @return \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerSource Source state.
      */

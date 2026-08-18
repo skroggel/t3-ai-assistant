@@ -95,7 +95,6 @@ class AiAssistantChatBox {
             messages: '.js-aiassistant-messages',
             input: '.js-aiassistant-input',
             typing: '.js-aiassistant-indicator',
-
             userMessageTemplate: '.js-aiassistant-user-message-template',
             botMessageTemplate: '.js-aiassistant-bot-message-template',
             typingTemplate: '.js-aiassistant-typing-template',
@@ -104,7 +103,6 @@ class AiAssistantChatBox {
             chatContent: '.js-aiassistant-chat-content',
             initButton: '.js-aiassistant-init',
             status: '.js-aiassistant-status',
-
             languageToggle: '.js-aiassistant-language-toggle',
             languagePanel: '.js-aiassistant-language-panel',
             languageStatus: '.js-aiassistant-language-status',
@@ -205,10 +203,10 @@ class AiAssistantChatBox {
          *
          * @type {AiAssistantChatBoxOptions}
          */
-        const formOptions = AiAssistantChatBox.parseOptions(form?.dataset?.chatOptions || '');
-        this.options = AiAssistantChatBox.mergeOptions(
-            AiAssistantChatBox.defaults,
-            AiAssistantChatBox.mergeOptions(options, formOptions),
+        const formOptions = ___AiAssistantChatBox.parseOptions(form?.dataset?.chatOptions || '');
+        this.options = ___AiAssistantChatBox.mergeOptions(
+            ___AiAssistantChatBox.defaults,
+            ___AiAssistantChatBox.mergeOptions(options, formOptions),
         );
 
         /**
@@ -390,15 +388,15 @@ class AiAssistantChatBox {
      *
      * @param {ParentNode} root Root node used for form lookup.
      * @param {Partial<AiAssistantChatBoxOptions>} options Optional configuration overrides.
-     * @return {Array<AiAssistantChatBox>}
+     * @return {Array<___AiAssistantChatBox>}
      */
     static init(root = document, options = {}) {
-        const mergedOptions = AiAssistantChatBox.mergeOptions(AiAssistantChatBox.defaults, options);
+        const mergedOptions = ___AiAssistantChatBox.mergeOptions(___AiAssistantChatBox.defaults, options);
         const instances = [];
 
         root.querySelectorAll(mergedOptions.selectors.form).forEach((form) => {
             if (form instanceof HTMLFormElement) {
-                instances.push(new AiAssistantChatBox(form, mergedOptions));
+                instances.push(new ___AiAssistantChatBox(form, mergedOptions));
             }
         });
 
@@ -422,7 +420,7 @@ class AiAssistantChatBox {
                 && !Array.isArray(value)
                 && !(value instanceof Element)
             ) {
-                merged[key] = AiAssistantChatBox.mergeOptions(defaults[key] || {}, value);
+                merged[key] = ___AiAssistantChatBox.mergeOptions(defaults[key] || {}, value);
                 return;
             }
 

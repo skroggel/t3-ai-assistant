@@ -5,31 +5,31 @@ services:
     public: false
 
   _instanceof:
-    Madj2k\AiAssistant\Indexing\Adapter\AdapterInterface:
+    Madj2k\AiCore\Indexing\Adapter\AdapterInterface:
       tags:
         - name: 'aiassistant.indexing.adapter'
 
-    Madj2k\AiAssistant\Indexing\Indexer\IndexerInterface:
+    Madj2k\AiCore\Indexing\Indexer\IndexerInterface:
       tags:
         - name: 'aiassistant.indexing.indexer'
 
-    Madj2k\AiAssistant\Indexing\Connector\ConnectorInterface:
+    Madj2k\AiCore\Indexing\Connector\ConnectorInterface:
       tags:
         - name: 'aiassistant.indexing.connector'
 
-    Madj2k\AiAssistant\Assistant\Pipeline\Processor\ProcessorInterface:
+    Madj2k\AiCore\Assistant\Pipeline\Processor\ProcessorInterface:
       tags:
         - name: 'aiassistant.assistant.pipeline.processor'
 
-    Madj2k\AiAssistant\Assistant\Prompt\Context\Builder\ContextBuilderInterface:
+    Madj2k\AiCore\Assistant\Prompt\Context\Builder\ContextBuilderInterface:
       tags:
         - name: 'aiassistant.assistant.prompt.context_builder'
 
-    Madj2k\AiAssistant\Connection\Ai\AiConnectorInterface:
+    Madj2k\AiCore\Connection\Ai\AiConnectorInterface:
       tags:
         - name: 'aiassistant.connection.ai_connector'
 
-    Madj2k\AiAssistant\Connection\VectorStore\VectorStoreConnectorInterface:
+    Madj2k\AiCore\Connection\VectorStore\VectorStoreConnectorInterface:
       tags:
         - name: 'aiassistant.connection.vector_store_connector'
 
@@ -64,67 +64,76 @@ services:
   Madj2k\AiAssistant\Indexing\TCA\IndexerItems:
     public: true
 
-  Madj2k\AiAssistant\Assistant\Pipeline\Registry\ProcessorRegistry:
+  # Framework-independent ai-core services are registered directly. The
+  # extension only provides their TYPO3-specific collaborators and adapters.
+  Madj2k\AiCore\Assistant\Application\Orchestrator: ~
+
+  Madj2k\AiCore\Assistant\Context\ContextFactory: ~
+
+  Madj2k\AiCore\Assistant\Context\Assistant\AssistantContextFactory: ~
+
+  Madj2k\AiCore\Assistant\Context\Retrieval\AnswerContextBuilder: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\Pipeline: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\PipelineValidator: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\AnswerGeneratorProcessor: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\ContextOptimizerProcessor: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\QualityGateProcessor: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\QueryOptimizerProcessor: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\Processor\Retrieval\RetrievalReadProcessor: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\Processor\Retrieval\RetrievalWriteProcessor: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\Processor\Retrieval\RetrieverProcessor: ~
+
+  Madj2k\AiCore\Assistant\Pipeline\Registry\ProcessorRegistry:
     arguments:
       $processors: !tagged_iterator 'aiassistant.assistant.pipeline.processor'
 
-  Madj2k\AiAssistant\Assistant\Prompt\Context\Registry\ContextBuilderRegistry:
+  Madj2k\AiCore\Assistant\Prompt\Context\Builder\AnswerCandidateContextBuilder: ~
+
+  Madj2k\AiCore\Assistant\Prompt\Context\Builder\QueryContextBuilder: ~
+
+  Madj2k\AiCore\Assistant\Prompt\Context\Builder\RetrievalContextBuilder: ~
+
+  Madj2k\AiCore\Assistant\Prompt\Context\Registry\ContextBuilderRegistry:
     arguments:
       $builders: !tagged_iterator 'aiassistant.assistant.prompt.context_builder'
 
-  # ai-core owns the framework-independent assistant runtime. These aliases bind
-  # its contracts and collaborators to the TYPO3 services exposed by this extension.
-  Madj2k\AiCore\Assistant\Application\Orchestrator:
-    alias: Madj2k\AiAssistant\Assistant\Application\Orchestrator
+  Madj2k\AiCore\Assistant\Prompt\Context\Formatter: ~
 
-  Madj2k\AiCore\Assistant\Context\ContextFactory:
-    alias: Madj2k\AiAssistant\Assistant\Context\ContextFactory
+  Madj2k\AiCore\Assistant\Prompt\PromptBuilder: ~
 
-  Madj2k\AiCore\Assistant\Context\Assistant\AssistantContextFactory:
-    alias: Madj2k\AiAssistant\Assistant\Context\Assistant\AssistantContextFactory
-
-  Madj2k\AiCore\Assistant\Pipeline\Pipeline:
-    alias: Madj2k\AiAssistant\Assistant\Pipeline\Pipeline
-
-  Madj2k\AiCore\Assistant\Pipeline\PipelineValidator:
-    alias: Madj2k\AiAssistant\Assistant\Pipeline\PipelineValidator
-
-  Madj2k\AiCore\Assistant\Pipeline\Registry\ProcessorRegistry:
-    alias: Madj2k\AiAssistant\Assistant\Pipeline\Registry\ProcessorRegistry
-
-  Madj2k\AiCore\Assistant\Prompt\PromptBuilder:
-    alias: Madj2k\AiAssistant\Assistant\Prompt\PromptBuilder
-
-  Madj2k\AiCore\Assistant\Prompt\Context\Registry\ContextBuilderRegistry:
-    alias: Madj2k\AiAssistant\Assistant\Prompt\Context\Registry\ContextBuilderRegistry
-
-  Madj2k\AiCore\Assistant\Prompt\Context\Formatter:
-    alias: Madj2k\AiAssistant\Assistant\Prompt\Context\Formatter
-
-  Madj2k\AiCore\Assistant\Context\Retrieval\AnswerContextBuilder:
-    alias: Madj2k\AiAssistant\Assistant\Context\Retrieval\AnswerContextBuilder
-
+  # ai-core contracts that require TYPO3-specific implementations.
   Madj2k\AiCore\Assistant\Log\PipelineLoggerInterface:
     alias: Madj2k\AiAssistant\Assistant\Log\PipelineLogger
 
   Madj2k\AiCore\Assistant\Memory\MemoryInterface:
     alias: Madj2k\AiAssistant\Assistant\Memory\SessionMemory
 
+  Madj2k\AiCore\Connection\Ai\OpenAiConnector: ~
+
+  Madj2k\AiCore\Connection\VectorStore\QdrantVectorStoreConnector: ~
+
   Madj2k\AiCore\Connection\Resolver\AiConnectorResolver:
-    alias: Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry
+    arguments:
+      $connectors: !tagged_iterator 'aiassistant.connection.ai_connector'
 
   Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver:
-    alias: Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry
-
-  Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry:
     arguments:
-      $indexers: !tagged_iterator 'aiassistant.indexing.indexer'
+      $connectors: !tagged_iterator 'aiassistant.connection.vector_store_connector'
 
-  Madj2k\AiCore\Indexing\Registry\IndexerRegistry:
-    alias: Madj2k\AiAssistant\Indexing\Registry\IndexerRegistry
+  Madj2k\AiCore\Indexing\Adapter\JsonAdapter: ~
 
-  Madj2k\AiCore\Indexing\TextChunker:
-    alias: Madj2k\AiAssistant\Indexing\Service\TextChunkerService
+  Madj2k\AiCore\Indexing\Adapter\PlainAdapter: ~
+
+  Madj2k\AiCore\Indexing\TextChunker: ~
 
   Madj2k\AiCore\Indexing\Identity\SourceIdentityGenerator: ~
 
@@ -132,27 +141,17 @@ services:
 
   Madj2k\AiCore\Connection\Health\ConnectionHealthChecker: ~
 
-  Madj2k\AiAssistant\Indexing\Registry\AdapterRegistry:
+  Madj2k\AiCore\Indexing\Resolver\AdapterResolver:
     arguments:
       $adapters: !tagged_iterator 'aiassistant.indexing.adapter'
 
-  Madj2k\AiCore\Indexing\Resolver\AdapterResolver:
-    alias: Madj2k\AiAssistant\Indexing\Registry\AdapterRegistry
-
-  Madj2k\AiAssistant\Indexing\Registry\ConnectorRegistry:
+  Madj2k\AiCore\Indexing\Resolver\IndexingConnectorResolver:
     arguments:
       $connectors: !tagged_iterator 'aiassistant.indexing.connector'
 
-  Madj2k\AiCore\Indexing\Resolver\IndexingConnectorResolver:
-    alias: Madj2k\AiAssistant\Indexing\Registry\ConnectorRegistry
-
-  Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry:
+  Madj2k\AiCore\Indexing\Registry\IndexerRegistry:
     arguments:
-      $connectors: !tagged_iterator 'aiassistant.connection.ai_connector'
-
-  Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry:
-    arguments:
-      $connectors: !tagged_iterator 'aiassistant.connection.vector_store_connector'
+      $indexers: !tagged_iterator 'aiassistant.indexing.indexer'
 
   Madj2k\AiAssistant\Backend\Configuration\BackendRegistryFieldProvider:
     arguments:
