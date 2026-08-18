@@ -16,7 +16,7 @@ use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
-use Madj2k\AiAssistant\Connection\VectorStore\DTO\VectorCollection;
+use Madj2k\AiCore\Connection\VectorStore\DTO\VectorCollection;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 
@@ -37,8 +37,8 @@ final class BackendConnectionTestHandler
      *
      * @param \Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository $aiConnectionRepository AI connection repository.
      * @param \Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository $vectorStoreConnectionRepository Vector store connection repository.
-     * @param \Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry $aiConnectorRegistry AI connector registry.
-     * @param \Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry $vectorStoreConnectorRegistry Vector store connector registry.
+     * @param \Madj2k\AiCore\Connection\Resolver\AiConnectorResolver $aiConnectorRegistry AI connector registry.
+     * @param \Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver $vectorStoreConnectorRegistry Vector store connector registry.
      * @param \Madj2k\AiAssistant\Backend\Response\BackendFlashMessageService $flashMessageService Flash message service.
      */
     public function __construct(

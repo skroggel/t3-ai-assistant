@@ -12,7 +12,7 @@ namespace Madj2k\AiAssistant\Backend\Purge;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
 use Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver as VectorStoreConnectorRegistry;
-use Madj2k\AiAssistant\Connection\VectorStore\DTO\VectorCollection;
+use Madj2k\AiCore\Connection\VectorStore\DTO\VectorCollection;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -26,7 +26,7 @@ final class BackendPurgeHandler
      * Constructor.
      *
      * @param \Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository $vectorStoreConnectionRepository Vector store connection repository.
-     * @param \Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry $vectorStoreConnectorRegistry Vector store connector registry.
+     * @param \Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver $vectorStoreConnectorRegistry Vector store connector registry.
      * @param \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool Connection pool.
      */
     public function __construct(

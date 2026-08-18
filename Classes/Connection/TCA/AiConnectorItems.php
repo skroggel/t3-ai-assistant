@@ -27,7 +27,7 @@ class AiConnectorItems
     /**
      * Constructor.
      *
-     * @param \Madj2k\AiAssistant\Connection\Registry\AiConnectorRegistry $aiConnectorRegistry AI connector registry.
+     * @param \Madj2k\AiCore\Connection\Resolver\AiConnectorResolver $aiConnectorRegistry AI connector registry.
      */
     public function __construct(
         protected readonly AiConnectorRegistry $aiConnectorRegistry

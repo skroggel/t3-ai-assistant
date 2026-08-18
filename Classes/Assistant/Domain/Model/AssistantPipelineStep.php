@@ -275,7 +275,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Returns the typed step type.
      *
-     * @return \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType
+     * @return \Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType
      */
     public function getType(): AssistantPipelineProcessorType
     {
@@ -286,7 +286,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Sets the step type.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType|string $type Step type.
+     * @param \Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType|string $type Step type.
      * @return void
      */
     public function setType(AssistantPipelineProcessorType|string $type): void
@@ -330,7 +330,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Returns the typed stage.
      *
-     * @return \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineStage
+     * @return \Madj2k\AiCore\Assistant\Enum\AssistantPipelineStage
      */
     public function getStage(): AssistantPipelineStage
     {
@@ -341,7 +341,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Sets the stage.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineStage|string $stage Stage.
+     * @param \Madj2k\AiCore\Assistant\Enum\AssistantPipelineStage|string $stage Stage.
      * @return void
      */
     public function setStage(AssistantPipelineStage|string $stage): void
@@ -548,7 +548,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Returns the typed history mode.
      *
-     * @return \Madj2k\AiAssistant\Assistant\Enum\HistoryMode
+     * @return \Madj2k\AiCore\Assistant\Enum\HistoryMode
      */
     public function getHistoryMode(): HistoryMode
     {
@@ -559,7 +559,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Sets the history mode.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Enum\HistoryMode|string $historyMode History mode.
+     * @param \Madj2k\AiCore\Assistant\Enum\HistoryMode|string $historyMode History mode.
      * @return void
      */
     public function setHistoryMode(HistoryMode|string $historyMode): void
@@ -800,7 +800,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Returns the typed failure strategy.
      *
-     * @return \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineFailureStrategy
+     * @return \Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy
      */
     public function getFailureStrategy(): AssistantPipelineFailureStrategy
     {
@@ -816,7 +816,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Sets the failure strategy.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineFailureStrategy|string $failureStrategy Failure strategy.
+     * @param \Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy|string $failureStrategy Failure strategy.
      * @return void
      */
     public function setFailureStrategy(AssistantPipelineFailureStrategy|string $failureStrategy): void

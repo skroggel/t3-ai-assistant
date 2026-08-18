@@ -31,7 +31,7 @@ class ChatController extends AbstractController
     /**
      * Constructor.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Application\Orchestrator $orchestrator Chat turn orchestrator.
+     * @param \Madj2k\AiCore\Assistant\Application\Orchestrator $orchestrator Chat turn orchestrator.
      * @param \Madj2k\AiAssistant\Assistant\Http\SseResponseFactory $sseResponseFactory SSE response factory.
      * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant profile repository.
      * @param \Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver $chatOptionsResolver Chat options resolver.
