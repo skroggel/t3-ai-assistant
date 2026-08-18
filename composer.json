@@ -14,7 +14,7 @@
 	],
     "license": "GPL-2.0-or-later",
     "require": {
-        "madj2k/ai-core": "@dev",
+        "madj2k/ai-core": "^1.0",
         "typo3/cms-core": "^13.4 || ^14.3",
         "psr/log": "^3.0"
 	},
@@ -28,8 +28,6 @@
     },
     "extra": {
         "typo3/cms": {
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "web-dir": ".Build/public",
             "extension-key": "ai_assistant"
         }
     }
