@@ -1,0 +1,40 @@
+<?php
+declare(strict_types=1);
+
+namespace Madj2k\AiAssistant\Tests\Unit\Connection;
+
+use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantPipelineStep;
+use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
+use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
+use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
+use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
+use Madj2k\AiCore\Assistant\Configuration\AssistantConfigurationInterface;
+use Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface;
+use Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy;
+use Madj2k\AiCore\Connection\Configuration\AiConnectionConfigurationInterface;
+use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
+use Madj2k\AiCore\Indexing\Configuration\IndexingConfigurationInterface;
+use PHPUnit\Framework\TestCase;
+
+final class CoreContractTest extends TestCase
+{
+    public function testExtbaseModelsImplementCoreConfigurationContracts(): void
+    {
+        self::assertInstanceOf(AiConnectionConfigurationInterface::class, new AiConnection());
+        self::assertInstanceOf(VectorStoreConnectionConfigurationInterface::class, new VectorStoreConnection());
+        self::assertInstanceOf(AssistantConfigurationInterface::class, new AssistantProfile());
+        self::assertInstanceOf(PipelineStepConfigurationInterface::class, new AssistantPipelineStep());
+        self::assertInstanceOf(IndexingConfigurationInterface::class, new IndexerConfig());
+    }
+
+    public function testPipelineStepNormalizesLegacyFallbackStrategy(): void
+    {
+        $pipelineStep = new AssistantPipelineStep();
+        self::assertSame(AssistantPipelineFailureStrategy::Continue, $pipelineStep->getFailureStrategy());
+
+        $pipelineStep->setFailureStrategy('fallback');
+
+        self::assertSame(AssistantPipelineFailureStrategy::Continue, $pipelineStep->getFailureStrategy());
+        self::assertSame('continue', $pipelineStep->getFailureStrategyValue());
+    }
+}

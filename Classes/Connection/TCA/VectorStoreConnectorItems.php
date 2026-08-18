@@ -27,7 +27,7 @@ class VectorStoreConnectorItems
     /**
      * Constructor.
      *
-     * @param \Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry $vectorStoreConnectorRegistry Vector store connector registry.
+     * @param \Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver $vectorStoreConnectorRegistry Vector store connector registry.
      */
     public function __construct(
         protected readonly VectorStoreConnectorRegistry $vectorStoreConnectorRegistry

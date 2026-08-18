@@ -90,7 +90,7 @@ final class SessionMemory implements MemoryInterface
      * @param string $role Message role.
      * @param string $content Message content.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function addMessage(string $chatIdentifier, string $role, string $content): void
     {
@@ -116,8 +116,8 @@ final class SessionMemory implements MemoryInterface
      * Stores the last retrieval result for a conversation.
      *
      * @param string $chatIdentifier Conversation identifier.
-     * @param \Madj2k\AiAssistant\Assistant\Context\Retrieval\RetrievalResult $retrievalResult Retrieval result.
-     * @return \Madj2k\AiAssistant\Assistant\DTO\LastRetrievalResult|null Stored retrieval result.
+     * @param \Madj2k\AiCore\Assistant\Context\Retrieval\RetrievalResult $retrievalResult Retrieval result.
+     * @return \Madj2k\AiCore\Assistant\DTO\LastRetrievalResult|null Stored retrieval result.
      */
     public function setLastRetrievalResult(string $chatIdentifier, RetrievalResult $retrievalResult): ?LastRetrievalResult
     {
@@ -150,7 +150,7 @@ final class SessionMemory implements MemoryInterface
      * Returns the last retrieval result for a conversation.
      *
      * @param string $chatIdentifier Conversation identifier.
-     * @return \Madj2k\AiAssistant\Assistant\DTO\LastRetrievalResult|null Retrieval result.
+     * @return \Madj2k\AiCore\Assistant\DTO\LastRetrievalResult|null Retrieval result.
      */
     public function getLastRetrievalResult(string $chatIdentifier): ?LastRetrievalResult
     {
@@ -177,11 +177,11 @@ final class SessionMemory implements MemoryInterface
      * Returns retrieved documents from the last retrieval result.
      *
      * @param string $chatIdentifier Conversation identifier.
-     * @return array<int,\Madj2k\AiAssistant\Assistant\DTO\RetrievalDocument>
+     * @return array<int,\Madj2k\AiCore\Assistant\DTO\RetrievalDocument>
      */
     public function getLastRetrievalDocuments(string $chatIdentifier): array
     {
-        /** @var \Madj2k\AiAssistant\Assistant\DTO\LastRetrievalResult|null $retrievalResult */
+        /** @var \Madj2k\AiCore\Assistant\DTO\LastRetrievalResult|null $retrievalResult */
         $retrievalResult = $this->getLastRetrievalResult($chatIdentifier);
         if (!$retrievalResult instanceof LastRetrievalResult) {
             return [];
@@ -210,7 +210,7 @@ final class SessionMemory implements MemoryInterface
      * @param array<string,mixed> $conversations Stored conversations.
      * @param string $chatIdentifier Conversation identifier.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     private function trimMessages(array &$conversations, string $chatIdentifier): void
     {

@@ -34,7 +34,7 @@ final readonly class PipelineProcessorItems
     /**
      * Constructor.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Pipeline\Registry\ProcessorRegistry $processorRegistry Processor registry.
+     * @param \Madj2k\AiCore\Assistant\Pipeline\Registry\ProcessorRegistry $processorRegistry Processor registry.
      */
     public function __construct(
         protected ProcessorRegistry $processorRegistry
@@ -125,7 +125,7 @@ final readonly class PipelineProcessorItems
      * Resolves the selected pipeline processor type from the current TCA row.
      *
      * @param array<string, mixed> $parameters TCA parameters.
-     * @return \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType|null Selected type.
+     * @return \Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType|null Selected type.
      */
     protected function resolveSelectedType(array $parameters): ?AssistantPipelineProcessorType
     {
