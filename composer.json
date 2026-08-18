@@ -1,5 +1,5 @@
 {
-    "name": "madj2k/ai-assistant",
+    "name": "madj2k/t3-ai-assistant",
     "type": "typo3-cms-extension",
     "description": "AI Assistant is a flexible TYPO3 extension for building AI-powered assistants based on Retrieval-Augmented Generation (RAG), configurable processing pipelines, and pluggable AI and vector store integrations.",
     "authors": [
