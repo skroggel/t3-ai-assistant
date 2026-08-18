@@ -27,7 +27,7 @@ final class BackendPurgeProvider
      * Constructor.
      *
      * @param \Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository $vectorStoreConnectionRepository Vector store connection repository.
-     * @param \Madj2k\AiAssistant\Connection\Registry\VectorStoreConnectorRegistry $vectorStoreConnectorRegistry Vector store connector registry.
+     * @param \Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver $vectorStoreConnectorRegistry Vector store connector registry.
      * @param \Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository $indexerConfigRepository Indexer repository.
      * @param \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool Connection pool.
      */

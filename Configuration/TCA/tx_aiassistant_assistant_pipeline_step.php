@@ -83,7 +83,7 @@ return [
                 'renderType' => 'selectSingle',
                 'required' => true,
                 'items' => \Madj2k\AiAssistant\Assistant\TCA\PipelineStepTypeConfiguration::getItems(),
-                'default' => \Madj2k\AiAssistant\Assistant\Enum\AssistantPipelineProcessorType::QueryOptimizer->value,
+                'default' => \Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType::QueryOptimizer->value,
             ],
         ],
         'processor_identifier' => [

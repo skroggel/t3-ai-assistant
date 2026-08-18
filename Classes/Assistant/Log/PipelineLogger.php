@@ -69,7 +69,7 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Creates a trace context for one chat request.
      *
-     * @param \Madj2k\AiAssistant\Assistant\DTO\AssistantRequest $assistantRequest
+     * @param \Madj2k\AiCore\Assistant\DTO\AssistantRequest $assistantRequest
      * @param string $route Route name.
      * @return PipelineLogMetaData
      */
@@ -90,10 +90,10 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Logs the start of a chat request.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param array<string,mixed> $payload Additional payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function startChat(PipelineLogMetaData $logMetaData, array $payload = []): void
     {
@@ -104,10 +104,10 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Logs the end of a chat request.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param array<string,mixed> $payload Additional payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function finishChat(PipelineLogMetaData $logMetaData, array $payload = []): void
     {
@@ -119,10 +119,10 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Logs a failed chat request.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param array<string,mixed> $payload Additional payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function failChat(PipelineLogMetaData $logMetaData, array $payload = []): void
     {
@@ -134,12 +134,12 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Logs the start of a pipeline step.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param string $stepTitle Step title.
      * @param string $processorType Processor type.
      * @param array<string,mixed> $payload Additional payload.
      * @return float Step start time as microtime.
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function startStep(
         PipelineLogMetaData $logMetaData,
@@ -161,13 +161,13 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Logs the end of a pipeline step.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param string $stepTitle Step title.
      * @param string $processorType Processor type.
      * @param float $startedAt Step start time as microtime.
      * @param array<string,mixed> $payload Additional payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function finishStep(
         PipelineLogMetaData $logMetaData,
@@ -187,13 +187,13 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Logs an LLM request including role based messages.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param string $stepTitle Step title.
      * @param string $processorType Processor type.
      * @param array<int,array<string,mixed>> $messages Role based messages.
      * @param array<string,mixed> $options LLM options.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function logLlmRequest(
         PipelineLogMetaData $logMetaData,
@@ -217,13 +217,13 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Logs an LLM response.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param string $stepTitle Step title.
      * @param string $processorType Processor type.
      * @param string $response Response text.
      * @param array<string,mixed> $payload Additional payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function logLlmResponse(
         PipelineLogMetaData $logMetaData,
@@ -244,12 +244,12 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Logs a retrieval request.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param string $stepTitle Step title.
      * @param string $connectorType Connector type.
      * @param array<string,mixed> $payload Retrieval request payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function logRetrievalRequest(
         PipelineLogMetaData $logMetaData,
@@ -267,12 +267,12 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * Logs a retrieval response.
      *
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param string $stepTitle Step title.
      * @param string $connectorType Connector type.
      * @param array<string,mixed> $payload Retrieval response payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function logRetrievalResponse(
         PipelineLogMetaData $logMetaData,
@@ -291,10 +291,10 @@ class PipelineLogger implements PipelineLoggerInterface
      * Logs a generic pipeline event.
      *
      * @param string $eventName Event name.
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param array<string,mixed> $payload Event payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function event(string $eventName, PipelineLogMetaData $logMetaData, array $payload = []): void
     {
@@ -306,10 +306,10 @@ class PipelineLogger implements PipelineLoggerInterface
      * Logs an error event.
      *
      * @param string $eventName Event name.
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param array<string,mixed> $payload Event payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     public function error(string $eventName, PipelineLogMetaData $logMetaData, array $payload = []): void
     {
@@ -322,10 +322,10 @@ class PipelineLogger implements PipelineLoggerInterface
      *
      * @param string $level Log level.
      * @param string $eventName Event name.
-     * @param \Madj2k\AiAssistant\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
      * @param array<string,mixed> $payload Event payload.
      * @return void
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     protected function log(string $level, string $eventName, PipelineLogMetaData $logMetaData, array $payload = []): void
     {
@@ -379,7 +379,7 @@ class PipelineLogger implements PipelineLoggerInterface
 
     /**
      * @return bool True when trace events should also be written to the PSR log.
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     protected function shouldAlsoWritePsrLog(): bool
     {
@@ -389,7 +389,7 @@ class PipelineLogger implements PipelineLoggerInterface
 
     /**
      * @return string Configured tracing mode.
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     protected function getMode(): string
     {
@@ -465,7 +465,7 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * @param mixed $value Value.
      * @return mixed Sanitized value.
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     protected function sanitizeValue(string $key, mixed $value): mixed
     {
@@ -500,7 +500,7 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * @param string $value Value.
      * @return string Truncated value.
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     protected function truncate(string $value): string
     {
@@ -518,7 +518,7 @@ class PipelineLogger implements PipelineLoggerInterface
     /**
      * @param $data
      * @return string
-     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
      */
     function truncatedJson($data): string
     {
