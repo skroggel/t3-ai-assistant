@@ -40,7 +40,7 @@ return [
         ],
 
         'retrieval' => [
-            'showitem' => 'max_retrieval_results, --linebreak--, score_threshold, --linebreak--, prompt_metadata_fields',
+            'showitem' => 'retrieval_vector_store_connection, --linebreak--, retrieval_collection, --linebreak--, max_retrieval_results, --linebreak--, score_threshold, --linebreak--, max_context_chunks, --linebreak--, max_context_characters, --linebreak--, prompt_metadata_fields',
         ],
 
         'context' => [
@@ -237,6 +237,28 @@ return [
                 'type' => 'number',
                 'format' => 'integer',
                 'default' => 8,
+            ],
+        ],
+        'retrieval_vector_store_connection' => [
+            'onChange' => 'reload',
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection.description',
+            'config' => [
+                'type' => 'group',
+                'allowed' => 'tx_aiassistant_connection_vector_database',
+                'size' => 1,
+                'minitems' => 0,
+                'maxitems' => 1,
+            ],
+        ],
+        'retrieval_collection' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_collection',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_collection.description',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'itemsProcFunc' => \Madj2k\AiAssistant\Assistant\TCA\PipelineCollectionItems::class . '->items',
+                'default' => '',
             ],
         ],
         'score_threshold' => [

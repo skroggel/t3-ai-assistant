@@ -10,20 +10,20 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Backend\Diagnostics;
 
+use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
+use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiCore\Connection\Health\ConnectionHealthChecker;
-use Madj2k\AiAssistant\Backend\Response\BackendFlashMessageService;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
 use Madj2k\AiCore\Connection\VectorStore\DTO\VectorCollection;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 
 /**
  * Class BackendConnectionTestHandler
  *
- * Handles backend connection tests for configured connection records.
+ * Handles backend tests for connection records and assistant configurations.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>
@@ -37,15 +37,16 @@ final class BackendConnectionTestHandler
      *
      * @param \Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository $aiConnectionRepository AI connection repository.
      * @param \Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository $vectorStoreConnectionRepository Vector store connection repository.
-     * @param \Madj2k\AiCore\Connection\Resolver\AiConnectorResolver $aiConnectorRegistry AI connector registry.
-     * @param \Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver $vectorStoreConnectorRegistry Vector store connector registry.
-     * @param \Madj2k\AiAssistant\Backend\Response\BackendFlashMessageService $flashMessageService Flash message service.
+     * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant profile repository.
+     * @param \Madj2k\AiCore\Connection\Health\ConnectionHealthChecker $connectionHealthChecker Connection health checker.
+     * @param \Madj2k\AiAssistant\Backend\Diagnostics\BackendAssistantTester $assistantTester Assistant configuration tester.
      */
     public function __construct(
         private readonly AiConnectionRepository $aiConnectionRepository,
         private readonly VectorStoreConnectionRepository $vectorStoreConnectionRepository,
+        private readonly AssistantProfileRepository $assistantProfileRepository,
         private readonly ConnectionHealthChecker $connectionHealthChecker,
-        private readonly BackendFlashMessageService $flashMessageService
+        private readonly BackendAssistantTester $assistantTester
     ) {
     }
 
@@ -58,7 +59,8 @@ final class BackendConnectionTestHandler
      */
     public function supports(object $request): bool
     {
-        return $this->getRequestArgument($request, 'testConnection') !== '';
+        return $this->getRequestArgument($request, 'testConnection') !== ''
+            || $this->getRequestArgument($request, 'testAssistant') !== '';
     }
 
 
@@ -71,6 +73,12 @@ final class BackendConnectionTestHandler
      */
     public function handle(object $request, array &$state): void
     {
+        $assistantUid = (int)$this->getRequestArgument($request, 'testAssistant');
+        if ($assistantUid > 0) {
+            $this->handleAssistantTest($assistantUid, $state);
+            return;
+        }
+
         /** @var string $testIdentifier */
         $testIdentifier = $this->getRequestArgument($request, 'testConnection');
 
@@ -94,6 +102,32 @@ final class BackendConnectionTestHandler
         }
 
         $this->setResult($state, $testIdentifier, 'error', 'Unsupported connection test target.');
+    }
+
+
+    /**
+     * Handles an assistant configuration and connection test.
+     *
+     * @param int $uid Assistant profile uid.
+     * @param array<string, mixed> $state Mutable module state.
+     * @return void
+     */
+    private function handleAssistantTest(int $uid, array &$state): void
+    {
+        $assistant = $this->assistantProfileRepository->findByUid($uid);
+        if (!$assistant instanceof AssistantProfile) {
+            $this->setAssistantResult($state, $uid, 'error', 'Assistant profile record not found.', []);
+            return;
+        }
+
+        $result = $this->assistantTester->test($assistant);
+        $this->setAssistantResult(
+            $state,
+            $uid,
+            $result['status'],
+            $result['message'],
+            $result['checks'],
+        );
     }
 
 
@@ -177,7 +211,7 @@ final class BackendConnectionTestHandler
 
 
     /**
-     * Stores the test result and creates a flash message.
+     * Stores the connection test result for rendering in the diagnostics module.
      *
      * @param array<string, mixed> $state Mutable module state.
      * @param string $identifier Connection test identifier.
@@ -192,12 +226,32 @@ final class BackendConnectionTestHandler
             'status' => $status,
             'message' => $message,
         ];
+    }
 
-        $this->flashMessageService->add(
-            $message,
-            '',
-            $status === 'ok' ? ContextualFeedbackSeverity::OK : ContextualFeedbackSeverity::WARNING
-        );
+
+    /**
+     * Stores the assistant test result for rendering in the diagnostics module.
+     *
+     * @param array<string, mixed> $state Mutable module state.
+     * @param int $uid Assistant profile uid.
+     * @param string $status Status.
+     * @param string $message Summary message.
+     * @param array<int, array{status: string, label: string, message: string}> $checks Detailed checks.
+     * @return void
+     */
+    private function setAssistantResult(
+        array &$state,
+        int $uid,
+        string $status,
+        string $message,
+        array $checks,
+    ): void {
+        $state['assistantTestResult'] = [
+            'uid' => $uid,
+            'status' => $status,
+            'message' => $message,
+            'checks' => $checks,
+        ];
     }
 
 

@@ -28,6 +28,7 @@ Vector store connections configure vector databases. Typical fields are:
 * endpoint;
 * API key;
 * default collection;
+* additional allowed collections;
 * vector size;
 * distance metric;
 * additional provider options.
@@ -36,5 +37,6 @@ Connection tests
 ----------------
 
 The backend module provides connection tests for configured AI and vector store
-connections. Use those tests before debugging indexer or pipeline behaviour.
-
+connections. It also provides assistant profile tests that resolve step
+overrides and verify that every effective collection exists on the selected
+vector store. Use those tests before debugging indexer or pipeline behaviour.

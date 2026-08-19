@@ -81,7 +81,7 @@ class BackendController extends ActionController
 
 
     /**
-     * Shows and processes connection diagnostics.
+     * Shows and processes connection and assistant diagnostics.
      *
      * @return \Psr\Http\Message\ResponseInterface HTML response.
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException

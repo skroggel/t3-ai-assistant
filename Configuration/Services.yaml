@@ -55,6 +55,9 @@ services:
   Madj2k\AiAssistant\Assistant\TCA\PipelineProcessorItems:
     public: true
 
+  Madj2k\AiAssistant\Assistant\TCA\PipelineCollectionItems:
+    public: true
+
   Madj2k\AiAssistant\Indexing\TCA\AdapterItems:
     public: true
 

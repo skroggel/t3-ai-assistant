@@ -71,6 +71,82 @@
 			</table>
 		</div>
 	</div>
+
+	<div class="aiassistant-config__card">
+		<h2>Assistant diagnostics</h2>
+		<p class="aiassistant-config__intro">
+			Validate assistant pipelines and test the effective AI and vector store connections without running a chat request.
+		</p>
+
+		<f:if condition="{assistantTestResult}">
+			<div class="aiassistant-config__notice aiassistant-config__notice--{assistantTestResult.status}">
+				{assistantTestResult.message}
+			</div>
+			<ul class="aiassistant-config__diagnostic-checks">
+				<f:for each="{assistantTestResult.checks}" as="check">
+					<li class="aiassistant-config__notice aiassistant-config__notice--{check.status} aiassistant-config__diagnostic-check aiassistant-config__diagnostic-check--{check.status}">
+						<strong>{check.label}:</strong> {check.message}
+					</li>
+				</f:for>
+			</ul>
+		</f:if>
+
+		<div class="aiassistant-config__table-wrap">
+			<table class="aiassistant-config__table">
+				<thead>
+					<tr>
+						<th>Assistant</th>
+						<th>AI connection</th>
+						<th>Default vector store</th>
+						<th>Pipeline steps</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<f:for each="{assistants}" as="assistant">
+						<tr>
+							<td>
+								<strong>{assistant.title}</strong>
+								<div class="aiassistant-config__hint">UID {assistant.uid}</div>
+							</td>
+							<td>{assistant.aiConnection}</td>
+							<td>{assistant.vectorStoreConnection}</td>
+							<td>{assistant.stepCount}</td>
+							<td>
+								<f:if condition="{assistant.hidden}">
+									<f:then><span class="aiassistant-config__badge aiassistant-config__badge--empty">disabled</span></f:then>
+									<f:else><span class="aiassistant-config__badge aiassistant-config__badge--ok">enabled</span></f:else>
+								</f:if>
+							</td>
+							<td>
+								<div class="aiassistant-config__actions-inline">
+									<a class="aiassistant-config__button aiassistant-config__button--ghost" href="{assistant.editUrl}">Edit</a>
+									<f:if condition="{assistant.hidden}">
+										<f:then>
+											<button type="button" class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__button--disabled" disabled="disabled">Test</button>
+										</f:then>
+										<f:else>
+											<form action="{formAction}" method="post" class="aiassistant-config__inline-form">
+												<input type="hidden" name="formToken" value="{formToken}" />
+												<input type="hidden" name="testAssistant" value="{assistant.uid}" />
+												<button type="submit" class="aiassistant-config__button aiassistant-config__button--ghost">Test</button>
+											</form>
+										</f:else>
+									</f:if>
+								</div>
+							</td>
+						</tr>
+					</f:for>
+					<f:if condition="{assistants -> f:count()} == 0">
+						<tr>
+							<td colspan="6">No assistant profiles found.</td>
+						</tr>
+					</f:if>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 
 <f:asset.script identifier="aiassistant-backend" src="EXT:ai_assistant/Resources/Public/JavaScript/Backend.js" />

@@ -12,8 +12,9 @@ store. Indexing transforms source content into embeddings that can be searched.
 Can one assistant use multiple collections?
 -------------------------------------------
 
-The standard profile has one default collection. Advanced behaviour can be
-implemented through custom processors or separate assistants.
+A vector store connection defines its default and additional allowed collections.
+Each retriever step can select one of them, so a pipeline can combine multiple
+collections in one answer.
 
 Why are prompts stored in records?
 ----------------------------------
@@ -27,4 +28,3 @@ Why do I see duplicate retrieval results?
 Usually because source identity, collection scope or cleanup rules changed after
 content was already indexed. Rebuild the affected collection after fixing source
 identity rules.
-

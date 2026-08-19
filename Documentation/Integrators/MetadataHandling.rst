@@ -36,6 +36,5 @@ Only selected metadata fields are written into the prompt. Configure
 Frontend metadata
 -----------------
 
-Only selected metadata fields are exposed as frontend sources. Configure
-``frontend_source_fields`` per step so users see useful, safe source data.
-
+The same ``prompt_metadata_fields`` selection is exposed as frontend source
+metadata. Include only fields that are useful and safe for both consumers.

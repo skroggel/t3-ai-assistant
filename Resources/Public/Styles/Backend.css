@@ -344,6 +344,35 @@
     border-color: #f6c7c7;
 }
 
+.aiassistant-config__diagnostic-checks {
+    display: grid;
+    gap: 8px;
+    margin: 0 16px 16px;
+    padding: 0;
+    list-style: none;
+}
+
+.aiassistant-config__diagnostic-check {
+    margin: 0;
+    font-weight: 400;
+}
+
+.aiassistant-config__diagnostic-check strong {
+    font-weight: 700;
+}
+
+.aiassistant-config__diagnostic-check--ok {
+    order: 1;
+}
+
+.aiassistant-config__diagnostic-check--warning {
+    order: 2;
+}
+
+.aiassistant-config__diagnostic-check--error {
+    order: 3;
+}
+
 .aiassistant-config__table {
     width: 100%;
     border-collapse: collapse;

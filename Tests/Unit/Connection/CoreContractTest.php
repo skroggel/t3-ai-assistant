@@ -27,6 +27,27 @@ final class CoreContractTest extends TestCase
         self::assertInstanceOf(IndexingConfigurationInterface::class, new IndexerConfig());
     }
 
+    public function testVectorStoreConnectionNormalizesAllowedCollections(): void
+    {
+        $connection = new VectorStoreConnection();
+        $connection->setDefaultCollection('public');
+        $connection->setCollections("products\npublic, archive");
+
+        self::assertSame(['products', 'public', 'archive'], $connection->getCollectionList());
+    }
+
+    public function testPipelineStepExposesVectorStoreConnectionOverride(): void
+    {
+        $connection = new VectorStoreConnection();
+        $pipelineStep = new AssistantPipelineStep();
+
+        self::assertNull($pipelineStep->getRetrievalVectorStoreConnection());
+
+        $pipelineStep->setRetrievalVectorStoreConnection($connection);
+
+        self::assertSame($connection, $pipelineStep->getRetrievalVectorStoreConnection());
+    }
+
     public function testPipelineStepNormalizesLegacyFallbackStrategy(): void
     {
         $pipelineStep = new AssistantPipelineStep();

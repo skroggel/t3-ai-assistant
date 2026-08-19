@@ -9,8 +9,8 @@ of answers depends strongly on retrieval configuration and metadata.
 Key retrieval settings
 ----------------------
 
-top_k
-    Maximum number of vector search results requested.
+max_retrieval_results
+    Maximum number of results contributed by this retriever.
 
 score_threshold
     Minimum similarity score. A threshold of ``0`` usually means no explicit
@@ -25,11 +25,8 @@ max_context_characters
     ``0`` can be used by the implementation to mean no explicit character limit.
 
 prompt_metadata_fields
-    Comma-separated list of metadata fields included in the prompt context.
-
-frontend_source_fields
-    Comma-separated list of metadata fields exposed as answer sources in the
-    frontend response.
+    Comma-separated list of metadata fields included in the prompt context and
+    exposed as answer sources in the frontend response.
 
 Recommended metadata fields
 ---------------------------
@@ -43,4 +40,3 @@ For most assistants, start with:
 For debugging and source attribution you can add project-specific fields such as
 ``page_uid``, ``record_identifier``, ``collection`` or ``chunk_index`` if they are
 available in the payload.
-

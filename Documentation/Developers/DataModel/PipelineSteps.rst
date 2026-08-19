@@ -6,7 +6,8 @@ Pipeline step records
 Pipeline step records store per-step configuration:
 
 * assistant profile reference;
-* title and processor identifier;
+* title and processor identifier; retriever titles also identify their
+  prompt-visible retrieval group and must be unique within the pipeline;
 * stage and type;
 * prompt inclusion flags;
 * step-specific prompts;
@@ -19,4 +20,3 @@ Pipeline step records store per-step configuration:
 
 Prompt text for project behaviour belongs here or in assistant profiles, not in
 processor PHP code.
-

@@ -19,6 +19,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * Stores connection credentials and defaults for vector store connectors.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
+ * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>
  * @package Madj2k\\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -63,6 +64,14 @@ class VectorStoreConnection extends AbstractEntity implements VectorStoreConnect
      * @var string
      */
     protected string $defaultCollection = '';
+
+
+    /**
+     * Newline- or comma-separated collections allowed for retrieval overrides.
+     *
+     * @var string
+     */
+    protected string $collections = '';
 
 
     /**
@@ -203,6 +212,46 @@ class VectorStoreConnection extends AbstractEntity implements VectorStoreConnect
     public function setDefaultCollection(string $defaultCollection): void
     {
         $this->defaultCollection = trim($defaultCollection);
+    }
+
+
+    /**
+     * Returns the configured collection list.
+     *
+     * @return string Newline- or comma-separated collections.
+     */
+    public function getCollections(): string
+    {
+        return $this->collections;
+    }
+
+
+    /**
+     * Sets the configured collection list.
+     *
+     * @param string $collections Newline- or comma-separated collections.
+     * @return void
+     */
+    public function setCollections(string $collections): void
+    {
+        $this->collections = trim($collections);
+    }
+
+
+    /**
+     * Returns all configured collections including the default collection.
+     *
+     * @return array<int, string> Collection names.
+     */
+    public function getCollectionList(): array
+    {
+        $collections = preg_split('/[\r\n,]+/', $this->collections) ?: [];
+        $collections[] = $this->defaultCollection;
+
+        return array_values(array_unique(array_filter(array_map(
+            static fn (mixed $collection): string => trim((string)$collection),
+            $collections,
+        ))));
     }
 
 
