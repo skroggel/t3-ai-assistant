@@ -8,7 +8,7 @@ Assistant profile
 
 An assistant profile defines the visible assistant and its global behaviour. It
 contains identity, behaviour, retrieval and output rules and references the AI
-connection, vector store connection and default collection used by the assistant.
+connection and default vector store connection used by the assistant.
 
 Pipeline
 --------
@@ -24,13 +24,16 @@ Pipeline step
 A pipeline step defines one processor execution. It can include parts of the
 assistant profile prompt, provide step-specific instructions and configure model,
 temperature, token limits, retrieval limits, metadata fields and failure strategy.
+Retriever steps may additionally override the vector store connection and
+collection.
 
 Retrieval
 ---------
 
-Retrieval searches a vector store for documents relevant to the current query.
-The retrieved documents are transformed into a prompt context. Metadata fields
-can be selected for the prompt and for frontend source attribution.
+Retrieval obtains documents relevant to the current query from a configured
+source, such as captured search results or a vector store. The retrieved
+documents are transformed into a prompt context. Metadata fields are selected
+for both the prompt and frontend source attribution.
 
 Indexing
 --------
@@ -59,4 +62,3 @@ The extension differentiates source identity and content changes:
 
 This allows re-indexing to update or remove the right vector documents without
 creating duplicates.
-

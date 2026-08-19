@@ -8,10 +8,11 @@ No answers from indexed content
 
 Check:
 
+* the assistant profile test under **AI Assistant > Diagnostics** succeeds;
 * indexer has written documents;
-* assistant uses the same vector store connection and collection;
+* retriever uses the same vector store connection and collection as the indexer;
 * embedding model vector size matches the vector store;
-* retrieval top_k is greater than zero;
+* ``max_retrieval_results`` is greater than zero;
 * score threshold is not too strict.
 
 Duplicate retrieval results
@@ -31,7 +32,7 @@ Check:
 
 * metadata is present in vector payload;
 * ``prompt_metadata_fields`` includes relevant fields;
-* ``frontend_source_fields`` includes title and URL;
+* ``prompt_metadata_fields`` includes title and URL;
 * answer generator prompt asks for source-aware answers if needed.
 
 Query optimizer answers instead of rewriting
@@ -39,4 +40,3 @@ Query optimizer answers instead of rewriting
 
 Check that the query optimizer step prompt says it must return only a search
 query and must not answer or summarize the retrieved result.
-

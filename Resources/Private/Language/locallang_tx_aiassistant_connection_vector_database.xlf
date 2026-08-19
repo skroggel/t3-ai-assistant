@@ -58,7 +58,7 @@
 				<source>API key used to authenticate against the vector database service.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.default_collection_desc" resname="tx_aiassistant_connection_vector_database.default_collection_desc">
-				<source>Default collection used when no collection is explicitly configured by the assistant or indexer.</source>
+				<source>Default collection used when no collection is explicitly configured by the retriever step, assistant or indexer.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.vector_size_desc" resname="tx_aiassistant_connection_vector_database.vector_size_desc">
 				<source>Vector dimension used when creating collections for this connection.</source>
@@ -69,6 +69,8 @@
 			<trans-unit id="tx_aiassistant_connection_vector_database.additional_options_desc" resname="tx_aiassistant_connection_vector_database.additional_options_desc">
 				<source>Optional connector-specific vector database settings. Use one key-value pair per line or JSON if supported.</source>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.collections" resname="tx_aiassistant_connection_vector_database.collections"><source>Allowed Collections</source></trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.collections_desc" resname="tx_aiassistant_connection_vector_database.collections_desc"><source>Collections available to retriever step overrides. Enter one collection per line. The default collection is always allowed.</source></trans-unit>
 		</body>
 	</file>
 </xliff>

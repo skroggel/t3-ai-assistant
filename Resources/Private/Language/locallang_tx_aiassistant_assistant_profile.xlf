@@ -81,9 +81,6 @@
 			<trans-unit id="tx_aiassistant_assistant_profile.chat_pipeline_steps" resname="tx_aiassistant_assistant_profile.chat_pipeline_steps">
 				<source>Chat Pipeline Steps</source>
 			</trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_profile.collection" resname="tx_aiassistant_assistant_profile.collection">
-				<source>Collection</source>
-			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.output_rules" resname="tx_aiassistant_assistant_profile.output_rules">
 				<source>Output Rules</source>
 			</trans-unit>
@@ -109,9 +106,6 @@
 				<source>Connections</source>
 			</trans-unit>
 
-			<trans-unit id="tx_aiassistant_assistant_profile.collection_desc" resname="tx_aiassistant_assistant_profile.collection_desc">
-				<source>Vector database collection used by retrieval steps for this assistant.</source>
-			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.ai_connection_desc" resname="tx_aiassistant_assistant_profile.ai_connection_desc">
 				<source>AI connection used for LLM requests and embeddings when this assistant is executed.</source>
 			</trans-unit>

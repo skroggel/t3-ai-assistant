@@ -21,6 +21,8 @@ use Madj2k\AiCore\Assistant\Enum\HistoryMode;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineStage;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
+use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
+use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
 
 /**
  * Class AssistantPipelineStep
@@ -28,6 +30,7 @@ use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
  * Domain model for a configurable assistant pipeline step.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
+ * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>
  * @package Madj2k\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -184,6 +187,22 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
      * @var int
      */
     protected int $maxRetrievalResults = 8;
+
+
+    /**
+     * Optional vector store connection override.
+     *
+     * @var \Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection|null
+     */
+    protected ?VectorStoreConnection $retrievalVectorStoreConnection = null;
+
+
+    /**
+     * Optional vector collection override.
+     *
+     * @var string
+     */
+    protected string $retrievalCollection = '';
 
 
     /**
@@ -691,6 +710,53 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     public function setMaxRetrievalResults(int $maxRetrievalResults): void
     {
         $this->maxRetrievalResults = $maxRetrievalResults;
+    }
+
+
+    /**
+     * Returns the vector store connection override.
+     *
+     * @return VectorStoreConnectionConfigurationInterface|null Vector store connection.
+     */
+    public function getRetrievalVectorStoreConnection(): ?VectorStoreConnectionConfigurationInterface
+    {
+        return $this->retrievalVectorStoreConnection;
+    }
+
+
+    /**
+     * Sets the vector store connection override.
+     *
+     * @param VectorStoreConnection|null $retrievalVectorStoreConnection Vector store connection.
+     * @return void
+     */
+    public function setRetrievalVectorStoreConnection(
+        ?VectorStoreConnection $retrievalVectorStoreConnection,
+    ): void {
+        $this->retrievalVectorStoreConnection = $retrievalVectorStoreConnection;
+    }
+
+
+    /**
+     * Returns the vector collection override.
+     *
+     * @return string Collection name.
+     */
+    public function getRetrievalCollection(): string
+    {
+        return trim($this->retrievalCollection);
+    }
+
+
+    /**
+     * Sets the vector collection override.
+     *
+     * @param string $retrievalCollection Collection name.
+     * @return void
+     */
+    public function setRetrievalCollection(string $retrievalCollection): void
+    {
+        $this->retrievalCollection = trim($retrievalCollection);
     }
 
 

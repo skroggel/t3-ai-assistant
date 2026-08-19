@@ -26,7 +26,7 @@ return [
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_vector_database.xlf:tx_aiassistant_connection_vector_database.tab_credentials,
                     endpoint, api_key,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_vector_database.xlf:tx_aiassistant_connection_vector_database.tab_defaults,
-                    default_collection, vector_size, distance, additional_options
+                    default_collection, collections, vector_size, distance, additional_options
             ',
         ]
     ],
@@ -84,6 +84,16 @@ return [
                 'eval' => 'trim',
                 'max' => 255,
                 'size' => 40,
+            ],
+        ],
+        'collections' => [
+            'label' => $ll . 'tx_aiassistant_connection_vector_database.collections',
+            'description' => $ll . 'tx_aiassistant_connection_vector_database.collections_desc',
+            'config' => [
+                'type' => 'text',
+                'rows' => 5,
+                'eval' => 'trim',
+                'placeholder' => "public-content\nproduct-content",
             ],
         ],
         'vector_size' => [

@@ -36,7 +36,7 @@ Required capabilities
 A vector store connector should support at least:
 
 * collection-aware writes;
-* similarity search with configurable ``top_k`` and score threshold;
+* similarity search with configurable ``max_retrieval_results`` and score threshold;
 * payload metadata storage;
 * deletion by source hash;
 * stable document IDs.

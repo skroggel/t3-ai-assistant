@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Backend\Diagnostics;
 
+use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
+use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository;
@@ -21,7 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Class BackendConnectionProvider
  *
- * Builds backend view data for configured connection records.
+ * Builds backend view data for configured connections and assistant profiles.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>
@@ -35,10 +37,12 @@ final class BackendConnectionProvider
      *
      * @param \Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository $aiConnectionRepository AI connection repository.
      * @param \Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository $vectorStoreConnectionRepository Vector store connection repository.
+     * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant profile repository.
      */
     public function __construct(
         private readonly AiConnectionRepository $aiConnectionRepository,
-        private readonly VectorStoreConnectionRepository $vectorStoreConnectionRepository
+        private readonly VectorStoreConnectionRepository $vectorStoreConnectionRepository,
+        private readonly AssistantProfileRepository $assistantProfileRepository,
     ) {
     }
 
@@ -112,9 +116,41 @@ final class BackendConnectionProvider
             ];
         }
 
+        /** @var array<int, array<string, mixed>> $assistants */
+        $assistants = [];
+        foreach ($this->assistantProfileRepository->findAll() as $assistant) {
+            if (!$assistant instanceof AssistantProfile) {
+                continue;
+            }
+
+            $uid = (int)$assistant->getUid();
+            $assistants[] = [
+                'uid' => $uid,
+                'title' => $assistant->getTitle(),
+                'aiConnection' => $assistant->getAiConnection()?->getTitle() ?? 'Not configured',
+                'vectorStoreConnection' => $assistant->getVectorStoreConnection()?->getTitle() ?? 'Not configured',
+                'stepCount' => $assistant->getChatPipelineSteps()->count(),
+                'hidden' => $assistant->isHidden(),
+                'editUrl' => (string)$uriBuilder->buildUriFromRoute('record_edit', [
+                    'edit' => [
+                        'tx_aiassistant_assistant_profile' => [
+                            $uid => 'edit',
+                        ],
+                    ],
+                    'returnUrl' => (string)$backendRequest->getUri(),
+                ]),
+            ];
+        }
+        usort(
+            $assistants,
+            static fn (array $left, array $right): int => [$left['title'], $left['uid']] <=> [$right['title'], $right['uid']],
+        );
+
         return [
             'connections' => $connections,
             'connectionTestResult' => $state['connectionTestResult'] ?? null,
+            'assistants' => $assistants,
+            'assistantTestResult' => $state['assistantTestResult'] ?? null,
         ];
     }
 }

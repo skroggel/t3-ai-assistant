@@ -16,14 +16,14 @@ return [
         ],
         'sortby' => 'sorting',
         'rootLevel' => 1,
-        'searchFields' => 'title,assistant_label,collection',
+        'searchFields' => 'title,assistant_label',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
     ],
     'types' => [
         '1' => [
             'showitem' => '
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_assistant,
-                    title, assistant_label, collection,
+                    title, assistant_label,
                     intro_text, initial_message,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_prompts,
                     identity_prompt, behavior_rules, retrieval_rules, output_rules,
@@ -58,18 +58,6 @@ return [
             'description' => $ll . 'tx_aiassistant_assistant_profile.assistant_label_desc',
             'config' => [
                 'type' => 'input',
-                'eval' => 'trim',
-                'max' => 255,
-                'size' => 40,
-            ],
-        ],
-        'collection' => [
-            'displayCond' => 'FIELD:vector_store_connection:REQ:true',
-            'label' => $ll . 'tx_aiassistant_assistant_profile.collection',
-            'description' => $ll . 'tx_aiassistant_assistant_profile.collection_desc',
-            'config' => [
-                'type' => 'input',
-                'required' => true,
                 'eval' => 'trim',
                 'max' => 255,
                 'size' => 40,
