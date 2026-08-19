@@ -45,13 +45,13 @@
 
     <section class="chat-box container py-4 js-aiassistant-container">
         <f:if condition="{settings.requireConsent}">
-            <div class="alert alert-warning js-aiassistant-consent" role="note">
+            <div class="chat-box-consent alert alert-warning js-aiassistant-consent" role="note">
                 <p><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.consent_message" /></p>
                 <button class="btn btn-primary js-aiassistant-init" type="button"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.consent_button" /></button>
             </div>
         </f:if>
 
-        <div class="js-aiassistant-chat-content" hidden="hidden">
+        <div class="chat-box-content js-aiassistant-chat-content" hidden="hidden">
             <f:form
                 action="stream"
                 controller="Chat"
@@ -168,10 +168,10 @@
                 <f:render partial="Index/ChatBox" arguments="{_all}" />
 
                 <f:comment><!-- input field for chat --></f:comment>
-                <div class="input-group mt-4">
+                <div class="chat-box-prompt input-group mt-4">
                     <f:form.textfield
                         name="query"
-                        class="form-control chat-box-input js-aiassistant-input"
+                        class="chat-box-input form-control js-aiassistant-input"
                         placeholder="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.input_placeholder')}"
                         aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.input_aria_label')}"
                         additionalAttributes="{dir: 'auto'}"
