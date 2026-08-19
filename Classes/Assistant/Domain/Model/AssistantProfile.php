@@ -25,6 +25,7 @@ use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
  * Class AssistantProfile
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
+ * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>
  * @package Madj2k\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -53,12 +54,6 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
      * @var string
      */
     protected string $assistantLabel = '';
-
-
-    /**
-     * @var string
-     */
-    protected string $collection = '';
 
 
     /**
@@ -162,29 +157,6 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     public function setAssistantLabel(string $assistantLabel): void
     {
         $this->assistantLabel = $assistantLabel;
-    }
-
-
-    /**
-     * Returns collection.
-     *
-     * @return string collection.
-     */
-    public function getCollection(): string
-    {
-        return $this->collection;
-    }
-
-
-    /**
-     * Sets collection.
-     *
-     * @param string $collection collection.
-     * @return void
-     */
-    public function setCollection(string $collection): void
-    {
-        $this->collection = $collection;
     }
 
 

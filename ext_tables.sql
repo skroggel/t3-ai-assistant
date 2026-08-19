@@ -19,7 +19,6 @@ CREATE TABLE `tx_aiassistant_connection_ai` (
 CREATE TABLE `tx_aiassistant_assistant_profile` (
     `title` varchar(255) DEFAULT '' NOT NULL,
     `assistant_label` varchar(255) DEFAULT '' NOT NULL,
-    `collection` varchar(255) DEFAULT '' NOT NULL,
     `ai_connection` int(11) unsigned DEFAULT '0' NOT NULL,
     `vector_store_connection` int(11) unsigned DEFAULT '0' NOT NULL,
     `intro_text` text,
@@ -50,6 +49,8 @@ CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
     `temperature` double DEFAULT '0' NOT NULL,
     `max_tokens` int(11) DEFAULT '500' NOT NULL,
     `max_retrieval_results` int(11) DEFAULT '8' NOT NULL,
+    `retrieval_vector_store_connection` int(11) unsigned DEFAULT '0' NOT NULL,
+    `retrieval_collection` varchar(255) DEFAULT '' NOT NULL,
     `score_threshold` double DEFAULT '0' NOT NULL,
     `max_context_chunks` int(11) DEFAULT '6' NOT NULL,
     `max_context_characters` int(11) DEFAULT '9000' NOT NULL,
@@ -178,6 +179,7 @@ CREATE TABLE `tx_aiassistant_connection_vector_database` (
     `endpoint` varchar(512) DEFAULT '' NOT NULL,
     `api_key` varchar(1024) DEFAULT '' NOT NULL,
     `default_collection` varchar(255) DEFAULT '' NOT NULL,
+    `collections` text,
     `vector_size` int(11) DEFAULT '1536' NOT NULL,
     `distance` varchar(255) DEFAULT 'Cosine' NOT NULL,
     `additional_options` text

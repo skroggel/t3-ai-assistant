@@ -30,6 +30,7 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
  * Stores the visible frontend conversation per chat identifier in session memory.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
+ * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>
  * @package Madj2k\\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -123,10 +124,9 @@ final class SessionMemory implements MemoryInterface
     {
         $chatIdentifier = $this->normalizeIdentifier($chatIdentifier);
         $conversations = $this->loadConversations($chatIdentifier);
-        $documents = $retrievalResult->getResults();
-        $rawData = $retrievalResult->getRawResults();
+        $groups = $retrievalResult->getGroups();
 
-        if ($documents === [] && $rawData === []) {
+        if ($groups === []) {
             $conversations[$chatIdentifier]['lastRetrievalResult'] = [];
             $this->saveConversations($conversations);
             return null;
@@ -134,9 +134,8 @@ final class SessionMemory implements MemoryInterface
 
         $lastRetrievalResult = new LastRetrievalResult(
             chatIdentifier: $chatIdentifier,
-            retrievalIdentifier: $retrievalResult->getProcessorIdentifier(),
-            documents: $documents,
-            rawData: $rawData,
+            groups: $groups,
+            createdAt: time(),
         );
 
         $conversations[$chatIdentifier]['lastRetrievalResult'] = $lastRetrievalResult->toArray();
@@ -161,33 +160,16 @@ final class SessionMemory implements MemoryInterface
             return null;
         }
 
-        return new LastRetrievalResult(
-            chatIdentifier: (string)($result['chatIdentifier'] ?? ''),
-            retrievalIdentifier: (string)($result['retrievalIdentifier'] ?? ''),
-            query: (string)($result['query'] ?? ''),
-            optimizedQuery: (string)($result['optimizedQuery'] ?? ''),
-            documents: is_array($result['documents'] ?? null) ? $result['documents'] : [],
-            rawData: is_array($result['rawData'] ?? null) ? $result['rawData'] : [],
-            createdAt: (int)($result['createdAt'] ?? 0),
-        );
-    }
-
-
-    /**
-     * Returns retrieved documents from the last retrieval result.
-     *
-     * @param string $chatIdentifier Conversation identifier.
-     * @return array<int,\Madj2k\AiCore\Assistant\DTO\RetrievalDocument>
-     */
-    public function getLastRetrievalDocuments(string $chatIdentifier): array
-    {
-        /** @var \Madj2k\AiCore\Assistant\DTO\LastRetrievalResult|null $retrievalResult */
-        $retrievalResult = $this->getLastRetrievalResult($chatIdentifier);
-        if (!$retrievalResult instanceof LastRetrievalResult) {
-            return [];
+        $groups = is_array($result['groups'] ?? null) ? $result['groups'] : [];
+        if ($groups === []) {
+            return null;
         }
 
-        return $retrievalResult->documents;
+        return new LastRetrievalResult(
+            chatIdentifier: (string)($result['chatIdentifier'] ?? ''),
+            groups: $groups,
+            createdAt: (int)($result['createdAt'] ?? 0),
+        );
     }
 
 
