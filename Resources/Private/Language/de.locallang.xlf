@@ -17,15 +17,15 @@
 			</trans-unit>
 			<trans-unit id="templates_index_index.intro" resname="templates_index_index.intro">
 				<source>Ask about the website content or just start a short conversation.</source>
-				<target>Frage nach Inhalten der Website oder starte einfach eine kurze Unterhaltung.</target>
+				<target>Fragen Sie nach Inhalten der Website oder starten Sie einfach eine kurze Unterhaltung.</target>
 			</trans-unit>
 			<trans-unit id="templates_index_index.initial_message" resname="templates_index_index.initial_message">
-				<source>Hello, I am the madj2k Assistant. How can I help you?</source>
-				<target>Hallo, ich bin der madj2k-Assistent. Wie kann ich dir helfen?</target>
+				<source>Hello, I am your AI-Assistant. How can I help you?</source>
+				<target>Hallo, ich bin Ihr KI-Assistent. Wie kann ich Ihnen helfen?</target>
 			</trans-unit>
 			<trans-unit id="templates_index_index.consent_message" resname="templates_index_index.consent_message">
 				<source>Please note: This chat uses artificial intelligence. AI-generated answers can be incorrect. Please review important information carefully.</source>
-				<target>Bitte beachte: Dieser Chat verwendet künstliche Intelligenz. KI-generierte Antworten können fehlerhaft sein. Prüfe wichtige Informationen daher sorgfältig.</target>
+				<target>Bitte beachten: Dieser Chat verwendet künstliche Intelligenz. KI-generierte Antworten können fehlerhaft sein. Prüfen Sie wichtige Informationen daher sorgfältig.</target>
 			</trans-unit>
 			<trans-unit id="templates_index_index.consent_button" resname="templates_index_index.consent_button">
 				<source>I understand, start chat</source>
@@ -33,11 +33,11 @@
 			</trans-unit>
 			<trans-unit id="chat.recommendation.line" resname="chat.recommendation.line">
 				<source>I found a matching page for you here: %s (%s)</source>
-				<target>Ich habe hier einen passenden Inhalt für dich gefunden: %s (%s)</target>
+				<target>Ich habe hier einen passenden Inhalt für Sie gefunden: %s (%s)</target>
 			</trans-unit>
 			<trans-unit id="chat.recommendation.line_without_reference" resname="chat.recommendation.line_without_reference">
 				<source>I found a matching page for you here: %s</source>
-				<target>Ich habe hier einen passenden Inhalt für dich gefunden: %s</target>
+				<target>Ich habe hier einen passenden Inhalt für Sie gefunden: %s</target>
 			</trans-unit>
 			<trans-unit id="chat.recommendation.url" resname="chat.recommendation.url">
 				<source>Link: %s</source>
@@ -45,7 +45,7 @@
 			</trans-unit>
 			<trans-unit id="chat.recommendation.reason" resname="chat.recommendation.reason">
 				<source>This fits your request well: %s</source>
-				<target>Das passt gut zu deiner Anfrage: %s</target>
+				<target>Das passt gut zu Ihrer Anfrage: %s</target>
 			</trans-unit>
 			<trans-unit id="chat.contact.department" resname="chat.contact.department">
 				<source>Responsible area: %s</source>
@@ -65,7 +65,7 @@
 			</trans-unit>
 			<trans-unit id="templates_index_index.input_placeholder" resname="templates_index_index.input_placeholder">
 				<source>Your message...</source>
-				<target>Deine Nachricht...</target>
+				<target>Ihre Nachricht...</target>
 			</trans-unit>
 			<trans-unit id="templates_index_index.input_aria_label" resname="templates_index_index.input_aria_label">
 				<source>Enter message</source>
@@ -85,7 +85,7 @@
 				</trans-unit>
 			<trans-unit id="templates_index_index.response_language_help" resname="templates_index_index.response_language_help">
 				<source>Choose a suggestion or enter any language in your own script. Leave empty to use the website language.</source>
-				<target>Wähle einen Vorschlag oder gib eine beliebige Sprache in deiner eigenen Schrift ein. Leer lassen, um die Sprache der Website zu verwenden.</target>
+				<target>Wählen Sie einen Vorschlag oder geben Sie eine beliebige Sprache in Ihrer eigenen Schrift ein. Leer lassen, um die Sprache der Website zu verwenden.</target>
 				</trans-unit>
 			<trans-unit id="templates_index_index.use_browser_language" resname="templates_index_index.use_browser_language">
 				<source>Use browser language</source>
@@ -105,7 +105,7 @@
 			</trans-unit>
 			<trans-unit id="templates_index_index.user_label" resname="templates_index_index.user_label">
 				<source>User message</source>
-				<target>Nutzereingabe</target>
+				<target>Nutzendeneingabe</target>
 			</trans-unit>
 			<trans-unit id="templates_index_index.assistant_label" resname="templates_index_index.assistant_label">
 				<source>AI assistant</source>

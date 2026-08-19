@@ -16,7 +16,7 @@
 				<source>Ask about the website content or just start a short conversation.</source>
 			</trans-unit>
 			<trans-unit id="templates_index_index.initial_message" resname="templates_index_index.initial_message">
-				<source>Hello, I am the madj2k Assistant. How can I help you?</source>
+				<source>Hello, I am your AI-Assistant. How can I help you?</source>
 			</trans-unit>
 			<trans-unit id="templates_index_index.consent_message" resname="templates_index_index.consent_message">
 				<source>Please note: This chat uses artificial intelligence. AI-generated answers can be incorrect. Please review important information carefully.</source>

@@ -1,12 +1,6 @@
 /* ==========================================================================
     Chatbox
   ========================================================================== */
-
-:root {
-    --bs-primary: #205EB5FF;
-    --bs-secondary: #D6D6D6BF;
-}
-
 .aiassistant-visually-hidden {
     position: absolute !important;
     width: 1px !important;
@@ -22,6 +16,9 @@
 .chat-box {
     max-width: 700px;
     margin: 0 auto;
+
+    --bs-primary: #205eb5;
+    --bs-secondary: #d6d6d6;
 }
 
 .chat-box-header {
@@ -123,6 +120,7 @@
 }
 
 .chat-box-message {
+    position: relative;
     padding: 0.75rem;
     border-radius: 0.5rem;
     max-width: 80%;
@@ -130,20 +128,52 @@
     overflow-wrap: anywhere;
 }
 
-.chat-box-message.from-user {
+.chat-box-message--from-user {
     align-self: flex-end;
     background-color: var(--bs-primary);
     color: #fff;
+    border-bottom-right-radius: 0.125rem;
 }
 
-.chat-box-message.from-bot {
+.chat-box-message--from-user::after {
+    content: "";
+    position: absolute;
+    right: -0.4375rem;
+    bottom: 0;
+    width: 0.75rem;
+    height: 0.875rem;
+    background-color: var(--bs-primary);
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+}
+
+.chat-box-message--from-bot {
     align-self: flex-start;
     background-color: var(--bs-secondary);
     color: var(--bs-body-color);
+    border-bottom-left-radius: 0.125rem;
+}
+
+.chat-box-message--from-bot::after {
+    content: "";
+    position: absolute;
+    left: -0.4375rem;
+    bottom: 0;
+    width: 0.75rem;
+    height: 0.875rem;
+    background-color: var(--bs-secondary);
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
 }
 
 .chat-box-message.is-typing {
     white-space: pre-wrap;
+}
+
+/* ==========================================================================
+    Prompt
+  ========================================================================== */
+.chat-box-prompt {
+    border: 1px solid var(--bs-secondary);
+    border-radius: 0.5rem;
 }
 
 /* ==========================================================================
@@ -218,7 +248,7 @@
     margin-bottom: 0;
 }
 
-.chat-box-message.from-user .chat-box-message-content {
+.chat-box-message--from-user .chat-box-message-content {
     //white-space: pre-wrap;
 }
 

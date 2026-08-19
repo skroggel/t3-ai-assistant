@@ -65,7 +65,7 @@
             >
                 <header class="chat-box-header">
                     <div class="chat-box-header-top">
-                        <p class="chat-box-brand">
+                        <p class="chat-box-header-brand">
                             <f:if condition="{assistantLabel}">
                                 <f:then>{assistantLabel}</f:then>
                                 <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.brand" /></f:else>
@@ -119,7 +119,7 @@
                                         placeholder="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.response_language_placeholder')}"
                                     />
                                     <button
-                                        class="btn btn-primary js-aiassistant-language-apply"
+                                        class="btn btn-primary chat-box-language-apply js-aiassistant-language-apply"
                                         type="button"
                                         aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.apply_language')}"
                                         title="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.apply_language')}"
@@ -171,14 +171,14 @@
                 <div class="chat-box-prompt input-group mt-4">
                     <f:form.textfield
                         name="query"
-                        class="chat-box-input form-control js-aiassistant-input"
+                        class="chat-box-prompt-input form-control js-aiassistant-input"
                         placeholder="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.input_placeholder')}"
                         aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.input_aria_label')}"
                         additionalAttributes="{dir: 'auto'}"
                         required="required"
                         autocomplete="off"
                     />
-                    <button class="btn btn-primary" type="submit"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.submit" /></button>
+                    <button class="btn btn-primary chat-box-prompt-submit" type="submit"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.submit" /></button>
                 </div>
             </f:form>
         </div>
