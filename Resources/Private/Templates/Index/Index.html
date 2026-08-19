@@ -150,9 +150,9 @@
                         </div>
                     </f:if>
 
-                    <p class="chat-box-intro">
-                        <f:if condition="{assistantIntroText}">
-                            <f:then>{assistantIntroText}</f:then>
+                    <p class="chat-box-header-intro">
+                        <f:if condition="{assistantProfile.introText}">
+                            <f:then>{assistantProfile.introText}</f:then>
                             <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.intro" /></f:else>
                         </f:if>
                     </p>
