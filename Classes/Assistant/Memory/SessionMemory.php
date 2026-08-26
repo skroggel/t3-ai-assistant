@@ -22,6 +22,7 @@ use Madj2k\AiCore\Assistant\DTO\LastRetrievalResult;
 use Madj2k\AiAssistant\Config\Config;
 use Madj2k\AiCore\Exception\AppException;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /**
@@ -99,6 +100,7 @@ final class SessionMemory implements MemoryInterface
         $conversations = $this->loadConversations($chatIdentifier);
         $role = $role === 'assistant' ? 'assistant' : 'user';
         $content = trim($content);
+
         if ($content === '') {
             return;
         }
@@ -214,7 +216,7 @@ final class SessionMemory implements MemoryInterface
     {
         $chatIdentifier = $this->normalizeIdentifier($chatIdentifier);
         $frontendUser = $this->getFrontendUser();
-
+$frontendUser = null;
         if ($frontendUser instanceof FrontendUserAuthentication) {
             $storedData = $frontendUser->getKey('ses', self::SESSION_KEY);
             $conversations = is_array($storedData) ? $storedData : [];
@@ -254,6 +256,7 @@ final class SessionMemory implements MemoryInterface
     private function saveConversations(array $conversations): void
     {
         $frontendUser = $this->getFrontendUser();
+$frontendUser = null;
         if ($frontendUser instanceof FrontendUserAuthentication) {
             $frontendUser->setKey('ses', self::SESSION_KEY, $conversations);
             $frontendUser->storeSessionData();
