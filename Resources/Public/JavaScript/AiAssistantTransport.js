@@ -135,6 +135,10 @@ class AiAssistantTransport {
                 return;
             }
 
+            if (event.event === 'error') {
+                throw new Error(event.data || 'The answer could not be loaded.');
+            }
+
             if (event.data !== '') {
                 message += event.data;
 

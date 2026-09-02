@@ -5,8 +5,8 @@ Editors can combine TYPO3 pages, files and custom data sources with configurable
 and source attribution. Additional source types can be supplied by extensions.
 
 The extension provides the TYPO3 integration: database records, backend configuration, source
-discovery, persistence, commands, session handling, diagnostics and frontend output. The
-framework-independent runtime, pipeline contracts, provider connectors and indexing primitives
+discovery, persistence, commands, diagnostics and frontend output. The framework-independent
+runtime, conversation memory, pipeline contracts, provider connectors and indexing primitives
 live in `madj2k/ai-core`, which Composer installs as a dependency.
 
 ## Features
@@ -17,6 +17,11 @@ live in `madj2k/ai-core`, which Composer installs as a dependency.
 - Metadata-aware retrieval and source links
 - Chat memory, pipeline traces and backend diagnostics
 - Extension points for processors, connectors, indexers and file adapters
+
+Chat memory uses the native PHP session by default. A TYPO3 frontend-session adapter is available
+as `Madj2k\AiAssistant\Assistant\Memory\Typo3FrontendSessionStore`. Projects can opt into it by
+aliasing `Madj2k\AiCore\Assistant\Memory\SessionStoreInterface` to that service in their own
+`Services.yaml`.
 
 ## Requirements
 

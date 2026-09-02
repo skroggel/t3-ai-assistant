@@ -13,6 +13,9 @@ use Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver;
 use Madj2k\AiCore\Exception\AppException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class ChatController
@@ -28,6 +31,8 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class ChatController extends AbstractController
 {
+    protected readonly LoggerInterface $logger;
+
     /**
      * Constructor.
      *
@@ -35,13 +40,16 @@ class ChatController extends AbstractController
      * @param \Madj2k\AiAssistant\Assistant\Http\SseResponseFactory $sseResponseFactory SSE response factory.
      * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant profile repository.
      * @param \Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver $chatOptionsResolver Chat options resolver.
+     * @param \Psr\Log\LoggerInterface|null $logger Frontend stream logger.
      */
     public function __construct(
         protected readonly Orchestrator               $orchestrator,
         protected readonly SseResponseFactory         $sseResponseFactory,
         protected readonly AssistantProfileRepository $assistantProfileRepository,
         protected readonly ChatOptionsResolver         $chatOptionsResolver,
+        ?LoggerInterface                                $logger = null,
     ) {
+        $this->logger = $logger ?? GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
 
@@ -137,9 +145,10 @@ class ChatController extends AbstractController
                 );
             }
         } catch (\Throwable $exception) {
-            return $this->sseResponseFactory->createStreamingResponse(function () use ($exception): void {
+            $this->logStreamException($exception);
+            return $this->sseResponseFactory->createStreamingResponse(function (): void {
                 $this->sseResponseFactory->sendPrelude();
-                $this->sseResponseFactory->sendEvent('error', $exception->getMessage());
+                $this->sseResponseFactory->sendEvent('error', SseResponseFactory::ERROR_MESSAGE);
                 $this->sseResponseFactory->sendEvent('done', 'end');
             });
         }
@@ -151,9 +160,20 @@ class ChatController extends AbstractController
                 $streamProducer();
                 $this->sseResponseFactory->sendEvent('done', 'end');
             } catch (\Throwable $exception) {
-                $this->sseResponseFactory->sendEvent('error', $exception->getMessage());
+                $this->logStreamException($exception);
+                $this->sseResponseFactory->sendEvent('error', SseResponseFactory::ERROR_MESSAGE);
                 $this->sseResponseFactory->sendEvent('done', 'end');
             }
         });
+    }
+
+
+    private function logStreamException(\Throwable $exception): void
+    {
+        $this->logger->error('Frontend chat stream failed.', [
+            'exception' => $exception,
+            'exception_class' => $exception::class,
+            'exception_message' => $exception->getMessage(),
+        ]);
     }
 }

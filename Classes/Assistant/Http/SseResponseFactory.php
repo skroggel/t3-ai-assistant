@@ -33,6 +33,8 @@ use TYPO3\CMS\Core\Http\Stream;
  */
 final class SseResponseFactory
 {
+    public const ERROR_MESSAGE = 'The answer could not be loaded.';
+
     /**
      * Creates a temporary SSE stream for non-streaming fallback usage.
      *
