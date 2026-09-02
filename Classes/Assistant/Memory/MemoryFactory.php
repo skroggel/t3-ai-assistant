@@ -15,13 +15,29 @@ use Madj2k\AiAssistant\Config\Config;
 use Madj2k\AiCore\Assistant\Memory\SessionMemory;
 use Madj2k\AiCore\Assistant\Memory\SessionStoreInterface;
 
-/** Creates the configured conversation memory service. */
+/**
+ * Creates the configured conversation memory service.
+ *
+ * @author Maximilian Fäßler <maximilian@faesslerweb.de>
+ * @copyright Steffen Kroggel <developer@steffenkroggel.de>
+ * @package Madj2k\\AiAssistant
+ * @license https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License, version 2 or later
+ */
 final readonly class MemoryFactory
 {
+    /**
+     * @param \Madj2k\AiCore\Assistant\Memory\SessionStoreInterface $sessionStore
+     */
     public function __construct(private SessionStoreInterface $sessionStore)
     {
     }
 
+
+    /**
+     * @return \Madj2k\AiCore\Assistant\Memory\SessionMemory
+     * @throws \Madj2k\AiAssistant\Exception\AppException
+     * @throws \Madj2k\AiCore\Exception\AppException
+     */
     public function create(): SessionMemory
     {
         return new SessionMemory(
