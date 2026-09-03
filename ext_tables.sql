@@ -101,6 +101,20 @@ CREATE TABLE `tx_aiassistant_indexer_run` (
     `message` text
 );
 
+CREATE TABLE `tx_aiassistant_indexer_state` (
+    `indexer_identifier` varchar(255) DEFAULT '' NOT NULL,
+    `source_type` varchar(50) DEFAULT '' NOT NULL,
+    `indexer_uid` int(11) DEFAULT '0' NOT NULL,
+    `scope` varchar(64) DEFAULT 'default' NOT NULL,
+    `cursor_value` text,
+    `status` varchar(16) DEFAULT '' NOT NULL,
+    `last_run_started_at` int(11) DEFAULT '0' NOT NULL,
+    `last_run_finished_at` int(11) DEFAULT '0' NOT NULL,
+    `last_error` text,
+
+    UNIQUE KEY `execution` (`indexer_identifier`, `source_type`, `indexer_uid`, `scope`)
+);
+
 CREATE TABLE `tx_aiassistant_indexer_source` (
     `source_type` varchar(50) DEFAULT '' NOT NULL,
     `indexer_uid` int(11) DEFAULT '0' NOT NULL,
