@@ -23,6 +23,7 @@ use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerRun;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerState;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerRunRepository;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerStateRepository;
+use TYPO3\CMS\Core\Locking\LockFactory;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
@@ -43,12 +44,14 @@ final readonly class IndexingCommandRunner
      * @param \Madj2k\AiCore\Indexing\Registry\IndexerRegistry $indexerRegistry Indexer registry.
      * @param \Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerRunRepository $indexerRunRepository Index run repository.
      * @param \Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerStateRepository $indexerStateRepository Indexer state repository.
+     * @param \TYPO3\CMS\Core\Locking\LockFactory $lockFactory Lock factory.
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager Persistence manager.
      */
     public function __construct(
         private IndexerRegistry $indexerRegistry,
         private IndexerRunRepository $indexerRunRepository,
         private IndexerStateRepository $indexerStateRepository,
+        private LockFactory $lockFactory,
         private PersistenceManager $persistenceManager
     ) {
     }
@@ -77,20 +80,36 @@ final readonly class IndexingCommandRunner
             $request->setLimit(100);
         }
 
-        $state = $this->resolveState($request);
-        if (!$request->isResetCursor() && $request->getCursor() === '') {
-            $request->setCursor($state->getCursor());
+        $locker = $this->lockFactory->createLocker($this->buildLockIdentifier($request));
+        if (!$locker->acquire()) {
+            throw new \RuntimeException('The indexer execution lock could not be acquired.', 1788421201);
         }
-
-        $startedAt = time();
-        if (!$request->isDryRun()) {
-            $this->startState($state, $startedAt);
-        }
-
-        $result = new IndexingResult();
 
         try {
-            $result = $indexer->index($request);
+            $state = $this->resolveState($request);
+            if (!$request->isResetCursor() && $request->getCursor() === '') {
+                $request->setCursor($state->getCursor());
+            }
+
+            $startedAt = time();
+            if (!$request->isDryRun()) {
+                $this->startState($state, $startedAt);
+            }
+
+            $result = new IndexingResult();
+
+            try {
+                $result = $indexer->index($request);
+            } catch (\Throwable $exception) {
+                $result->increaseFailed();
+                $result->addDetail('exception', $exception->getMessage());
+                if (!$request->isDryRun()) {
+                    $this->finishState($state, 'error', $result, $exception->getMessage());
+                }
+                $this->persistRun($startedAt, 'error', $result, $request);
+                throw $exception;
+            }
+
             $status = $result->getFailed() > 0 ? 'error' : 'ok';
             if (!$request->isDryRun()) {
                 $this->finishState($state, $status, $result, '');
@@ -98,17 +117,11 @@ final readonly class IndexingCommandRunner
             if ($this->shouldPersistRun($result, $request)) {
                 $this->persistRun($startedAt, $status, $result, $request);
             }
-        } catch (\Throwable $exception) {
-            $result->increaseFailed();
-            $result->addDetail('exception', $exception->getMessage());
-            if (!$request->isDryRun()) {
-                $this->finishState($state, 'error', $result, $exception->getMessage());
-            }
-            $this->persistRun($startedAt, 'error', $result, $request);
-            throw $exception;
-        }
 
-        return $result;
+            return $result;
+        } finally {
+            $locker->release();
+        }
     }
 
 
@@ -286,5 +299,27 @@ final readonly class IndexingCommandRunner
         $mode = $request->getOption('mode', 'default');
 
         return is_scalar($mode) && trim((string)$mode) !== '' ? trim((string)$mode) : 'default';
+    }
+
+
+    /**
+     * Builds the stable identifier for one indexer execution lock.
+     *
+     * The lock covers cursor resolution, indexing and state persistence. Separate
+     * indexers and execution scopes therefore remain independent.
+     *
+     * @param \Madj2k\AiCore\Indexing\DTO\IndexingRequest $request Indexing request.
+     * @return string Lock identifier.
+     */
+    private function buildLockIdentifier(IndexingRequest $request): string
+    {
+        $executionKey = implode('|', [
+            $request->getIndexerIdentifier(),
+            $request->getSourceType(),
+            (string)($request->getIndexerUid() ?? 0),
+            $this->resolveStateScope($request),
+        ]);
+
+        return 'aiassistant-indexer-' . hash('sha256', $executionKey);
     }
 }

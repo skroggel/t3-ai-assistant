@@ -26,6 +26,8 @@ use Madj2k\AiCore\Indexing\DTO\IndexingResult;
 use Madj2k\AiCore\Indexing\Indexer\IndexerInterface;
 use Madj2k\AiCore\Indexing\Registry\IndexerRegistry;
 use PHPUnit\Framework\TestCase;
+use TYPO3\CMS\Core\Locking\LockFactory;
+use TYPO3\CMS\Core\Locking\LockingStrategyInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
@@ -117,10 +119,13 @@ final class IndexingCommandRunnerTest extends TestCase
         $persistenceManager = $this->createMock(PersistenceManager::class);
         $persistenceManager->expects(self::exactly(2))->method('persistAll');
 
+        $lockFactory = $this->createLockFactoryMock();
+
         $subject = new IndexingCommandRunner(
             new IndexerRegistry([$indexer]),
             $runRepository,
             $stateRepository,
+            $lockFactory,
             $persistenceManager
         );
 
@@ -204,10 +209,13 @@ final class IndexingCommandRunnerTest extends TestCase
         $persistenceManager = $this->createMock(PersistenceManager::class);
         $persistenceManager->expects(self::exactly(3))->method('persistAll');
 
+        $lockFactory = $this->createLockFactoryMock();
+
         $subject = new IndexingCommandRunner(
             new IndexerRegistry([$indexer]),
             $runRepository,
             $stateRepository,
+            $lockFactory,
             $persistenceManager
         );
 
@@ -221,5 +229,29 @@ final class IndexingCommandRunnerTest extends TestCase
         self::assertSame(1, $run->getItemsIndexed());
         self::assertSame(2, $run->getChunksTotal());
         self::assertGreaterThan(0, $run->getFinishedAt());
+    }
+
+
+    /**
+     * Creates a lock factory mock that verifies acquisition and release.
+     *
+     * @return \TYPO3\CMS\Core\Locking\LockFactory Lock factory mock.
+     */
+    private function createLockFactoryMock(): LockFactory
+    {
+        $locker = $this->createMock(LockingStrategyInterface::class);
+        $locker->expects(self::once())->method('acquire')->willReturn(true);
+        $locker->expects(self::once())->method('release')->willReturn(true);
+
+        $lockFactory = $this->createMock(LockFactory::class);
+        $lockFactory->expects(self::once())
+            ->method('createLocker')
+            ->with(self::callback(
+                static fn (string $identifier): bool => str_starts_with($identifier, 'aiassistant-indexer-')
+                    && strlen($identifier) === 84
+            ))
+            ->willReturn($locker);
+
+        return $lockFactory;
     }
 }
