@@ -73,7 +73,7 @@
 				<source>Optional explicit retrieval/context policy for this profile. When set, it overrides the site-level retrieval policy for this profile.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.ai_connection" resname="tx_aiassistant_assistant_profile.ai_connection">
-				<source>Ai Connection</source>
+				<source>AI Connection</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.behavior_rules" resname="tx_aiassistant_assistant_profile.behavior_rules">
 				<source>Behavior Rules</source>
@@ -107,7 +107,7 @@
 			</trans-unit>
 
 			<trans-unit id="tx_aiassistant_assistant_profile.ai_connection_desc" resname="tx_aiassistant_assistant_profile.ai_connection_desc">
-				<source>AI connection used for LLM requests and embeddings when this assistant is executed.</source>
+				<source>AI connection used for all LLM requests and retrieval query embeddings. Important: For assistants using vector retrieval, changing the provider or embedding model can make existing indexes incompatible. Verify provider-specific pipeline model overrides and use collections indexed with the same embedding configuration.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.vector_store_connection_desc" resname="tx_aiassistant_assistant_profile.vector_store_connection_desc">
 				<source>Vector database connection used for retrieval queries in this assistant.</source>

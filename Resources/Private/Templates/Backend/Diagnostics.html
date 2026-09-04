@@ -75,7 +75,7 @@
 	<div class="aiassistant-config__card">
 		<h2>Assistant diagnostics</h2>
 		<p class="aiassistant-config__intro">
-			Validate assistant pipelines and test the effective AI and vector store connections without running a chat request.
+			Validate assistant pipelines, embedding dimensions, and the effective AI and vector store connections without executing the complete chat pipeline.
 		</p>
 
 		<f:if condition="{assistantTestResult}">
@@ -110,8 +110,22 @@
 								<strong>{assistant.title}</strong>
 								<div class="aiassistant-config__hint">UID {assistant.uid}</div>
 							</td>
-							<td>{assistant.aiConnection}</td>
-							<td>{assistant.vectorStoreConnection}</td>
+							<td>
+								{assistant.aiConnection}
+								<f:if condition="{assistant.aiEmbeddingModel}">
+									<div class="aiassistant-config__hint">Embedding: <code class="aiassistant-config__key">{assistant.aiEmbeddingModel}</code></div>
+									<f:if condition="{assistant.aiEmbeddingDimension}">
+										<f:then><div class="aiassistant-config__hint">Measured: {assistant.aiEmbeddingDimension} dimensions</div></f:then>
+										<f:else><div class="aiassistant-config__hint">Dimension: run test to measure</div></f:else>
+									</f:if>
+								</f:if>
+							</td>
+							<td>
+								{assistant.vectorStoreConnection}
+								<f:if condition="{assistant.vectorStoreDimension}">
+									<div class="aiassistant-config__hint">Configured: {assistant.vectorStoreDimension} dimensions · {assistant.vectorStoreDistance}</div>
+								</f:if>
+							</td>
 							<td>{assistant.stepCount}</td>
 							<td>
 								<f:if condition="{assistant.hidden}">
