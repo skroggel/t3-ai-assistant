@@ -54,6 +54,9 @@
 			<trans-unit id="tx_aiassistant_connection_ai.base_url_desc" resname="tx_aiassistant_connection_ai.base_url_desc">
 				<source>Base URL of the AI provider API. Leave empty if the connector uses its default endpoint.</source>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.base_url_placeholder" resname="tx_aiassistant_connection_ai.base_url_placeholder">
+				<source>Leave empty to use the connector default</source>
+			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.api_key_desc" resname="tx_aiassistant_connection_ai.api_key_desc">
 				<source>API key used to authenticate against the AI provider.</source>
 			</trans-unit>

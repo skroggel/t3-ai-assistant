@@ -46,7 +46,7 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
      *
      * @var string
      */
-    protected string $baseUrl = 'https://api.openai.com/v1';
+    protected string $baseUrl = '';
 
 
     /**
@@ -78,7 +78,7 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
      *
      * @var string
      */
-    protected string $defaultModel = 'gpt-4o-mini';
+    protected string $defaultModel = '';
 
 
     /**
@@ -86,7 +86,7 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
      *
      * @var string
      */
-    protected string $embeddingModel = 'text-embedding-3-small';
+    protected string $embeddingModel = '';
 
 
     /**
@@ -168,7 +168,7 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
      */
     public function getBaseUrl(): string
     {
-        return $this->baseUrl ?? 'https://api.openai.com/v1';
+        return $this->baseUrl;
     }
 
 
@@ -272,9 +272,7 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
      */
     public function setDefaultModel(string $defaultModel): void
     {
-        $this->defaultModel = trim($defaultModel) !== ''
-            ? trim($defaultModel)
-            : 'gpt-4o-mini';
+        $this->defaultModel = trim($defaultModel);
     }
 
 
@@ -297,9 +295,7 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
      */
     public function setEmbeddingModel(string $embeddingModel): void
     {
-        $this->embeddingModel = trim($embeddingModel) !== ''
-            ? trim($embeddingModel)
-            : 'text-embedding-3-small';
+        $this->embeddingModel = trim($embeddingModel);
     }
 
 

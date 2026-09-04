@@ -61,8 +61,8 @@ return [
                 'eval' => 'trim',
                 'max' => 512,
                 'size' => 60,
-                'placeholder' => 'https://api.openai.com/v1',
-                'default' => 'https://api.openai.com/v1',
+                'placeholder' => $ll . 'tx_aiassistant_connection_ai.base_url_placeholder',
+                'default' => '',
             ],
         ],
         'api_key' => [
@@ -107,7 +107,6 @@ return [
                 'eval' => 'trim',
                 'max' => 255,
                 'size' => 40,
-                'placeholder' => 'gpt-4o-mini',
             ],
         ],
         'default_temperature' => [
@@ -128,7 +127,6 @@ return [
                 'eval' => 'trim',
                 'max' => 255,
                 'size' => 40,
-                'placeholder' => 'text-embedding-3-small',
             ],
         ],
         'embedding_temperature' => [
