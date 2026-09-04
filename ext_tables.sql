@@ -12,6 +12,7 @@ CREATE TABLE `tx_aiassistant_connection_ai` (
     `default_model` varchar(255) DEFAULT '' NOT NULL,
     `default_temperature` double DEFAULT '0.2' NOT NULL,
     `embedding_model` varchar(255) DEFAULT '' NOT NULL,
+    `embedding_dimension` int(11) unsigned DEFAULT '1536' NOT NULL,
     `embedding_temperature` double DEFAULT '0' NOT NULL,
     `additional_options` text
 );
@@ -180,7 +181,6 @@ CREATE TABLE `tx_aiassistant_connection_vector_database` (
     `api_key` varchar(1024) DEFAULT '' NOT NULL,
     `default_collection` varchar(255) DEFAULT '' NOT NULL,
     `collections` text,
-    `vector_size` int(11) DEFAULT '1536' NOT NULL,
     `distance` varchar(255) DEFAULT 'Cosine' NOT NULL,
     `additional_options` text
 );

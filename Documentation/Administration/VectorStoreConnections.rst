@@ -13,9 +13,12 @@ Configuration checklist
 * enter API credentials if required;
 * configure default collection;
 * configure additional collections available to retriever steps;
-* configure vector size to match the embedding model;
 * choose the distance metric;
 * test the connection in the backend module.
+
+The embedding dimension belongs to the AI connection. Vector store connections
+only define storage-specific settings such as endpoint, collections and distance
+metric.
 
 Storage and collection scope
 ----------------------------

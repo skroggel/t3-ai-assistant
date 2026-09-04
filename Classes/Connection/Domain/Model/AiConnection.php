@@ -90,6 +90,14 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
 
 
     /**
+     * Embedding dimension.
+     *
+     * @var int
+     */
+    protected int $embeddingDimension = 1536;
+
+
+    /**
      * Default chat temperature.
      *
      * @var float
@@ -296,6 +304,29 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
     public function setEmbeddingModel(string $embeddingModel): void
     {
         $this->embeddingModel = trim($embeddingModel);
+    }
+
+
+    /**
+     * Returns the configured embedding dimension.
+     *
+     * @return int Embedding dimension.
+     */
+    public function getEmbeddingDimension(): int
+    {
+        return $this->embeddingDimension;
+    }
+
+
+    /**
+     * Sets the configured embedding dimension.
+     *
+     * @param int $embeddingDimension Embedding dimension.
+     * @return void
+     */
+    public function setEmbeddingDimension(int $embeddingDimension): void
+    {
+        $this->embeddingDimension = $embeddingDimension;
     }
 
 

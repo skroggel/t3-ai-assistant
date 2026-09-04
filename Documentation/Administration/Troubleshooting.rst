@@ -11,7 +11,7 @@ Check:
 * the assistant profile test under **AI Assistant > Diagnostics** succeeds;
 * indexer has written documents;
 * retriever uses the same vector store connection and collection as the indexer;
-* embedding model vector size matches the vector store;
+* the measured embedding dimension matches the AI connection configuration;
 * ``max_retrieval_results`` is greater than zero;
 * score threshold is not too strict.
 

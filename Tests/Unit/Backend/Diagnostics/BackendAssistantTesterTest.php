@@ -49,6 +49,21 @@ final class BackendAssistantTesterTest extends TestCase
     }
 
 
+    public function testReportsExistingCollectionWithIncompatibleVectorConfiguration(): void
+    {
+        $result = $this->createTester(
+            ['public'],
+            collectionCompatible: false,
+        )->test($this->createAssistant('public'));
+
+        self::assertSame('error', $result['status']);
+        self::assertTrue($this->hasCheckMessage(
+            $result['checks'],
+            'is not compatible with the effective embedding configuration',
+        ));
+    }
+
+
     public function testRejectsCollectionOutsideEffectiveConnectionConfiguration(): void
     {
         $assistant = $this->createAssistant('public');
@@ -72,7 +87,6 @@ final class BackendAssistantTesterTest extends TestCase
         $override->setConnectorIdentifier('test-vector');
         $override->setEndpoint('https://private-vector.example.test');
         $override->setDefaultCollection('private');
-        $override->setVectorSize(2);
         $this->getRetriever($assistant)->setRetrievalVectorStoreConnection($override);
 
         $result = $this->createTester(['private'])->test($assistant);
@@ -85,14 +99,14 @@ final class BackendAssistantTesterTest extends TestCase
     public function testReportsEmbeddingDimensionMismatchForRetriever(): void
     {
         $assistant = $this->createAssistant('public');
-        $assistant->getVectorStoreConnection()?->setVectorSize(3);
+        $assistant->getAiConnection()?->setEmbeddingDimension(3);
 
         $result = $this->createTester(['public'])->test($assistant);
 
         self::assertSame('error', $result['status']);
         self::assertTrue($this->hasCheckMessage(
             $result['checks'],
-            'AI connection returns 2 dimensions, but the configured vector size is 3',
+            'AI connection returns 2 dimensions, but it is configured for 3',
         ));
     }
 
@@ -110,7 +124,22 @@ final class BackendAssistantTesterTest extends TestCase
         $result = $this->createTester(['public'])->test($assistant);
 
         self::assertSame('ok', $result['status']);
-        self::assertSame(1, $this->countChecksByLabel($result['checks'], 'Vector store "Vector store"'));
+        self::assertSame(1, $this->countChecksByLabel($result['checks'], 'AI embedding configuration'));
+    }
+
+
+    public function testRejectsMissingEmbeddingDimension(): void
+    {
+        $assistant = $this->createAssistant('public');
+        $assistant->getAiConnection()?->setEmbeddingDimension(0);
+
+        $result = $this->createTester(['public'])->test($assistant);
+
+        self::assertSame('error', $result['status']);
+        self::assertTrue($this->hasCheckMessage(
+            $result['checks'],
+            'embedding dimension must be greater than zero',
+        ));
     }
 
 
@@ -146,11 +175,13 @@ final class BackendAssistantTesterTest extends TestCase
      * @param array<int, string> $remoteCollections Remote collection names.
      * @param string $chatResponse Chat probe response content.
      * @param array<int, string> $unsupportedModels Model overrides rejected by the test connector.
+     * @param bool $collectionCompatible Whether the remote collection matches the requested vector configuration.
      */
     private function createTester(
         array $remoteCollections,
         string $chatResponse = 'OK',
         array $unsupportedModels = [],
+        bool $collectionCompatible = true,
     ): BackendAssistantTester
     {
         $aiConnector = $this->createStub(AiConnectorInterface::class);
@@ -172,6 +203,7 @@ final class BackendAssistantTesterTest extends TestCase
         $vectorConnector = $this->createStub(VectorStoreConnectorInterface::class);
         $vectorConnector->method('getIdentifier')->willReturn('test-vector');
         $vectorConnector->method('listCollections')->willReturn($remoteCollections);
+        $vectorConnector->method('ensureCollection')->willReturn($collectionCompatible);
 
         $aiConnectorResolver = new AiConnectorResolver([$aiConnector]);
         $vectorStoreConnectorResolver = new VectorStoreConnectorResolver([$vectorConnector]);
@@ -201,13 +233,13 @@ final class BackendAssistantTesterTest extends TestCase
         $aiConnection = new AiConnection();
         $aiConnection->setTitle('AI');
         $aiConnection->setConnectorIdentifier('test-ai');
+        $aiConnection->setEmbeddingDimension(2);
 
         $vectorStoreConnection = new VectorStoreConnection();
         $vectorStoreConnection->setTitle('Vector store');
         $vectorStoreConnection->setConnectorIdentifier('test-vector');
         $vectorStoreConnection->setEndpoint('https://vector.example.test');
         $vectorStoreConnection->setDefaultCollection($collection);
-        $vectorStoreConnection->setVectorSize(2);
 
         $retriever = new AssistantPipelineStep();
         $retriever->setTitle('Knowledge');

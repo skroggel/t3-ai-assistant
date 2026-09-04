@@ -72,6 +72,7 @@ final class BackendConnectionProvider
                 'kind' => 'AI',
                 'type' => $connection->getConnectorIdentifier(),
                 'baseUrl' => $connection->getBaseUrl(),
+                'embeddingDimension' => $connection->getEmbeddingDimension(),
                 'hidden' => false,
                 'editUrl' => (string)$uriBuilder->buildUriFromRoute('record_edit', [
                     'edit' => [
@@ -95,6 +96,7 @@ final class BackendConnectionProvider
                 'kind' => 'Vector store',
                 'type' => $connection->getConnectorIdentifier(),
                 'baseUrl' => $connection->getEndpoint(),
+                'embeddingDimension' => null,
                 'hidden' => false,
                 'editUrl' => (string)$uriBuilder->buildUriFromRoute('record_edit', [
                     'edit' => [
@@ -143,9 +145,9 @@ final class BackendConnectionProvider
                 'title' => $assistant->getTitle(),
                 'aiConnection' => $aiConnection?->getTitle() ?? 'Not configured',
                 'aiEmbeddingModel' => $aiConnection?->getEmbeddingModel() ?? '',
-                'aiEmbeddingDimension' => $measuredEmbeddingDimension,
+                'aiConfiguredEmbeddingDimension' => $aiConnection?->getEmbeddingDimension() ?? 0,
+                'aiMeasuredEmbeddingDimension' => $measuredEmbeddingDimension,
                 'vectorStoreConnection' => $vectorStoreConnection?->getTitle() ?? 'Not configured',
-                'vectorStoreDimension' => $vectorStoreConnection?->getVectorSize(),
                 'vectorStoreDistance' => $vectorStoreConnection?->getDistance() ?? '',
                 'stepCount' => $assistant->getChatPipelineSteps()->count(),
                 'hidden' => $assistant->isHidden(),

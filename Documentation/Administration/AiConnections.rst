@@ -13,7 +13,7 @@ Configuration checklist
 * enter the provider endpoint if needed;
 * enter API credentials;
 * set a default chat model;
-* set embedding model and dimensions according to the vector store;
+* set the embedding model and its output dimension;
 * test the connection in the backend module.
 
 Model defaults
@@ -29,21 +29,16 @@ Select ``gemini`` as connector and leave the base URL empty to use the official
 Gemini API endpoint. Configure a chat model and an embedding model available to
 the API key.
 
-Gemini embedding models return 3072 dimensions by default. The vector size of
-the selected vector-store connection must match. Operation-specific connection
-options can be grouped under ``chat`` and ``embedding`` so embedding settings
-are not forwarded to chat requests. For example:
+Gemini embedding models return 3072 dimensions by default. Store the desired
+dimension on the AI connection. The Gemini connector automatically sends it as
+``outputDimensionality`` for single and batch embedding requests. When reducing
+the embedding dimensions, follow the normalization requirements of the selected
+Gemini embedding model.
 
-..  code-block:: json
+Existing installations
+----------------------
 
-    {
-      "embedding": {
-        "embedContentConfig": {
-          "outputDimensionality": 1536
-        }
-      }
-    }
-
-When reducing the embedding dimensions, use the same dimension in the
-vector-store connection and follow the normalization requirements of the
-selected Gemini embedding model.
+The schema update initializes existing AI connections with the default dimension
+of ``1536``. If an installation uses another dimension, update every affected AI
+connection and run its connection test. Afterwards, run the assistant diagnostics
+to verify the configured dimension against every collection used by that assistant.

@@ -20,6 +20,7 @@ use Madj2k\AiCore\Assistant\Pipeline\Registry\ProcessorRegistry;
 use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
 use Madj2k\AiCore\Connection\Health\ConnectionHealthChecker;
 use Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver;
+use Madj2k\AiCore\Connection\VectorStore\DTO\VectorCollection;
 
 /**
  * Class BackendAssistantTester
@@ -45,8 +46,7 @@ final readonly class BackendAssistantTester
         private ProcessorRegistry $processorRegistry,
         private ConnectionHealthChecker $connectionHealthChecker,
         private VectorStoreConnectorResolver $vectorStoreConnectorResolver,
-    ) {
-    }
+    ) {}
 
 
     /**
@@ -90,6 +90,26 @@ final readonly class BackendAssistantTester
                         ? sprintf('Embedding test succeeded with %d dimensions.', $embeddingDimension)
                         : 'AI connection returned an empty embedding.',
                 );
+                $configuredEmbeddingDimension = $aiConnection->getEmbeddingDimension();
+                $checks[] = $this->check(
+                    $configuredEmbeddingDimension > 0
+                        && $embeddingDimension === $configuredEmbeddingDimension
+                        ? 'ok'
+                        : 'error',
+                    'AI embedding configuration',
+                    $configuredEmbeddingDimension <= 0
+                        ? 'The AI connection embedding dimension must be greater than zero.'
+                        : ($embeddingDimension === $configuredEmbeddingDimension
+                            ? sprintf(
+                                'Measured embedding dimension %d matches the AI connection configuration.',
+                                $embeddingDimension,
+                            )
+                            : sprintf(
+                                'AI connection returns %d dimensions, but it is configured for %d. Align the embedding configuration and reindex into a compatible collection.',
+                                $embeddingDimension,
+                                $configuredEmbeddingDimension,
+                            )),
+                );
             } catch (\Throwable $exception) {
                 $checks[] = $this->check('error', 'AI embedding', $exception->getMessage());
             }
@@ -116,8 +136,6 @@ final readonly class BackendAssistantTester
          * @var array<string, array{collections?: array<int, string>, error?: string}> $remoteCollections
          */
         $remoteCollections = [];
-        /** @var array<string, true> $checkedDimensionConnections */
-        $checkedDimensionConnections = [];
         foreach ($steps as $step) {
             try {
                 $processor = $this->processorRegistry->get($step->getProcessorIdentifier(), $step->getType());
@@ -139,30 +157,6 @@ final readonly class BackendAssistantTester
             }
 
             $connectionKey = (string)spl_object_id($connection);
-            if (
-                $embeddingDimension !== null
-                && $embeddingDimension > 0
-                && !isset($checkedDimensionConnections[$connectionKey])
-            ) {
-                $configuredVectorSize = $connection->getVectorSize();
-                $connectionLabel = $this->connectionLabel($connection);
-                $checks[] = $this->check(
-                    $embeddingDimension === $configuredVectorSize ? 'ok' : 'error',
-                    sprintf('Vector store "%s"', $connectionLabel),
-                    $embeddingDimension === $configuredVectorSize
-                        ? sprintf(
-                            'AI embedding dimension %d matches the configured vector size.',
-                            $embeddingDimension,
-                        )
-                        : sprintf(
-                            'AI connection returns %d dimensions, but the configured vector size is %d. Align the embedding configuration and reindex into a compatible collection.',
-                            $embeddingDimension,
-                            $configuredVectorSize,
-                        ),
-                );
-                $checkedDimensionConnections[$connectionKey] = true;
-            }
-
             $collection = trim($step->getRetrievalCollection()) !== ''
                 ? trim($step->getRetrievalCollection())
                 : trim($connection->getDefaultCollection());
@@ -202,14 +196,53 @@ final readonly class BackendAssistantTester
                 continue;
             }
 
+            $collectionConfigurationVerified = false;
+            if (
+                $aiConnection !== null
+                && $embeddingDimension !== null
+                && $embeddingDimension > 0
+                && $embeddingDimension === $aiConnection->getEmbeddingDimension()
+            ) {
+                try {
+                    $collectionCompatible = $this->vectorStoreConnectorResolver
+                        ->get($connection->getConnectorIdentifier())
+                        ->ensureCollection(
+                            $connection,
+                            new VectorCollection(
+                                $collection,
+                                $aiConnection->getEmbeddingDimension(),
+                                $connection->getDistance(),
+                            ),
+                        );
+                    if (!$collectionCompatible) {
+                        $checks[] = $this->check(
+                            'error',
+                            $stepLabel,
+                            sprintf('Collection "%s" is not compatible with the effective embedding configuration.', $collection),
+                        );
+                        continue;
+                    }
+                    $collectionConfigurationVerified = true;
+                } catch (\Throwable $exception) {
+                    $checks[] = $this->check('error', $stepLabel, $exception->getMessage());
+                    continue;
+                }
+            }
+
             $checks[] = $this->check(
                 'ok',
                 $stepLabel,
-                sprintf(
-                    'Collection "%s" exists on vector store "%s".',
-                    $collection,
-                    $this->connectionLabel($connection),
-                ),
+                $collectionConfigurationVerified
+                    ? sprintf(
+                        'Collection "%s" exists on vector store "%s" and matches the effective embedding configuration.',
+                        $collection,
+                        $this->connectionLabel($connection),
+                    )
+                    : sprintf(
+                        'Collection "%s" exists on vector store "%s".',
+                        $collection,
+                        $this->connectionLabel($connection),
+                    ),
             );
         }
 

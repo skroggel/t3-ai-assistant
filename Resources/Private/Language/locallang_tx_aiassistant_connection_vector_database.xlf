@@ -42,9 +42,6 @@
 			<trans-unit id="tx_aiassistant_connection_vector_database.title" resname="tx_aiassistant_connection_vector_database.title">
 				<source>Title</source>
 			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_vector_database.vector_size" resname="tx_aiassistant_connection_vector_database.vector_size">
-				<source>Vector Size</source>
-			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.title_desc" resname="tx_aiassistant_connection_vector_database.title_desc">
 				<source>Internal name used to identify this vector database connection.</source>
 			</trans-unit>
@@ -59,9 +56,6 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.default_collection_desc" resname="tx_aiassistant_connection_vector_database.default_collection_desc">
 				<source>Default collection used when no collection is explicitly configured by the retriever step, assistant or indexer.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_vector_database.vector_size_desc" resname="tx_aiassistant_connection_vector_database.vector_size_desc">
-				<source>Vector dimension used when creating collections for this connection.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.distance_desc" resname="tx_aiassistant_connection_vector_database.distance_desc">
 				<source>Distance metric used by the vector database for similarity search.</source>

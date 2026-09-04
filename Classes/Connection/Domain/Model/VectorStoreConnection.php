@@ -75,14 +75,6 @@ class VectorStoreConnection extends AbstractEntity implements VectorStoreConnect
 
 
     /**
-     * Vector size.
-     *
-     * @var int
-     */
-    protected int $vectorSize = 1536;
-
-
-    /**
      * Distance metric.
      *
      * @var string
@@ -252,29 +244,6 @@ class VectorStoreConnection extends AbstractEntity implements VectorStoreConnect
             static fn (mixed $collection): string => trim((string)$collection),
             $collections,
         ))));
-    }
-
-
-    /**
-     * Returns vector size.
-     *
-     * @return int Vector size.
-     */
-    public function getVectorSize(): int
-    {
-        return $this->vectorSize;
-    }
-
-
-    /**
-     * Sets vector size.
-     *
-     * @param int $vectorSize Vector size.
-     * @return void
-     */
-    public function setVectorSize(int $vectorSize): void
-    {
-        $this->vectorSize = $vectorSize > 0 ? $vectorSize : 1536;
     }
 
 

@@ -16,7 +16,7 @@ return [
         ],
         'sortby' => 'sorting',
         'rootLevel' => 1,
-        'searchFields' => 'title,connector_identifier,base_url,default_model,embedding_model',
+        'searchFields' => 'title,connector_identifier,base_url,default_model,embedding_model,embedding_dimension',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
     ],
     'types' => [
@@ -26,7 +26,7 @@ return [
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_ai.xlf:tx_aiassistant_connection_ai.tab_credentials,
                     base_url, api_key, organization, project,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_ai.xlf:tx_aiassistant_connection_ai.tab_defaults,
-                    default_model, default_temperature, embedding_model, embedding_temperature, additional_options
+                    default_model, default_temperature, embedding_model, embedding_dimension, embedding_temperature, additional_options
             ',
         ]
     ],
@@ -127,6 +127,18 @@ return [
                 'eval' => 'trim',
                 'max' => 255,
                 'size' => 40,
+            ],
+        ],
+        'embedding_dimension' => [
+            'label' => $ll . 'tx_aiassistant_connection_ai.embedding_dimension',
+            'description' => $ll . 'tx_aiassistant_connection_ai.embedding_dimension_desc',
+            'config' => [
+                'type' => 'number',
+                'format' => 'integer',
+                'default' => 1536,
+                'range' => [
+                    'lower' => 1,
+                ],
             ],
         ],
         'embedding_temperature' => [
