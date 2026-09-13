@@ -5,7 +5,7 @@
 		<body>
 			<trans-unit id="tx_aiassistant_indexer_run" resname="tx_aiassistant_indexer_run">
 				<source>AI Chat Index Run</source>
-				<target>KI-Chat-Indexierungslauf</target>
+				<target>AI-Chat-Indexlauf</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_run.chunks_total" resname="tx_aiassistant_indexer_run.chunks_total">
 				<source>Chunks Total</source>
@@ -21,7 +21,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_run.is_dry_run" resname="tx_aiassistant_indexer_run.is_dry_run">
 				<source>Is Dry Run</source>
-				<target>Ist Testlauf</target>
+				<target>Dry Run</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_run.items_failed" resname="tx_aiassistant_indexer_run.items_failed">
 				<source>Items Failed</source>
