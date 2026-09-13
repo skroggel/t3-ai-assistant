@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_indexer_run.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant" target-language="de">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_indexer_run" resname="tx_aiassistant_indexer_run">
+				<source>AI Chat Index Run</source>
+				<target>KI-Chat-Indexierungslauf</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.chunks_total" resname="tx_aiassistant_indexer_run.chunks_total">
+				<source>Chunks Total</source>
+				<target>Chunks gesamt</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.finished_at" resname="tx_aiassistant_indexer_run.finished_at">
+				<source>Finished At</source>
+				<target>Beendet am</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.indexer_uid" resname="tx_aiassistant_indexer_run.indexer_uid">
+				<source>Indexer Uid</source>
+				<target>Indexer-UID</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.is_dry_run" resname="tx_aiassistant_indexer_run.is_dry_run">
+				<source>Is Dry Run</source>
+				<target>Ist Testlauf</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_failed" resname="tx_aiassistant_indexer_run.items_failed">
+				<source>Items Failed</source>
+				<target>Fehlgeschlagene Elemente</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_indexed" resname="tx_aiassistant_indexer_run.items_indexed">
+				<source>Items Indexed</source>
+				<target>Indexierte Elemente</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_processed" resname="tx_aiassistant_indexer_run.items_processed">
+				<source>Items Processed</source>
+				<target>Verarbeitete Elemente</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_removed" resname="tx_aiassistant_indexer_run.items_removed">
+				<source>Items Removed</source>
+				<target>Entfernte Elemente</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.items_skipped" resname="tx_aiassistant_indexer_run.items_skipped">
+				<source>Items Skipped</source>
+				<target>Übersprungene Elemente</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.message" resname="tx_aiassistant_indexer_run.message">
+				<source>Message</source>
+				<target>Nachricht</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.source_type" resname="tx_aiassistant_indexer_run.source_type">
+				<source>Source Type</source>
+				<target>Quelltyp</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.started_at" resname="tx_aiassistant_indexer_run.started_at">
+				<source>Started At</source>
+				<target>Gestartet am</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer_run.status" resname="tx_aiassistant_indexer_run.status">
+				<source>Status</source>
+				<target>Status</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

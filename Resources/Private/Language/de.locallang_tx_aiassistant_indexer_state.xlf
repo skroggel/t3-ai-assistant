@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_indexer_state.xlf" product-name="ai_assistant" target-language="de">
+        <body>
+            <trans-unit id="tx_aiassistant_indexer_state" resname="tx_aiassistant_indexer_state">
+                <source>Indexer state</source>
+            	<target>Indexer-Status</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_indexer_state.indexer_identifier" resname="tx_aiassistant_indexer_state.indexer_identifier">
+                <source>Indexer identifier</source>
+            	<target>Indexer-Kennung</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_indexer_state.source_type" resname="tx_aiassistant_indexer_state.source_type">
+                <source>Source type</source>
+            	<target>Quelltyp</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_indexer_state.indexer_uid" resname="tx_aiassistant_indexer_state.indexer_uid">
+                <source>Indexer uid</source>
+            	<target>Indexer-UID</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_indexer_state.scope" resname="tx_aiassistant_indexer_state.scope">
+                <source>Execution scope</source>
+            	<target>Ausführungsbereich</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_indexer_state.cursor_value" resname="tx_aiassistant_indexer_state.cursor_value">
+                <source>Cursor</source>
+            	<target>Cursor</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_indexer_state.status" resname="tx_aiassistant_indexer_state.status">
+                <source>Status</source>
+            <target>Status</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_indexer_state.last_run_started_at" resname="tx_aiassistant_indexer_state.last_run_started_at">
+                <source>Last run started at</source>
+            	<target>Letzter Lauf gestartet am</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_indexer_state.last_run_finished_at" resname="tx_aiassistant_indexer_state.last_run_finished_at">
+                <source>Last run finished at</source>
+            	<target>Letzter Lauf beendet am</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_indexer_state.last_error" resname="tx_aiassistant_indexer_state.last_error">
+                <source>Last error</source>
+            	<target>Letzter Fehler</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

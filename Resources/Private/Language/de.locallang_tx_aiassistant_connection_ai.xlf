@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_ai.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant" target-language="de">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_connection_ai" resname="tx_aiassistant_connection_ai">
+				<source>Connection AI-API</source>
+				<target>Verbindung KI-API</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.additional_options" resname="tx_aiassistant_connection_ai.additional_options">
+				<source>Additional Options</source>
+				<target>Zusätzliche Optionen</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.api_key" resname="tx_aiassistant_connection_ai.api_key">
+				<source>Api Key</source>
+				<target>API-Schlüssel</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.base_url" resname="tx_aiassistant_connection_ai.base_url">
+				<source>Base Url</source>
+				<target>Basis-URL</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.connector_identifier" resname="tx_aiassistant_connection_ai.connector_identifier">
+				<source>Connector Identifier</source>
+				<target>Connector-Kennung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.default_model" resname="tx_aiassistant_connection_ai.default_model">
+				<source>Default Model</source>
+				<target>Standardmodell</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.default_temperature" resname="tx_aiassistant_connection_ai.default_temperature">
+				<source>Default Temperature</source>
+				<target>Standardtemperatur</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.embedding_model" resname="tx_aiassistant_connection_ai.embedding_model">
+				<source>Embedding Model</source>
+				<target>Embedding-Modell</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.embedding_dimension" resname="tx_aiassistant_connection_ai.embedding_dimension">
+				<source>Embedding Dimension</source>
+				<target>Embedding-Dimension</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.embedding_temperature" resname="tx_aiassistant_connection_ai.embedding_temperature">
+				<source>Embedding Temperature</source>
+				<target>Embedding-Temperatur</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.organization" resname="tx_aiassistant_connection_ai.organization">
+				<source>Organization</source>
+				<target>Organisation</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.project" resname="tx_aiassistant_connection_ai.project">
+				<source>Project</source>
+				<target>Projekt</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.tab_credentials" resname="tx_aiassistant_connection_ai.tab_credentials">
+				<source>Credentials</source>
+				<target>Zugangsdaten</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.tab_defaults" resname="tx_aiassistant_connection_ai.tab_defaults">
+				<source>Defaults</source>
+				<target>Standardwerte</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.title" resname="tx_aiassistant_connection_ai.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.title_desc" resname="tx_aiassistant_connection_ai.title_desc">
+				<source>Internal name used to identify this AI connection.</source>
+				<target>Interner Name zur Identifizierung dieser KI-Verbindung.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.connector_identifier_desc" resname="tx_aiassistant_connection_ai.connector_identifier_desc">
+				<source>Registered AI connector implementation used for this connection.</source>
+				<target>Registrierte KI-Connector-Implementierung, die für diese Verbindung verwendet wird.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.base_url_desc" resname="tx_aiassistant_connection_ai.base_url_desc">
+				<source>Base URL of the AI provider API. Leave empty if the connector uses its default endpoint.</source>
+				<target>Basis-URL der API des KI-Anbieters. Leer lassen, wenn der Connector seinen Standard-Endpunkt verwendet.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.base_url_placeholder" resname="tx_aiassistant_connection_ai.base_url_placeholder">
+				<source>Leave empty to use the connector default</source>
+				<target>Leer lassen, um den Standard des Connectors zu verwenden</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.api_key_desc" resname="tx_aiassistant_connection_ai.api_key_desc">
+				<source>API key used to authenticate against the AI provider.</source>
+				<target>API-Schlüssel zur Authentifizierung beim KI-Anbieter.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.organization_desc" resname="tx_aiassistant_connection_ai.organization_desc">
+				<source>Optional organization identifier sent to the AI provider.</source>
+				<target>Optionale Organisationskennung, die an den KI-Anbieter gesendet wird.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.project_desc" resname="tx_aiassistant_connection_ai.project_desc">
+				<source>Optional project identifier sent to the AI provider.</source>
+				<target>Optionale Projektkennung, die an den KI-Anbieter gesendet wird.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.default_model_desc" resname="tx_aiassistant_connection_ai.default_model_desc">
+				<source>Default chat/completion model used when a pipeline step does not define a model.</source>
+				<target>Standardmodell für Chat/Completion, das verwendet wird, wenn ein Pipeline-Schritt kein Modell definiert.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.default_temperature_desc" resname="tx_aiassistant_connection_ai.default_temperature_desc">
+				<source>Default sampling temperature used for chat/completion requests without an explicit step value.</source>
+				<target>Standard-Sampling-Temperatur für Chat-/Completion-Anfragen ohne expliziten Wert im Schritt.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.embedding_model_desc" resname="tx_aiassistant_connection_ai.embedding_model_desc">
+				<source>Model used to create embeddings for indexing and retrieval queries.</source>
+				<target>Modell zur Erstellung von Embeddings für die Indexierung und Retrieval-Abfragen.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.embedding_dimension_desc" resname="tx_aiassistant_connection_ai.embedding_dimension_desc">
+				<source>Requested and expected vector dimension of the embedding model. The default is 1536. Use the connection test to verify it. Changing this value requires a compatible or rebuilt collection.</source>
+				<target>Angeforderte und erwartete Vektordimension des Embedding-Modells. Der Standardwert ist 1536. Verwenden Sie den Verbindungstest zur Überprüfung. Eine Änderung dieses Werts erfordert eine kompatible oder neu aufgebaute Collection.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.embedding_temperature_desc" resname="tx_aiassistant_connection_ai.embedding_temperature_desc">
+				<source>Temperature used for embedding requests if supported by the selected connector.</source>
+				<target>Temperatur für Embedding-Anfragen, sofern vom ausgewählten Connector unterstützt.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.additional_options_desc" resname="tx_aiassistant_connection_ai.additional_options_desc">
+				<source>Optional connector-specific settings. Use one key-value pair per line or JSON if supported by the connector.</source>
+				<target>Optionale Connector-spezifische Einstellungen. Verwenden Sie ein Schlüssel-Wert-Paar pro Zeile oder JSON, sofern vom Connector unterstützt.</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

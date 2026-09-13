@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant" target-language="de">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_assistant_profile" resname="tx_aiassistant_assistant_profile">
+				<source>Assistant Profile</source>
+				<target>Assistentenprofil</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.title" resname="tx_aiassistant_assistant_profile.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.title_desc" resname="tx_aiassistant_assistant_profile.title_desc">
+				<source>Human-readable name of this chat profile.</source>
+				<target>Menschenlesbarer Name dieses Chat-Profils.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.site_identifier" resname="tx_aiassistant_assistant_profile.site_identifier">
+				<source>Site</source>
+				<target>Site</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.site_identifier_desc" resname="tx_aiassistant_assistant_profile.site_identifier_desc">
+				<source>Choose the TYPO3 site this profile belongs to. Only sites with aiAssistant.collection are listed.</source>
+				<target>Wählen Sie die TYPO3-Site aus, zu der dieses Profil gehört. Es werden nur Sites mit `aiAssistant.collection` aufgelistet.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.scope_root_pid" resname="tx_aiassistant_assistant_profile.scope_root_pid">
+				<source>Scope root page</source>
+				<target>Stammseite des Geltungsbereichs</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.scope_root_pid_desc" resname="tx_aiassistant_assistant_profile.scope_root_pid_desc">
+				<source>This page and all its subpages define the contextual scope of the assistant.</source>
+				<target>Diese Seite und alle ihre Unterseiten definieren den kontextuellen Geltungsbereich des Assistenten.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.scope_mode" resname="tx_aiassistant_assistant_profile.scope_mode">
+				<source>Scope mode</source>
+				<target>Geltungsbereichsmodus</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.scope_mode_desc" resname="tx_aiassistant_assistant_profile.scope_mode_desc">
+				<source>`Strict` only uses hits from the configured subtree. `Prefer` prioritizes the subtree and falls back to broader site content when needed.</source>
+				<target>`Strict` verwendet nur Treffer aus dem konfigurierten Seitenbaum. `Prefer` priorisiert den Seitenbaum und greift bei Bedarf auf umfassendere Site-Inhalte zurück.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.scope_mode_strict" resname="tx_aiassistant_assistant_profile.scope_mode_strict">
+				<source>Strict</source>
+				<target>Strikt</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.scope_mode_prefer" resname="tx_aiassistant_assistant_profile.scope_mode_prefer">
+				<source>Prefer</source>
+				<target>Bevorzugen</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.assistant_label" resname="tx_aiassistant_assistant_profile.assistant_label">
+				<source>Assistant label</source>
+				<target>Assistentenbezeichnung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.assistant_label_desc" resname="tx_aiassistant_assistant_profile.assistant_label_desc">
+				<source>Optional frontend label and assistant identity, for example `Founding Assistant`. When set, the bot also uses this label when users ask who it is.</source>
+				<target>Optionale Frontend-Bezeichnung und Identität des Assistenten, zum Beispiel `Founding Assistant`. Wenn gesetzt, verwendet der Bot diese Bezeichnung auch, wenn Benutzer fragen, wer er ist.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.intro_text" resname="tx_aiassistant_assistant_profile.intro_text">
+				<source>Intro text</source>
+				<target>Einleitungstext</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.intro_text_desc" resname="tx_aiassistant_assistant_profile.intro_text_desc">
+				<source>Optional frontend intro text for this sub-bot profile.</source>
+				<target>Optionaler Einleitungstext im Frontend für dieses Sub-Bot-Profil.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.initial_message" resname="tx_aiassistant_assistant_profile.initial_message">
+				<source>Initial message</source>
+				<target>Erste Nachricht</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.initial_message_desc" resname="tx_aiassistant_assistant_profile.initial_message_desc">
+				<source>Optional first chat message shown before the user sends a question.</source>
+				<target>Optionale erste Chat-Nachricht, die angezeigt wird, bevor der Benutzer eine Frage sendet.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.identity_prompt" resname="tx_aiassistant_assistant_profile.identity_prompt">
+				<source>Identity prompt</source>
+				<target>Identitäts-Prompt</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.identity_prompt_desc" resname="tx_aiassistant_assistant_profile.identity_prompt_desc">
+				<source>Optional explicit system instruction for how this profile should identify itself. Overrides the derived assistant label behavior.</source>
+				<target>Optionale explizite Systemanweisung dazu, wie sich dieses Profil identifizieren soll. Überschreibt das aus der Assistentenbezeichnung abgeleitete Verhalten.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.profile_prompt" resname="tx_aiassistant_assistant_profile.profile_prompt">
+				<source>Profile prompt</source>
+				<target>Profil-Prompt</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.profile_prompt_desc" resname="tx_aiassistant_assistant_profile.profile_prompt_desc">
+				<source>Optional explicit system instruction for this profile's focus and behavior.</source>
+				<target>Optionale explizite Systemanweisung für Fokus und Verhalten dieses Profils.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.retrieval_policy_prompt" resname="tx_aiassistant_assistant_profile.retrieval_policy_prompt">
+				<source>Retrieval policy prompt</source>
+				<target>Retrieval-Richtlinien-Prompt</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.retrieval_policy_prompt_desc" resname="tx_aiassistant_assistant_profile.retrieval_policy_prompt_desc">
+				<source>Optional explicit retrieval/context policy for this profile. When set, it overrides the site-level retrieval policy for this profile.</source>
+				<target>Optionale explizite Retrieval-/Kontextrichtlinie für dieses Profil. Wenn gesetzt, überschreibt sie für dieses Profil die Retrieval-Richtlinie auf Site-Ebene.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.ai_connection" resname="tx_aiassistant_assistant_profile.ai_connection">
+				<source>AI Connection</source>
+				<target>KI-Verbindung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.behavior_rules" resname="tx_aiassistant_assistant_profile.behavior_rules">
+				<source>Behavior Rules</source>
+				<target>Verhaltensregeln</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.chat_pipeline_steps" resname="tx_aiassistant_assistant_profile.chat_pipeline_steps">
+				<source>Chat Pipeline Steps</source>
+				<target>Chat-Pipeline-Schritte</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.output_rules" resname="tx_aiassistant_assistant_profile.output_rules">
+				<source>Output Rules</source>
+				<target>Ausgaberegeln</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.vector_store_connection" resname="tx_aiassistant_assistant_profile.vector_store_connection">
+				<source>Vector Store Connection</source>
+				<target>Vektorspeicher-Verbindung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.palette_connections" resname="tx_aiassistant_assistant_profile.palette_connections">
+				<source>Connections</source>
+				<target>Verbindungen</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.retrieval_rules" resname="tx_aiassistant_assistant_profile.retrieval_rules">
+				<source>Retrieval Rules</source>
+				<target>Retrieval-Regeln</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.tab_assistant" resname="tx_aiassistant_assistant_profile.tab_assistant">
+				<source>Assistant</source>
+				<target>Assistent</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.tab_pipeline" resname="tx_aiassistant_assistant_profile.tab_pipeline">
+				<source>Pipeline</source>
+				<target>Pipeline</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.tab_prompts" resname="tx_aiassistant_assistant_profile.tab_prompts">
+				<source>Prompt parts</source>
+				<target>Prompt-Bestandteile</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.tab_connections" resname="tx_aiassistant_assistant_profile.tab_connections">
+				<source>Connections</source>
+				<target>Verbindungen</target>
+			</trans-unit>
+
+			<trans-unit id="tx_aiassistant_assistant_profile.ai_connection_desc" resname="tx_aiassistant_assistant_profile.ai_connection_desc">
+				<source>AI connection used for all LLM requests and retrieval query embeddings. Important: For assistants using vector retrieval, changing the provider or embedding model can make existing indexes incompatible. Verify provider-specific pipeline model overrides and use collections indexed with the same embedding configuration.</source>
+				<target>KI-Verbindung für alle LLM-Anfragen und Embeddings von Retrieval-Abfragen. Wichtig: Bei Assistenten mit Vektor-Retrieval kann eine Änderung des Anbieters oder Embedding-Modells vorhandene Indizes inkompatibel machen. Prüfen Sie anbieterspezifische Modellüberschreibungen in der Pipeline und verwenden Sie Collections, die mit derselben Embedding-Konfiguration indexiert wurden.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.vector_store_connection_desc" resname="tx_aiassistant_assistant_profile.vector_store_connection_desc">
+				<source>Vector database connection used for retrieval queries in this assistant.</source>
+				<target>Vektordatenbank-Verbindung, die für Retrieval-Abfragen dieses Assistenten verwendet wird.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.behavior_rules_desc" resname="tx_aiassistant_assistant_profile.behavior_rules_desc">
+				<source>Defines behavioral rules, boundaries, tone, and constraints for all pipeline steps.</source>
+				<target>Definiert Verhaltensregeln, Grenzen, Tonalität und Einschränkungen für alle Pipeline-Schritte.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.retrieval_rules_desc" resname="tx_aiassistant_assistant_profile.retrieval_rules_desc">
+				<source>Defines how retrieved knowledge should be interpreted and used in answers.</source>
+				<target>Definiert, wie abgerufenes Wissen interpretiert und in Antworten verwendet werden soll.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.output_rules_desc" resname="tx_aiassistant_assistant_profile.output_rules_desc">
+				<source>Defines formatting, structure, citation behavior, and final answer requirements.</source>
+				<target>Definiert Formatierung, Struktur, Zitierverhalten und Anforderungen an die endgültige Antwort.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.chat_pipeline_steps_desc" resname="tx_aiassistant_assistant_profile.chat_pipeline_steps_desc">
+				<source>Ordered pipeline steps that define how this assistant processes requests.</source>
+				<target>Geordnete Pipeline-Schritte, die definieren, wie dieser Assistent Anfragen verarbeitet.</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

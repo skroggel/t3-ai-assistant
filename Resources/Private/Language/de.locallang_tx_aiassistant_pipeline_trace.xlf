@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_pipeline_trace.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant" target-language="de">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_pipeline_trace" resname="tx_aiassistant_pipeline_trace">
+				<source>Chat trace</source>
+				<target>Chat-Trace</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.chat_identifier" resname="tx_aiassistant_pipeline_trace.chat_identifier">
+				<source>Chat Identifier</source>
+				<target>Chat-Kennung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.duration_ms" resname="tx_aiassistant_pipeline_trace.duration_ms">
+				<source>Duration Ms</source>
+				<target>Dauer in ms</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.event_name" resname="tx_aiassistant_pipeline_trace.event_name">
+				<source>Event Name</source>
+				<target>Ereignisname</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.level" resname="tx_aiassistant_pipeline_trace.level">
+				<source>Level</source>
+				<target>Level</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.payload" resname="tx_aiassistant_pipeline_trace.payload">
+				<source>Payload</source>
+				<target>Payload</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.processor_type" resname="tx_aiassistant_pipeline_trace.processor_type">
+				<source>Processor Type</source>
+				<target>Prozessortyp</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.query_text" resname="tx_aiassistant_pipeline_trace.query_text">
+				<source>Query Text</source>
+				<target>Abfragetext</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.route" resname="tx_aiassistant_pipeline_trace.route">
+				<source>Route</source>
+				<target>Route</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.step_title" resname="tx_aiassistant_pipeline_trace.step_title">
+				<source>Step Title</source>
+				<target>Schritttitel</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_pipeline_trace.trace_id" resname="tx_aiassistant_pipeline_trace.trace_id">
+				<source>Trace Id</source>
+				<target>Trace-ID</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

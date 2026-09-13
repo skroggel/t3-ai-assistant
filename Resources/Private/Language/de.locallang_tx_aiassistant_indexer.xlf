@@ -1,0 +1,264 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_indexer.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant" target-language="de">
+		<header/>
+		<body>
+			<trans-unit id="tx_aiassistant_indexer" resname="tx_aiassistant_indexer">
+				<source>Indexer</source>
+				<target>Indexer</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.title" resname="tx_aiassistant_indexer.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.type" resname="tx_aiassistant_indexer.type">
+				<source>Type</source>
+				<target>Typ</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.type.file">
+				<source>File</source>
+				<target>Datei</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.type.page">
+				<source>Page</source>
+				<target>Seite</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.type.external">
+				<source>External</source>
+				<target>Extern</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.site_identifier" resname="tx_aiassistant_indexer.site_identifier">
+				<source>Site</source>
+				<target>Site</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.connector_uid" resname="tx_aiassistant_indexer.connector_uid">
+				<source>Connector</source>
+				<target>Connector</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunk_size" resname="tx_aiassistant_indexer.chunk_size">
+				<source>Chunk size</source>
+				<target>Chunk-Größe</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunk_overlap" resname="tx_aiassistant_indexer.chunk_overlap">
+				<source>Chunk overlap</source>
+				<target>Chunk-Überlappung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.import_path" resname="tx_aiassistant_indexer.import_path">
+				<source>Import paths</source>
+				<target>Importpfade</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.include_subfolders" resname="tx_aiassistant_indexer.include_subfolders">
+				<source>Include subfolders</source>
+				<target>Unterordner einbeziehen</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.page_fields" resname="tx_aiassistant_indexer.page_fields">
+				<source>Page fields</source>
+				<target>Seitenfelder</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.root_pages" resname="tx_aiassistant_indexer.root_pages">
+				<source>Root pages</source>
+				<target>Stammseiten</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.content_types" resname="tx_aiassistant_indexer.content_types">
+				<source>Content types</source>
+				<target>Inhaltstypen</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.content_fields" resname="tx_aiassistant_indexer.content_fields">
+				<source>Content fields</source>
+				<target>Inhaltsfelder</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.title_desc" resname="tx_aiassistant_indexer.title_desc">
+				<source>Human-readable name to identify this indexer in CLI/BE.</source>
+				<target>Menschenlesbarer Name zur Identifizierung dieses Indexers in CLI/Backend.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.title_placeholder" resname="tx_aiassistant_indexer.title_placeholder">
+				<source>e.g. Site pages (DE)</source>
+				<target>z. B. Site-Seiten (DE)</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.type_desc" resname="tx_aiassistant_indexer.type_desc">
+				<source>Choose what this indexer processes: files, pages, or external content.</source>
+				<target>Wählen Sie aus, was dieser Indexer verarbeitet: Dateien, Seiten oder externe Inhalte.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.site_identifier_desc" resname="tx_aiassistant_indexer.site_identifier_desc">
+				<source>Choose a TYPO3 site that defines `aiAssistant.collection` in its Site Configuration. The indexer writes to that site's collection.</source>
+				<target>Wählen Sie eine TYPO3-Site aus, die `aiAssistant.collection` in ihrer Site-Konfiguration definiert. Der Indexer schreibt in die Collection dieser Site.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.connector_uid_desc" resname="tx_aiassistant_indexer.connector_uid_desc">
+				<source>Select the external connector that provides the content for this indexer. Connectors can be created in the backend module under Settings &gt; Connectors.</source>
+				<target>Wählen Sie den externen Connector aus, der die Inhalte für diesen Indexer bereitstellt. Connectoren können im Backend-Modul unter Einstellungen &gt; Connectoren erstellt werden.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunk_size_desc" resname="tx_aiassistant_indexer.chunk_size_desc">
+				<source>Chunk size in words. Leave empty to use global defaults.</source>
+				<target>Chunk-Größe in Wörtern. Leer lassen, um globale Standardwerte zu verwenden.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunk_size_placeholder" resname="tx_aiassistant_indexer.chunk_size_placeholder">
+				<source>500</source>
+				<target>500</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_desc" resname="tx_aiassistant_indexer.chunk_overlap_desc">
+				<source>Overlap in words between chunks. Leave empty to use defaults.</source>
+				<target>Überlappung in Wörtern zwischen Chunks. Leer lassen, um Standardwerte zu verwenden.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_placeholder" resname="tx_aiassistant_indexer.chunk_overlap_placeholder">
+				<source>50</source>
+				<target>50</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.max_chunks" resname="tx_aiassistant_indexer.max_chunks">
+				<source>Max chunks</source>
+				<target>Max. Chunks</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.max_chunks_desc" resname="tx_aiassistant_indexer.max_chunks_desc">
+				<source>Limit total chunks per source to control cost.</source>
+				<target>Begrenzt die Gesamtzahl der Chunks pro Quelle zur Kostenkontrolle.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.max_chunks_placeholder" resname="tx_aiassistant_indexer.max_chunks_placeholder">
+				<source>200</source>
+				<target>200</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.min_chunk_chars" resname="tx_aiassistant_indexer.min_chunk_chars">
+				<source>Min chunk chars</source>
+				<target>Min. Chunk-Zeichen</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.min_chunk_chars_desc" resname="tx_aiassistant_indexer.min_chunk_chars_desc">
+				<source>Skip chunks shorter than this length.</source>
+				<target>Chunks überspringen, die kürzer als diese Länge sind.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.min_chunk_chars_placeholder" resname="tx_aiassistant_indexer.min_chunk_chars_placeholder">
+				<source>40</source>
+				<target>40</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.import_path_desc" resname="tx_aiassistant_indexer.import_path_desc">
+				<source>Enter a TYPO3 FAL folder identifier such as 1:/user_upload/rag/. The number is the storage uid shown in Filelist, followed by the folder path inside that storage. Supported file types depend on the registered adapters, for example PDF, JSON and JSONL.</source>
+				<target>Geben Sie eine TYPO3-FAL-Ordnerkennung wie `1:/user_upload/rag/` ein. Die Zahl ist die in der Dateiliste angezeigte Storage-UID, gefolgt vom Ordnerpfad innerhalb dieses Speichers. Unterstützte Dateitypen hängen von den registrierten Adaptern ab, zum Beispiel PDF, JSON und JSONL.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.include_subfolders_desc" resname="tx_aiassistant_indexer.include_subfolders_desc">
+				<source>When enabled, all configured import paths are scanned recursively.</source>
+				<target>Wenn aktiviert, werden alle konfigurierten Importpfade rekursiv durchsucht.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.import_path_placeholder" resname="tx_aiassistant_indexer.import_path_placeholder">
+				<source>1:/user_upload/rag</source>
+				<target>1:/user_upload/rag</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.page_fields_desc" resname="tx_aiassistant_indexer.page_fields_desc">
+				<source>Comma or line separated list of page fields to include.</source>
+				<target>Komma- oder zeilengetrennte Liste der einzubeziehenden Seitenfelder.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.root_pages_desc" resname="tx_aiassistant_indexer.root_pages_desc">
+				<source>Scope of pages for indexer.</source>
+				<target>Seitenbereich für den Indexer.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.page_fields_placeholder" resname="tx_aiassistant_indexer.page_fields_placeholder">
+				<source>title,subtitle,description,keywords,abstract</source>
+				<target>title,subtitle,description,keywords,abstract</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.content_types_desc" resname="tx_aiassistant_indexer.content_types_desc">
+				<source>Limit to selected CType values. Leave empty to index all.</source>
+				<target>Auf ausgewählte CType-Werte beschränken. Leer lassen, um alle zu indexieren.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.content_types_placeholder" resname="tx_aiassistant_indexer.content_types_placeholder">
+				<source>text,textpic,textmedia,bullets</source>
+				<target>text,textpic,textmedia,bullets</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.content_fields_desc" resname="tx_aiassistant_indexer.content_fields_desc">
+				<source>Comma or line separated list of tt_content fields to include.</source>
+				<target>Komma- oder zeilengetrennte Liste der einzubeziehenden `tt_content`-Felder.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.content_fields_placeholder" resname="tx_aiassistant_indexer.content_fields_placeholder">
+				<source>header,subheader,bodytext</source>
+				<target>header,subheader,bodytext</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.tab_chunking" resname="tx_aiassistant_indexer.tab_chunking">
+				<source>Chunking</source>
+				<target>Chunking</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.tab_file" resname="tx_aiassistant_indexer.tab_file">
+				<source>File</source>
+				<target>Datei</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.tab_page" resname="tx_aiassistant_indexer.tab_page">
+				<source>Page</source>
+				<target>Seite</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.tab_external" resname="tx_aiassistant_indexer.tab_external">
+				<source>External Source</source>
+				<target>Externe Quelle</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.adapter_identifier" resname="tx_aiassistant_indexer.adapter_identifier">
+				<source>Adapter Identifier</source>
+				<target>Adapter-Kennung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.additional_content_fields" resname="tx_aiassistant_indexer.additional_content_fields">
+				<source>Additional Content Fields</source>
+				<target>Zusätzliche Inhaltsfelder</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.additional_metadata" resname="tx_aiassistant_indexer.additional_metadata">
+				<source>Additional Metadata</source>
+				<target>Zusätzliche Metadaten</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.ai_connection" resname="tx_aiassistant_indexer.ai_connection">
+				<source>Ai Connection</source>
+				<target>KI-Verbindung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.collection" resname="tx_aiassistant_indexer.collection">
+				<source>Collection</source>
+				<target>Collection</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.indexer_identifier" resname="tx_aiassistant_indexer.indexer_identifier">
+				<source>Indexer Identifier</source>
+				<target>Indexer-Kennung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.tab_connections" resname="tx_aiassistant_indexer.tab_connections">
+				<source>Connections</source>
+				<target>Verbindungen</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.tab_metadata" resname="tx_aiassistant_indexer.tab_metadata">
+				<source>Metadata</source>
+				<target>Metadaten</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.vector_store_connection" resname="tx_aiassistant_indexer.vector_store_connection">
+				<source>Vector Store Connection</source>
+				<target>Vektorspeicher-Verbindung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.indexer_identifier_desc" resname="tx_aiassistant_indexer.indexer_identifier_desc">
+				<source>Registered indexer service that executes this configuration.</source>
+				<target>Registrierter Indexer-Service, der diese Konfiguration ausführt.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.adapter_identifier_desc" resname="tx_aiassistant_indexer.adapter_identifier_desc">
+				<source>Registered adapter used by adapter-based indexers to provide indexable documents.</source>
+				<target>Registrierter Adapter, der von adapterbasierten Indexern verwendet wird, um indexierbare Dokumente bereitzustellen.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.additional_metadata_desc" resname="tx_aiassistant_indexer.additional_metadata_desc">
+				<source>Optional metadata added to all indexed documents. Use key=value lines. For JSON/JSONL files, use json_text_fields.&lt;json.path&gt; for indexed text and json_metadata_fields.&lt;json.path&gt;=&lt;payload_key&gt; for mapped metadata.</source>
+				<target>Optionale Metadaten, die allen indexierten Dokumenten hinzugefügt werden. Verwenden Sie Zeilen im Format `key=value`. Für JSON-/JSONL-Dateien verwenden Sie `json_text_fields.&lt;json.path&gt;` für indexierten Text und `json_metadata_fields.&lt;json.path&gt;=&lt;payload_key&gt;` für zugeordnete Metadaten.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.ai_connection_desc" resname="tx_aiassistant_indexer.ai_connection_desc">
+				<source>AI connection used to create embeddings for documents indexed by this configuration.</source>
+				<target>KI-Verbindung zur Erstellung von Embeddings für Dokumente, die mit dieser Konfiguration indexiert werden.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.vector_store_connection_desc" resname="tx_aiassistant_indexer.vector_store_connection_desc">
+				<source>Vector database connection where generated document vectors are stored.</source>
+				<target>Vektordatenbank-Verbindung, in der die erzeugten Dokumentvektoren gespeichert werden.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.collection_desc" resname="tx_aiassistant_indexer.collection_desc">
+				<source>Target vector database collection for all documents created by this indexer.</source>
+				<target>Ziel-Collection der Vektordatenbank für alle von diesem Indexer erstellten Dokumente.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.additional_content_fields_desc" resname="tx_aiassistant_indexer.additional_content_fields_desc">
+				<source>Additional comma-separated fields in table.field format that are joined by page pid.</source>
+				<target>Zusätzliche kommaseparierte Felder im Format `table.field`, die über die Seiten-PID verknüpft werden.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.collection_placeholder" resname="tx_aiassistant_indexer.collection_placeholder">
+				<source>e.g. website_content</source>
+				<target>z. B. website_content</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.additional_metadata_placeholder" resname="tx_aiassistant_indexer.additional_metadata_placeholder">
+				<source>e.g. source=rag, json_text_fields.content.text, json_metadata_fields.id=external_id</source>
+				<target>z. B. source=rag, json_text_fields.content.text, json_metadata_fields.id=external_id</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.additional_content_fields_placeholder" resname="tx_aiassistant_indexer.additional_content_fields_placeholder">
+				<source>pages.abstract, tt_content.bodytext, tx_news_domain_model_news.title</source>
+				<target>pages.abstract, tt_content.bodytext, tx_news_domain_model_news.title</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

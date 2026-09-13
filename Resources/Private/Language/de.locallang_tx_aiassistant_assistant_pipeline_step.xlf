@@ -1,226 +1,297 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_pipeline_step.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_pipeline_step.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant" target-language="de">
 		<header/>
 		<body>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step" resname="tx_aiassistant_assistant_pipeline_step">
 				<source>Chat pipeline step</source>
+				<target>Chat-Pipeline-Schritt</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.assistant_profile" resname="tx_aiassistant_assistant_pipeline_step.assistant_profile">
 				<source>Assistant Profile</source>
+				<target>Assistentenprofil</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy">
 				<source>Failure Strategy</source>
+				<target>Fehlerstrategie</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.continue" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.continue">
 				<source>Continue</source>
+				<target>Fortfahren</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback">
 				<source>Fallback (deprecated; use Continue instead)</source>
+				<target>Fallback (veraltet; stattdessen „Fortfahren“ verwenden)</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.stop" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.stop">
 				<source>Stop</source>
+				<target>Stoppen</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_limit" resname="tx_aiassistant_assistant_pipeline_step.history_limit">
 				<source>History Limit</source>
+				<target>Verlaufslimit</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_mode" resname="tx_aiassistant_assistant_pipeline_step.history_mode">
 				<source>History Mode</source>
+				<target>Verlaufsmodus</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_mode.last_n" resname="tx_aiassistant_assistant_pipeline_step.history_mode.last_n">
 				<source>Last N messages</source>
+				<target>Letzte N Nachrichten</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_mode.none" resname="tx_aiassistant_assistant_pipeline_step.history_mode.none">
 				<source>None</source>
+				<target>Keine</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_behavior_rules" resname="tx_aiassistant_assistant_pipeline_step.include_behavior_rules">
 				<source>Include Behavior Rules</source>
+				<target>Verhaltensregeln einbeziehen</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_identity_prompt" resname="tx_aiassistant_assistant_pipeline_step.include_identity_prompt">
 				<source>Include Identity Prompt</source>
+				<target>Identitäts-Prompt einbeziehen</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_output_rules" resname="tx_aiassistant_assistant_pipeline_step.include_output_rules">
 				<source>Include Output Rules</source>
+				<target>Ausgaberegeln einbeziehen</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules" resname="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules">
 				<source>Include Retrieval Rules</source>
+				<target>Retrieval-Regeln einbeziehen</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_context_characters" resname="tx_aiassistant_assistant_pipeline_step.max_context_characters">
 				<source>Max Context Characters</source>
+				<target>Max. Kontextzeichen</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_context_chunks" resname="tx_aiassistant_assistant_pipeline_step.max_context_chunks">
 				<source>Max Context Chunks</source>
+				<target>Max. Kontext-Chunks</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_tokens" resname="tx_aiassistant_assistant_pipeline_step.max_tokens">
 				<source>Max Tokens</source>
+				<target>Max. Tokens</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.model" resname="tx_aiassistant_assistant_pipeline_step.model">
 				<source>Model override (advanced)</source>
+				<target>Modell überschreiben (erweitert)</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.processor_identifier" resname="tx_aiassistant_assistant_pipeline_step.processor_identifier">
 				<source>Processor Identifier</source>
+				<target>Prozessor-Kennung</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields" resname="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields">
 				<source>Prompt Metadata Fields</source>
+				<target>Prompt-Metadatenfelder</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.score_threshold" resname="tx_aiassistant_assistant_pipeline_step.score_threshold">
 				<source>Score Threshold</source>
+				<target>Score-Schwellenwert</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage" resname="tx_aiassistant_assistant_pipeline_step.stage">
 				<source>Stage</source>
+				<target>Phase</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.post_answer" resname="tx_aiassistant_assistant_pipeline_step.stage.post_answer">
 				<source>Post answer</source>
+				<target>Nach Antwort</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.post_retrieval" resname="tx_aiassistant_assistant_pipeline_step.stage.post_retrieval">
 				<source>Post retrieval</source>
+				<target>Nach Retrieval</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.pre_answer" resname="tx_aiassistant_assistant_pipeline_step.stage.pre_answer">
 				<source>Pre answer</source>
+				<target>Vor Antwort</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.pre_retrieval" resname="tx_aiassistant_assistant_pipeline_step.stage.pre_retrieval">
 				<source>Pre retrieval</source>
+				<target>Vor Retrieval</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.retrieval" resname="tx_aiassistant_assistant_pipeline_step.stage.retrieval">
 				<source>Retrieval</source>
+				<target>Retrieval</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_behavior_rules" resname="tx_aiassistant_assistant_pipeline_step.step_behavior_rules">
 				<source>Step Behavior Rules</source>
+				<target>Verhaltensregeln des Schritts</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_identity" resname="tx_aiassistant_assistant_pipeline_step.step_identity">
 				<source>Step Identity</source>
+				<target>Identität des Schritts</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_output_rules" resname="tx_aiassistant_assistant_pipeline_step.step_output_rules">
 				<source>Step Output Rules</source>
+				<target>Ausgaberegeln des Schritts</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_retrieval_rules" resname="tx_aiassistant_assistant_pipeline_step.step_retrieval_rules">
 				<source>Step Retrieval Rules</source>
+				<target>Retrieval-Regeln des Schritts</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_context" resname="tx_aiassistant_assistant_pipeline_step.tab_context">
 				<source>Context</source>
+				<target>Kontext</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_llm" resname="tx_aiassistant_assistant_pipeline_step.tab_llm">
 				<source>History and LLM</source>
+				<target>Verlauf und LLM</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_prompt_includes" resname="tx_aiassistant_assistant_pipeline_step.tab_prompt_includes">
 				<source>Assistant prompt includes</source>
+				<target>Assistenten-Prompt enthält</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_retrieval" resname="tx_aiassistant_assistant_pipeline_step.tab_retrieval">
 				<source>Retrieval</source>
+				<target>Retrieval</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_runtime" resname="tx_aiassistant_assistant_pipeline_step.tab_runtime">
 				<source>Runtime</source>
+				<target>Laufzeit</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_step_prompts" resname="tx_aiassistant_assistant_pipeline_step.tab_step_prompts">
 				<source>Step prompts</source>
+				<target>Schritt-Prompts</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.temperature" resname="tx_aiassistant_assistant_pipeline_step.temperature">
 				<source>Temperature</source>
+				<target>Temperatur</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.title" resname="tx_aiassistant_assistant_pipeline_step.title">
 				<source>Title</source>
+				<target>Titel</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_retrieval_results" resname="tx_aiassistant_assistant_pipeline_step.max_retrieval_results">
 				<source>Maximum retrieval results</source>
+				<target>Maximale Anzahl an Retrieval-Ergebnissen</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type" resname="tx_aiassistant_assistant_pipeline_step.type">
 				<source>Type</source>
+				<target>Typ</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.answer_generator" resname="tx_aiassistant_assistant_pipeline_step.type.answer_generator">
 				<source>Answer generator</source>
+				<target>Antwortgenerator</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.context_optimizer" resname="tx_aiassistant_assistant_pipeline_step.type.context_optimizer">
 				<source>Context optimizer</source>
+				<target>Kontextoptimierer</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.quality_gate" resname="tx_aiassistant_assistant_pipeline_step.type.quality_gate">
 				<source>Quality gate</source>
+				<target>Qualitätsprüfung</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.query_optimizer" resname="tx_aiassistant_assistant_pipeline_step.type.query_optimizer">
 				<source>Query optimizer</source>
+				<target>Abfrageoptimierer</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.retrieval" resname="tx_aiassistant_assistant_pipeline_step.type.retrieval">
 				<source>Retrieval</source>
+				<target>Retrieval</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.assistant_profile.description" resname="tx_aiassistant_assistant_pipeline_step.assistant_profile.description">
 				<source>Selects the assistant profile this pipeline step belongs to. The assistant profile provides the prompt blocks, connections and collection used during execution.</source>
+				<target>Wählt das Assistentenprofil aus, zu dem dieser Pipeline-Schritt gehört. Das Assistentenprofil stellt die während der Ausführung verwendeten Prompt-Blöcke, Verbindungen und die Collection bereit.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.title.description" resname="tx_aiassistant_assistant_pipeline_step.title.description">
 				<source>Defines the title of this pipeline step. Retriever titles must be unique and are shown in prompts as the retrieval name.</source>
+				<target>Definiert den Titel dieses Pipeline-Schritts. Retriever-Titel müssen eindeutig sein und werden in Prompts als Retrieval-Name angezeigt.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.description" resname="tx_aiassistant_assistant_pipeline_step.type.description">
 				<source>Defines the semantic role of this step in the assistant pipeline, such as query optimization, retrieval, answer generation or quality validation.</source>
+				<target>Definiert die semantische Rolle dieses Schritts in der Assistenten-Pipeline, zum Beispiel Abfrageoptimierung, Retrieval, Antwortgenerierung oder Qualitätsvalidierung.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.processor_identifier.description" resname="tx_aiassistant_assistant_pipeline_step.processor_identifier.description">
 				<source>Selects the registered processor service that executes this step. The processor must support the selected step type.</source>
+				<target>Wählt den registrierten Prozessor-Service aus, der diesen Schritt ausführt. Der Prozessor muss den ausgewählten Schritttyp unterstützen.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.description" resname="tx_aiassistant_assistant_pipeline_step.stage.description">
 				<source>Groups the step into the execution phase of the pipeline. Sorting still controls the order within the selected stage.</source>
+				<target>Ordnet den Schritt einer Ausführungsphase der Pipeline zu. Die Sortierung steuert weiterhin die Reihenfolge innerhalb der ausgewählten Phase.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_identity_prompt.description" resname="tx_aiassistant_assistant_pipeline_step.include_identity_prompt.description">
 				<source>Adds the assistant identity prompt to this step. Use it when the processor needs to know who the assistant is.</source>
+				<target>Fügt diesem Schritt den Identitäts-Prompt des Assistenten hinzu. Verwenden Sie ihn, wenn der Prozessor wissen muss, wer der Assistent ist.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_behavior_rules.description" resname="tx_aiassistant_assistant_pipeline_step.include_behavior_rules.description">
 				<source>Adds the assistant behavior rules to this step. Use it when the processor should follow the assistant-wide behavior policy.</source>
+				<target>Fügt diesem Schritt die Verhaltensregeln des Assistenten hinzu. Verwenden Sie sie, wenn der Prozessor den für den gesamten Assistenten geltenden Verhaltensregeln folgen soll.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules.description" resname="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules.description">
 				<source>Adds the assistant retrieval rules to this step. Use it for retrieval and context-related processors.</source>
+				<target>Fügt diesem Schritt die Retrieval-Regeln des Assistenten hinzu. Verwenden Sie sie für Retrieval- und kontextbezogene Prozessoren.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.include_output_rules.description" resname="tx_aiassistant_assistant_pipeline_step.include_output_rules.description">
 				<source>Adds the assistant output rules to this step. Use it when the processor creates or validates user-facing output.</source>
+				<target>Fügt diesem Schritt die Ausgaberegeln des Assistenten hinzu. Verwenden Sie sie, wenn der Prozessor benutzerseitige Ausgaben erzeugt oder validiert.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_identity.description" resname="tx_aiassistant_assistant_pipeline_step.step_identity.description">
 				<source>Adds an optional identity prompt that applies only to this pipeline step.</source>
+				<target>Fügt einen optionalen Identitäts-Prompt hinzu, der nur für diesen Pipeline-Schritt gilt.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_behavior_rules.description" resname="tx_aiassistant_assistant_pipeline_step.step_behavior_rules.description">
 				<source>Adds optional behavior instructions that apply only to this pipeline step.</source>
+				<target>Fügt optionale Verhaltensanweisungen hinzu, die nur für diesen Pipeline-Schritt gelten.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_retrieval_rules.description" resname="tx_aiassistant_assistant_pipeline_step.step_retrieval_rules.description">
 				<source>Adds optional retrieval or context instructions that apply only to this pipeline step.</source>
+				<target>Fügt optionale Retrieval- oder Kontextanweisungen hinzu, die nur für diesen Pipeline-Schritt gelten.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.step_output_rules.description" resname="tx_aiassistant_assistant_pipeline_step.step_output_rules.description">
 				<source>Adds optional output instructions that apply only to this pipeline step.</source>
+				<target>Fügt optionale Ausgabeanweisungen hinzu, die nur für diesen Pipeline-Schritt gelten.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_mode.description" resname="tx_aiassistant_assistant_pipeline_step.history_mode.description">
 				<source>Controls whether and how previous conversation messages are provided to this step.</source>
+				<target>Steuert, ob und wie vorherige Nachrichten der Unterhaltung diesem Schritt bereitgestellt werden.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_limit.description" resname="tx_aiassistant_assistant_pipeline_step.history_limit.description">
 				<source>Limits how many previous messages are provided when history mode uses the latest messages.</source>
+				<target>Begrenzt die Anzahl vorheriger Nachrichten, die bereitgestellt werden, wenn der Verlaufsmodus die letzten Nachrichten verwendet.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.model.description" resname="tx_aiassistant_assistant_pipeline_step.model.description">
 				<source>Optional provider-specific model override for this pipeline step. Leave empty to use the default model of the assistant's AI connection. If set, the model must be supported by that connection's provider. Changing the AI connection may invalidate this override.</source>
+				<target>Optionale anbieterspezifische Modellüberschreibung für diesen Pipeline-Schritt. Leer lassen, um das Standardmodell der KI-Verbindung des Assistenten zu verwenden. Wenn gesetzt, muss das Modell vom Anbieter dieser Verbindung unterstützt werden. Eine Änderung der KI-Verbindung kann diese Überschreibung ungültig machen.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.temperature.description" resname="tx_aiassistant_assistant_pipeline_step.temperature.description">
 				<source>Controls the creativity of the AI response for this step. Lower values are more deterministic, higher values are more creative.</source>
+				<target>Steuert die Kreativität der KI-Antwort für diesen Schritt. Niedrigere Werte sind deterministischer, höhere Werte kreativer.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_tokens.description" resname="tx_aiassistant_assistant_pipeline_step.max_tokens.description">
 				<source>Limits the maximum number of tokens generated by the AI model for this step.</source>
+				<target>Begrenzt die maximale Anzahl der vom KI-Modell für diesen Schritt erzeugten Tokens.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_retrieval_results.description" resname="tx_aiassistant_assistant_pipeline_step.max_retrieval_results.description">
 				<source>Defines how many results this retriever may contribute.</source>
+				<target>Legt fest, wie viele Ergebnisse dieser Retriever beitragen darf.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.score_threshold.description" resname="tx_aiassistant_assistant_pipeline_step.score_threshold.description">
 				<source>Filters retrieval results by minimum similarity score. Results below this value are ignored.</source>
+				<target>Filtert Retrieval-Ergebnisse anhand eines minimalen Ähnlichkeits-Scores. Ergebnisse unterhalb dieses Werts werden ignoriert.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_context_chunks.description" resname="tx_aiassistant_assistant_pipeline_step.max_context_chunks.description">
 				<source>Limits how many retrieved chunks may be used when building the answer context.</source>
+				<target>Begrenzt, wie viele abgerufene Chunks beim Aufbau des Antwortkontexts verwendet werden dürfen.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_context_characters.description" resname="tx_aiassistant_assistant_pipeline_step.max_context_characters.description">
 				<source>Limits the maximum character length of the generated answer context.</source>
+				<target>Begrenzt die maximale Zeichenlänge des erzeugten Antwortkontexts.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields.description" resname="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields.description">
 				<source>Defines comma-separated metadata fields that may be included in prompts, for example title or url.</source>
+				<target>Definiert kommaseparierte Metadatenfelder, die in Prompts aufgenommen werden dürfen, zum Beispiel Titel oder URL.</target>
 			</trans-unit>
 				<trans-unit id="tx_aiassistant_assistant_pipeline_step.failure_strategy.description" resname="tx_aiassistant_assistant_pipeline_step.failure_strategy.description">
 					<source>Defines how the pipeline should continue when this step fails.</source>
+					<target>Legt fest, wie die Pipeline fortfahren soll, wenn dieser Schritt fehlschlägt.</target>
 				</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields.placeholder" resname="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields.placeholder">
 				<source>title,url</source>
+				<target>title,url</target>
 			</trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection" resname="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection"><source>Vector Store Connection Override</source></trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection.description"><source>Optionally overrides the assistant profile's default vector store connection for this retriever.</source></trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection"><source>Collection Override</source></trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description"><source>Optionally overrides the default with a collection configured on the selected vector store connection.</source></trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection.default" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection.default"><source>Use connection default</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection" resname="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection"><source>Vector Store Connection Override</source><target>Vektorspeicher-Verbindung überschreiben</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection.description"><source>Optionally overrides the assistant profile's default vector store connection for this retriever.</source><target>Überschreibt optional die standardmäßige Vektorspeicher-Verbindung des Assistentenprofils für diesen Retriever.</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection"><source>Collection Override</source><target>Collection überschreiben</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description"><source>Optionally overrides the default with a collection configured on the selected vector store connection.</source><target>Überschreibt optional den Standard mit einer Collection, die in der ausgewählten Vektorspeicher-Verbindung konfiguriert ist.</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection.default" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection.default"><source>Use connection default</source><target>Standard der Verbindung verwenden</target></trans-unit>
 			</body>
 	</file>
 </xliff>

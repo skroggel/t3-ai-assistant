@@ -1,47 +1,60 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+	<file source-language="en" datatype="plaintext" date="2026-02-19T11:35:55Z" product-name="ai_assistant" target-language="de">
 		<header/>
 		<body>
 			<trans-unit id="plugin.tx_aiassistant_chat.title">
 				<source>AI Chat</source>
+				<target>KI-Chat</target>
 			</trans-unit>
 			<trans-unit id="plugin.tx_aiassistant_chat..description">
-				<source></source>
+				<source/>
+				<target></target>
 			</trans-unit>
 
-			<trans-unit id="flexform.chat.sheet.general" >
+			<trans-unit id="flexform.chat.sheet.general">
 				<source>Chat Settings</source>
+				<target>Chat-Einstellungen</target>
 			</trans-unit>
-			<trans-unit id="flexform.chat.assistant_profile" >
+			<trans-unit id="flexform.chat.assistant_profile">
 				<source>Assistant Profile</source>
+				<target>Assistentenprofil</target>
 			</trans-unit>
-			<trans-unit id="flexform.chat.require_consent" >
+			<trans-unit id="flexform.chat.require_consent">
 				<source>Require consent before starting the chat</source>
+				<target>Zustimmung vor dem Start des Chats erforderlich</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.sheet.language">
 				<source>Language</source>
+				<target>Sprache</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.response_language">
 				<source>Fixed response language</source>
+				<target>Feste Antwortsprache</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.response_language.description">
 				<source>Optional language name or BCP 47 code. When empty, the current TYPO3 site language is used.</source>
+				<target>Optionaler Sprachname oder BCP-47-Code. Wenn leer, wird die aktuelle TYPO3-Sitesprache verwendet.</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.allow_user_language">
 				<source>Allow users to select the response language</source>
+				<target>Benutzern erlauben, die Antwortsprache auszuwählen</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.allow_user_language.description">
 				<source>Shows a searchable, free-text language field. A fixed response language takes priority.</source>
+				<target>Zeigt ein durchsuchbares Freitextfeld für die Sprache an. Eine fest eingestellte Antwortsprache hat Vorrang.</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.sheet.accessibility">
 				<source>Accessibility</source>
+				<target>Barrierefreiheit</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.plain_language">
 				<source>Use plain language</source>
+				<target>Einfache Sprache verwenden</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.plain_language.description">
 				<source>Instructs answer-generating pipeline steps to use familiar words, short sentences and a clear structure.</source>
+				<target>Weist antwortgenerierende Pipeline-Schritte an, vertraute Wörter, kurze Sätze und eine klare Struktur zu verwenden.</target>
 			</trans-unit>
 		</body>
 	</file>
