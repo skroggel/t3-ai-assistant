@@ -5,8 +5,12 @@ declare(strict_types=1);
  * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 3
- * of the License, or any later version.
+ * the terms of the GNU General Public License, version 3.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
  */
 
 namespace Madj2k\AiAssistant\Backend\Response;
@@ -22,9 +26,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Adds flash messages without coupling backend domain services to an Extbase controller.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Steffen Kroggel <developer@steffenkroggel.de>
- * @package Madj2k\\AiAssistant
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @copyright Steffen Kroggel <developer@steffenkroggel.de>, Maximilian Fäßler <maximilian@faesslerweb.de>
+ * @package Madj2k\AiAssistant
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3
  */
 final class BackendFlashMessageService
 {
@@ -34,6 +38,7 @@ final class BackendFlashMessageService
      * @param string $message Message text.
      * @param string $title Optional title.
      * @param \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity $severity Message severity.
+     * @throws \TYPO3\CMS\Core\Exception
      */
     public function add(
         string $message,

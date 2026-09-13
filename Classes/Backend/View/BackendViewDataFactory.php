@@ -2,10 +2,15 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the TYPO3 extension ai_assistant.
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.
  *
  * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
  */
 
 namespace Madj2k\AiAssistant\Backend\View;
@@ -29,11 +34,11 @@ use Psr\Http\Message\ServerRequestInterface;
  * Aggregates the reduced backend module view data.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Steffen Kroggel <developer@steffenkroggel.de>
- * @package Madj2k\\AiAssistant
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @copyright Steffen Kroggel <developer@steffenkroggel.de>, Maximilian Fäßler <maximilian@faesslerweb.de>
+ * @package Madj2k\AiAssistant
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3
  */
-final class BackendViewDataFactory
+final readonly class BackendViewDataFactory
 {
     /**
      * @param \Madj2k\AiAssistant\Backend\Configuration\BackendConfigurationProvider $configurationProvider Configuration provider.
@@ -43,11 +48,11 @@ final class BackendViewDataFactory
      * @param \Madj2k\AiAssistant\Backend\Diagnostics\BackendDiagnosticsProvider $diagnosticsProvider Diagnostics provider.
      */
     public function __construct(
-        private readonly BackendConfigurationProvider $configurationProvider,
-        private readonly BackendIndexerProvider $indexerProvider,
-        private readonly BackendPurgeProvider $purgeProvider,
-        private readonly BackendConnectionProvider $connectionProvider,
-        private readonly BackendDiagnosticsProvider $diagnosticsProvider
+        private BackendConfigurationProvider $configurationProvider,
+        private BackendIndexerProvider       $indexerProvider,
+        private BackendPurgeProvider         $purgeProvider,
+        private BackendConnectionProvider    $connectionProvider,
+        private BackendDiagnosticsProvider   $diagnosticsProvider
     ) {
     }
 
