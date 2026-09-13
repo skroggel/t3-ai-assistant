@@ -113,12 +113,20 @@ services:
 
   Madj2k\AiCore\Assistant\Prompt\PromptBuilder: ~
 
+  Madj2k\AiCore\Assistant\Memory\PhpSessionStore: ~
+
+  Madj2k\AiCore\Assistant\Memory\SessionStoreInterface:
+    alias: Madj2k\AiCore\Assistant\Memory\PhpSessionStore
+
+  Madj2k\AiCore\Assistant\Memory\SessionMemory:
+    factory: ['@Madj2k\AiAssistant\Assistant\Memory\MemoryFactory', 'create']
+
   # ai-core contracts that require TYPO3-specific implementations.
   Madj2k\AiCore\Assistant\Log\PipelineLoggerInterface:
     alias: Madj2k\AiAssistant\Assistant\Log\PipelineLogger
 
   Madj2k\AiCore\Assistant\Memory\MemoryInterface:
-    alias: Madj2k\AiAssistant\Assistant\Memory\SessionMemory
+    alias: Madj2k\AiCore\Assistant\Memory\SessionMemory
 
   Madj2k\AiCore\Connection\Ai\OpenAiConnector: ~
 

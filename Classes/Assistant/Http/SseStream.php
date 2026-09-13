@@ -249,14 +249,14 @@ final class SseStream implements StreamInterface, SelfEmittableStreamInterface
                 ($this->producer)();
                 /** @var string|false $contents */
                 $contents = ob_get_clean();
-            } catch (\Throwable $exception) {
+            } catch (\Throwable) {
                 /** @var string|false $contents */
                 $contents = ob_get_clean();
                 if (is_string($contents) && $contents !== '') {
                     $body->write($contents);
                 }
                 $body->write('event: error' . "\n");
-                $body->write('data: ' . $exception->getMessage() . "\n\n");
+                $body->write('data: ' . SseResponseFactory::ERROR_MESSAGE . "\n\n");
                 $body->write('event: done' . "\n");
                 $body->write('data: end' . "\n\n");
                 $body->rewind();
