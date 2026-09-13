@@ -9,6 +9,7 @@ use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Indexing\Domain\Model\ConnectorConfig;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerRun;
+use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerState;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerSource;
 
 return [
@@ -32,6 +33,9 @@ return [
     ],
     IndexerRun::class => [
         'tableName' => 'tx_aiassistant_indexer_run',
+    ],
+    IndexerState::class => [
+        'tableName' => 'tx_aiassistant_indexer_state',
     ],
     IndexerSource::class => [
         'tableName' => 'tx_aiassistant_indexer_source',
