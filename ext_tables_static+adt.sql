@@ -13,14 +13,14 @@
 #
 # Default AI connection.
 #
-INSERT INTO tx_aiassistant_connection_ai (uid, pid, hidden, sorting, title, connector_identifier, base_url, api_key, organization, project, default_model, default_temperature, embedding_model, embedding_temperature, additional_options) VALUES
-(1000, 0, 0, 10, 'Default OpenAI connection', 'openai', 'https://api.openai.com/v1', '', '', '', 'gpt-4o-mini', 0.20, 'text-embedding-3-small', 0.00, '');
+INSERT INTO tx_aiassistant_connection_ai (uid, pid, hidden, sorting, title, connector_identifier, base_url, api_key, organization, project, default_model, default_temperature, embedding_model, embedding_dimension, embedding_temperature, additional_options) VALUES
+(1000, 0, 0, 10, 'Default OpenAI connection', 'openai', 'https://api.openai.com/v1', '', '', '', 'gpt-4o-mini', 0.20, 'text-embedding-3-small', 1536, 0.00, '');
 
 #
 # Default vector store connection.
 #
-INSERT INTO tx_aiassistant_connection_vector_database (uid, pid, hidden, sorting, title, connector_identifier, endpoint, api_key, default_collection, vector_size, distance, additional_options) VALUES
-(1000, 0, 0, 10, 'Default Qdrant connection', 'qdrant', 'http://localhost:6333', '', 'aiassistant_default', 1536, 'Cosine', '');
+INSERT INTO tx_aiassistant_connection_vector_database (uid, pid, hidden, sorting, title, connector_identifier, endpoint, api_key, default_collection, distance, additional_options) VALUES
+(1000, 0, 0, 10, 'Default Qdrant connection', 'qdrant', 'http://localhost:6333', '', 'aiassistant_default', 'Cosine', '');
 
 #
 # Example page indexer for page tree PID 1.

@@ -12,12 +12,15 @@ namespace Madj2k\AiAssistant\Backend\Diagnostics;
 
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
+use Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface;
+use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
 use Madj2k\AiCore\Assistant\Pipeline\PipelineValidator;
 use Madj2k\AiCore\Assistant\Pipeline\Processor\Retrieval\RetrieverProcessor;
 use Madj2k\AiCore\Assistant\Pipeline\Registry\ProcessorRegistry;
 use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
 use Madj2k\AiCore\Connection\Health\ConnectionHealthChecker;
 use Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver;
+use Madj2k\AiCore\Connection\VectorStore\DTO\VectorCollection;
 
 /**
  * Class BackendAssistantTester
@@ -43,15 +46,14 @@ final readonly class BackendAssistantTester
         private ProcessorRegistry $processorRegistry,
         private ConnectionHealthChecker $connectionHealthChecker,
         private VectorStoreConnectorResolver $vectorStoreConnectorResolver,
-    ) {
-    }
+    ) {}
 
 
     /**
      * Tests one assistant without executing its chat pipeline.
      *
      * @param \Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile $assistant Assistant profile.
-     * @return array{status: string, message: string, checks: array<int, array{status: string, label: string, message: string}>} Test result.
+     * @return array{status: string, message: string, checks: array<int, array{status: string, label: string, message: string}>, embeddingDimension: int|null} Test result.
      */
     public function test(AssistantProfile $assistant): array
     {
@@ -71,22 +73,63 @@ final readonly class BackendAssistantTester
         }
 
         $aiConnection = $assistant->getAiConnection();
+        $embeddingDimension = null;
         if ($aiConnection === null) {
             $checks[] = $this->check('error', 'AI connection', 'No AI connection is configured.');
         } else {
             try {
-                $healthy = $this->connectionHealthChecker->checkAi(
+                $embeddingResponse = $this->connectionHealthChecker->probeAiEmbedding(
                     $aiConnection,
                     'TYPO3 AI Assistant profile diagnostics',
                 );
+                $embeddingDimension = count($embeddingResponse->getEmbedding());
                 $checks[] = $this->check(
-                    $healthy ? 'ok' : 'error',
-                    'AI connection',
-                    $healthy ? 'AI connection test succeeded.' : 'AI connection returned an empty embedding.',
+                    $embeddingDimension > 0 ? 'ok' : 'error',
+                    'AI embedding',
+                    $embeddingDimension > 0
+                        ? sprintf('Embedding test succeeded with %d dimensions.', $embeddingDimension)
+                        : 'AI connection returned an empty embedding.',
+                );
+                $configuredEmbeddingDimension = $aiConnection->getEmbeddingDimension();
+                $checks[] = $this->check(
+                    $configuredEmbeddingDimension > 0
+                        && $embeddingDimension === $configuredEmbeddingDimension
+                        ? 'ok'
+                        : 'error',
+                    'AI embedding configuration',
+                    $configuredEmbeddingDimension <= 0
+                        ? 'The AI connection embedding dimension must be greater than zero.'
+                        : ($embeddingDimension === $configuredEmbeddingDimension
+                            ? sprintf(
+                                'Measured embedding dimension %d matches the AI connection configuration.',
+                                $embeddingDimension,
+                            )
+                            : sprintf(
+                                'AI connection returns %d dimensions, but it is configured for %d. Align the embedding configuration and reindex into a compatible collection.',
+                                $embeddingDimension,
+                                $configuredEmbeddingDimension,
+                            )),
                 );
             } catch (\Throwable $exception) {
-                $checks[] = $this->check('error', 'AI connection', $exception->getMessage());
+                $checks[] = $this->check('error', 'AI embedding', $exception->getMessage());
             }
+
+            try {
+                $chatResponse = $this->connectionHealthChecker->probeAiChat(
+                    $aiConnection,
+                    'Reply with OK.',
+                );
+                $chatHealthy = trim($chatResponse->getContent()) !== '';
+                $checks[] = $this->check(
+                    $chatHealthy ? 'ok' : 'error',
+                    'AI chat',
+                    $chatHealthy ? 'Chat test returned a response.' : 'Chat test returned an empty response.',
+                );
+            } catch (\Throwable $exception) {
+                $checks[] = $this->check('error', 'AI chat', $exception->getMessage());
+            }
+
+            $checks = array_merge($checks, $this->testModelOverrides($steps, $aiConnection));
         }
 
         /**
@@ -113,6 +156,7 @@ final readonly class BackendAssistantTester
                 continue;
             }
 
+            $connectionKey = (string)spl_object_id($connection);
             $collection = trim($step->getRetrievalCollection()) !== ''
                 ? trim($step->getRetrievalCollection())
                 : trim($connection->getDefaultCollection());
@@ -130,7 +174,6 @@ final readonly class BackendAssistantTester
                 continue;
             }
 
-            $connectionKey = (string)spl_object_id($connection);
             if (!isset($remoteCollections[$connectionKey])) {
                 $remoteCollections[$connectionKey] = $this->loadRemoteCollections($connection);
             }
@@ -153,14 +196,53 @@ final readonly class BackendAssistantTester
                 continue;
             }
 
+            $collectionConfigurationVerified = false;
+            if (
+                $aiConnection !== null
+                && $embeddingDimension !== null
+                && $embeddingDimension > 0
+                && $embeddingDimension === $aiConnection->getEmbeddingDimension()
+            ) {
+                try {
+                    $collectionCompatible = $this->vectorStoreConnectorResolver
+                        ->get($connection->getConnectorIdentifier())
+                        ->ensureCollection(
+                            $connection,
+                            new VectorCollection(
+                                $collection,
+                                $aiConnection->getEmbeddingDimension(),
+                                $connection->getDistance(),
+                            ),
+                        );
+                    if (!$collectionCompatible) {
+                        $checks[] = $this->check(
+                            'error',
+                            $stepLabel,
+                            sprintf('Collection "%s" is not compatible with the effective embedding configuration.', $collection),
+                        );
+                        continue;
+                    }
+                    $collectionConfigurationVerified = true;
+                } catch (\Throwable $exception) {
+                    $checks[] = $this->check('error', $stepLabel, $exception->getMessage());
+                    continue;
+                }
+            }
+
             $checks[] = $this->check(
                 'ok',
                 $stepLabel,
-                sprintf(
-                    'Collection "%s" exists on vector store "%s".',
-                    $collection,
-                    $this->connectionLabel($connection),
-                ),
+                $collectionConfigurationVerified
+                    ? sprintf(
+                        'Collection "%s" exists on vector store "%s" and matches the effective embedding configuration.',
+                        $collection,
+                        $this->connectionLabel($connection),
+                    )
+                    : sprintf(
+                        'Collection "%s" exists on vector store "%s".',
+                        $collection,
+                        $this->connectionLabel($connection),
+                    ),
             );
         }
 
@@ -183,7 +265,84 @@ final readonly class BackendAssistantTester
                 default => 'Assistant diagnostics succeeded.',
             },
             'checks' => $checks,
+            'embeddingDimension' => $embeddingDimension,
         ];
+    }
+
+
+    /**
+     * Tests each distinct provider-specific model override used by LLM steps.
+     *
+     * @param array<int, \Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface> $steps Pipeline steps.
+     * @param \Madj2k\AiAssistant\Connection\Domain\Model\AiConnection $aiConnection Effective AI connection.
+     * @return array<int, array{status: string, label: string, message: string}> Diagnostic checks.
+     */
+    private function testModelOverrides(array $steps, \Madj2k\AiAssistant\Connection\Domain\Model\AiConnection $aiConnection): array
+    {
+        /** @var array<string, array<int, string>> $stepsByModel */
+        $stepsByModel = [];
+        foreach ($steps as $step) {
+            if (!$this->isLlmStep($step)) {
+                continue;
+            }
+
+            $model = trim($step->getModel());
+            if ($model === '') {
+                continue;
+            }
+
+            $stepTitle = trim($step->getTitle());
+            $stepsByModel[$model][] = $stepTitle !== '' ? $stepTitle : $step->getProcessorIdentifier();
+        }
+
+        $checks = [];
+        foreach ($stepsByModel as $model => $stepTitles) {
+            $stepList = implode(', ', array_map(
+                static fn (string $title): string => sprintf('"%s"', $title),
+                $stepTitles,
+            ));
+
+            try {
+                $response = $this->connectionHealthChecker->probeAiChat(
+                    $aiConnection,
+                    'Reply with OK.',
+                    $model,
+                );
+                $healthy = trim($response->getContent()) !== '';
+                $checks[] = $this->check(
+                    $healthy ? 'ok' : 'error',
+                    sprintf('Model override "%s"', $model),
+                    $healthy
+                        ? sprintf('Chat test succeeded. Used by: %s.', $stepList)
+                        : sprintf('Chat test returned an empty response. Used by: %s.', $stepList),
+                );
+            } catch (\Throwable $exception) {
+                $checks[] = $this->check(
+                    'error',
+                    sprintf('Model override "%s"', $model),
+                    sprintf('Chat test failed. Used by: %s. %s', $stepList, $exception->getMessage()),
+                );
+            }
+        }
+
+        return $checks;
+    }
+
+
+    /**
+     * Determines whether a pipeline step performs an LLM chat request.
+     *
+     * @param \Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface $step Pipeline step.
+     * @return bool True for LLM-based pipeline step types.
+     */
+    private function isLlmStep(PipelineStepConfigurationInterface $step): bool
+    {
+        return in_array($step->getType(), [
+            AssistantPipelineProcessorType::QueryOptimizer,
+            AssistantPipelineProcessorType::ContextOptimizer,
+            AssistantPipelineProcessorType::AnswerGenerator,
+            AssistantPipelineProcessorType::QualityGate,
+        ], true);
     }
 
 

@@ -17,6 +17,7 @@ AI connections configure chat and embedding providers. Typical fields are:
 * default chat model;
 * default temperature;
 * embedding model;
+* embedding dimension;
 * additional provider options.
 
 Vector store connections
@@ -29,7 +30,6 @@ Vector store connections configure vector databases. Typical fields are:
 * API key;
 * default collection;
 * additional allowed collections;
-* vector size;
 * distance metric;
 * additional provider options.
 
@@ -39,4 +39,6 @@ Connection tests
 The backend module provides connection tests for configured AI and vector store
 connections. It also provides assistant profile tests that resolve step
 overrides and verify that every effective collection exists on the selected
-vector store. Use those tests before debugging indexer or pipeline behaviour.
+vector store and matches the AI connection's embedding dimension. Use those
+tests after changing an embedding configuration and before debugging indexer or
+pipeline behaviour.

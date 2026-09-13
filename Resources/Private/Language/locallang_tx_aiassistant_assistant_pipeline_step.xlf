@@ -55,7 +55,7 @@
 				<source>Max Tokens</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.model" resname="tx_aiassistant_assistant_pipeline_step.model">
-				<source>Model</source>
+				<source>Model override (advanced)</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.processor_identifier" resname="tx_aiassistant_assistant_pipeline_step.processor_identifier">
 				<source>Processor Identifier</source>
@@ -187,7 +187,7 @@
 				<source>Limits how many previous messages are provided when history mode uses the latest messages.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.model.description" resname="tx_aiassistant_assistant_pipeline_step.model.description">
-				<source>Overrides the default AI model for this step. Leave empty to use the model configured by the selected AI connection.</source>
+				<source>Optional provider-specific model override for this pipeline step. Leave empty to use the default model of the assistant's AI connection. If set, the model must be supported by that connection's provider. Changing the AI connection may invalidate this override.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.temperature.description" resname="tx_aiassistant_assistant_pipeline_step.temperature.description">
 				<source>Controls the creativity of the AI response for this step. Lower values are more deterministic, higher values are more creative.</source>

@@ -27,6 +27,9 @@
 			<trans-unit id="tx_aiassistant_connection_ai.embedding_model" resname="tx_aiassistant_connection_ai.embedding_model">
 				<source>Embedding Model</source>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.embedding_dimension" resname="tx_aiassistant_connection_ai.embedding_dimension">
+				<source>Embedding Dimension</source>
+			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.embedding_temperature" resname="tx_aiassistant_connection_ai.embedding_temperature">
 				<source>Embedding Temperature</source>
 			</trans-unit>
@@ -54,6 +57,9 @@
 			<trans-unit id="tx_aiassistant_connection_ai.base_url_desc" resname="tx_aiassistant_connection_ai.base_url_desc">
 				<source>Base URL of the AI provider API. Leave empty if the connector uses its default endpoint.</source>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.base_url_placeholder" resname="tx_aiassistant_connection_ai.base_url_placeholder">
+				<source>Leave empty to use the connector default</source>
+			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.api_key_desc" resname="tx_aiassistant_connection_ai.api_key_desc">
 				<source>API key used to authenticate against the AI provider.</source>
 			</trans-unit>
@@ -71,6 +77,9 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.embedding_model_desc" resname="tx_aiassistant_connection_ai.embedding_model_desc">
 				<source>Model used to create embeddings for indexing and retrieval queries.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.embedding_dimension_desc" resname="tx_aiassistant_connection_ai.embedding_dimension_desc">
+				<source>Requested and expected vector dimension of the embedding model. The default is 1536. Use the connection test to verify it. Changing this value requires a compatible or rebuilt collection.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.embedding_temperature_desc" resname="tx_aiassistant_connection_ai.embedding_temperature_desc">
 				<source>Temperature used for embedding requests if supported by the selected connector.</source>

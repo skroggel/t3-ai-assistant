@@ -92,7 +92,7 @@ final class BackendPurgeHandler
             } else {
                 $connector->deleteCollection(
                     $connection,
-                    new VectorCollection($collectionName, $connection->getVectorSize(), $connection->getDistance())
+                    new VectorCollection($collectionName)
                 );
             }
         } catch (\Throwable $exception) {

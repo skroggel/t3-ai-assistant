@@ -13,7 +13,6 @@ namespace Madj2k\AiAssistant\Backend\Diagnostics;
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
 use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
-use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
 use Psr\Http\Message\ServerRequestInterface;
@@ -63,10 +62,6 @@ final class BackendConnectionProvider
         $connections = [];
 
         foreach ($this->aiConnectionRepository->findAll() as $connection) {
-            if (!$connection instanceof AiConnection) {
-                continue;
-            }
-
             /** @var int $uid */
             $uid = (int)$connection->getUid();
 
@@ -77,6 +72,7 @@ final class BackendConnectionProvider
                 'kind' => 'AI',
                 'type' => $connection->getConnectorIdentifier(),
                 'baseUrl' => $connection->getBaseUrl(),
+                'embeddingDimension' => $connection->getEmbeddingDimension(),
                 'hidden' => false,
                 'editUrl' => (string)$uriBuilder->buildUriFromRoute('record_edit', [
                     'edit' => [
@@ -90,10 +86,6 @@ final class BackendConnectionProvider
         }
 
         foreach ($this->vectorStoreConnectionRepository->findAll() as $connection) {
-            if (!$connection instanceof VectorStoreConnection) {
-                continue;
-            }
-
             /** @var int $uid */
             $uid = (int)$connection->getUid();
 
@@ -104,6 +96,7 @@ final class BackendConnectionProvider
                 'kind' => 'Vector store',
                 'type' => $connection->getConnectorIdentifier(),
                 'baseUrl' => $connection->getEndpoint(),
+                'embeddingDimension' => null,
                 'hidden' => false,
                 'editUrl' => (string)$uriBuilder->buildUriFromRoute('record_edit', [
                     'edit' => [
@@ -124,11 +117,38 @@ final class BackendConnectionProvider
             }
 
             $uid = (int)$assistant->getUid();
+            $aiConnection = $assistant->getAiConnection();
+            $vectorStoreConnection = $assistant->getVectorStoreConnection();
+            $measuredEmbeddingDimension = null;
+
+            $assistantTestResult = $state['assistantTestResult'] ?? null;
+            if (
+                is_array($assistantTestResult)
+                && (int)($assistantTestResult['uid'] ?? 0) === $uid
+                && (int)($assistantTestResult['embeddingDimension'] ?? 0) > 0
+            ) {
+                $measuredEmbeddingDimension = (int)$assistantTestResult['embeddingDimension'];
+            }
+
+            $connectionTestResult = $state['connectionTestResult'] ?? null;
+            if (
+                $aiConnection instanceof AiConnection
+                && is_array($connectionTestResult)
+                && ($connectionTestResult['identifier'] ?? '') === 'ai:' . (int)$aiConnection->getUid()
+                && (int)($connectionTestResult['embeddingDimension'] ?? 0) > 0
+            ) {
+                $measuredEmbeddingDimension = (int)$connectionTestResult['embeddingDimension'];
+            }
+
             $assistants[] = [
                 'uid' => $uid,
                 'title' => $assistant->getTitle(),
-                'aiConnection' => $assistant->getAiConnection()?->getTitle() ?? 'Not configured',
-                'vectorStoreConnection' => $assistant->getVectorStoreConnection()?->getTitle() ?? 'Not configured',
+                'aiConnection' => $aiConnection?->getTitle() ?? 'Not configured',
+                'aiEmbeddingModel' => $aiConnection?->getEmbeddingModel() ?? '',
+                'aiConfiguredEmbeddingDimension' => $aiConnection?->getEmbeddingDimension() ?? 0,
+                'aiMeasuredEmbeddingDimension' => $measuredEmbeddingDimension,
+                'vectorStoreConnection' => $vectorStoreConnection?->getTitle() ?? 'Not configured',
+                'vectorStoreDistance' => $vectorStoreConnection?->getDistance() ?? '',
                 'stepCount' => $assistant->getChatPipelineSteps()->count(),
                 'hidden' => $assistant->isHidden(),
                 'editUrl' => (string)$uriBuilder->buildUriFromRoute('record_edit', [

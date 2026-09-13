@@ -130,6 +130,8 @@ services:
 
   Madj2k\AiCore\Connection\Ai\OpenAiConnector: ~
 
+  Madj2k\AiCore\Connection\Ai\GeminiConnector: ~
+
   Madj2k\AiCore\Connection\VectorStore\QdrantVectorStoreConnector: ~
 
   Madj2k\AiCore\Connection\Resolver\AiConnectorResolver:

@@ -17,7 +17,6 @@ use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
-use Madj2k\AiCore\Connection\VectorStore\DTO\VectorCollection;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -127,6 +126,7 @@ final class BackendConnectionTestHandler
             $result['status'],
             $result['message'],
             $result['checks'],
+            $result['embeddingDimension'],
         );
     }
 
@@ -149,19 +149,76 @@ final class BackendConnectionTestHandler
         }
 
         try {
-            $healthy = $this->connectionHealthChecker->checkAi(
+            $embeddingResponse = $this->connectionHealthChecker->probeAiEmbedding(
                 $connection,
                 'TYPO3 AI Chat backend connection test',
             );
+            $embeddingDimension = count($embeddingResponse->getEmbedding());
+        } catch (\Throwable $exception) {
+            $this->setResult(
+                $state,
+                'ai:' . $uid,
+                'error',
+                'Embedding test failed: ' . $exception->getMessage(),
+            );
+            return;
+        }
 
-            if (!$healthy) {
-                $this->setResult($state, 'ai:' . $uid, 'error', 'AI connection test returned an empty embedding.');
+        if ($embeddingDimension === 0) {
+            $this->setResult($state, 'ai:' . $uid, 'error', 'AI connection test returned an empty embedding.');
+            return;
+        }
+
+        $configuredEmbeddingDimension = $connection->getEmbeddingDimension();
+        if ($configuredEmbeddingDimension <= 0) {
+            $this->setResult(
+                $state,
+                'ai:' . $uid,
+                'error',
+                'The configured embedding dimension must be greater than zero.',
+                $embeddingDimension,
+            );
+            return;
+        }
+
+        if ($configuredEmbeddingDimension !== $embeddingDimension) {
+            $this->setResult($state, 'ai:' . $uid, 'error', sprintf(
+                'Embedding dimension mismatch: provider returned %d dimensions, but the AI connection is configured for %d.',
+                $embeddingDimension,
+                $configuredEmbeddingDimension,
+            ), $embeddingDimension);
+            return;
+        }
+
+        try {
+            $chatResponse = $this->connectionHealthChecker->probeAiChat(
+                $connection,
+                'Reply with OK.',
+            );
+            if (trim($chatResponse->getContent()) === '') {
+                $this->setResult($state, 'ai:' . $uid, 'error', sprintf(
+                'Embedding test succeeded with %d dimensions, but the chat test returned an empty response.',
+                    $embeddingDimension,
+                ), $embeddingDimension);
                 return;
             }
 
-            $this->setResult($state, 'ai:' . $uid, 'ok', 'AI connection test succeeded.');
+            $this->setResult(
+                $state,
+                'ai:' . $uid,
+                'ok',
+                sprintf(
+                    'AI connection test succeeded. Embedding: %d dimensions and configuration matches. Chat: response received.',
+                    $embeddingDimension,
+                ),
+                $embeddingDimension,
+            );
         } catch (\Throwable $exception) {
-            $this->setResult($state, 'ai:' . $uid, 'error', $exception->getMessage());
+            $this->setResult($state, 'ai:' . $uid, 'error', sprintf(
+                'Embedding test succeeded with %d dimensions, but the chat test failed: %s',
+                $embeddingDimension,
+                $exception->getMessage(),
+            ), $embeddingDimension);
         }
     }
 
@@ -183,20 +240,8 @@ final class BackendConnectionTestHandler
             return;
         }
 
-        /** @var string $collectionName */
-        $collectionName = trim($connection->getDefaultCollection()) !== ''
-            ? trim($connection->getDefaultCollection())
-            : '_aiassistant_connection_test';
-
         try {
-            $healthy = $this->connectionHealthChecker->checkVectorStore(
-                $connection,
-                new VectorCollection(
-                    $collectionName,
-                    $connection->getVectorSize(),
-                    $connection->getDistance()
-                )
-            );
+            $healthy = $this->connectionHealthChecker->probeVectorStore($connection);
 
             if (!$healthy) {
                 $this->setResult($state, 'vector:' . $uid, 'error', 'Vector store connection test failed.');
@@ -217,14 +262,21 @@ final class BackendConnectionTestHandler
      * @param string $identifier Connection test identifier.
      * @param string $status Status.
      * @param string $message Message.
+     * @param int|null $embeddingDimension Measured embedding dimension, if available.
      * @return void
      */
-    private function setResult(array &$state, string $identifier, string $status, string $message): void
-    {
+    private function setResult(
+        array &$state,
+        string $identifier,
+        string $status,
+        string $message,
+        ?int $embeddingDimension = null,
+    ): void {
         $state['connectionTestResult'] = [
             'identifier' => $identifier,
             'status' => $status,
             'message' => $message,
+            'embeddingDimension' => $embeddingDimension,
         ];
     }
 
@@ -237,6 +289,7 @@ final class BackendConnectionTestHandler
      * @param string $status Status.
      * @param string $message Summary message.
      * @param array<int, array{status: string, label: string, message: string}> $checks Detailed checks.
+     * @param int|null $embeddingDimension Measured embedding dimension, if available.
      * @return void
      */
     private function setAssistantResult(
@@ -245,12 +298,14 @@ final class BackendConnectionTestHandler
         string $status,
         string $message,
         array $checks,
+        ?int $embeddingDimension = null,
     ): void {
         $state['assistantTestResult'] = [
             'uid' => $uid,
             'status' => $status,
             'message' => $message,
             'checks' => $checks,
+            'embeddingDimension' => $embeddingDimension,
         ];
     }
 

@@ -20,7 +20,13 @@ final class CoreContractTest extends TestCase
 {
     public function testExtbaseModelsImplementCoreConfigurationContracts(): void
     {
-        self::assertInstanceOf(AiConnectionConfigurationInterface::class, new AiConnection());
+        $aiConnection = new AiConnection();
+
+        self::assertInstanceOf(AiConnectionConfigurationInterface::class, $aiConnection);
+        self::assertSame('', $aiConnection->getBaseUrl());
+        self::assertSame('', $aiConnection->getDefaultModel());
+        self::assertSame('', $aiConnection->getEmbeddingModel());
+        self::assertSame(1536, $aiConnection->getEmbeddingDimension());
         self::assertInstanceOf(VectorStoreConnectionConfigurationInterface::class, new VectorStoreConnection());
         self::assertInstanceOf(AssistantConfigurationInterface::class, new AssistantProfile());
         self::assertInstanceOf(PipelineStepConfigurationInterface::class, new AssistantPipelineStep());
