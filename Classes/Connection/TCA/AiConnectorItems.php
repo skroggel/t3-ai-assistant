@@ -2,10 +2,15 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the TYPO3 extension ai_assistant.
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.
  *
  * For the full copyright and license information, please read the
- * LICENSE file that was distributed with this source code.
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
  */
 
 namespace Madj2k\AiAssistant\Connection\TCA;
@@ -18,11 +23,11 @@ use Madj2k\AiCore\Connection\Resolver\AiConnectorResolver as AiConnectorRegistry
  * Provides registered AI connector options for TCA select fields.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Steffen Kroggel <developer@steffenkroggel.de>
- * @package Madj2k\\AiAssistant
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @copyright Steffen Kroggel <developer@steffenkroggel.de>, Maximilian Fäßler <maximilian@faesslerweb.de>
+ * @package Madj2k\AiAssistant
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3
  */
-class AiConnectorItems
+readonly class AiConnectorItems
 {
     /**
      * Constructor.
@@ -30,7 +35,7 @@ class AiConnectorItems
      * @param \Madj2k\AiCore\Connection\Resolver\AiConnectorResolver $aiConnectorRegistry AI connector registry.
      */
     public function __construct(
-        protected readonly AiConnectorRegistry $aiConnectorRegistry
+        protected AiConnectorRegistry $aiConnectorRegistry
     ) {
     }
 
