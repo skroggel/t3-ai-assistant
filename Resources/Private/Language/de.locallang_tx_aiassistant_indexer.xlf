@@ -69,7 +69,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.title_desc" resname="tx_aiassistant_indexer.title_desc">
 				<source>Human-readable name to identify this indexer in CLI/BE.</source>
-				<target>Menschenlesbarer Name zur Identifizierung dieses Indexers in CLI/Backend.</target>
+				<target>Lesbarer Name zur Identifizierung dieses Indexers in CLI und Backend.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.title_placeholder" resname="tx_aiassistant_indexer.title_placeholder">
 				<source>e.g. Site pages (DE)</source>
@@ -197,7 +197,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.ai_connection" resname="tx_aiassistant_indexer.ai_connection">
 				<source>Ai Connection</source>
-				<target>KI-Verbindung</target>
+				<target>AI-Verbindung</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.collection" resname="tx_aiassistant_indexer.collection">
 				<source>Collection</source>
@@ -217,7 +217,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.vector_store_connection" resname="tx_aiassistant_indexer.vector_store_connection">
 				<source>Vector Store Connection</source>
-				<target>Vektorspeicher-Verbindung</target>
+				<target>Vector-Store-Verbindung</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.indexer_identifier_desc" resname="tx_aiassistant_indexer.indexer_identifier_desc">
 				<source>Registered indexer service that executes this configuration.</source>
@@ -233,7 +233,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.ai_connection_desc" resname="tx_aiassistant_indexer.ai_connection_desc">
 				<source>AI connection used to create embeddings for documents indexed by this configuration.</source>
-				<target>KI-Verbindung zur Erstellung von Embeddings für Dokumente, die mit dieser Konfiguration indexiert werden.</target>
+				<target>AI-Verbindung zur Erstellung von Embeddings für Dokumente, die mit dieser Konfiguration indexiert werden.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.vector_store_connection_desc" resname="tx_aiassistant_indexer.vector_store_connection_desc">
 				<source>Vector database connection where generated document vectors are stored.</source>

@@ -5,7 +5,7 @@
 		<body>
 			<trans-unit id="plugin.tx_aiassistant_chat.title">
 				<source>AI Chat</source>
-				<target>KI-Chat</target>
+				<target>AI Chat</target>
 			</trans-unit>
 			<trans-unit id="plugin.tx_aiassistant_chat..description">
 				<source/>
@@ -18,7 +18,7 @@
 			</trans-unit>
 			<trans-unit id="flexform.chat.assistant_profile">
 				<source>Assistant Profile</source>
-				<target>Assistentenprofil</target>
+				<target>Assistant-Profil</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.require_consent">
 				<source>Require consent before starting the chat</source>
@@ -54,7 +54,7 @@
 			</trans-unit>
 			<trans-unit id="flexform.chat.plain_language.description">
 				<source>Instructs answer-generating pipeline steps to use familiar words, short sentences and a clear structure.</source>
-				<target>Weist antwortgenerierende Pipeline-Schritte an, vertraute Wörter, kurze Sätze und eine klare Struktur zu verwenden.</target>
+				<target>Weist die Pipeline-Schritte zur Antwortgenerierung an, vertraute Wörter, kurze Sätze und eine klare Struktur zu verwenden.</target>
 			</trans-unit>
 		</body>
 	</file>

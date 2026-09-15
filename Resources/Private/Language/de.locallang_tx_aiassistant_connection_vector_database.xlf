@@ -5,7 +5,7 @@
 		<body>
 			<trans-unit id="tx_aiassistant_connection_vector_database" resname="tx_aiassistant_connection_vector_database">
 				<source>Connection Vector Database</source>
-				<target>Verbindung Vektordatenbank</target>
+				<target>Vektordatenbank-Verbindung</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.additional_options" resname="tx_aiassistant_connection_vector_database.additional_options">
 				<source>Additional Options</source>
@@ -41,7 +41,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.endpoint" resname="tx_aiassistant_connection_vector_database.endpoint">
 				<source>Endpoint</source>
-				<target>Endpunkt</target>
+				<target>Endpoint</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.tab_credentials" resname="tx_aiassistant_connection_vector_database.tab_credentials">
 				<source>Credentials</source>
@@ -61,11 +61,11 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.connector_identifier_desc" resname="tx_aiassistant_connection_vector_database.connector_identifier_desc">
 				<source>Registered vector store connector implementation used for this connection.</source>
-				<target>Registrierte Vektorspeicher-Connector-Implementierung, die für diese Verbindung verwendet wird.</target>
+				<target>Registrierte Vector-Store-Connector-Implementierung für diese Verbindung.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.endpoint_desc" resname="tx_aiassistant_connection_vector_database.endpoint_desc">
 				<source>Endpoint URL of the vector database service.</source>
-				<target>Endpunkt-URL des Vektordatenbank-Dienstes.</target>
+				<target>Endpoint-URL des Vektordatenbankdienstes.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.api_key_desc" resname="tx_aiassistant_connection_vector_database.api_key_desc">
 				<source>API key used to authenticate against the vector database service.</source>
@@ -83,8 +83,8 @@
 				<source>Optional connector-specific vector database settings. Use one key-value pair per line or JSON if supported.</source>
 				<target>Optionale Connector-spezifische Vektordatenbank-Einstellungen. Verwenden Sie ein Schlüssel-Wert-Paar pro Zeile oder JSON, sofern unterstützt.</target>
 			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_vector_database.collections" resname="tx_aiassistant_connection_vector_database.collections"><source>Allowed Collections</source><target>Erlaubte Collections</target></trans-unit>
-			<trans-unit id="tx_aiassistant_connection_vector_database.collections_desc" resname="tx_aiassistant_connection_vector_database.collections_desc"><source>Collections available to retriever step overrides. Enter one collection per line. The default collection is always allowed.</source><target>Collections, die für Überschreibungen in Retriever-Schritten verfügbar sind. Geben Sie eine Collection pro Zeile ein. Die Standard-Collection ist immer erlaubt.</target></trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.collections" resname="tx_aiassistant_connection_vector_database.collections"><source>Allowed Collections</source><target>Zulässige Collections</target></trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.collections_desc" resname="tx_aiassistant_connection_vector_database.collections_desc"><source>Collections available to retriever step overrides. Enter one collection per line. The default collection is always allowed.</source><target>Collections, die für Overrides in Retriever-Schritten verfügbar sind. Geben Sie pro Zeile eine Collection ein. Die Standard-Collection ist immer zulässig.</target></trans-unit>
 		</body>
 	</file>
 </xliff>

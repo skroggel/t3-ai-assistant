@@ -29,7 +29,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_pipeline_trace.processor_type" resname="tx_aiassistant_pipeline_trace.processor_type">
 				<source>Processor Type</source>
-				<target>Prozessortyp</target>
+				<target>Processor-Typ</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_pipeline_trace.query_text" resname="tx_aiassistant_pipeline_trace.query_text">
 				<source>Query Text</source>
