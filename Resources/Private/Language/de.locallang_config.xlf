@@ -13,15 +13,15 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.headline" resname="templates_backend_config.headline">
 				<source>AI Chat Configuration</source>
-				<target>AI-Chat Konfiguration</target>
+				<target>AI-Chat-Konfiguration</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.intro" resname="templates_backend_config.intro">
 				<source>Manage indexers, run previews, and review recent indexing activity.</source>
-				<target>Verwalte Indexer, starte Vorschauen und prüfe die letzten Index-Aktivitäten.</target>
+				<target>Verwalte Indexer, starte Previews und prüfe die letzten Indexierungsaktivitäten.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.tabs_aria_label" resname="templates_backend_config.tabs_aria_label">
 				<source>AI Chat sections</source>
-				<target>AI-Chat Bereiche</target>
+				<target>AI-Chat-Bereiche</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.tab_indexers" resname="templates_backend_config.tab_indexers">
 				<source>Indexing</source>
@@ -53,11 +53,11 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.settings_connectors_hint" resname="templates_backend_config.settings_connectors_hint">
 				<source>External source connections are managed in the Connectors tab.</source>
-				<target>Externe Quellen werden im Reiter Connectors verwaltet.</target>
+				<target>Externe Quellenverbindungen werden im Tab „Connectors“ verwaltet.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.settings_diagnostics_hint" resname="templates_backend_config.settings_diagnostics_hint">
 				<source>Health check and system overview are available under Diagnostics.</source>
-				<target>Health-Check und Systemüberblick findest du unter Diagnose.</target>
+				<target>Health Check und Systemüberblick findest du unter „Diagnostics“.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.shopware_last_run" resname="templates_backend_config.shopware_last_run">
 				<source>Last Shopware run:</source>
@@ -141,7 +141,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.site_profiles_intro" resname="templates_backend_config.site_profiles_intro">
 				<source>Review which TYPO3 sites expose an AI chat profile, which collection they use, and whether their setup is unique and language-aware.</source>
-				<target>Prüfe, welche TYPO3-Sites ein AI-Chat-Profil bereitstellen, welche Collection sie nutzen und ob die Konfiguration eindeutig und sprachbewusst ist.</target>
+				<target>Prüfe, welche TYPO3-Sites ein AI-Chat-Profil bereitstellen, welche Collection sie nutzen und ob ihre Konfiguration eindeutig und sprachabhängig ist.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.chat_overview_intro" resname="templates_backend_config.chat_overview_intro">
 				<source>Review the currently active chat behavior for frontend conversations.</source>
@@ -157,7 +157,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.chat_overview_devlog" resname="templates_backend_config.chat_overview_devlog">
 				<source>Development log</source>
-				<target>Development-Log</target>
+				<target>Dev-Log</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.chat_overview_language" resname="templates_backend_config.chat_overview_language">
 				<source>Language handling</source>
@@ -201,11 +201,11 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.site_profiles_warning_main_profile_with_site_prompts_title" resname="templates_backend_config.site_profiles_warning_main_profile_with_site_prompts_title">
 				<source>These sites already have a main profile but still keep additional site prompt overrides. Check whether those rules should move into the main profile.</source>
-				<target>Diese Sites haben bereits ein Hauptprofil, nutzen aber noch zusaetzliche Site-Prompt-Overrides. Pruefe, ob diese Regeln ins Hauptprofil verschoben werden sollten.</target>
+				<target>Diese Sites haben bereits ein Hauptprofil, verwenden aber weiterhin zusätzliche Site-Prompt-Overrides. Prüfe, ob diese Regeln ins Hauptprofil verschoben werden sollten.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.site_profiles_main_profile_managed_title" resname="templates_backend_config.site_profiles_main_profile_managed_title">
 				<source>These sites already route prompts cleanly through their main profile without additional site prompt overrides.</source>
-				<target>Diese Sites leiten ihre Prompts bereits sauber ueber das Hauptprofil, ohne zusaetzliche Site-Prompt-Overrides.</target>
+				<target>Diese Sites leiten ihre Prompts bereits sauber über das Hauptprofil, ohne zusätzliche Site-Prompt-Overrides.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.site_profiles_site" resname="templates_backend_config.site_profiles_site">
 				<source>Site</source>
@@ -277,7 +277,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_intro" resname="templates_backend_config.indexers_intro">
 				<source>Each row represents one effective index scope: type, site scope, and target collection. The indexer record controls what gets chunked and indexed for that scope. Indexers can only be deleted after their indexed data has been purged.</source>
-				<target>Jede Zeile repräsentiert einen wirksamen Index-Scope: Typ, Site-Scope und Ziel-Collection. Der Indexer-Datensatz steuert, was für diesen Scope gechunked und indexiert wird. Indexer können erst gelöscht werden, nachdem ihre indexierten Daten geleert wurden.</target>
+				<target>Jede Zeile repräsentiert einen wirksamen Index-Scope: Typ, Site-Scope und Ziel-Collection. Der Indexer-Datensatz steuert, was für diesen Scope in Chunks aufgeteilt und indexiert wird. Indexer können erst gelöscht werden, nachdem ihre indexierten Daten per Purge entfernt wurden.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_uid" resname="templates_backend_config.indexers_uid">
 				<source>UID</source>
@@ -289,11 +289,11 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_window_legend" resname="templates_backend_config.indexers_window_legend">
 				<source>External indexers show their current Shopware time window here: either cursor-based after a successful run or lookback-based before the first successful run.</source>
-				<target>Externe Indexer zeigen hier ihr aktuelles Shopware-Zeitfenster: entweder cursor-basiert nach einem erfolgreichen Lauf oder lookback-basiert vor dem ersten erfolgreichen Lauf.</target>
+				<target>Externe Indexer zeigen hier ihr aktuelles Shopware-Zeitfenster: entweder Cursor-basiert nach einem erfolgreichen Lauf oder Lookback-basiert vor dem ersten erfolgreichen Lauf.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_window_legend_title" resname="templates_backend_config.indexers_window_legend_title">
 				<source>Legend: Window: cursor = incremental mode using the last stored Shopware cursor. Window: lookback Nd = fallback mode using connector lookback_days, otherwise global shopware.indexing.lookbackDays. Configure the connector in Settings &gt; Connectors.</source>
-				<target>Legende: Window: cursor = inkrementeller Modus mit dem zuletzt gespeicherten Shopware-Cursor. Window: lookback Nd = Fallback-Modus mit connector lookback_days, sonst globalem shopware.indexing.lookbackDays. Den Connector konfigurierst du unter Einstellungen &gt; Connectors.</target>
+				<target>Legende: Window: cursor = inkrementeller Modus mit dem zuletzt gespeicherten Shopware-Cursor. Window: lookback Nd = Fallback-Modus mit connector lookback_days, andernfalls mit dem globalen Wert shopware.indexing.lookbackDays. Den Connector konfigurierst du unter Einstellungen &gt; Connectors.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.external_run_dialog_title" resname="templates_backend_config.external_run_dialog_title">
 				<source>Run external indexer</source>
@@ -305,23 +305,23 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexer_run_dialog_intro" resname="templates_backend_config.indexer_run_dialog_intro">
 				<source>Optional run parameters for this indexer.</source>
-				<target>Optionale Laufparameter für diesen Indexer.</target>
+				<target>Optionale Ausführungsparameter für diesen Indexer.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexer_run_dialog_intro_file" resname="templates_backend_config.indexer_run_dialog_intro_file">
 				<source>Optional run parameters for this file indexer. Dry-run writes nothing to Qdrant. Only changed limits the run to updated or new files.</source>
-				<target>Optionale Laufparameter für diesen File-Indexer. Ein Dry-run schreibt nichts nach Qdrant. Nur geändert beschränkt den Lauf auf neue oder aktualisierte Dateien.</target>
+				<target>Optionale Ausführungsparameter für diesen Datei-Indexer. Ein Dry Run schreibt nichts nach Qdrant. „Only changed“ beschränkt den Lauf auf neue oder aktualisierte Dateien.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexer_run_dialog_intro_page" resname="templates_backend_config.indexer_run_dialog_intro_page">
 				<source>Optional run parameters for this page indexer. Dry-run writes nothing to Qdrant. Only changed limits the run to updated or new pages.</source>
-				<target>Optionale Laufparameter für diesen Page-Indexer. Ein Dry-run schreibt nichts nach Qdrant. Nur geändert beschränkt den Lauf auf neue oder aktualisierte Seiten.</target>
+				<target>Optionale Ausführungsparameter für diesen Seiten-Indexer. Ein Dry Run schreibt nichts nach Qdrant. „Only changed“ beschränkt den Lauf auf neue oder aktualisierte Seiten.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.external_run_dialog_intro" resname="templates_backend_config.external_run_dialog_intro">
 				<source>Optional run parameters for this external indexer. Leave Since empty to use the normal cursor/lookback logic.</source>
-				<target>Optionale Laufparameter für diesen externen Indexer. Lasse Seit leer, um die normale Cursor-/Lookback-Logik zu verwenden.</target>
+				<target>Optionale Ausführungsparameter für diesen externen Indexer. Lass „Since“ leer, um die normale Cursor-/Lookback-Logik zu verwenden.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_run_options_title" resname="templates_backend_config.indexers_run_options_title">
 				<source>Opens run options for this indexer.</source>
-				<target>Öffnet die Laufoptionen für diesen Indexer.</target>
+				<target>Öffnet die Ausführungsoptionen für diesen Indexer.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.external_run_dry_run_label" resname="templates_backend_config.external_run_dry_run_label">
 				<source>Mode</source>
@@ -329,11 +329,11 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.external_run_dry_run_help" resname="templates_backend_config.external_run_dry_run_help">
 				<source>Run as dry-run without writing to Qdrant</source>
-				<target>Als Dry-run ohne Schreiben nach Qdrant ausführen</target>
+				<target>Als Dry Run ausführen, ohne nach Qdrant zu schreiben</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.external_run_since_label" resname="templates_backend_config.external_run_since_label">
 				<source>Since</source>
-				<target>Seit</target>
+				<target>Since</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.external_run_since_placeholder" resname="templates_backend_config.external_run_since_placeholder">
 				<source>2026-01-01 or 2026-01-01T00:00:00+00:00</source>
@@ -349,7 +349,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.external_run_collection_default" resname="templates_backend_config.external_run_collection_default">
 				<source>Use indexer/default collection</source>
-				<target>Indexer-/Standard-Collection verwenden</target>
+				<target>Indexer-/Default-Collection verwenden</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.external_run_collection_help" resname="templates_backend_config.external_run_collection_help">
 				<source>Optional override for the target Qdrant collection. Known configured collections are listed here.</source>
@@ -417,11 +417,11 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_run" resname="templates_backend_config.indexers_run">
 				<source>Run</source>
-				<target>Run</target>
+				<target>Ausführen</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_dry_run" resname="templates_backend_config.indexers_dry_run">
 				<source>Dry-run</source>
-				<target>Testlauf</target>
+				<target>Dry Run</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_dry_badge" resname="templates_backend_config.indexers_dry_badge">
 				<source>Dry</source>
@@ -441,7 +441,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_purge" resname="templates_backend_config.indexers_purge">
 				<source>Purge</source>
-				<target>Leeren</target>
+				<target>Purge</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_purge_confirm" resname="templates_backend_config.indexers_purge_confirm">
 				<source>Delete indexed content for this scope from Qdrant and local source tracking?</source>
@@ -453,7 +453,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_no_sites" resname="templates_backend_config.indexers_no_sites">
 				<source>No TYPO3 site with `aiAssistant.collection` is configured. Add this to Site Configuration before creating indexers.</source>
-				<target>Es ist keine TYPO3-Site mit `aiAssistant.collection` konfiguriert. Trage dies zuerst in der Site-Konfiguration ein, bevor Du Indexer anlegst.</target>
+				<target>Es ist keine TYPO3-Site mit `aiAssistant.collection` konfiguriert. Trage dies zuerst in der Site-Konfiguration ein, bevor du Indexer anlegst.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexers_group_create" resname="templates_backend_config.indexers_group_create">
 				<source>Create indexers</source>
@@ -493,7 +493,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.indexed_data_empty" resname="templates_backend_config.indexed_data_empty">
 				<source>No indexed data scopes available yet.</source>
-				<target>Noch keine indexierten Daten-Scope vorhanden.</target>
+				<target>Noch keine Scopes mit indexierten Daten verfügbar.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.diagnostics_subtab_preview" resname="templates_backend_config.diagnostics_subtab_preview">
 				<source>Preview</source>
@@ -513,7 +513,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.diagnostics_errors_intro" resname="templates_backend_config.diagnostics_errors_intro">
 				<source>Shows AI Chat error entries from the last two weeks. Expand an entry to inspect the raw log payload and stack trace.</source>
-				<target>Zeigt AI-Chat-Fehler der letzten zwei Wochen. Ein Eintrag kann aufgeklappt werden, um Rohdaten und Stacktrace zu sehen.</target>
+				<target>Zeigt AI-Chat-Fehler der letzten zwei Wochen. Klappe einen Eintrag auf, um das Raw-Log-Payload und den Stacktrace zu prüfen.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.diagnostics_errors_component" resname="templates_backend_config.diagnostics_errors_component">
 				<source>Component</source>
@@ -533,7 +533,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.connectors_intro" resname="templates_backend_config.connectors_intro">
 				<source>Connectors define how external content is fetched. External indexers reference one connector and write the indexed data into their site-specific collection.</source>
-				<target>Connectoren definieren, wie externe Inhalte geladen werden. Externe Indexer referenzieren genau einen Connector und schreiben die indexierten Daten in ihre site-spezifische Collection.</target>
+				<target>Connectoren definieren, wie externe Inhalte abgerufen werden. Externe Indexer referenzieren jeweils einen Connector und schreiben die indexierten Daten in die Site-spezifische Collection.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.connectors_title" resname="templates_backend_config.connectors_title">
 				<source>Connector</source>
@@ -561,19 +561,19 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.assistant_profiles_intro_lead" resname="templates_backend_config.assistant_profiles_intro_lead">
 				<source>Each site can define a dedicated main profile for the default chatbot.</source>
-				<target>Jede Site kann nun ein eigenes Hauptprofil für den Standard-Chatbot definieren.</target>
+				<target>Jede Site kann ein eigenes Hauptprofil für den Standard-Chatbot definieren.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.assistant_profiles_intro_rest" resname="templates_backend_config.assistant_profiles_intro_rest">
 				<source> Create additional sub-profiles only when a specific chat element should use a narrower scope or a different assistant identity.</source>
-				<target> Lege zusaetzliche Subprofile nur dann an, wenn ein bestimmtes Chat-Element einen engeren Scope oder eine andere Assistenten-Identitaet nutzen soll.</target>
+				<target> Lege zusätzliche Subprofile nur dann an, wenn ein bestimmtes Chat-Element einen engeren Scope oder eine andere Assistant-Identität verwenden soll.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.assistant_profiles_default_hint" resname="templates_backend_config.assistant_profiles_default_hint">
 				<source>Leave the profile field empty in a chat element to use the site's main profile or the default chatbot configuration.</source>
-				<target>Lass das Profilfeld im Chat-Element leer, um das Hauptprofil der Site oder die Default-Chatbot-Konfiguration zu verwenden.</target>
+				<target>Lass das Profilfeld in einem Chat-Element leer, um das Hauptprofil der Site oder die Default-Chatbot-Konfiguration zu verwenden.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.assistant_profiles_warning_duplicate_main_title" resname="templates_backend_config.assistant_profiles_warning_duplicate_main_title">
 				<source>Multiple active main profiles exist for the same site. The first one wins as fallback, so this should be cleaned up.</source>
-				<target>Für dieselbe Site existieren mehrere aktive Hauptprofile. Als Fallback gewinnt nur das erste, daher sollte das bereinigt werden.</target>
+				<target>Für dieselbe Site existieren mehrere aktive Hauptprofile. Als Fallback wird das erste verwendet; die Duplikate sollten daher bereinigt werden.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.assistant_profiles_title" resname="templates_backend_config.assistant_profiles_title">
 				<source>Profile</source>
@@ -721,7 +721,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.not_available" resname="templates_backend_config.not_available">
 				<source>n/a</source>
-				<target>n/v</target>
+				<target>n. v.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.preview_title" resname="templates_backend_config.preview_title">
 				<source>Content Diagnostics</source>
@@ -737,7 +737,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.search_title" resname="templates_backend_config.search_title">
 				<source>Search And Connectivity Checks</source>
-				<target>Suche und Verbindungsprüfungen</target>
+				<target>Suche und Verbindungstests</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.search_cost_warning" resname="templates_backend_config.search_cost_warning">
 				<source>Warning: Search tests send data to OpenAI and may incur API costs.</source>
@@ -745,7 +745,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.search_intro" resname="templates_backend_config.search_intro">
 				<source>Search test: run a quick semantic query against Qdrant using the configured embedding model.</source>
-				<target>Suchtest: Führe eine kurze semantische Anfrage gegen Qdrant mit dem konfigurierten Embedding-Modell aus.</target>
+				<target>Suchtest: Führe eine kurze semantische Query gegen Qdrant mit dem konfigurierten Embedding-Modell aus.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.health_check_intro" resname="templates_backend_config.health_check_intro">
 				<source>Health check: verify OpenAI and Qdrant connectivity without running a manual search query.</source>
@@ -797,7 +797,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.search_collection_default" resname="templates_backend_config.search_collection_default">
 				<source>Use default collection</source>
-				<target>Standard-Collection verwenden</target>
+				<target>Default-Collection verwenden</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.search_empty" resname="templates_backend_config.search_empty">
 				<source>No results could be found for this query.</source>
@@ -945,7 +945,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.purge_remote_state_without_remote" resname="templates_backend_config.purge_remote_state_without_remote">
 				<source>State without remote</source>
-				<target>State ohne Remote</target>
+				<target>Source-State ohne Remote-Collection</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.purge_missing_connection" resname="templates_backend_config.purge_missing_connection">
 				<source>Missing connection</source>
@@ -981,7 +981,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.purge_success" resname="templates_backend_config.purge_success">
 				<source>Collection "%s" was deleted for connection #%d. Removed source state entries from the database: %d.</source>
-				<target>Collection "%s" wurde für Verbindung #%d gelöscht. Entfernte Source-State-Einträge aus der Datenbank: %d.</target>
+				<target>Collection "%s" wurde für Verbindung #%d gelöscht. Aus der Datenbank entfernte Source-State-Einträge: %d.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.purge_warning_remote_failed" resname="templates_backend_config.purge_warning_remote_failed">
 				<source>Remote collection could not be deleted (%s). Local source state entries were removed anyway: %d.</source>
@@ -989,7 +989,7 @@
 			</trans-unit>
 			<trans-unit id="templates_backend_config.purge_warning_remote_missing" resname="templates_backend_config.purge_warning_remote_missing">
 				<source>Collection "%s" was not found remotely for connection #%d. Removed source state entries from the database: %d.</source>
-				<target>Collection "%s" wurde remote für Verbindung #%d nicht gefunden. Entfernte Source-State-Einträge aus der Datenbank: %d.</target>
+				<target>Collection "%s" wurde für Verbindung #%d remote nicht gefunden. Aus der Datenbank entfernte Source-State-Einträge: %d.</target>
 			</trans-unit>
 		</body>
 	</file>

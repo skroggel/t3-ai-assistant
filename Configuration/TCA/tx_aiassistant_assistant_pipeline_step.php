@@ -17,7 +17,7 @@ return [
             'disabled' => 'hidden',
         ],
         'sortby' => 'sorting',
-        'rootLevel' => 1,
+        'rootLevel' => -1,
         'searchFields' => 'title,type,stage,processor_identifier',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
     ],

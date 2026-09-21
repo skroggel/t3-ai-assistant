@@ -5,7 +5,7 @@
 		<body>
 			<trans-unit id="tx_aiassistant_connection_ai" resname="tx_aiassistant_connection_ai">
 				<source>Connection AI-API</source>
-				<target>Verbindung KI-API</target>
+				<target>AI-API-Verbindung</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.additional_options" resname="tx_aiassistant_connection_ai.additional_options">
 				<source>Additional Options</source>
@@ -65,15 +65,15 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.title_desc" resname="tx_aiassistant_connection_ai.title_desc">
 				<source>Internal name used to identify this AI connection.</source>
-				<target>Interner Name zur Identifizierung dieser KI-Verbindung.</target>
+				<target>Interner Name zur Identifizierung dieser AI-Verbindung.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.connector_identifier_desc" resname="tx_aiassistant_connection_ai.connector_identifier_desc">
 				<source>Registered AI connector implementation used for this connection.</source>
-				<target>Registrierte KI-Connector-Implementierung, die für diese Verbindung verwendet wird.</target>
+				<target>Registrierte AI-Connector-Implementierung für diese Verbindung.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.base_url_desc" resname="tx_aiassistant_connection_ai.base_url_desc">
 				<source>Base URL of the AI provider API. Leave empty if the connector uses its default endpoint.</source>
-				<target>Basis-URL der API des KI-Anbieters. Leer lassen, wenn der Connector seinen Standard-Endpunkt verwendet.</target>
+				<target>Basis-URL der API des AI-Anbieters. Leer lassen, wenn der Connector seinen Standard-Endpoint verwendet.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.base_url_placeholder" resname="tx_aiassistant_connection_ai.base_url_placeholder">
 				<source>Leave empty to use the connector default</source>
@@ -81,15 +81,15 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.api_key_desc" resname="tx_aiassistant_connection_ai.api_key_desc">
 				<source>API key used to authenticate against the AI provider.</source>
-				<target>API-Schlüssel zur Authentifizierung beim KI-Anbieter.</target>
+				<target>API-Schlüssel zur Authentifizierung beim AI-Anbieter.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.organization_desc" resname="tx_aiassistant_connection_ai.organization_desc">
 				<source>Optional organization identifier sent to the AI provider.</source>
-				<target>Optionale Organisationskennung, die an den KI-Anbieter gesendet wird.</target>
+				<target>Optionale Organisationskennung, die an den AI-Anbieter gesendet wird.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.project_desc" resname="tx_aiassistant_connection_ai.project_desc">
 				<source>Optional project identifier sent to the AI provider.</source>
-				<target>Optionale Projektkennung, die an den KI-Anbieter gesendet wird.</target>
+				<target>Optionale Projektkennung, die an den AI-Anbieter gesendet wird.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.default_model_desc" resname="tx_aiassistant_connection_ai.default_model_desc">
 				<source>Default chat/completion model used when a pipeline step does not define a model.</source>

@@ -15,7 +15,7 @@ return [
             'disabled' => 'hidden',
         ],
         'sortby' => 'sorting',
-        'rootLevel' => 1,
+        'rootLevel' => -1,
         'searchFields' => 'title,assistant_label',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
     ],
