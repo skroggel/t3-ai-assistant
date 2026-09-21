@@ -803,12 +803,6 @@
 			<trans-unit id="templates_backend_config.purge_intro" resname="templates_backend_config.purge_intro">
 				<source>Delete a vector database collection and the matching local source state for the same connection and collection. Remote collections are listed when the selected connector supports it.</source>
 			</trans-unit>
-			<trans-unit id="templates_backend_config.purge_hint_label" resname="templates_backend_config.purge_hint_label">
-				<source>HINT:</source>
-			</trans-unit>
-			<trans-unit id="templates_backend_config.purge_cursor_hint" resname="templates_backend_config.purge_cursor_hint">
-				<source>Indexer cursors are not reset automatically when purging. If you want a fresh indexing run, pass the parameter --reset-cursor to the next indexer command.</source>
-			</trans-unit>
 			<trans-unit id="templates_backend_config.purge_connection" resname="templates_backend_config.purge_connection">
 				<source>Connection</source>
 			</trans-unit>

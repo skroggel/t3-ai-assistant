@@ -18,7 +18,7 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => 'source_type, indexer_uid, vector_store_connection, source_id, source_hash, language, collection, page_id, path, filename, content_checksum, storage_source_hash, file_mtime, file_ctime, last_changed, last_indexed, status, locked_until, lock_token, last_error',
+            'showitem' => 'source_type, indexer_uid, vector_store_connection, source_id, source_hash, language, language_id, collection, page_id, path, filename, content_checksum, storage_source_hash, file_mtime, file_ctime, last_changed, last_indexed, status, locked_until, lock_token, last_error',
         ]
     ],
     'columns' => [
@@ -59,6 +59,15 @@ return [
         ],
         'language' => [
             'label' => $ll . 'tx_aiassistant_indexer_source.language',
+            'config' => [
+                'type' => 'input',
+                'readOnly' => true,
+                'eval' => 'trim',
+                'max' => 16,
+            ],
+        ],
+        'language_id' => [
+            'label' => $ll . 'tx_aiassistant_indexer_source.language_id',
             'config' => [
                 'type' => 'number',
                 'readOnly' => true,

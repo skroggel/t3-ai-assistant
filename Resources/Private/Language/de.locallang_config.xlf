@@ -899,14 +899,6 @@
 				<source>Delete a vector database collection and the matching local source state for the same connection and collection. Remote collections are listed when the selected connector supports it.</source>
 				<target>Lösche eine Vector-Datenbank-Collection und den passenden lokalen Source-State für dieselbe Verbindung und Collection. Remote-Collections werden aufgelistet, wenn der gewählte Connector dies unterstützt.</target>
 			</trans-unit>
-			<trans-unit id="templates_backend_config.purge_hint_label" resname="templates_backend_config.purge_hint_label">
-				<source>HINT:</source>
-				<target>HINWEIS:</target>
-			</trans-unit>
-			<trans-unit id="templates_backend_config.purge_cursor_hint" resname="templates_backend_config.purge_cursor_hint">
-				<source>Indexer cursors are not reset automatically when purging. If you want a fresh indexing run, pass the parameter --reset-cursor to the next indexer command.</source>
-				<target>Indexer-Cursor werden beim Purge nicht automatisch zurückgesetzt. Wenn ein frischer Index-Durchlauf gewünscht ist, muss dem nächsten Indexer-Command der Parameter --reset-cursor mitgegeben werden.</target>
-			</trans-unit>
 			<trans-unit id="templates_backend_config.purge_connection" resname="templates_backend_config.purge_connection">
 				<source>Connection</source>
 				<target>Verbindung</target>

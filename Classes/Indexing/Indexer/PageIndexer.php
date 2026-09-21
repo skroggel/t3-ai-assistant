@@ -420,7 +420,8 @@ final class PageIndexer extends AbstractIndexer
         $metadata = new DocumentMetadata('page', 'pages:' . (int)$page['uid']);
         $metadata->setTitle((string)($page['title'] ?? ''));
         $metadata->setPageId((int)$page['uid']);
-        $metadata->setLanguage((int)($page['sys_language_uid'] ?? 0));
+        $languageId = (int)($page['sys_language_uid'] ?? 0);
+        $metadata->setLanguageId($languageId);
         $metadata->setChangedAt((int)($page['SYS_LASTCHANGED'] ?: $page['tstamp'] ?: 0));
         $this->categoryMetadataService->addCategoryMetadata($metadata, 'pages', (int)$page['uid']);
         $keywords = $this->normalizeKeywords((string)($page['keywords'] ?? ''));
@@ -444,6 +445,8 @@ final class PageIndexer extends AbstractIndexer
         try {
             $siteFinder  = GeneralUtility::makeInstance(SiteFinder::class);
             $site = $siteFinder->getSiteByPageId((int)$page['uid']);
+            $siteLanguage = $site->getLanguageById($languageId);
+            $metadata->setLanguage($siteLanguage->getLocale()->getLanguageCode());
             $router = $site->getRouter();
             $metadata->setUrl((string) $router->generateUri((int)$page['uid']));
         } catch (\Exception $e) {

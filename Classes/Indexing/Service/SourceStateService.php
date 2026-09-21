@@ -95,6 +95,7 @@ final readonly class SourceStateService
         $state->setStorageSourceHash($this->createSourceHash($document));
         $state->setLastError('');
         $state->setLanguage($metadata->getLanguage());
+        $state->setLanguageId($metadata->getLanguageId());
         $state->setPageId($metadata->getPageId());
         $state->setPath($metadata->getPath());
         $state->setFilename($metadata->getFilename());

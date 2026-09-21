@@ -56,9 +56,14 @@ class IndexerSource extends AbstractEntity
 
 
     /**
+     * @var string
+     */
+    protected string $language = '';
+
+    /**
      * @var int
      */
-    protected int $language = 0;
+    protected int $languageId = -1;
 
 
     /**
@@ -216,15 +221,25 @@ class IndexerSource extends AbstractEntity
     }
 
 
-    public function getLanguage(): int
+    public function getLanguage(): string
     {
         return $this->language;
     }
 
 
-    public function setLanguage(int $language): void
+    public function setLanguage(string $language): void
     {
-        $this->language = $language;
+        $this->language = trim($language);
+    }
+
+    public function getLanguageId(): int
+    {
+        return $this->languageId;
+    }
+
+    public function setLanguageId(int $languageId): void
+    {
+        $this->languageId = $languageId;
     }
 
 

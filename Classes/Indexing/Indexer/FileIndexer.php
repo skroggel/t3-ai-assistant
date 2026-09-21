@@ -19,7 +19,6 @@ use Madj2k\AiCore\Indexing\VectorDocumentIndexer;
 use Madj2k\AiCore\Exception\JsonRecordIdentityException;
 use Madj2k\AiCore\Indexing\Resolver\AdapterResolver as AdapterRegistry;
 use Madj2k\AiCore\Indexing\Adapter\MultiDocumentAdapterInterface;
-use Madj2k\AiCore\Indexing\DTO\IndexableDocument;
 use Madj2k\AiCore\DTO\DocumentMetadata;
 use Madj2k\AiCore\Indexing\DTO\IndexingRequest;
 use Madj2k\AiCore\Indexing\DTO\IndexingResult;
@@ -30,6 +29,7 @@ use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\Folder;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -171,7 +171,13 @@ final class FileIndexer extends AbstractIndexer
                     );
 
                     if ($adapter instanceof MultiDocumentAdapterInterface) {
-                        foreach ($adapter->extractDocuments($file['localPath'], $metadata) as $document) {
+                        $documents = $adapter->extractDocuments($file['localPath'], $metadata);
+                        if ($documents === []) {
+                            $result->increaseSkipped();
+                            continue;
+                        }
+
+                        foreach ($documents as $document) {
                             $this->indexDocument(
                                 $configuration,
                                 $document,
@@ -180,10 +186,15 @@ final class FileIndexer extends AbstractIndexer
                             );
                         }
                     } else {
-                        $text = $adapter->extract($file['localPath'], $metadata);
+                        $document = $adapter->extract($file['localPath'], $metadata);
+                        if ($document === null) {
+                            $result->increaseSkipped();
+                            continue;
+                        }
+
                         $this->indexDocument(
                             $configuration,
-                            new IndexableDocument($text, $metadata),
+                            $document,
                             $request,
                             $result
                         );
@@ -218,7 +229,7 @@ final class FileIndexer extends AbstractIndexer
     /**
      * Builds metadata for an indexed file document.
      *
-     * @param array{sourceIdentifier:string,localPath:string,title:string,path:string,filename:string,mtime:int,extension:string,size:int,url:string,storageUid:int,fileUid:int} $file File information.
+     * @param array{sourceIdentifier:string,localPath:string,title:string,path:string,filename:string,mtime:int,extension:string,size:int,url:string,storageUid:int,fileUid:int,language:string,languageId:int} $file File information.
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
      * @param string $adapterIdentifier Adapter identifier.
      * @return \Madj2k\AiCore\DTO\DocumentMetadata Metadata.
@@ -230,6 +241,8 @@ final class FileIndexer extends AbstractIndexer
     ): DocumentMetadata {
         $metadata = new DocumentMetadata('file', $file['sourceIdentifier']);
         $metadata->setTitle($file['title']);
+        $metadata->setLanguage($file['language']);
+        $metadata->setLanguageId($file['languageId']);
         $metadata->setPath($file['path']);
         $metadata->setFilename($file['filename']);
         $metadata->setChangedAt($file['mtime']);
@@ -323,7 +336,14 @@ final class FileIndexer extends AbstractIndexer
 
             $fileUid = method_exists($file, 'getUid') ? (int)$file->getUid() : 0;
 
-            $files[] = [
+             $fileMetadata = $file->getMetaData();
+             $fileMetadata = is_array($fileMetadata) ? $fileMetadata : [];
+             $languageId = (int)($fileMetadata['sys_language_uid'] ?? $fileMetadata['language_id'] ?? -1);
+             $language = isset($fileMetadata['language']) && is_string($fileMetadata['language'])
+                 ? trim($fileMetadata['language'])
+                 : $this->resolveLanguageCode($languageId);
+
+             $files[] = [
                 'sourceIdentifier' => $file->getCombinedIdentifier(),
                 'localPath' => $localPath,
                 'title' => $file->getName(),
@@ -335,6 +355,8 @@ final class FileIndexer extends AbstractIndexer
                 'url' => (string)($file->getPublicUrl() ?? ''),
                 'storageUid' => $storageUid,
                 'fileUid' => $fileUid,
+                'language' => $language,
+                'languageId' => $languageId,
             ];
         }
 
@@ -344,6 +366,30 @@ final class FileIndexer extends AbstractIndexer
         );
 
         return $files;
+    }
+
+
+    /**
+     * Resolves a TYPO3 language ID to its ISO language code.
+     *
+     * @param int $languageId TYPO3 language ID.
+     * @return string ISO language code or an empty string when unresolved.
+     */
+    private function resolveLanguageCode(int $languageId): string
+    {
+        if ($languageId < 0) {
+            return '';
+        }
+
+        foreach (GeneralUtility::makeInstance(SiteFinder::class)->getAllSites() as $site) {
+            try {
+                return $site->getLanguageById($languageId)->getLocale()->getLanguageCode();
+            } catch (\Throwable) {
+                continue;
+            }
+        }
+
+        return '';
     }
 
 

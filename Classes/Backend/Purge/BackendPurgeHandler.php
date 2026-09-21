@@ -19,6 +19,7 @@ use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
 use Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver as VectorStoreConnectorRegistry;
 use Madj2k\AiCore\Connection\VectorStore\DTO\VectorCollection;
+use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -34,11 +35,13 @@ final readonly class BackendPurgeHandler
      * @param \Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository $vectorStoreConnectionRepository Vector store connection repository.
      * @param \Madj2k\AiCore\Connection\Resolver\VectorStoreConnectorResolver $vectorStoreConnectorRegistry Vector store connector registry.
      * @param \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool Connection pool.
+     * @param \Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository $indexerConfigRepository Indexer configuration repository.
      */
     public function __construct(
         private VectorStoreConnectionRepository $vectorStoreConnectionRepository,
         private VectorStoreConnectorRegistry    $vectorStoreConnectorRegistry,
-        private ConnectionPool                  $connectionPool
+        private ConnectionPool                  $connectionPool,
+        private IndexerConfigRepository         $indexerConfigRepository,
     ) {
     }
 
@@ -106,6 +109,7 @@ final readonly class BackendPurgeHandler
         }
 
         $deletedSources = $this->deleteSourceState($connectionUid, $collectionName);
+        $this->deleteIndexerState($connectionUid, $collectionName);
 
         if ($remoteError === '' && !$remoteMissing) {
             $this->setResult($state, 'ok', $this->translate(
@@ -176,6 +180,48 @@ final readonly class BackendPurgeHandler
                 'collection' => $collection,
             ]
         );
+    }
+
+
+    /**
+     * Deletes cursor and runtime status for indexers using the purged collection.
+     *
+     * Run history is intentionally retained for auditability.
+     *
+     * @param int $connectionUid Vector store connection uid.
+     * @param string $collection Collection.
+     * @return int Deleted state rows.
+     */
+    private function deleteIndexerState(int $connectionUid, string $collection): int
+    {
+        $connection = $this->connectionPool->getConnectionForTable('tx_aiassistant_indexer_state');
+        $deleted = 0;
+
+        foreach ($this->indexerConfigRepository->findAll() as $configuration) {
+            $vectorStoreConnection = $configuration->getVectorStoreConnection();
+            if ($vectorStoreConnection === null || (int)$vectorStoreConnection->getUid() !== $connectionUid) {
+                continue;
+            }
+
+            $configuredCollection = trim($configuration->getCollection());
+            if ($configuredCollection === '') {
+                $configuredCollection = trim($vectorStoreConnection->getDefaultCollection());
+            }
+            if ($configuredCollection !== $collection) {
+                continue;
+            }
+
+            $deleted += $connection->delete(
+                'tx_aiassistant_indexer_state',
+                [
+                    'indexer_identifier' => $configuration->getIndexerIdentifier(),
+                    'source_type' => $configuration->getType(),
+                    'indexer_uid' => (int)$configuration->getUid(),
+                ]
+            );
+        }
+
+        return $deleted;
     }
 
 
