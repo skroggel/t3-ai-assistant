@@ -45,7 +45,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_connector.lookback_days" resname="tx_aiassistant_indexer_connector.lookback_days">
 				<source>Default lookback days</source>
-				<target>Standard-Rückblickzeitraum in Tagen</target>
+				<target>Standard-Lookback in Tagen</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_connector.custom_fields" resname="tx_aiassistant_indexer_connector.custom_fields">
 				<source>Custom fields</source>
@@ -57,7 +57,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_connector.title_desc" resname="tx_aiassistant_indexer_connector.title_desc">
 				<source>Human-readable name for this external connector.</source>
-				<target>Menschenlesbarer Name für diesen externen Connector.</target>
+				<target>Lesbarer Name für diesen externen Connector.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_connector.type_desc" resname="tx_aiassistant_indexer_connector.type_desc">
 				<source>Connector implementation used to fetch external content.</source>
@@ -89,7 +89,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_connector.lookback_days_desc" resname="tx_aiassistant_indexer_connector.lookback_days_desc">
 				<source>Default lookback window when no explicit --since value is provided.</source>
-				<target>Standard-Rückblickzeitraum, wenn kein expliziter `--since`-Wert angegeben ist.</target>
+				<target>Standard-Lookback-Zeitraum, wenn kein expliziter `--since`-Wert angegeben ist.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_connector.custom_fields_desc" resname="tx_aiassistant_indexer_connector.custom_fields_desc">
 				<source>Comma- or line-separated list of Shopware customField keys to include in indexed text, for example `custom_meta_subheader`, `custom_meta_covertext`, or `custom_product_oai_identifier_journal`.</source>

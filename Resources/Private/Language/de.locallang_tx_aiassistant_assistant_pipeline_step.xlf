@@ -29,7 +29,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_limit" resname="tx_aiassistant_assistant_pipeline_step.history_limit">
 				<source>History Limit</source>
-				<target>Verlaufslimit</target>
+				<target>Max. Verlaufsnachrichten</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.history_mode" resname="tx_aiassistant_assistant_pipeline_step.history_mode">
 				<source>History Mode</source>
@@ -73,11 +73,11 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.model" resname="tx_aiassistant_assistant_pipeline_step.model">
 				<source>Model override (advanced)</source>
-				<target>Modell überschreiben (erweitert)</target>
+				<target>Modell-Override (erweitert)</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.processor_identifier" resname="tx_aiassistant_assistant_pipeline_step.processor_identifier">
 				<source>Processor Identifier</source>
-				<target>Prozessor-Kennung</target>
+				<target>Processor-Kennung</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields" resname="tx_aiassistant_assistant_pipeline_step.prompt_metadata_fields">
 				<source>Prompt Metadata Fields</source>
@@ -137,7 +137,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_prompt_includes" resname="tx_aiassistant_assistant_pipeline_step.tab_prompt_includes">
 				<source>Assistant prompt includes</source>
-				<target>Assistenten-Prompt enthält</target>
+				<target>Im Assistenten-Prompt enthalten</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_retrieval" resname="tx_aiassistant_assistant_pipeline_step.tab_retrieval">
 				<source>Retrieval</source>
@@ -149,7 +149,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_step_prompts" resname="tx_aiassistant_assistant_pipeline_step.tab_step_prompts">
 				<source>Step prompts</source>
-				<target>Schritt-Prompts</target>
+				<target>Prompts des Schritts</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.temperature" resname="tx_aiassistant_assistant_pipeline_step.temperature">
 				<source>Temperature</source>
@@ -177,11 +177,11 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.quality_gate" resname="tx_aiassistant_assistant_pipeline_step.type.quality_gate">
 				<source>Quality gate</source>
-				<target>Qualitätsprüfung</target>
+				<target>Quality Gate</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.query_optimizer" resname="tx_aiassistant_assistant_pipeline_step.type.query_optimizer">
 				<source>Query optimizer</source>
-				<target>Abfrageoptimierer</target>
+				<target>Query-Optimierer</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.type.retrieval" resname="tx_aiassistant_assistant_pipeline_step.type.retrieval">
 				<source>Retrieval</source>
@@ -201,7 +201,7 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.processor_identifier.description" resname="tx_aiassistant_assistant_pipeline_step.processor_identifier.description">
 				<source>Selects the registered processor service that executes this step. The processor must support the selected step type.</source>
-				<target>Wählt den registrierten Prozessor-Service aus, der diesen Schritt ausführt. Der Prozessor muss den ausgewählten Schritttyp unterstützen.</target>
+				<target>Wählt den registrierten Processor-Service aus, der diesen Schritt ausführt. Der Processor muss den ausgewählten Schritttyp unterstützen.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.stage.description" resname="tx_aiassistant_assistant_pipeline_step.stage.description">
 				<source>Groups the step into the execution phase of the pipeline. Sorting still controls the order within the selected stage.</source>
@@ -249,15 +249,15 @@
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.model.description" resname="tx_aiassistant_assistant_pipeline_step.model.description">
 				<source>Optional provider-specific model override for this pipeline step. Leave empty to use the default model of the assistant's AI connection. If set, the model must be supported by that connection's provider. Changing the AI connection may invalidate this override.</source>
-				<target>Optionale anbieterspezifische Modellüberschreibung für diesen Pipeline-Schritt. Leer lassen, um das Standardmodell der KI-Verbindung des Assistenten zu verwenden. Wenn gesetzt, muss das Modell vom Anbieter dieser Verbindung unterstützt werden. Eine Änderung der KI-Verbindung kann diese Überschreibung ungültig machen.</target>
+				<target>Optionaler anbieterspezifischer Modell-Override für diesen Pipeline-Schritt. Leer lassen, um das Standardmodell der AI-Verbindung des Assistenten zu verwenden. Wenn ein Modell eingetragen ist, muss es vom Anbieter dieser Verbindung unterstützt werden. Eine Änderung der AI-Verbindung kann diesen Override ungültig machen.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.temperature.description" resname="tx_aiassistant_assistant_pipeline_step.temperature.description">
 				<source>Controls the creativity of the AI response for this step. Lower values are more deterministic, higher values are more creative.</source>
-				<target>Steuert die Kreativität der KI-Antwort für diesen Schritt. Niedrigere Werte sind deterministischer, höhere Werte kreativer.</target>
+				<target>Steuert die Kreativität der AI-Antwort für diesen Schritt. Niedrigere Werte führen zu deterministischeren, höhere Werte zu kreativeren Ergebnissen.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_tokens.description" resname="tx_aiassistant_assistant_pipeline_step.max_tokens.description">
 				<source>Limits the maximum number of tokens generated by the AI model for this step.</source>
-				<target>Begrenzt die maximale Anzahl der vom KI-Modell für diesen Schritt erzeugten Tokens.</target>
+				<target>Begrenzt die maximale Anzahl der Tokens, die das AI-Modell für diesen Schritt erzeugen darf.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.max_retrieval_results.description" resname="tx_aiassistant_assistant_pipeline_step.max_retrieval_results.description">
 				<source>Defines how many results this retriever may contribute.</source>
@@ -287,10 +287,10 @@
 				<source>title,url</source>
 				<target>title,url</target>
 			</trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection" resname="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection"><source>Vector Store Connection Override</source><target>Vektorspeicher-Verbindung überschreiben</target></trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection.description"><source>Optionally overrides the assistant profile's default vector store connection for this retriever.</source><target>Überschreibt optional die standardmäßige Vektorspeicher-Verbindung des Assistentenprofils für diesen Retriever.</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection" resname="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection"><source>Vector Store Connection Override</source><target>Vector-Store-Verbindung überschreiben</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_vector_store_connection.description"><source>Optionally overrides the assistant profile's default vector store connection for this retriever.</source><target>Überschreibt optional die standardmäßige Vector-Store-Verbindung des Assistentenprofils für diesen Retriever.</target></trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection"><source>Collection Override</source><target>Collection überschreiben</target></trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description"><source>Optionally overrides the default with a collection configured on the selected vector store connection.</source><target>Überschreibt optional den Standard mit einer Collection, die in der ausgewählten Vektorspeicher-Verbindung konfiguriert ist.</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description"><source>Optionally overrides the default with a collection configured on the selected vector store connection.</source><target>Überschreibt optional die Standard-Collection durch eine Collection, die für die ausgewählte Vector-Store-Verbindung konfiguriert ist.</target></trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection.default" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection.default"><source>Use connection default</source><target>Standard der Verbindung verwenden</target></trans-unit>
 			</body>
 	</file>

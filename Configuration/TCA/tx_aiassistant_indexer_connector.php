@@ -16,7 +16,7 @@ return [
             'disabled' => 'hidden',
         ],
         'sortby' => 'sorting',
-        'rootLevel' => 1,
+        'rootLevel' => -1,
         'searchFields' => 'title,type,base_url,client_id',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
     ],
