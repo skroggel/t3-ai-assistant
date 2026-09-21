@@ -4,17 +4,12 @@
     <f:render partial="Backend/Module/Navigation" arguments="{_all}" />
 
     <div class="aiassistant-config__card">
-        <h2>
+        <h2 class="aiassistant-config__subtitle">
             <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge" />
         </h2>
         <p class="aiassistant-config__intro">
             <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_intro" />
         </p>
-        <p class="aiassistant-config__intro">
-            <strong><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_hint_label" /></strong>
-            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.purge_cursor_hint" />
-        </p>
-
         <f:if condition="{purgeResult}">
             <div class="aiassistant-config__notice aiassistant-config__notice--{purgeResult.status}">
                 {purgeResult.message}
@@ -40,7 +35,7 @@
                         <tr>
                             <td>
                                 <strong>{collection.connectionTitle}</strong>
-                                <div class="aiassistant-config__hint">UID {collection.connectionUid}</div>
+                                <div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.uid" arguments="{0: collection.connectionUid}" /></div>
                                 <f:if condition="{collection.endpoint}">
                                     <div class="aiassistant-config__hint"><code>{collection.endpoint}</code></div>
                                 </f:if>

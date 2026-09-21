@@ -4,7 +4,7 @@
         <f:render partial="Backend/Module/Navigation" arguments="{_all}" />
 
         <div class="aiassistant-config__card">
-        <h2>
+        <h2 class="aiassistant-config__subtitle">
             <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_status" />
         </h2>
         <p class="aiassistant-config__intro">
@@ -15,17 +15,17 @@
             <table class="aiassistant-config__table">
                 <thead>
                     <tr>
-                        <th>UID</th>
-                        <th>Title</th>
-                        <th class="aiassistant-config__cell--compact" title="Sources" aria-label="Sources">Src</th>
-                        <th class="aiassistant-config__cell--compact" title="Indexed" aria-label="Indexed">Idx</th>
-                        <th class="aiassistant-config__cell--compact" title="Skipped" aria-label="Skipped">Skp</th>
-                        <th class="aiassistant-config__cell--compact" title="Failed" aria-label="Failed">Fail</th>
-                        <th class="aiassistant-config__cell--compact" title="Pending" aria-label="Pending">Pend</th>
-                        <th class="aiassistant-config__cell--compact" title="Processing" aria-label="Processing">Proc</th>
-                        <th>Last indexed</th>
-                        <th>Last run</th>
-                        <th>Actions</th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.uid" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.title" /></th>
+                        <th class="aiassistant-config__cell--compact" title="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.sources_short')}" aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.sources_short')}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.sources_short" /></th>
+                        <th class="aiassistant-config__cell--compact" title="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexed_short')}" aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexed_short')}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexed_short" /></th>
+                        <th class="aiassistant-config__cell--compact" title="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.skipped_short')}" aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.skipped_short')}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.skipped_short" /></th>
+                        <th class="aiassistant-config__cell--compact" title="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.failed_short')}" aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.failed_short')}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.failed_short" /></th>
+                        <th class="aiassistant-config__cell--compact" title="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pending_short')}" aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pending_short')}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pending_short" /></th>
+                        <th class="aiassistant-config__cell--compact" title="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.processing_short')}" aria-label="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.processing_short')}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.processing_short" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.last_indexed" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.last_run" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.actions" /></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,9 +34,9 @@
                             <td>{indexer.uid}</td>
                             <td>
                                 <strong>{indexer.title}</strong>
-                                <div class="aiassistant-config__hint">Type: <code>{indexer.type}</code></div>
-                                <div class="aiassistant-config__hint">Indexer: <code>{indexer.indexerIdentifier}</code></div>
-                                <div class="aiassistant-config__hint">Collection: <code>{indexer.collection}</code></div>
+                                 <div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.type" />: <code>{indexer.type}</code></div>
+                                 <div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer" />: <code>{indexer.indexerIdentifier}</code></div>
+                                 <div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.collection" />: <code>{indexer.collection}</code></div>
                             </td>
                             <td class="aiassistant-config__cell--compact" title="Sources">{indexer.sourceCount}</td>
                             <td class="aiassistant-config__cell--compact" title="Indexed"><span class="aiassistant-config__badge aiassistant-config__badge--ok">{indexer.indexedCount}</span></td>
@@ -63,8 +63,8 @@
                                             <div class="aiassistant-config__hint">{indexer.lastRunPresentation.text}</div>
                                         </f:if>
                                         <f:if condition="{indexer.lastRunMessages}">
-                                            <button type="button" class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__indexer-message-details">
-                                                Show messages ({indexer.lastRunPresentation.messageCount})
+                                                 <button type="button" class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__indexer-message-details">
+                                                 <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.show_messages" arguments="{0: indexer.lastRunPresentation.messageCount}" />
                                             </button>
                                             <div class="aiassistant-config__preview-source aiassistant-config__preview-source--hidden">
                                                 <div class="aiassistant-config__result-list">
@@ -89,7 +89,7 @@
                             <td>
                                 <a class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__button--icon" href="{indexer.editUrl}" target="_top">
                                     <core:icon identifier="actions-open" size="small" />
-                                    <span class="aiassistant-config__sr-only">Edit</span>
+                                     <span class="aiassistant-config__sr-only"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.edit" /></span>
                                 </a>
                             </td>
                         </tr>
@@ -109,8 +109,8 @@
 
 <dialog id="aiassistant-indexer-message-dialog" class="aiassistant-config__dialog">
     <div class="aiassistant-config__dialog-header">
-        <h3>Indexer messages</h3>
-        <button type="button" class="aiassistant-config__button aiassistant-config__button--ghost" data-aiassistant-indexer-message-close>Close</button>
+         <h3><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.indexer_messages" /></h3>
+         <button type="button" class="aiassistant-config__button aiassistant-config__button--ghost" data-aiassistant-indexer-message-close><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.close" /></button>
     </div>
     <div data-aiassistant-indexer-message-content></div>
 </dialog>

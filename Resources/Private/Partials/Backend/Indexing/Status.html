@@ -65,8 +65,8 @@
 											<div class="aiassistant-config__hint">{indexer.lastRunPresentation.text}</div>
 											<f:if condition="{indexer.lastRunMessages}">
 												<details>
-													<summary class="aiassistant-config__button aiassistant-config__button--ghost">
-														Show messages ({indexer.lastRunPresentation.messageCount})
+															<summary class="aiassistant-config__button aiassistant-config__button--ghost">
+																<f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.show_messages" arguments="{0: indexer.lastRunPresentation.messageCount}" />
 													</summary>
 													<f:for each="{indexer.lastRunMessages}" as="message">
 														<div class="aiassistant-config__hint">

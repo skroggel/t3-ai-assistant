@@ -4,9 +4,9 @@
 	<f:render partial="Backend/Module/Navigation" arguments="{_all}" />
 
 	<div class="aiassistant-config__card">
-		<h2>Connection diagnostics</h2>
+		<h2 class="aiassistant-config__subtitle"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.connection_diagnostics" /></h2>
 		<p class="aiassistant-config__intro">
-			Test configured connection records. Disabled records cannot be tested.
+			<f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.connection_diagnostics_intro" />
 		</p>
 
 		<f:if condition="{connectionTestResult}">
@@ -19,12 +19,12 @@
 			<table class="aiassistant-config__table">
 				<thead>
 					<tr>
-						<th>Connection</th>
-						<th>Kind</th>
-						<th>Type</th>
-						<th>Endpoint</th>
-						<th>Status</th>
-						<th>Actions</th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.connection" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.kind" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.type" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.endpoint" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.status" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.actions" /></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -32,9 +32,9 @@
 						<tr>
 							<td>
 								<strong>{connection.title}</strong>
-								<div class="aiassistant-config__hint">UID {connection.uid}</div>
+								<div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.uid" arguments="{0: connection.uid}" /></div>
 								<f:if condition="{connection.embeddingDimension}">
-									<div class="aiassistant-config__hint">Embedding: {connection.embeddingDimension} dimensions</div>
+									<div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.embedding_dimensions" arguments="{0: connection.embeddingDimension}" /></div>
 								</f:if>
 							</td>
 							<td>{connection.kind}</td>
@@ -42,22 +42,22 @@
 							<td>{connection.baseUrl}</td>
 							<td>
 								<f:if condition="{connection.hidden}">
-									<f:then><span class="aiassistant-config__badge aiassistant-config__badge--empty">disabled</span></f:then>
-									<f:else><span class="aiassistant-config__badge aiassistant-config__badge--ok">enabled</span></f:else>
+									<f:then><span class="aiassistant-config__badge aiassistant-config__badge--empty"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.disabled" /></span></f:then>
+									<f:else><span class="aiassistant-config__badge aiassistant-config__badge--ok"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.enabled" /></span></f:else>
 								</f:if>
 							</td>
 							<td>
 								<div class="aiassistant-config__actions-inline">
-									<a class="aiassistant-config__button aiassistant-config__button--ghost" href="{connection.editUrl}">Edit</a>
+									<a class="aiassistant-config__button aiassistant-config__button--ghost" href="{connection.editUrl}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.edit" /></a>
 									<f:if condition="{connection.hidden}">
 										<f:then>
-											<button type="button" class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__button--disabled" disabled="disabled">Test</button>
+											<button type="button" class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__button--disabled" disabled="disabled"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.test" /></button>
 										</f:then>
 										<f:else>
 											<form action="{formAction}" method="post" class="aiassistant-config__inline-form">
 												<input type="hidden" name="formToken" value="{formToken}" />
 												<input type="hidden" name="testConnection" value="{connection.testIdentifier}" />
-												<button type="submit" class="aiassistant-config__button aiassistant-config__button--ghost">Test</button>
+												<button type="submit" class="aiassistant-config__button aiassistant-config__button--ghost"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.test" /></button>
 											</form>
 										</f:else>
 									</f:if>
@@ -67,7 +67,7 @@
 					</f:for>
 					<f:if condition="{connections -> f:count()} == 0">
 						<tr>
-							<td colspan="6">No connection records found.</td>
+							<td colspan="6"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.no_connections" /></td>
 						</tr>
 					</f:if>
 				</tbody>
@@ -76,9 +76,9 @@
 	</div>
 
 	<div class="aiassistant-config__card">
-		<h2>Assistant diagnostics</h2>
+		<h2 class="aiassistant-config__subtitle"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.assistant_diagnostics" /></h2>
 		<p class="aiassistant-config__intro">
-			Validate assistant pipelines, embedding dimensions, and the effective AI and vector store connections without executing the complete chat pipeline.
+			<f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.assistant_diagnostics_intro" />
 		</p>
 
 		<f:if condition="{assistantTestResult}">
@@ -98,12 +98,12 @@
 			<table class="aiassistant-config__table">
 				<thead>
 					<tr>
-						<th>Assistant</th>
-						<th>AI connection</th>
-						<th>Default vector store</th>
-						<th>Pipeline steps</th>
-						<th>Status</th>
-						<th>Actions</th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.assistant" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.ai_connection" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.default_vector_store" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_steps" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.status" /></th>
+						<th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.actions" /></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -111,46 +111,46 @@
 						<tr>
 							<td>
 								<strong>{assistant.title}</strong>
-								<div class="aiassistant-config__hint">UID {assistant.uid}</div>
+								<div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.uid" arguments="{0: assistant.uid}" /></div>
 							</td>
 							<td>
 								{assistant.aiConnection}
 								<f:if condition="{assistant.aiEmbeddingModel}">
-									<div class="aiassistant-config__hint">Embedding: <code class="aiassistant-config__key">{assistant.aiEmbeddingModel}</code></div>
+									<div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.embedding" />: <code class="aiassistant-config__key">{assistant.aiEmbeddingModel}</code></div>
 								</f:if>
 								<f:if condition="{assistant.aiConfiguredEmbeddingDimension}">
-									<f:then><div class="aiassistant-config__hint">Configured: {assistant.aiConfiguredEmbeddingDimension} dimensions</div></f:then>
-									<f:else><div class="aiassistant-config__hint">Dimension: not configured</div></f:else>
+									<f:then><div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.configured_dimensions" arguments="{0: assistant.aiConfiguredEmbeddingDimension}" /></div></f:then>
+									<f:else><div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.dimension_not_configured" /></div></f:else>
 								</f:if>
 								<f:if condition="{assistant.aiMeasuredEmbeddingDimension}">
-									<div class="aiassistant-config__hint">Measured: {assistant.aiMeasuredEmbeddingDimension} dimensions</div>
+									<div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.measured_dimensions" arguments="{0: assistant.aiMeasuredEmbeddingDimension}" /></div>
 								</f:if>
 							</td>
 							<td>
 								{assistant.vectorStoreConnection}
 								<f:if condition="{assistant.vectorStoreDistance}">
-									<div class="aiassistant-config__hint">Distance: {assistant.vectorStoreDistance}</div>
+									<div class="aiassistant-config__hint"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.distance" arguments="{0: assistant.vectorStoreDistance}" /></div>
 								</f:if>
 							</td>
 							<td>{assistant.stepCount}</td>
 							<td>
 								<f:if condition="{assistant.hidden}">
-									<f:then><span class="aiassistant-config__badge aiassistant-config__badge--empty">disabled</span></f:then>
-									<f:else><span class="aiassistant-config__badge aiassistant-config__badge--ok">enabled</span></f:else>
+									<f:then><span class="aiassistant-config__badge aiassistant-config__badge--empty"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.disabled" /></span></f:then>
+									<f:else><span class="aiassistant-config__badge aiassistant-config__badge--ok"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.enabled" /></span></f:else>
 								</f:if>
 							</td>
 							<td>
 								<div class="aiassistant-config__actions-inline">
-									<a class="aiassistant-config__button aiassistant-config__button--ghost" href="{assistant.editUrl}">Edit</a>
+									<a class="aiassistant-config__button aiassistant-config__button--ghost" href="{assistant.editUrl}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.edit" /></a>
 									<f:if condition="{assistant.hidden}">
 										<f:then>
-											<button type="button" class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__button--disabled" disabled="disabled">Test</button>
+											<button type="button" class="aiassistant-config__button aiassistant-config__button--ghost aiassistant-config__button--disabled" disabled="disabled"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.test" /></button>
 										</f:then>
 										<f:else>
 											<form action="{formAction}" method="post" class="aiassistant-config__inline-form">
 												<input type="hidden" name="formToken" value="{formToken}" />
 												<input type="hidden" name="testAssistant" value="{assistant.uid}" />
-												<button type="submit" class="aiassistant-config__button aiassistant-config__button--ghost">Test</button>
+												<button type="submit" class="aiassistant-config__button aiassistant-config__button--ghost"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.test" /></button>
 											</form>
 										</f:else>
 									</f:if>
@@ -160,7 +160,7 @@
 					</f:for>
 					<f:if condition="{assistants -> f:count()} == 0">
 						<tr>
-							<td colspan="6">No assistant profiles found.</td>
+							<td colspan="6"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.no_assistants" /></td>
 						</tr>
 					</f:if>
 				</tbody>

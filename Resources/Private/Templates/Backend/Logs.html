@@ -8,49 +8,56 @@
     <div class="aiassistant-config__card">
         <div class="aiassistant-config__section-header">
             <div>
-                <h2>
+                <h2 class="aiassistant-config__subtitle">
                     <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs" />
                 </h2>
                 <p class="aiassistant-config__intro">
                     <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_intro" />
                 </p>
             </div>
-            <form action="{formAction}" method="post" class="aiassistant-config__inline-form" data-aiassistant-confirm="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_clear_confirm')}">
-                <input type="hidden" name="formToken" value="{formToken}" />
-                <button type="submit" name="purgeChatLog" value="1" class="aiassistant-config__button aiassistant-config__button--danger">
-                    <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_clear" />
-                </button>
-            </form>
         </div>
 
-        <form action="{formAction}" method="get" target="_top" class="aiassistant-config__form aiassistant-config__form--inline">
-            <label for="aiassistant-pipeline-log-limit">
-                <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_limit" />
-            </label>
-            <select id="aiassistant-pipeline-log-limit" name="limit" class="aiassistant-config__input">
-                <f:for each="{0: 50, 1: 100, 2: 250, 3: 500}" as="limitOption">
-                    <f:if condition="{limitOption} == {chatTraceLimit}">
-                        <f:then>
-                            <option value="{limitOption}" selected="selected">{limitOption}</option>
-                        </f:then>
-                        <f:else>
-                            <option value="{limitOption}">{limitOption}</option>
-                        </f:else>
-                    </f:if>
-                </f:for>
-            </select>
-            <label for="aiassistant-pipeline-log-chat-identifier">
-                <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_chat_identifier" />
-            </label>
-            <input id="aiassistant-pipeline-log-chat-identifier" name="chatIdentifier" value="{chatTraceFilterChatIdentifier}" list="aiassistant-pipeline-log-chat-identifiers" class="aiassistant-config__input" />
-            <datalist id="aiassistant-pipeline-log-chat-identifiers">
-                <f:for each="{chatTraceChatIdentifiers}" as="chatIdentifierOption">
-                    <option value="{chatIdentifierOption}">{chatIdentifierOption}</option>
-                </f:for>
-            </datalist>
-            <button type="submit" class="aiassistant-config__button">
-                <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.filter" />
+        <form action="{formAction}" method="post" class="aiassistant-config__inline-form aiassistant-config__inline-form--logs" data-aiassistant-confirm="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_clear_confirm')}">
+            <input type="hidden" name="formToken" value="{formToken}" />
+            <button type="submit" name="purgeChatLog" value="1" class="aiassistant-config__button aiassistant-config__button--danger">
+                <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_clear" />
             </button>
+        </form>
+
+        <form action="{formAction}" method="get" target="_top" class="aiassistant-config__inline-form aiassistant-config__inline-form--logs">
+            <div class="aiassistant-config__form-row">
+                <label for="aiassistant-pipeline-log-limit">
+                    <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_limit" />
+                </label>
+                <select id="aiassistant-pipeline-log-limit" name="limit" class="aiassistant-config__input">
+                    <f:for each="{0: 50, 1: 100, 2: 250, 3: 500}" as="limitOption">
+                        <f:if condition="{limitOption} == {chatTraceLimit}">
+                            <f:then>
+                                <option value="{limitOption}" selected="selected">{limitOption}</option>
+                            </f:then>
+                            <f:else>
+                                <option value="{limitOption}">{limitOption}</option>
+                            </f:else>
+                        </f:if>
+                    </f:for>
+                </select>
+            </div>
+            <div class="aiassistant-config__form-row">
+                <label for="aiassistant-pipeline-log-chat-identifier">
+                    <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_chat_identifier" />
+                </label>
+                <input id="aiassistant-pipeline-log-chat-identifier" name="chatIdentifier" value="{chatTraceFilterChatIdentifier}" list="aiassistant-pipeline-log-chat-identifiers" class="aiassistant-config__input" />
+                <datalist id="aiassistant-pipeline-log-chat-identifiers">
+                    <f:for each="{chatTraceChatIdentifiers}" as="chatIdentifierOption">
+                        <option value="{chatIdentifierOption}">{chatIdentifierOption}</option>
+                    </f:for>
+                </datalist>
+            </div>
+            <div class="aiassistant-config__form-row">
+                <button type="submit" class="aiassistant-config__button">
+                    <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.filter" />
+                </button>
+            </div>
         </form>
 
         <div class="aiassistant-config__hint">
@@ -61,13 +68,13 @@
             <table class="aiassistant-config__table">
                 <thead>
                     <tr>
-                        <th>UID</th>
-                        <th>Time</th>
-                        <th>Level</th>
-                        <th>Event</th>
-                        <th>Conversation</th>
-                        <th>Route</th>
-                        <th>Payload</th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.uid" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.time" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.level" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.event" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.conversation" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.route" /></th>
+                        <th><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.payload" /></th>
                     </tr>
                 </thead>
                 <tbody>

@@ -875,6 +875,231 @@
 			<trans-unit id="templates_backend_config.filter" resname="templates_backend_config.filter">
 				<source>Filter</source>
 			</trans-unit>
+			<trans-unit id="templates_backend_config.central_configuration" resname="templates_backend_config.central_configuration">
+				<source>Central configuration</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.central_configuration_intro" resname="templates_backend_config.central_configuration_intro">
+				<source>Only runtime settings for chat memory and pipeline logging are managed here. Connection data, assistants and indexers are regular TCA records.</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.setting" resname="templates_backend_config.setting">
+				<source>Setting</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.value" resname="templates_backend_config.value">
+				<source>Value</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.status" resname="templates_backend_config.status">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.invalid_value" resname="templates_backend_config.invalid_value">
+				<source>Invalid value.</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.save_configuration" resname="templates_backend_config.save_configuration">
+				<source>Save configuration</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.connection_diagnostics" resname="templates_backend_config.connection_diagnostics">
+				<source>Connection diagnostics</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.connection_diagnostics_intro" resname="templates_backend_config.connection_diagnostics_intro">
+				<source>Test configured connection records. Disabled records cannot be tested.</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.connection" resname="templates_backend_config.connection">
+				<source>Connection</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.kind" resname="templates_backend_config.kind">
+				<source>Kind</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.type" resname="templates_backend_config.type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.endpoint" resname="templates_backend_config.endpoint">
+				<source>Endpoint</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.actions" resname="templates_backend_config.actions">
+				<source>Actions</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.uid" resname="templates_backend_config.uid">
+				<source>UID %s</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.embedding_dimensions" resname="templates_backend_config.embedding_dimensions">
+				<source>Embedding: %s dimensions</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.disabled" resname="templates_backend_config.disabled">
+				<source>disabled</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.enabled" resname="templates_backend_config.enabled">
+				<source>enabled</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.edit" resname="templates_backend_config.edit">
+				<source>Edit</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.test" resname="templates_backend_config.test">
+				<source>Test</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.no_connections" resname="templates_backend_config.no_connections">
+				<source>No connection records found.</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.assistant_diagnostics" resname="templates_backend_config.assistant_diagnostics">
+				<source>Assistant diagnostics</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.assistant_diagnostics_intro" resname="templates_backend_config.assistant_diagnostics_intro">
+				<source>Validate assistant pipelines, embedding dimensions, and the effective AI and vector store connections without executing the complete chat pipeline.</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.assistant" resname="templates_backend_config.assistant">
+				<source>Assistant</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.ai_connection" resname="templates_backend_config.ai_connection">
+				<source>AI connection</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.default_vector_store" resname="templates_backend_config.default_vector_store">
+				<source>Default vector store</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_steps" resname="templates_backend_config.pipeline_steps">
+				<source>Pipeline steps</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.embedding" resname="templates_backend_config.embedding">
+				<source>Embedding</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.configured_dimensions" resname="templates_backend_config.configured_dimensions">
+				<source>Configured: %s dimensions</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.dimension_not_configured" resname="templates_backend_config.dimension_not_configured">
+				<source>Dimension: not configured</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.measured_dimensions" resname="templates_backend_config.measured_dimensions">
+				<source>Measured: %s dimensions</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.distance" resname="templates_backend_config.distance">
+				<source>Distance: %s</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.no_assistants" resname="templates_backend_config.no_assistants">
+				<source>No assistant profiles found.</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.title" resname="templates_backend_config.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.sources_short" resname="templates_backend_config.sources_short">
+				<source>Src</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.indexed_short" resname="templates_backend_config.indexed_short">
+				<source>Idx</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.skipped_short" resname="templates_backend_config.skipped_short">
+				<source>Skp</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.failed_short" resname="templates_backend_config.failed_short">
+				<source>Fail</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.pending_short" resname="templates_backend_config.pending_short">
+				<source>Pend</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.processing_short" resname="templates_backend_config.processing_short">
+				<source>Proc</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.last_indexed" resname="templates_backend_config.last_indexed">
+				<source>Last indexed</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.last_run" resname="templates_backend_config.last_run">
+				<source>Last run</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.indexer" resname="templates_backend_config.indexer">
+				<source>Indexer</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.collection" resname="templates_backend_config.collection">
+				<source>Collection</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.show_messages" resname="templates_backend_config.show_messages">
+				<source>Show messages (%s)</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.indexer_messages" resname="templates_backend_config.indexer_messages">
+				<source>Indexer messages</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.close" resname="templates_backend_config.close">
+				<source>Close</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.time" resname="templates_backend_config.time">
+				<source>Time</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.level" resname="templates_backend_config.level">
+				<source>Level</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.event" resname="templates_backend_config.event">
+				<source>Event</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.conversation" resname="templates_backend_config.conversation">
+				<source>Conversation</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.route" resname="templates_backend_config.route">
+				<source>Route</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.payload" resname="templates_backend_config.payload">
+				<source>Payload</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.module_title" resname="templates_backend_config.module_title">
+				<source>AI Chat backend</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.module_intro" resname="templates_backend_config.module_intro">
+				<source>Central configuration, connection diagnostics and chat pipeline logs.</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.module_navigation" resname="templates_backend_config.module_navigation">
+				<source>AI Chat backend module navigation</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.tab_configuration" resname="templates_backend_config.tab_configuration">
+				<source>Configuration</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.tab_diagnostics" resname="templates_backend_config.tab_diagnostics">
+				<source>Diagnostics</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.tab_indexer_status" resname="templates_backend_config.tab_indexer_status">
+				<source>Indexer status</source>
+			</trans-unit>
+			<trans-unit id="templates_backend_config.tab_pipeline_logs" resname="templates_backend_config.tab_pipeline_logs">
+				<source>Pipeline logs</source>
+			</trans-unit>
+			<trans-unit id="registry.chat_memory_max_prompts.label" resname="registry.chat_memory_max_prompts.label">
+				<source>Memory prompts</source>
+			</trans-unit>
+			<trans-unit id="registry.chat_memory_max_prompts.description" resname="registry.chat_memory_max_prompts.description">
+				<source>Maximum number of recent chat prompts that are kept in memory.</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_mode.label" resname="registry.pipeline_log_mode.label">
+				<source>Pipeline log mode</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_mode.description" resname="registry.pipeline_log_mode.description">
+				<source>Controls how much pipeline logging is written.</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_mode.off" resname="registry.pipeline_log_mode.off">
+				<source>off</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_mode.errors" resname="registry.pipeline_log_mode.errors">
+				<source>errors</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_mode.verbose" resname="registry.pipeline_log_mode.verbose">
+				<source>verbose</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_write_psr.label" resname="registry.pipeline_log_write_psr.label">
+				<source>Write PSR log</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_write_psr.description" resname="registry.pipeline_log_write_psr.description">
+				<source>Writes pipeline events to the TYPO3 PSR logger in addition to the database log.</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_mask_sensitive.label" resname="registry.pipeline_log_mask_sensitive.label">
+				<source>Mask sensitive values</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_mask_sensitive.description" resname="registry.pipeline_log_mask_sensitive.description">
+				<source>Masks sensitive values before they are written into the pipeline log.</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_max_chars.label" resname="registry.pipeline_log_max_chars.label">
+				<source>Maximum log characters</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_max_chars.description" resname="registry.pipeline_log_max_chars.description">
+				<source>Maximum number of characters stored for long prompt, response or payload values.</source>
+			</trans-unit>
+			<trans-unit id="registry.no" resname="registry.no">
+				<source>no</source>
+			</trans-unit>
+			<trans-unit id="registry.yes" resname="registry.yes">
+				<source>yes</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

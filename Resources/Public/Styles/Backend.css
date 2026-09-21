@@ -131,6 +131,11 @@
     border-left: 4px solid var(--aiassistant-accent);
 }
 
+.aiassistant-config__subtitle {
+    padding-inline: 12px;
+    margin-top: 8px;
+}
+
 .aiassistant-config__intro {
     color: var(--aiassistant-muted);
     margin: 0 0 2px;
@@ -732,9 +737,13 @@ button.aiassistant-config__badge:hover {
 .aiassistant-config__inline-form {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: end;
     gap: 10px 12px;
     margin: 0;
+}
+
+.aiassistant-config__inline-form--logs {
+    padding: 12px;
 }
 
 .aiassistant-config__inline-form--spaced {
