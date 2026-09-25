@@ -35,23 +35,6 @@ Retrieval settings
     score threshold, context limits and metadata fields. Each retriever adds a
     named group to the existing retrieval context.
 
-MCP connections
-    optional MCP connection override for a tool-calling answer step. Empty means
-    that the assistant profile's MCP connections are inherited. If connections
-    are selected, only those MCP servers and their allowed tools are exposed to
-    the model.
-
-Tool-calling steps
-------------------
-
-Select the processor identifier `aiassistant.answer_generator.tool_calling` for an answer-generator
-step to enable the model/tool loop. The step receives only the effective MCP connections. The model
-may select a tool among those connections, but it cannot expand the configured scope.
-
-The loop is bounded by the global core round limit and by the `max_rounds` value of each MCP
-connection. Tool names are qualified by connection, for example `mcp.shop.list_products`, so tools
-with the same server-side name remain unambiguous.
-
 Failure strategy
     Defines how the pipeline reacts if the step fails.
 

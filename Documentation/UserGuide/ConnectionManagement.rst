@@ -36,31 +36,6 @@ server-to-server provider access. The OAuth configuration consists of:
 The connector obtains and caches the access token automatically. The client secret should be
 protected like an API key and must not be included in additional options or log output.
 
-MCP connections
----------------
-
-MCP connections configure reusable MCP servers. An assistant profile can use multiple MCP
-connections. Typical fields are:
-
-* stable identifier and title;
-* Streamable HTTP endpoint;
-* authentication mode;
-* bearer token or OAuth 2.0 client-credentials settings;
-* request timeout;
-* maximum tool rounds per request;
-* optional tool allowlist.
-
-The supported OAuth mode is OAuth 2.0 Client Credentials. The client obtains and caches an access
-token for the current request process and renews it before expiry. Client secrets must be protected
-like AI API keys and should not be exposed in logs.
-
-Assistant assignment
---------------------
-
-Assign MCP connections to an assistant profile to make them available to its tool-calling steps.
-An individual pipeline step can override the profile selection. An empty step override inherits the
-profile connections; a non-empty override restricts the step to the selected connections.
-
 Vector store connections
 ------------------------
 
@@ -77,12 +52,9 @@ Vector store connections configure vector databases. Typical fields are:
 Connection tests
 ----------------
 
-The backend module provides connection tests for configured AI, vector store and MCP
-connections. It also provides assistant profile tests that resolve step
+The backend module provides connection tests for configured AI and vector store connections. It
+also provides assistant profile tests that resolve step
 overrides and verify that every effective collection exists on the selected
 vector store and matches the AI connection's embedding dimension. Use those
 tests after changing an embedding configuration and before debugging indexer or
 pipeline behaviour.
-
-MCP tests perform the protocol handshake and capability discovery. The result includes the number
-of discovered tools and resources and is shown in **AI Assistant > Diagnostics**.
