@@ -61,6 +61,12 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
      */
     protected string $apiKey = '';
 
+    protected string $authentication = 'api_key';
+    protected string $oauthTokenEndpoint = '';
+    protected string $oauthClientId = '';
+    protected string $oauthClientSecret = '';
+    protected string $oauthScope = '';
+
 
     /**
      * Organization identifier.
@@ -218,6 +224,26 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
     {
         $this->apiKey = trim($apiKey);
     }
+
+    public function getAuthentication(): string { return $this->authentication; }
+
+    public function setAuthentication(string $authentication): void { $this->authentication = trim($authentication) ?: 'api_key'; }
+
+    public function getOauthTokenEndpoint(): string { return trim($this->oauthTokenEndpoint); }
+
+    public function setOauthTokenEndpoint(string $endpoint): void { $this->oauthTokenEndpoint = trim($endpoint); }
+
+    public function getOauthClientId(): string { return trim($this->oauthClientId); }
+
+    public function setOauthClientId(string $clientId): void { $this->oauthClientId = trim($clientId); }
+
+    public function getOauthClientSecret(): string { return $this->oauthClientSecret; }
+
+    public function setOauthClientSecret(string $secret): void { $this->oauthClientSecret = trim($secret); }
+
+    public function getOauthScope(): string { return trim($this->oauthScope); }
+
+    public function setOauthScope(string $scope): void { $this->oauthScope = trim($scope); }
 
 
     /**

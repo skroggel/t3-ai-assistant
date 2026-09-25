@@ -36,7 +36,11 @@ return [
         ],
 
         'llm' => [
-            'showitem' => 'history_mode, --linebreak--, history_limit, --linebreak--, model, --linebreak--, temperature, --linebreak--, max_tokens',
+            'showitem' => 'history_mode, --linebreak--, history_limit, --linebreak--, model, --linebreak--, temperature, --linebreak--, max_tokens, --linebreak--, mcp_connections',
+        ],
+
+        'tools' => [
+            'showitem' => 'mcp_connections',
         ],
 
         'retrieval' => [
@@ -249,6 +253,18 @@ return [
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
+            ],
+        ],
+        'mcp_connections' => [
+            'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_pipeline_step.xlf:tx_aiassistant_assistant_pipeline_step.mcp_connections',
+            'description' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_pipeline_step.xlf:tx_aiassistant_assistant_pipeline_step.mcp_connections.description',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'tx_aiassistant_connection_mcp',
+                'MM' => 'tx_aiassistant_assistant_pipeline_step_mcp_mm',
+                'size' => 5,
+                'maxitems' => 50,
             ],
         ],
         'retrieval_collection' => [

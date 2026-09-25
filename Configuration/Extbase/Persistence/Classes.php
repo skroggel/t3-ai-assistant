@@ -6,6 +6,7 @@ use Madj2k\AiAssistant\Assistant\Domain\Model\PipelineTrace;
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantPipelineStep;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
+use Madj2k\AiAssistant\Connection\Domain\Model\McpConnection;
 use Madj2k\AiAssistant\Indexing\Domain\Model\ConnectorConfig;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerRun;
@@ -18,6 +19,9 @@ return [
     ],
     VectorStoreConnection::class => [
         'tableName' => 'tx_aiassistant_connection_vector_database',
+    ],
+    McpConnection::class => [
+        'tableName' => 'tx_aiassistant_connection_mcp',
     ],
     AssistantPipelineStep::class => [
         'tableName' => 'tx_aiassistant_assistant_pipeline_step',

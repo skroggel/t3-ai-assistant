@@ -7,6 +7,11 @@ CREATE TABLE `tx_aiassistant_connection_ai` (
     `connector_identifier` varchar(255) DEFAULT 'openai' NOT NULL,
     `base_url` varchar(512) DEFAULT '' NOT NULL,
     `api_key` varchar(1024) DEFAULT '' NOT NULL,
+    `authentication` varchar(64) DEFAULT 'api_key' NOT NULL,
+    `oauth_token_endpoint` varchar(2048) DEFAULT '' NOT NULL,
+    `oauth_client_id` varchar(255) DEFAULT '' NOT NULL,
+    `oauth_client_secret` varchar(4096) DEFAULT '' NOT NULL,
+    `oauth_scope` varchar(2048) DEFAULT '' NOT NULL,
     `organization` varchar(255) DEFAULT '' NOT NULL,
     `project` varchar(255) DEFAULT '' NOT NULL,
     `default_model` varchar(255) DEFAULT '' NOT NULL,
@@ -57,6 +62,15 @@ CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
     `max_context_characters` int(11) DEFAULT '9000' NOT NULL,
     `prompt_metadata_fields` varchar(255) DEFAULT '' NOT NULL,
     `failure_strategy` varchar(255) DEFAULT 'continue' NOT NULL
+);
+
+CREATE TABLE `tx_aiassistant_assistant_pipeline_step_mcp_mm` (
+    `uid_local` int(11) unsigned DEFAULT '0' NOT NULL,
+    `uid_foreign` int(11) unsigned DEFAULT '0' NOT NULL,
+    `sorting` int(11) unsigned DEFAULT '0' NOT NULL,
+    `sorting_foreign` int(11) unsigned DEFAULT '0' NOT NULL,
+    KEY `uid_local` (`uid_local`),
+    KEY `uid_foreign` (`uid_foreign`)
 );
 
 CREATE TABLE `tx_aiassistant_pipeline_trace` (
@@ -198,4 +212,29 @@ CREATE TABLE `tx_aiassistant_connection_vector_database` (
     `collections` text,
     `distance` varchar(255) DEFAULT 'Cosine' NOT NULL,
     `additional_options` text
+);
+
+CREATE TABLE `tx_aiassistant_connection_mcp` (
+    `title` varchar(255) DEFAULT '' NOT NULL,
+    `identifier` varchar(100) DEFAULT '' NOT NULL,
+    `transport` varchar(64) DEFAULT 'streamable_http' NOT NULL,
+    `endpoint` varchar(2048) DEFAULT '' NOT NULL,
+    `authentication` varchar(64) DEFAULT 'none' NOT NULL,
+    `bearer_token` varchar(4096) DEFAULT '' NOT NULL,
+    `oauth_token_endpoint` varchar(2048) DEFAULT '' NOT NULL,
+    `oauth_client_id` varchar(255) DEFAULT '' NOT NULL,
+    `oauth_client_secret` varchar(4096) DEFAULT '' NOT NULL,
+    `oauth_scope` varchar(2048) DEFAULT '' NOT NULL,
+    `timeout` int(11) unsigned DEFAULT '10' NOT NULL,
+    `max_rounds` int(11) unsigned DEFAULT '10' NOT NULL,
+    `allowed_tools` text
+);
+
+CREATE TABLE `tx_aiassistant_assistant_profile_mcp_mm` (
+    `uid_local` int(11) unsigned DEFAULT '0' NOT NULL,
+    `uid_foreign` int(11) unsigned DEFAULT '0' NOT NULL,
+    `sorting` int(11) unsigned DEFAULT '0' NOT NULL,
+    `sorting_foreign` int(11) unsigned DEFAULT '0' NOT NULL,
+    KEY `uid_local` (`uid_local`),
+    KEY `uid_foreign` (`uid_foreign`)
 );

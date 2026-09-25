@@ -12,6 +12,9 @@
 		<f:if condition="{connectionTestResult}">
 			<div class="aiassistant-config__notice aiassistant-config__notice--{connectionTestResult.status}">
 				{connectionTestResult.message}
+				<f:if condition="{connectionTestResult.details.toolCount}">
+					<div class="aiassistant-config__hint">Tools: {connectionTestResult.details.toolCount}, Resources: {connectionTestResult.details.resourceCount}</div>
+				</f:if>
 			</div>
 		</f:if>
 

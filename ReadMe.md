@@ -13,6 +13,9 @@ live in `madj2k/ai-core`, which Composer installs as a dependency.
 
 - Assistant profiles and configurable processing pipelines
 - AI and vector-store connection records
+- AI connections with API-key or OAuth 2.0 client-credentials authentication
+- MCP connection records with bearer and OAuth 2.0 client-credentials authentication
+- Model-controlled MCP tool calling with assistant and pipeline-step scoping
 - TYPO3 page and file indexing, including structured file adapters
 - Metadata-aware retrieval and source links
 - Chat memory, pipeline traces and backend diagnostics
@@ -40,9 +43,10 @@ After installation:
 
 1. Apply the TYPO3 database schema updates.
 2. Create and test an AI connection and a vector-store connection in the backend module.
-3. Create an indexer and index its sources.
-4. Create or import an assistant profile using the same vector-store connection and collection.
-5. Add the chat plugin to a page.
+3. Optionally create MCP connections, test their capabilities and assign them to an assistant profile.
+4. Create an indexer and index its sources.
+5. Create or import an assistant profile using the same vector-store connection and collection.
+6. Add the chat plugin to a page.
 
 See the [Documentation](Documentation/Index.rst) for configuration, commands and extension points.
 

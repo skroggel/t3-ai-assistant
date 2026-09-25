@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Backend\Diagnostics;
 
+use GuzzleHttp\Client;
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
 use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiCore\Connection\Health\ConnectionHealthChecker;
@@ -22,6 +23,10 @@ use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
+use Madj2k\AiAssistant\Connection\Domain\Repository\McpConnectionRepository;
+use Madj2k\AiAssistant\Connection\Domain\Model\McpConnection;
+use Madj2k\AiMcp\Client\StreamableHttpMcpClient;
+use Madj2k\AiMcp\Authentication\OAuth2ClientCredentialsAuthentication;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -48,6 +53,7 @@ final readonly class BackendConnectionTestHandler
     public function __construct(
         private AiConnectionRepository          $aiConnectionRepository,
         private VectorStoreConnectionRepository $vectorStoreConnectionRepository,
+        private McpConnectionRepository         $mcpConnectionRepository,
         private AssistantProfileRepository      $assistantProfileRepository,
         private ConnectionHealthChecker         $connectionHealthChecker,
         private BackendAssistantTester          $assistantTester
@@ -102,6 +108,11 @@ final readonly class BackendConnectionTestHandler
 
         if ($kind === 'vector') {
             $this->handleVectorStoreConnectionTest($uid, $state);
+            return;
+        }
+
+        if ($kind === 'mcp') {
+            $this->handleMcpConnectionTest($uid, $state);
             return;
         }
 
@@ -259,6 +270,59 @@ final readonly class BackendConnectionTestHandler
         }
     }
 
+    /**
+     * Handles an MCP connection test and capability discovery.
+     *
+     * @param int $uid MCP connection uid.
+     * @param array<string, mixed> $state Mutable module state.
+     * @return void
+     */
+    private function handleMcpConnectionTest(int $uid, array &$state): void
+    {
+        $connection = $this->mcpConnectionRepository->findByUid($uid);
+        if (!$connection instanceof McpConnection) {
+            $this->setResult($state, 'mcp:' . $uid, 'error', 'MCP connection record not found.');
+            return;
+        }
+
+        try {
+            $httpClient = new Client(['timeout' => $connection->getTimeout()]);
+            $authentication = $connection->getAuthentication() === 'oauth_client_credentials'
+                ? new OAuth2ClientCredentialsAuthentication(
+                    $httpClient,
+                    $connection->getOauthTokenEndpoint(),
+                    $connection->getOauthClientId(),
+                    $connection->getOauthClientSecret(),
+                    $connection->getOauthScope(),
+                )
+                : null;
+            $client = new StreamableHttpMcpClient(
+                $httpClient,
+                $connection->getEndpoint(),
+                headers: $connection->getHeaders(),
+                authentication: $authentication,
+            );
+            $capabilities = $client->initialize();
+            $tools = $client->listTools();
+            $resources = $client->listResources();
+
+            $this->setResult(
+                $state,
+                'mcp:' . $uid,
+                'ok',
+                sprintf('MCP connection succeeded. Tools: %d, resources: %d.', count($tools), count($resources)),
+                null,
+                [
+                    'toolCount' => count($tools),
+                    'resourceCount' => count($resources),
+                    'capabilities' => $capabilities,
+                ],
+            );
+        } catch (\Throwable $exception) {
+            $this->setResult($state, 'mcp:' . $uid, 'error', 'MCP connection test failed: ' . $exception->getMessage());
+        }
+    }
+
 
     /**
      * Stores the connection test result for rendering in the diagnostics module.
@@ -268,6 +332,7 @@ final readonly class BackendConnectionTestHandler
      * @param string $status Status.
      * @param string $message Message.
      * @param int|null $embeddingDimension Measured embedding dimension, if available.
+     * @param array<string, mixed> $details Additional diagnostic details.
      * @return void
      */
     private function setResult(
@@ -276,12 +341,14 @@ final readonly class BackendConnectionTestHandler
         string $status,
         string $message,
         ?int $embeddingDimension = null,
+        array $details = [],
     ): void {
         $state['connectionTestResult'] = [
             'identifier' => $identifier,
             'status' => $status,
             'message' => $message,
             'embeddingDimension' => $embeddingDimension,
+            'details' => $details,
         ];
     }
 

@@ -25,6 +25,10 @@ services:
       tags:
         - name: 'aiassistant.assistant.prompt.context_builder'
 
+    Madj2k\AiCore\Assistant\Tool\Provider\ToolProviderInterface:
+      tags:
+        - name: 'aiassistant.assistant.tool_provider'
+
     Madj2k\AiCore\Connection\Ai\AiConnectorInterface:
       tags:
         - name: 'aiassistant.connection.ai_connector'
@@ -83,6 +87,8 @@ services:
 
   Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\AnswerGeneratorProcessor: ~
 
+  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\ToolCallingProcessor: ~
+
   Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\ContextOptimizerProcessor: ~
 
   Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\QualityGateProcessor: ~
@@ -98,6 +104,12 @@ services:
   Madj2k\AiCore\Assistant\Pipeline\Registry\ProcessorRegistry:
     arguments:
       $processors: !tagged_iterator 'aiassistant.assistant.pipeline.processor'
+
+  Madj2k\AiCore\Assistant\Tool\Registry\ToolRegistry:
+    arguments:
+      $providers: !tagged_iterator 'aiassistant.assistant.tool_provider'
+
+  Madj2k\AiCore\Assistant\Tool\Execution\ToolCallingService: ~
 
   Madj2k\AiCore\Assistant\Prompt\Context\Builder\AnswerCandidateContextBuilder: ~
 
@@ -169,6 +181,10 @@ services:
   Madj2k\AiAssistant\Backend\Configuration\BackendRegistryFieldProvider:
     arguments:
       $fieldContributors: !tagged_iterator 'aiassistant.backend.configuration.registry_field_contributor'
+
+  Madj2k\AiAssistant\Assistant\Tool\McpToolProvider:
+    tags:
+      - name: 'aiassistant.assistant.tool_provider'
 
   Madj2k\AiAssistant\Command\IndexFilesCommand:
     tags:

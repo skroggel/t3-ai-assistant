@@ -221,6 +221,8 @@
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection"><source>Collection Override</source></trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection.description"><source>Optionally overrides the default with a collection configured on the selected vector store connection.</source></trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_collection.default" resname="tx_aiassistant_assistant_pipeline_step.retrieval_collection.default"><source>Use connection default</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.mcp_connections" resname="tx_aiassistant_assistant_pipeline_step.mcp_connections"><source>MCP Connections Override</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.mcp_connections.description" resname="tx_aiassistant_assistant_pipeline_step.mcp_connections.description"><source>Optionally overrides the assistant profile's MCP connections for this step. Leave empty to inherit the profile configuration.</source></trans-unit>
 			</body>
 	</file>
 </xliff>

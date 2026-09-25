@@ -13,7 +13,9 @@ Runtime configuration
     Logging and memory-related settings.
 
 Connection tests
-    Tests for configured AI and vector store connection records.
+    Tests for configured AI, vector store and MCP connection records. MCP tests
+    perform handshake and capability discovery and report discovered tool and
+    resource counts.
 
 Indexer status
     Status information for indexer configurations and source processing.
@@ -27,4 +29,3 @@ Non-goals
 The backend module intentionally does not try to be a full indexing workbench. It
 is not designed as a preview system, old indexer execution UI, broad health check
 center or mass settings editor.
-

@@ -20,6 +20,8 @@ use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
+use Madj2k\AiAssistant\Connection\Domain\Repository\McpConnectionRepository;
+use Madj2k\AiAssistant\Connection\Domain\Model\McpConnection;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -46,6 +48,7 @@ final class BackendConnectionProvider
     public function __construct(
         private readonly AiConnectionRepository $aiConnectionRepository,
         private readonly VectorStoreConnectionRepository $vectorStoreConnectionRepository,
+        private readonly McpConnectionRepository $mcpConnectionRepository,
         private readonly AssistantProfileRepository $assistantProfileRepository,
     ) {
     }
@@ -110,6 +113,28 @@ final class BackendConnectionProvider
                             $uid => 'edit',
                         ],
                     ],
+                    'returnUrl' => (string)$backendRequest->getUri(),
+                ]),
+            ];
+        }
+
+        foreach ($this->mcpConnectionRepository->findAll() as $connection) {
+            if (!$connection instanceof McpConnection) {
+                continue;
+            }
+
+            $uid = (int)$connection->getUid();
+            $connections[] = [
+                'uid' => $uid,
+                'testIdentifier' => 'mcp:' . $uid,
+                'title' => $connection->getTitle(),
+                'kind' => 'MCP',
+                'type' => $connection->getTransport(),
+                'baseUrl' => $connection->getEndpoint(),
+                'embeddingDimension' => null,
+                'hidden' => false,
+                'editUrl' => (string)$uriBuilder->buildUriFromRoute('record_edit', [
+                    'edit' => ['tx_aiassistant_connection_mcp' => [$uid => 'edit']],
                     'returnUrl' => (string)$backendRequest->getUri(),
                 ]),
             ];

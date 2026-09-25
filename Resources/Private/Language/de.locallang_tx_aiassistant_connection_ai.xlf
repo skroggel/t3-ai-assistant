@@ -15,6 +15,54 @@
 				<source>Api Key</source>
 				<target>API-Schlüssel</target>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.authentication" resname="tx_aiassistant_connection_ai.authentication">
+				<source>Authentication</source>
+				<target>Authentifizierung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.authentication.description" resname="tx_aiassistant_connection_ai.authentication.description">
+				<source>Select API key authentication or OAuth 2.0 Client Credentials for this AI provider.</source>
+				<target>Wählen Sie für diesen AI-Anbieter die API-Key-Authentifizierung oder OAuth 2.0 Client Credentials.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.authentication.api_key" resname="tx_aiassistant_connection_ai.authentication.api_key">
+				<source>API Key</source>
+				<target>API-Schlüssel</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.authentication.oauth_client_credentials" resname="tx_aiassistant_connection_ai.authentication.oauth_client_credentials">
+				<source>OAuth 2.0 Client Credentials</source>
+				<target>OAuth 2.0 Client Credentials</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.oauth_token_endpoint" resname="tx_aiassistant_connection_ai.oauth_token_endpoint">
+				<source>OAuth Token Endpoint</source>
+				<target>OAuth-Token-Endpoint</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.oauth_token_endpoint.description" resname="tx_aiassistant_connection_ai.oauth_token_endpoint.description">
+				<source>URL of the OAuth 2.0 token endpoint used to obtain access tokens.</source>
+				<target>URL des OAuth-2.0-Token-Endpoints, über den Zugriffstoken abgerufen werden.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.oauth_client_id" resname="tx_aiassistant_connection_ai.oauth_client_id">
+				<source>OAuth Client ID</source>
+				<target>OAuth-Client-ID</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.oauth_client_id.description" resname="tx_aiassistant_connection_ai.oauth_client_id.description">
+				<source>Client identifier registered with the OAuth 2.0 authorization server.</source>
+				<target>Beim OAuth-2.0-Autorisierungsserver registrierte Client-ID.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.oauth_client_secret" resname="tx_aiassistant_connection_ai.oauth_client_secret">
+				<source>OAuth Client Secret</source>
+				<target>OAuth-Client-Secret</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.oauth_client_secret.description" resname="tx_aiassistant_connection_ai.oauth_client_secret.description">
+				<source>Client secret used to authenticate this server-to-server OAuth 2.0 client.</source>
+				<target>Client-Secret zur Authentifizierung dieses serverseitigen OAuth-2.0-Clients.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.oauth_scope" resname="tx_aiassistant_connection_ai.oauth_scope">
+				<source>OAuth Scope</source>
+				<target>OAuth-Scope</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_ai.oauth_scope.description" resname="tx_aiassistant_connection_ai.oauth_scope.description">
+				<source>Optional space-separated scopes requested from the OAuth 2.0 authorization server.</source>
+				<target>Optionale, durch Leerzeichen getrennte Scopes, die beim OAuth-2.0-Autorisierungsserver angefordert werden.</target>
+			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_ai.base_url" resname="tx_aiassistant_connection_ai.base_url">
 				<source>Base Url</source>
 				<target>Basis-URL</target>
