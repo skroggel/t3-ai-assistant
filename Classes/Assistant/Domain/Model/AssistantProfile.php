@@ -40,7 +40,6 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     public function __construct()
     {
         $this->chatPipelineSteps = new ObjectStorage();
-        $this->mcpConnections = new ObjectStorage();
 
     }
 
@@ -112,57 +111,6 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
      * @var \Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection|null
      */
     protected ?VectorStoreConnection $vectorStoreConnection = null;
-
-    /**
-     * MCP connections available to this assistant.
-     *
-     * @var ObjectStorage<object>
-     */
-    protected ObjectStorage $mcpConnections;
-
-    /**
-     * Returns MCP connections assigned to this assistant.
-     *
-     * @return ObjectStorage<object> MCP connections.
-     */
-    public function getMcpConnections(): ObjectStorage
-    {
-        return $this->mcpConnections;
-    }
-
-    /**
-     * Sets MCP connections assigned to this assistant.
-     *
-     * @param ObjectStorage<object> $mcpConnections MCP connections.
-     * @return void
-     */
-    public function setMcpConnections(ObjectStorage $mcpConnections): void
-    {
-        $this->mcpConnections = $mcpConnections;
-    }
-
-    /**
-     * Adds one MCP connection.
-     *
-     * @param object $mcpConnection MCP connection.
-     * @return void
-     */
-    public function addMcpConnection(object $mcpConnection): void
-    {
-        $this->mcpConnections->attach($mcpConnection);
-    }
-
-    /**
-     * Removes one MCP connection.
-     *
-     * @param object $mcpConnection MCP connection.
-     * @return void
-     */
-    public function removeMcpConnection(object $mcpConnection): void
-    {
-        $this->mcpConnections->detach($mcpConnection);
-    }
-
 
     /**
      * Returns title.

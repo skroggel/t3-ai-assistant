@@ -196,65 +196,6 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
      */
     protected ?VectorStoreConnection $retrievalVectorStoreConnection = null;
 
-    /**
-     * Optional MCP connections overriding the assistant profile default.
-     *
-     * @var ObjectStorage<object>
-     */
-    protected ObjectStorage $mcpConnections;
-
-    /**
-     * Initializes object storage properties.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->mcpConnections = new ObjectStorage();
-    }
-
-    /**
-     * Returns MCP connections configured for this step.
-     *
-     * @return ObjectStorage<object> MCP connections.
-     */
-    public function getMcpConnections(): ObjectStorage
-    {
-        return $this->mcpConnections;
-    }
-
-    /**
-     * Sets MCP connections configured for this step.
-     *
-     * @param ObjectStorage<object> $mcpConnections MCP connections.
-     * @return void
-     */
-    public function setMcpConnections(ObjectStorage $mcpConnections): void
-    {
-        $this->mcpConnections = $mcpConnections;
-    }
-
-    /**
-     * Adds an MCP connection override.
-     *
-     * @param object $mcpConnection MCP connection.
-     * @return void
-     */
-    public function addMcpConnection(object $mcpConnection): void
-    {
-        $this->mcpConnections->attach($mcpConnection);
-    }
-
-    /**
-     * Removes an MCP connection override.
-     *
-     * @param object $mcpConnection MCP connection.
-     * @return void
-     */
-    public function removeMcpConnection(object $mcpConnection): void
-    {
-        $this->mcpConnections->detach($mcpConnection);
-    }
 
 
     /**
