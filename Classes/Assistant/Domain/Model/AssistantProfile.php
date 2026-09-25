@@ -19,7 +19,6 @@ use Madj2k\AiCore\Assistant\Configuration\AssistantConfigurationInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
-use Madj2k\AiAssistant\Connection\Domain\Model\McpConnection;
 
 /**
  * Class AssistantProfile
@@ -117,14 +116,14 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     /**
      * MCP connections available to this assistant.
      *
-     * @var ObjectStorage<McpConnection>
+     * @var ObjectStorage<object>
      */
     protected ObjectStorage $mcpConnections;
 
     /**
      * Returns MCP connections assigned to this assistant.
      *
-     * @return ObjectStorage<McpConnection> MCP connections.
+     * @return ObjectStorage<object> MCP connections.
      */
     public function getMcpConnections(): ObjectStorage
     {
@@ -134,7 +133,7 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     /**
      * Sets MCP connections assigned to this assistant.
      *
-     * @param ObjectStorage<McpConnection> $mcpConnections MCP connections.
+     * @param ObjectStorage<object> $mcpConnections MCP connections.
      * @return void
      */
     public function setMcpConnections(ObjectStorage $mcpConnections): void
@@ -145,10 +144,10 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     /**
      * Adds one MCP connection.
      *
-     * @param McpConnection $mcpConnection MCP connection.
+     * @param object $mcpConnection MCP connection.
      * @return void
      */
-    public function addMcpConnection(McpConnection $mcpConnection): void
+    public function addMcpConnection(object $mcpConnection): void
     {
         $this->mcpConnections->attach($mcpConnection);
     }
@@ -156,10 +155,10 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     /**
      * Removes one MCP connection.
      *
-     * @param McpConnection $mcpConnection MCP connection.
+     * @param object $mcpConnection MCP connection.
      * @return void
      */
-    public function removeMcpConnection(McpConnection $mcpConnection): void
+    public function removeMcpConnection(object $mcpConnection): void
     {
         $this->mcpConnections->detach($mcpConnection);
     }

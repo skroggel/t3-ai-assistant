@@ -182,9 +182,6 @@ services:
     arguments:
       $fieldContributors: !tagged_iterator 'aiassistant.backend.configuration.registry_field_contributor'
 
-  Madj2k\AiAssistant\Assistant\Tool\McpToolProvider:
-    tags:
-      - name: 'aiassistant.assistant.tool_provider'
 
   Madj2k\AiAssistant\Command\IndexFilesCommand:
     tags:

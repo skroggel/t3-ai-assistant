@@ -30,18 +30,6 @@ A vector store connector is responsible for:
 * deleting documents by source hash;
 * translating provider responses into core DTOs.
 
-MCP connections
----------------
-
-MCP is integrated as a tool provider rather than as a vector-store retriever. The framework-
-independent `madj2k/ai-mcp` package implements the MCP client and maps discovered tools to the
-AI Core tool contracts. TYPO3 stores reusable `McpConnection` records and creates providers for
-the connections assigned to the active assistant and pipeline step.
-
-The MCP client supports Streamable HTTP, JSON-RPC responses and SSE-wrapped responses, tool and
-resource discovery, structured tool calls, bearer authentication and OAuth 2.0 Client Credentials.
-The TYPO3 integration qualifies tool names with the MCP connection identifier and applies
-connection-level allowlists and round limits before exposing them to the model.
 
 Connection records
 ------------------

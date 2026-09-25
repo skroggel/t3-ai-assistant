@@ -13,9 +13,7 @@ Runtime configuration
     Logging and memory-related settings.
 
 Connection tests
-    Tests for configured AI, vector store and MCP connection records. MCP tests
-    perform handshake and capability discovery and report discovered tool and
-    resource counts.
+    Tests for configured AI and vector store connection records.
 
 Indexer status
     Status information for indexer configurations and source processing.

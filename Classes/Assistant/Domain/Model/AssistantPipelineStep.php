@@ -21,7 +21,6 @@ use Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineStage;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
-use Madj2k\AiAssistant\Connection\Domain\Model\McpConnection;
 use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -200,7 +199,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Optional MCP connections overriding the assistant profile default.
      *
-     * @var ObjectStorage<McpConnection>
+     * @var ObjectStorage<object>
      */
     protected ObjectStorage $mcpConnections;
 
@@ -217,7 +216,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Returns MCP connections configured for this step.
      *
-     * @return ObjectStorage<McpConnection> MCP connections.
+     * @return ObjectStorage<object> MCP connections.
      */
     public function getMcpConnections(): ObjectStorage
     {
@@ -227,7 +226,7 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Sets MCP connections configured for this step.
      *
-     * @param ObjectStorage<McpConnection> $mcpConnections MCP connections.
+     * @param ObjectStorage<object> $mcpConnections MCP connections.
      * @return void
      */
     public function setMcpConnections(ObjectStorage $mcpConnections): void
@@ -238,10 +237,10 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Adds an MCP connection override.
      *
-     * @param McpConnection $mcpConnection MCP connection.
+     * @param object $mcpConnection MCP connection.
      * @return void
      */
-    public function addMcpConnection(McpConnection $mcpConnection): void
+    public function addMcpConnection(object $mcpConnection): void
     {
         $this->mcpConnections->attach($mcpConnection);
     }
@@ -249,10 +248,10 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     /**
      * Removes an MCP connection override.
      *
-     * @param McpConnection $mcpConnection MCP connection.
+     * @param object $mcpConnection MCP connection.
      * @return void
      */
-    public function removeMcpConnection(McpConnection $mcpConnection): void
+    public function removeMcpConnection(object $mcpConnection): void
     {
         $this->mcpConnections->detach($mcpConnection);
     }

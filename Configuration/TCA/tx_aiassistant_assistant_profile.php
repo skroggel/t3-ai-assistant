@@ -31,7 +31,6 @@ return [
                     chat_pipeline_steps,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_connections,
                     --palette--;;connections,
-                    mcp_connections,
 
             ',
         ]
@@ -84,18 +83,6 @@ return [
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
-            ],
-        ],
-        'mcp_connections' => [
-            'label' => 'MCP connections',
-            'description' => 'MCP servers available to this assistant.',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectMultipleSideBySide',
-                'foreign_table' => 'tx_aiassistant_connection_mcp',
-                'MM' => 'tx_aiassistant_assistant_profile_mcp_mm',
-                'size' => 5,
-                'maxitems' => 50,
             ],
         ],
         'intro_text' => [

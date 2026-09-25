@@ -52,7 +52,6 @@ final class TcaRootLevelTest extends TestCase
             'assistant profile' => ['tx_aiassistant_assistant_profile'],
             'AI connection' => ['tx_aiassistant_connection_ai'],
             'vector database connection' => ['tx_aiassistant_connection_vector_database'],
-            'MCP connection' => ['tx_aiassistant_connection_mcp'],
             'indexer' => ['tx_aiassistant_indexer'],
             'indexer connector' => ['tx_aiassistant_indexer_connector'],
         ];
