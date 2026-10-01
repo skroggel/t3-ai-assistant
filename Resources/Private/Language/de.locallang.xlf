@@ -35,6 +35,18 @@
 				<source>I found a matching page for you here: %s (%s)</source>
 				<target>Ich habe hier einen passenden Inhalt für Sie gefunden: %s (%s)</target>
 			</trans-unit>
+			<trans-unit id="chat.error.ai_unavailable" resname="chat.error.ai_unavailable">
+				<source>The AI service is currently unavailable or its quota-limit has been reached.</source>
+				<target>Der AI-Dienst ist derzeit nicht verfügbar oder das Kontingent ist aufgebraucht.</target>
+			</trans-unit>
+			<trans-unit id="chat.error.vector_store_unavailable" resname="chat.error.vector_store_unavailable">
+				<source>The knowledge database is currently unavailable.</source>
+				<target>Die Wissensdatenbank ist derzeit nicht verfügbar.</target>
+			</trans-unit>
+			<trans-unit id="chat.error.generic" resname="chat.error.generic">
+				<source>The answer could not be loaded: %s</source>
+				<target>Die Antwort konnte nicht geladen werden: %s</target>
+			</trans-unit>
 			<trans-unit id="chat.recommendation.line_without_reference" resname="chat.recommendation.line_without_reference">
 				<source>I found a matching page for you here: %s</source>
 				<target>Ich habe hier einen passenden Inhalt für Sie gefunden: %s</target>

@@ -59,7 +59,7 @@ tt_content.aiassistant_chat {
 
 ajax = PAGE
 ajax {
-    typeNum = 1700000000
+    typeNum = 1790831370
     config {
         disableAllHeaderCode = 1
         no_cache = 1
@@ -83,4 +83,10 @@ ajax {
             }
         }
     }
+}
+
+// @deprecated
+ajaxOld < ajax
+ajaxOld {
+    typeNum = 1700000000
 }

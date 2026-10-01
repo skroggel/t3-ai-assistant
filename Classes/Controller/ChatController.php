@@ -23,11 +23,13 @@ use Madj2k\AiCore\Assistant\DTO\DirectInteraction;
 use Madj2k\AiAssistant\Assistant\Http\SseResponseFactory;
 use Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver;
 use Madj2k\AiCore\Exception\AppException;
+use Madj2k\AiCore\Exception\ApiException;
+use Madj2k\AiCore\Exception\VectorDatabaseException;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class ChatController
@@ -44,7 +46,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ChatController extends AbstractController
 {
     /**
-     * @var \Psr\Log\LoggerInterface|\TYPO3\CMS\Core\Log\Logger
+     * @var \Psr\Log\LoggerInterface
      */
     protected readonly LoggerInterface $logger;
 
@@ -61,8 +63,8 @@ class ChatController extends AbstractController
         protected readonly Orchestrator               $orchestrator,
         protected readonly SseResponseFactory         $sseResponseFactory,
         protected readonly AssistantProfileRepository $assistantProfileRepository,
-        protected readonly ChatOptionsResolver         $chatOptionsResolver,
-        ?LoggerInterface                                $logger = null,
+        protected readonly ChatOptionsResolver        $chatOptionsResolver,
+        ?LoggerInterface                              $logger = null,
     ) {
         $this->logger = $logger ?? GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
@@ -131,8 +133,8 @@ class ChatController extends AbstractController
                 assistantProfile: $profile,
                 chatIdentifier: $chatIdentifier,
                 serverRequest: $serverRequest,
-                runtimeSettings: $runtimeSettings,
                 chatOptions: $chatOptions,
+                runtimeSettings: $runtimeSettings,
             );
 
             if ($isLanguageConfirmation) {
@@ -161,9 +163,9 @@ class ChatController extends AbstractController
             }
         } catch (\Throwable $exception) {
             $this->logStreamException($exception);
-            return $this->sseResponseFactory->createStreamingResponse(function (): void {
+            return $this->sseResponseFactory->createStreamingResponse(function () use ($exception): void {
                 $this->sseResponseFactory->sendPrelude();
-                $this->sseResponseFactory->sendEvent('error', SseResponseFactory::ERROR_MESSAGE);
+                $this->sseResponseFactory->sendEvent('error', $this->getAvailabilityMessage($exception));
                 $this->sseResponseFactory->sendEvent('done', 'end');
             });
         }
@@ -176,13 +178,16 @@ class ChatController extends AbstractController
                 $this->sseResponseFactory->sendEvent('done', 'end');
             } catch (\Throwable $exception) {
                 $this->logStreamException($exception);
-                $this->sseResponseFactory->sendEvent('error', SseResponseFactory::ERROR_MESSAGE);
+                $this->sseResponseFactory->sendEvent('error', $this->getAvailabilityMessage($exception));
                 $this->sseResponseFactory->sendEvent('done', 'end');
             }
         });
     }
 
-
+    /**
+     * @param \Throwable $exception
+     * @return void
+     */
     private function logStreamException(\Throwable $exception): void
     {
         $this->logger->error('Frontend chat stream failed.', [
@@ -190,5 +195,34 @@ class ChatController extends AbstractController
             'exception_class' => $exception::class,
             'exception_message' => $exception->getMessage(),
         ]);
+    }
+
+    /**
+     * Returns a user-facing availability message without exposing provider details.
+     *
+     * @param \Throwable $exception Pipeline exception.
+     * @return string Availability message.
+     */
+    private function getAvailabilityMessage(\Throwable $exception): string
+    {
+        if ($exception instanceof ApiException) {
+            return LocalizationUtility::translate(
+                'chat.error.ai_unavailable',
+                'ai_assistant'
+            );
+        }
+
+        if ($exception instanceof VectorDatabaseException) {
+            return LocalizationUtility::translate(
+                'chat.error.vector_store_unavailable',
+                'ai_assistant'
+            );
+        }
+
+        return LocalizationUtility::translate(
+            'chat.error.generic',
+            'ai_assistant',
+            [SseResponseFactory::ERROR_MESSAGE]
+        );
     }
 }

@@ -79,3 +79,8 @@ Run from the extension root:
 ```bash
 docker run --rm --pull always -v "$(pwd)":/project -it ghcr.io/typo3-documentation/render-guides:latest --config=Documentation
 ```
+
+## Tests
+```
+ddev exec vendor/bin/phpunit --bootstrap vendor/autoload.php vendor/madj2k/t3-ai-assistant/Tests
+```

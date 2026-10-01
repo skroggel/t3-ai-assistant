@@ -27,6 +27,15 @@
 			<trans-unit id="chat.recommendation.line" resname="chat.recommendation.line">
 				<source>I found a matching page for you here: %s (%s)</source>
 			</trans-unit>
+			<trans-unit id="chat.error.ai_unavailable" resname="chat.error.ai_unavailable">
+				<source>The AI service is currently unavailable or its quota-limit has been reached.</source>
+			</trans-unit>
+			<trans-unit id="chat.error.vector_store_unavailable" resname="chat.error.vector_store_unavailable">
+				<source>The knowledge database is currently unavailable.</source>
+			</trans-unit>
+			<trans-unit id="chat.error.generic" resname="chat.error.generic">
+				<source>The answer could not be loaded: %s</source>
+			</trans-unit>
 			<trans-unit id="chat.recommendation.line_without_reference" resname="chat.recommendation.line_without_reference">
 				<source>I found a matching page for you here: %s</source>
 			</trans-unit>
