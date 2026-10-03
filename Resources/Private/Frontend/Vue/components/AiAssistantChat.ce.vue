@@ -48,6 +48,7 @@ import LanguageSelector from './LanguageSelector.vue';
  * @property {string} endpoint SSE chat endpoint.
  * @property {string|number} assistantProfile Assistant profile uid.
  * @property {string} chatIdentifier Conversation identifier.
+ * @property {string} requestToken Signed frontend request token.
  * @property {string|number} startTimestamp Session reset timestamp.
  * @property {string} settingsJson Serialized runtime settings.
  * @property {string} chatOptionsJson Serialized chat options.
@@ -83,6 +84,7 @@ const props = defineProps({
     endpoint: { type: String, default: '' },
     assistantProfile: { type: [String, Number], default: 0 },
     chatIdentifier: { type: String, default: '' },
+    requestToken: { type: String, default: '' },
     startTimestamp: { type: [String, Number], default: 0 },
 
     // Runtime configuration.
@@ -346,7 +348,8 @@ const send = async (query, directInteraction = '', options = {}) => {
     const formData = new FormData();
     formData.set(`${parameterPrefix}[query]`, query);
     formData.set(`${parameterPrefix}[assistantProfile]`, String(props.assistantProfile));
-    formData.set(`${parameterPrefix}[chatIdentifier]`, props.chatIdentifier);
+        formData.set(`${parameterPrefix}[chatIdentifier]`, props.chatIdentifier);
+        formData.set(`${parameterPrefix}[requestToken]`, props.requestToken);
     formData.set(`${parameterPrefix}[startTimestamp]`, String(props.startTimestamp || Math.floor(Date.now() / 1000)));
     formData.set(`${parameterPrefix}[settingsJson]`, props.settingsJson || '{}');
     formData.set(`${parameterPrefix}[directInteraction]`, directInteraction);
@@ -387,10 +390,14 @@ const send = async (query, directInteraction = '', options = {}) => {
         messages.value[messageIndex].typing = false;
     } catch (error) {
         messages.value[messageIndex].typing = false;
+        const errorMessage = error instanceof Error
+            ? error.message
+            : (props.errorMessage || labels.errorMessage || 'The answer could not be loaded.');
         if (options.showUserMessage === false && options.fallbackMessage) {
             messages.value[messageIndex].html = renderMarkdown(options.fallbackMessage);
         } else {
-            statusMessage.value = props.errorMessage || labels.errorMessage || (error instanceof Error ? error.message : 'The answer could not be loaded.');
+            messages.value[messageIndex].html = renderMarkdown(errorMessage);
+            statusMessage.value = errorMessage;
         }
     } finally {
         abortController = null;

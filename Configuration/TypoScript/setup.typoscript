@@ -24,6 +24,14 @@ plugin.tx_aiassistant {
     }
 }
 
+[{$aiAssistant.useLegacyFrontend} == 1]
+    plugin.tx_aiassistant.view {
+        templateRootPaths.1791031407 = EXT:ai_assistant/Resources/Private/Frontend/Legacy/Templates/
+        partialRootPaths.1791031407 = EXT:ai_assistant/Resources/Private/Frontend/Legacy/Partials/
+        layoutRootPaths.1791031407 = EXT:ai_assistant/Resources/Private/Frontend/Legacy/Layouts/
+    }
+[END]
+
 # Module configuration
 module.tx_aiassistant {
     persistence {

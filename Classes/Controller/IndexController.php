@@ -22,6 +22,7 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use Madj2k\AiAssistant\Assistant\Service\FrontendRequestTokenService;
 
 /**
  * Class IndexController
@@ -46,8 +47,9 @@ class IndexController extends AbstractController
     public function __construct(
         AssistantProfileRepository $assistantProfileRepository,
         private readonly ChatOptionsResolver $chatOptionsResolver,
+        FrontendRequestTokenService $requestTokenService,
     ) {
-        parent::__construct($assistantProfileRepository);
+        parent::__construct($assistantProfileRepository, $requestTokenService);
     }
 
     /**
@@ -63,13 +65,18 @@ class IndexController extends AbstractController
 
         $chatOptions = $this->chatOptionsResolver->resolve($this->settings, $this->resolveSiteLanguage());
         $frontendOptions = $this->chatOptionsResolver->toFrontendOptions($chatOptions, $this->settings);
+        $chatIdentifier = $this->createChatIdentifier();
 
         $this->view->assignMultiple([
             'pageUid' => (int)($this->currentContentObject->data['pid'] ?? 0),
             'contentElementUid' => (int)($this->currentContentObject->data['uid'] ?? 0),
-            'chatIdentifier' => $this->createChatIdentifier(),
+            'chatIdentifier' => $chatIdentifier,
             'assistantProfile' => $assistantProfile,
             'startTimestamp' => time(),
+            'requestToken' => $this->createRequestToken(
+                (int)($assistantProfile?->getUid() ?? 0),
+                $chatIdentifier,
+            ),
             'settingsJson' => $this->jsonEncodeSettings($this->settings),
             'chatOptionsJson' => $this->jsonEncodeSettings($frontendOptions),
             'labelsJson' => $this->jsonEncodeSettings($this->getFrontendLabels()),

@@ -9,6 +9,7 @@ Integrators
 
     AssistantProfiles
     ChatConfiguration
+    SiteSettings
     VueFrontend
     PipelineSteps
     RetrievalConfiguration

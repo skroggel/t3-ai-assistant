@@ -1,0 +1,33 @@
+categories:
+  aiAssistant:
+    label: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.category.aiAssistant.label'
+    description: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.category.aiAssistant.description'
+
+settings:
+  aiAssistant.useLegacyFrontend:
+    label: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.useLegacyFrontend.label'
+    description: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.useLegacyFrontend.description'
+    type: bool
+    default: false
+    category: aiAssistant
+
+  aiAssistant.allowedAssistantProfiles:
+    label: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.allowedAssistantProfiles.label'
+    description: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.allowedAssistantProfiles.description'
+    type: stringlist
+    default: []
+    category: aiAssistant
+
+  aiAssistant.requestTokenTtl:
+    label: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.requestTokenTtl.label'
+    description: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.requestTokenTtl.description'
+    type: int
+    default: 7200
+    category: aiAssistant
+
+  aiAssistant.maxPayloadBytes:
+    label: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.maxPayloadBytes.label'
+    description: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.maxPayloadBytes.description'
+    type: int
+    default: 524288
+    category: aiAssistant

@@ -3,6 +3,36 @@
 	<file source-language="en" datatype="plaintext" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
 		<header/>
 		<body>
+			<trans-unit id="settings.category.aiAssistant.label">
+				<source>AI Assistant</source>
+			</trans-unit>
+			<trans-unit id="settings.category.aiAssistant.description">
+				<source>Frontend chat mode and request security.</source>
+			</trans-unit>
+			<trans-unit id="settings.useLegacyFrontend.label">
+				<source>Use legacy frontend</source>
+			</trans-unit>
+			<trans-unit id="settings.useLegacyFrontend.description">
+				<source>Use the legacy Fluid/JavaScript chat frontend instead of the Vue custom element.</source>
+			</trans-unit>
+			<trans-unit id="settings.allowedAssistantProfiles.label">
+				<source>Allowed Assistant profiles</source>
+			</trans-unit>
+			<trans-unit id="settings.allowedAssistantProfiles.description">
+				<source>Assistant profile UIDs allowed for public frontend requests.</source>
+			</trans-unit>
+			<trans-unit id="settings.requestTokenTtl.label">
+				<source>Frontend request token lifetime</source>
+			</trans-unit>
+			<trans-unit id="settings.requestTokenTtl.description">
+				<source>Lifetime of signed frontend request tokens in seconds.</source>
+			</trans-unit>
+			<trans-unit id="settings.maxPayloadBytes.label">
+				<source>Maximum frontend payload size</source>
+			</trans-unit>
+			<trans-unit id="settings.maxPayloadBytes.description">
+				<source>Maximum serialized runtime-settings payload accepted by the chat endpoint.</source>
+			</trans-unit>
 			<trans-unit id="plugin.tx_aiassistant_chat.title">
 				<source>AI Chat</source>
 			</trans-unit>

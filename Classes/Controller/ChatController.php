@@ -27,8 +27,10 @@ use Madj2k\AiCore\Exception\ApiException;
 use Madj2k\AiCore\Exception\VectorDatabaseException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Madj2k\AiAssistant\Assistant\Service\FrontendRequestTokenService;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -62,10 +64,12 @@ class ChatController extends AbstractController
     public function __construct(
         protected readonly Orchestrator               $orchestrator,
         protected readonly SseResponseFactory         $sseResponseFactory,
-        protected readonly AssistantProfileRepository $assistantProfileRepository,
+        AssistantProfileRepository $assistantProfileRepository,
         protected readonly ChatOptionsResolver        $chatOptionsResolver,
+        FrontendRequestTokenService                   $requestTokenService,
         ?LoggerInterface                              $logger = null,
     ) {
+        parent::__construct($assistantProfileRepository, $requestTokenService);
         $this->logger = $logger ?? GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
     }
 
@@ -78,6 +82,7 @@ class ChatController extends AbstractController
      * @param int $assistantProfile Assistant profile selected in the plugin.
      * @param string $chatIdentifier Stable frontend conversation scope.
      * @param string $settingsJson Runtime settings provided by the frontend plugin.
+     * @param string $requestToken Signed frontend request token.
      * @param string $userLanguage Optional response language selected by the user.
      * @param string $directInteraction Optional explicit direct interaction identifier.
      * @return \Psr\Http\Message\ResponseInterface SSE response.
@@ -88,34 +93,34 @@ class ChatController extends AbstractController
         int $assistantProfile = 0,
         string $chatIdentifier = '',
         string $settingsJson = '',
+        string $requestToken = '',
         string $userLanguage = '',
         string $directInteraction = '',
     ): ResponseInterface {
-        /** @var array<string,mixed> $runtimeSettings */
-        $runtimeSettings = [];
-        $decodedRuntimeSettings = json_decode($settingsJson, true);
-        if (is_array($decodedRuntimeSettings)) {
-            $runtimeSettings = $decodedRuntimeSettings;
-        }
-
-        /** @var \Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile|null $profile */
-        $profile = $this->assistantProfileRepository->findByUid($assistantProfile);
-        $serverRequest = $this->resolveServerRequest();
 
         try {
+
+            if (!$this->isValidFrontendRequest($requestToken, $assistantProfile, $chatIdentifier, $settingsJson)) {
+                return $this->sseResponseFactory->createStreamingResponse(function (): void {
+                    $this->sseResponseFactory->sendPrelude();
+                    $this->sseResponseFactory->sendEvent('error', 'Invalid assistant request token.');
+                    $this->sseResponseFactory->sendEvent('done', 'end');
+                });
+            }
+
+            /** @var \Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile|null $profile */
+            $profile = $this->resolveAssistantProfile($assistantProfile);
+            if ($profile === null) {
+                return new JsonResponse(['error' => 'Assistant profile was not found.'], 404);
+            }
+
+            /** @var array<string,mixed> $runtimeSettings */
+            $runtimeSettings = $this->resolveRuntimeSettings($settingsJson);
+
             if ($chatIdentifier === '' || $startTimestamp === 0) {
                 throw new AppException('No chat identifier specified');
             }
 
-            if (!$profile instanceof AssistantProfile) {
-                throw new AppException('Assistant profile not found');
-            }
-
-            $chatOptions = $this->chatOptionsResolver->resolve(
-                $runtimeSettings,
-                $this->resolveSiteLanguage(),
-                $userLanguage,
-            );
             $isLanguageConfirmation = $directInteraction === 'language_confirmation';
             if ($directInteraction !== '' && !$isLanguageConfirmation) {
                 throw new AppException('Unsupported direct interaction');
@@ -127,12 +132,18 @@ class ChatController extends AbstractController
                 throw new AppException('Language confirmation is not available');
             }
 
+            $chatOptions = $this->chatOptionsResolver->resolve(
+                $runtimeSettings,
+                $this->resolveSiteLanguage(),
+                $userLanguage,
+            );
+
             $assistantRequest = new AssistantRequest(
-                query: $isLanguageConfirmation ? $chatOptions->responseLanguage : $query,
+                query: $isLanguageConfirmation ? $chatOptions->responseLanguage : trim($query),
                 startTimestamp: $startTimestamp,
                 assistantProfile: $profile,
                 chatIdentifier: $chatIdentifier,
-                serverRequest: $serverRequest,
+                serverRequest: $this->resolveServerRequest(),
                 chatOptions: $chatOptions,
                 runtimeSettings: $runtimeSettings,
             );
@@ -197,6 +208,7 @@ class ChatController extends AbstractController
         ]);
     }
 
+
     /**
      * Returns a user-facing availability message without exposing provider details.
      *
@@ -222,7 +234,7 @@ class ChatController extends AbstractController
         return LocalizationUtility::translate(
             'chat.error.generic',
             'ai_assistant',
-            [SseResponseFactory::ERROR_MESSAGE]
+            [$exception->getMessage()]
         );
     }
 }

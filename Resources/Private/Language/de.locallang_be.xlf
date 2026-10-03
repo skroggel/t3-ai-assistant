@@ -3,6 +3,46 @@
 	<file source-language="en" datatype="plaintext" date="2026-02-19T11:35:55Z" product-name="ai_assistant" target-language="de">
 		<header/>
 		<body>
+			<trans-unit id="settings.category.aiAssistant.label">
+				<source>AI Assistant</source>
+				<target>AI Assistant</target>
+			</trans-unit>
+			<trans-unit id="settings.category.aiAssistant.description">
+				<source>Frontend chat mode and request security.</source>
+				<target>Frontend-Chat-Modus und Sicherheit der Anfragen.</target>
+			</trans-unit>
+			<trans-unit id="settings.useLegacyFrontend.label">
+				<source>Use legacy frontend</source>
+				<target>Legacy-Frontend verwenden</target>
+			</trans-unit>
+			<trans-unit id="settings.useLegacyFrontend.description">
+				<source>Use the legacy Fluid/JavaScript chat frontend instead of the Vue custom element.</source>
+				<target>Das Legacy-Fluid-/JavaScript-Chat-Frontend anstelle des Vue-Custom-Elements verwenden.</target>
+			</trans-unit>
+			<trans-unit id="settings.allowedAssistantProfiles.label">
+				<source>Allowed Assistant profiles</source>
+				<target>Erlaubte Assistant-Profile</target>
+			</trans-unit>
+			<trans-unit id="settings.allowedAssistantProfiles.description">
+				<source>Assistant profile UIDs allowed for public frontend requests.</source>
+				<target>UIDs der Assistant-Profile, die für öffentliche Frontend-Anfragen erlaubt sind.</target>
+			</trans-unit>
+			<trans-unit id="settings.requestTokenTtl.label">
+				<source>Frontend request token lifetime</source>
+				<target>Gültigkeitsdauer des Frontend-Request-Tokens</target>
+			</trans-unit>
+			<trans-unit id="settings.requestTokenTtl.description">
+				<source>Lifetime of signed frontend request tokens in seconds.</source>
+				<target>Gültigkeitsdauer signierter Frontend-Request-Tokens in Sekunden.</target>
+			</trans-unit>
+			<trans-unit id="settings.maxPayloadBytes.label">
+				<source>Maximum frontend payload size</source>
+				<target>Maximale Größe der Frontend-Payload</target>
+			</trans-unit>
+			<trans-unit id="settings.maxPayloadBytes.description">
+				<source>Maximum serialized runtime-settings payload accepted by the chat endpoint.</source>
+				<target>Maximale Größe der serialisierten Runtime-Settings, die der Chat-Endpoint akzeptiert.</target>
+			</trans-unit>
 			<trans-unit id="plugin.tx_aiassistant_chat.title">
 				<source>AI Chat</source>
 				<target>AI Chat</target>

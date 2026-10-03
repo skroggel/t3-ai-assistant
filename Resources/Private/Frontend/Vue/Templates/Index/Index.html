@@ -25,9 +25,10 @@
     </f:if>
 
     <ai-assistant-chat
-        endpoint="{f:uri.action(action: 'stream', controller: 'Chat', extensionName: 'AiAssistant', pluginName: 'Chat', pageType: '1790831370')}"
+        endpoint="{f:uri.action(action: 'stream', controller: 'Chat', extensionName: 'AiAssistant', pluginName: 'Chat', pageType: '1790831370', arguments: '{id: pageUid}')}"
         assistant-profile="{assistantProfile.uid}"
         chat-identifier="{chatIdentifier}"
+        request-token="{requestToken}"
         start-timestamp="{startTimestamp}"
 
         settings-json="{settingsJson -> f:format.htmlspecialchars()}"

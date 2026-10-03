@@ -1,0 +1,12 @@
+aiAssistant:
+  # Render the legacy chat templates instead of the Vue custom element.
+  useLegacyFrontend: false
+
+  # Assistant profile UIDs allowed for public frontend requests.
+  allowedAssistantProfiles: []
+
+  # Lifetime of signed frontend request tokens in seconds.
+  requestTokenTtl: 7200
+
+  # Maximum serialized runtime-settings payload accepted by the chat endpoint.
+  maxPayloadBytes: 524288
