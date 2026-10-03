@@ -26,13 +26,20 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Backend\Module\ModuleProvider;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\FormProtection\BackendFormProtection;
+use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Page\AssetCollector;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
+use TYPO3\CMS\Fluid\View\FluidViewAdapter;
+use TYPO3Fluid\Fluid\View\TemplateView;
 
 /**
  * Class BackendController
@@ -47,7 +54,6 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 class BackendController extends ActionController
 {
     /**
-     * @param \TYPO3\CMS\Backend\Template\ModuleTemplateFactory $moduleTemplateFactory Module template factory.
      * @param \Madj2k\AiAssistant\Backend\Form\BackendRequestDataService $requestDataService Request data service.
      * @param \Madj2k\AiAssistant\Backend\Form\BackendFormTokenService $formTokenService Form token service.
      * @param \Madj2k\AiAssistant\Backend\View\BackendViewDataFactory $viewDataFactory View data factory.
@@ -57,7 +63,6 @@ class BackendController extends ActionController
      * @param \Madj2k\AiAssistant\Backend\Purge\BackendPurgeHandler $purgeHandler Purge handler.
      */
     public function __construct(
-        private readonly ModuleTemplateFactory $moduleTemplateFactory,
         private readonly BackendRequestDataService $requestDataService,
         private readonly BackendFormTokenService $formTokenService,
         private readonly BackendViewDataFactory $viewDataFactory,
@@ -188,13 +193,39 @@ class BackendController extends ActionController
         );
 
         /** @var \TYPO3\CMS\Backend\Template\ModuleTemplate $moduleTemplate */
-        $moduleTemplate = $this->moduleTemplateFactory->create($backendRequest);
+        $moduleTemplate = $this->createModuleTemplate($backendRequest);
         $moduleTemplate->assignMultiple($viewData);
 
         GeneralUtility::makeInstance(AssetCollector::class)
             ->addStyleSheet('aiassistant-backend', 'EXT:ai_assistant/Resources/Public/Styles/Backend.css');
 
         return $moduleTemplate->renderResponse($templateName);
+    }
+
+    /**
+     * Creates the backend module view from the extension's explicit resource tree.
+     * TYPO3's default BackendViewFactory only searches Resources/Private/Templates.
+     */
+    private function createModuleTemplate(ServerRequestInterface $backendRequest): ModuleTemplate
+    {
+        $privatePath = GeneralUtility::getFileAbsFileName('EXT:ai_assistant/Resources/Private/Backend/');
+        $renderingContext = GeneralUtility::makeInstance(RenderingContextFactory::class)->create([
+            'templateRootPaths' => [$privatePath . 'Templates/'],
+            'partialRootPaths' => [$privatePath . 'Partials/'],
+            'layoutRootPaths' => [$privatePath . 'Layouts/'],
+        ], $backendRequest);
+        $view = new FluidViewAdapter(new TemplateView($renderingContext));
+
+        return new ModuleTemplate(
+            GeneralUtility::makeInstance(PageRenderer::class),
+            GeneralUtility::makeInstance(IconFactory::class),
+            GeneralUtility::makeInstance(UriBuilder::class),
+            GeneralUtility::makeInstance(ModuleProvider::class),
+            GeneralUtility::makeInstance(FlashMessageService::class),
+            GeneralUtility::makeInstance(ExtensionConfiguration::class),
+            $view,
+            $backendRequest,
+        );
     }
 
 

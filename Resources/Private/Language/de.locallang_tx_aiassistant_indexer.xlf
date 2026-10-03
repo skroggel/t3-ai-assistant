@@ -88,16 +88,16 @@
 				<target>Wählen Sie den externen Connector aus, der die Inhalte für diesen Indexer bereitstellt. Connectoren können im Backend-Modul unter Einstellungen &gt; Connectoren erstellt werden.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size_desc" resname="tx_aiassistant_indexer.chunk_size_desc">
-				<source>Chunk size in words. Leave empty to use global defaults.</source>
-				<target>Chunk-Größe in Wörtern. Leer lassen, um globale Standardwerte zu verwenden.</target>
+                <source>Chunk size in characters. Leave empty to use global defaults.</source>
+                <target>Chunk-Größe in Zeichen. Leer lassen, um globale Standardwerte zu verwenden.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size_placeholder" resname="tx_aiassistant_indexer.chunk_size_placeholder">
 				<source>500</source>
 				<target>500</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_desc" resname="tx_aiassistant_indexer.chunk_overlap_desc">
-				<source>Overlap in words between chunks. Leave empty to use defaults.</source>
-				<target>Überlappung in Wörtern zwischen Chunks. Leer lassen, um Standardwerte zu verwenden.</target>
+                <source>Overlap in characters between chunks. Leave empty to use defaults.</source>
+                <target>Überlappung in Zeichen zwischen Chunks. Leer lassen, um Standardwerte zu verwenden.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_placeholder" resname="tx_aiassistant_indexer.chunk_overlap_placeholder">
 				<source>50</source>

@@ -65,12 +65,24 @@ final class IndexerItems
 
 
     /**
+     * Adds registered indexers matching the selected TCA indexer type.
+     *
+     * @param array<string, mixed> $parameters TCA parameters.
+     * @return void
+     */
+    public function itemsByType(array &$parameters): void
+    {
+        $this->appendItems($parameters, $this->resolveType($parameters));
+    }
+
+
+    /**
      * Appends registered indexers to the given TCA parameters.
      *
      * @param array<string, mixed> $parameters TCA parameters.
      * @return void
      */
-    protected function appendItems(array &$parameters): void
+    protected function appendItems(array &$parameters, string $type = ''): void
     {
         /**
          * @var array<int, array<string, mixed>> $items
@@ -82,7 +94,9 @@ final class IndexerItems
         foreach ($this->indexerRegistry->all() as $indexer) {
             $identifier = trim($indexer->getIdentifier());
 
-            if ($identifier === '' || $this->hasItem($items, $identifier)) {
+            if ($identifier === '' || $this->hasItem($items, $identifier)
+                || ($type !== '' && $indexer->getSourceType() !== $type)
+            ) {
                 continue;
             }
 
@@ -93,6 +107,21 @@ final class IndexerItems
         }
 
         $parameters['items'] = $items;
+    }
+
+
+    /**
+     * Resolves the selected TCA indexer type from the current record.
+     *
+     * @param array<string, mixed> $parameters TCA parameters.
+     * @return string Indexer type.
+     */
+    protected function resolveType(array $parameters): string
+    {
+        $row = $parameters['row'] ?? $parameters['databaseRow'] ?? [];
+        $type = is_array($row) ? ($row['type'] ?? '') : '';
+
+        return is_array($type) ? (string)($type[0] ?? '') : (string)$type;
     }
 
 

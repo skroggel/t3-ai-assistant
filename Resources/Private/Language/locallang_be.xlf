@@ -19,6 +19,12 @@
 			<trans-unit id="flexform.chat.require_consent" >
 				<source>Require consent before starting the chat</source>
 			</trans-unit>
+			<trans-unit id="flexform.chat.sanitize_options">
+				<source>Markdown HTML sanitizing options (JSON)</source>
+			</trans-unit>
+			<trans-unit id="flexform.chat.sanitize_options.description">
+				<source>Optional DOMPurify configuration as JSON. The configured values are merged with the secure defaults.</source>
+			</trans-unit>
 			<trans-unit id="flexform.chat.sheet.language">
 				<source>Language</source>
 			</trans-unit>

@@ -263,11 +263,7 @@ final class FileIndexer extends AbstractIndexer
             $metadata->setUrl($file['url']);
         }
 
-        foreach ($configuration->getAdditionalMetadataArray() as $key => $value) {
-            if (is_string($key) && trim($key) !== '') {
-                $metadata->addAdditional($key, $value);
-            }
-        }
+        $this->addAdditionalMetadata($metadata, $configuration);
 
         return $metadata;
     }

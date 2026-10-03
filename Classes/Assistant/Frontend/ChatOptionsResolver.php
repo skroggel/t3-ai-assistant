@@ -83,10 +83,17 @@ final class ChatOptionsResolver
      * Converts core options into the nested frontend constructor structure.
      *
      * @param \Madj2k\AiCore\Assistant\DTO\ChatOptions $chatOptions Normalized Core chat options.
+     * @param array<string,mixed> $settings Plugin settings.
      * @return array<string,mixed>
      */
-    public function toFrontendOptions(ChatOptions $chatOptions): array
+    public function toFrontendOptions(ChatOptions $chatOptions, array $settings = []): array
     {
+        $sanitizeOptions = $settings['sanitizeOptions'] ?? [];
+        if (is_string($sanitizeOptions)) {
+            $decodedOptions = json_decode($sanitizeOptions, true);
+            $sanitizeOptions = is_array($decodedOptions) ? $decodedOptions : [];
+        }
+
         return [
             'language' => [
                 'responseLanguage' => $chatOptions->responseLanguage,
@@ -95,6 +102,7 @@ final class ChatOptionsResolver
             'accessibility' => [
                 'plainLanguage' => $chatOptions->plainLanguage,
             ],
+            'sanitizeOptions' => is_array($sanitizeOptions) ? $sanitizeOptions : [],
         ];
     }
 

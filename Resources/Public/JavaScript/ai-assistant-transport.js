@@ -104,6 +104,7 @@ class AiAssistantTransport {
                 Accept: options.accept || this.options.streamAccept,
                 'X-Requested-With': 'XMLHttpRequest',
             },
+            signal: options.signal,
         });
 
         if (!response.ok || !response.body) {
@@ -127,7 +128,7 @@ class AiAssistantTransport {
         let message = '';
         let done = false;
 
-        const handleEvent = (rawEvent) => {
+        const handleEvent = async (rawEvent) => {
             const event = this.parseServerSentEvent(rawEvent);
 
             if (event.event === this.options.doneEventName) {
@@ -143,7 +144,7 @@ class AiAssistantTransport {
                 message += event.data;
 
                 if (typeof onMessage === 'function') {
-                    onMessage(message, event);
+                    await onMessage(message, event);
                 }
             }
         };
@@ -157,15 +158,15 @@ class AiAssistantTransport {
             const parts = buffer.split(/\r?\n\r?\n/);
             buffer = parts.pop() || '';
 
-            parts.forEach((part) => {
+            for (const part of parts) {
                 if (part !== '') {
-                    handleEvent(part);
+                    await handleEvent(part);
                 }
-            });
+            }
         }
 
         if (buffer !== '') {
-            handleEvent(buffer);
+            await handleEvent(buffer);
         }
 
         return message;
@@ -207,3 +208,7 @@ class AiAssistantTransport {
         return event;
     }
 }
+
+// Expose the shared transport for the Vue custom element without turning this
+// legacy-compatible browser script into an ES module.
+window.AiAssistantTransport = AiAssistantTransport;

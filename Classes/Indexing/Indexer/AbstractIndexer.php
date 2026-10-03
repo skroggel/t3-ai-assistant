@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Madj2k\AiAssistant\Indexing\Indexer;
 
 use Madj2k\AiCore\Indexing\VectorDocumentIndexer;
+use Madj2k\AiCore\DTO\DocumentMetadata;
 use Madj2k\AiCore\Indexing\DTO\IndexableDocument;
 use Madj2k\AiCore\Indexing\DTO\IndexingRequest;
 use Madj2k\AiCore\Indexing\DTO\IndexingResult;
@@ -61,6 +62,24 @@ abstract class AbstractIndexer implements IndexerInterface
     protected function resolveCollection(IndexerConfig $configuration, string $collectionOverride = ''): string
     {
         return $this->vectorDocumentIndexer->resolveCollection($configuration, $collectionOverride);
+    }
+
+    /**
+     * Adds metadata configured on the indexer record to the document payload.
+     *
+     * @param DocumentMetadata $metadata Document metadata.
+     * @param IndexerConfig $configuration Indexer configuration.
+     * @return void
+     */
+    protected function addAdditionalMetadata(
+        DocumentMetadata $metadata,
+        IndexerConfig $configuration,
+    ): void {
+        foreach ($configuration->getAdditionalMetadataArray() as $key => $value) {
+            if (is_string($key) && trim($key) !== '') {
+                $metadata->addAdditional($key, $value);
+            }
+        }
     }
 
     protected function indexDocument(

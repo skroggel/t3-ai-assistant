@@ -38,7 +38,7 @@ return [
             'showitem' => 'root_pages, --linebreak--, page_fields, --linebreak--, content_types, --linebreak--, content_fields, --linebreak--, additional_content_fields, --linebreak--, additional_metadata',
         ],
         'external' => [
-            'showitem' => 'connector_uid, --linebreak--, adapter_identifier',
+            'showitem' => 'connector_uid',
         ],
     ],
     'columns' => [
@@ -72,7 +72,7 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'itemsProcFunc' => \Madj2k\AiAssistant\Indexing\TCA\IndexerItems::class . '->items',
+                'itemsProcFunc' => \Madj2k\AiAssistant\Indexing\TCA\IndexerItems::class . '->itemsByType',
                 'required' => true,
                 'default' => 'aiassistant.indexer.page',
             ],
@@ -137,7 +137,7 @@ return [
                 'type' => 'group',
                 'allowed' => 'tx_aiassistant_indexer_connector',
                 'size' => 1,
-                'minitems' => 0,
+                'minitems' => 1,
                 'maxitems' => 1,
             ],
         ],

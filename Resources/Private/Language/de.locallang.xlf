@@ -111,6 +111,10 @@
 				<source>Use selected language</source>
 				<target>Ausgewählte Sprache verwenden</target>
 			</trans-unit>
+			<trans-unit id="templates_index_index.language_confirmation_fallback" resname="templates_index_index.language_confirmation_fallback">
+				<source>Language selected: %s</source>
+				<target>Sprache ausgewählt: %s</target>
+			</trans-unit>
 			<trans-unit id="templates_index_index.chat_history" resname="templates_index_index.chat_history">
 				<source>Chat history</source>
 				<target>Chatverlauf</target>

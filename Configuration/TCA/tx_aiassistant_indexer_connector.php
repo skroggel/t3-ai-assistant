@@ -60,6 +60,7 @@ return [
         'download_base_url' => [
             'label' => $ll . 'tx_aiassistant_indexer_connector.download_base_url',
             'description' => $ll . 'tx_aiassistant_indexer_connector.download_base_url_desc',
+            'onChange' => 'reload',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
@@ -70,8 +71,10 @@ return [
         'download_path' => [
             'label' => $ll . 'tx_aiassistant_indexer_connector.download_path',
             'description' => $ll . 'tx_aiassistant_indexer_connector.download_path_desc',
+            'displayCond' => 'FIELD:download_base_url:REQ:TRUE',
             'config' => [
                 'type' => 'input',
+                'required' => true,
                 'eval' => 'trim',
                 'max' => 512,
                 'size' => 60,

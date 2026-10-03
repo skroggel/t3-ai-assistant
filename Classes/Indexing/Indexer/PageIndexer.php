@@ -453,11 +453,7 @@ final class PageIndexer extends AbstractIndexer
             // nothing
         }
 
-        foreach ($configuration->getAdditionalMetadataArray() as $key => $value) {
-            if (is_string($key) && trim($key) !== '') {
-                $metadata->addAdditional($key, $value);
-            }
-        }
+        $this->addAdditionalMetadata($metadata, $configuration);
 
         return $metadata;
     }

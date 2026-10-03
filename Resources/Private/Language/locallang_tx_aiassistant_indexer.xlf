@@ -67,13 +67,13 @@
 				<source>Select the external connector that provides the content for this indexer. Connectors can be created in the backend module under Settings &gt; Connectors.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size_desc" resname="tx_aiassistant_indexer.chunk_size_desc">
-				<source>Chunk size in words. Leave empty to use global defaults.</source>
+                <source>Chunk size in characters. Leave empty to use global defaults.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size_placeholder" resname="tx_aiassistant_indexer.chunk_size_placeholder">
 				<source>500</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_desc" resname="tx_aiassistant_indexer.chunk_overlap_desc">
-				<source>Overlap in words between chunks. Leave empty to use defaults.</source>
+                <source>Overlap in characters between chunks. Leave empty to use defaults.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_placeholder" resname="tx_aiassistant_indexer.chunk_overlap_placeholder">
 				<source>50</source>

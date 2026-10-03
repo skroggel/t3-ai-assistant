@@ -20,7 +20,7 @@ use Madj2k\AiAssistant\Assistant\Frontend\PluginConfigurationResolver;
 use Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
@@ -62,6 +62,7 @@ class IndexController extends AbstractController
             : null;
 
         $chatOptions = $this->chatOptionsResolver->resolve($this->settings, $this->resolveSiteLanguage());
+        $frontendOptions = $this->chatOptionsResolver->toFrontendOptions($chatOptions, $this->settings);
 
         $this->view->assignMultiple([
             'pageUid' => (int)($this->currentContentObject->data['pid'] ?? 0),
@@ -70,10 +71,43 @@ class IndexController extends AbstractController
             'assistantProfile' => $assistantProfile,
             'startTimestamp' => time(),
             'settingsJson' => $this->jsonEncodeSettings($this->settings),
-            'chatOptionsJson' => $this->jsonEncodeSettings($this->chatOptionsResolver->toFrontendOptions($chatOptions)),
+            'chatOptionsJson' => $this->jsonEncodeSettings($frontendOptions),
+            'labelsJson' => $this->jsonEncodeSettings($this->getFrontendLabels()),
             'showLanguageSelector' => $this->chatOptionsResolver->showLanguageSelector($this->settings),
         ]);
 
         return $this->htmlResponse();
+    }
+
+    /**
+     * Returns translated labels for the Vue chat in one serializable payload.
+     *
+     * @return array<string, string>
+     */
+    private function getFrontendLabels(): array
+    {
+        $keys = [
+            'errorMessage' => 'templates_index_index.error_message',
+            'chatLabel' => 'templates_index_index.chat_history',
+            'userLabel' => 'templates_index_index.user_label',
+            'assistantLabel' => 'templates_index_index.assistant_label',
+            'consentMessage' => 'templates_index_index.consent_message',
+            'consentLabel' => 'templates_index_index.consent_button',
+            'inputPlaceholder' => 'templates_index_index.input_placeholder',
+            'submitLabel' => 'templates_index_index.submit',
+            'languageLabel' => 'templates_index_index.response_language',
+            'siteLanguageLabel' => 'templates_index_index.use_site_language',
+            'browserLanguageLabel' => 'templates_index_index.use_browser_language',
+            'languageApplyLabel' => 'templates_index_index.apply_language',
+            'languagePlaceholder' => 'templates_index_index.response_language_placeholder',
+            'languageConfirmationFallback' => 'templates_index_index.language_confirmation_fallback',
+        ];
+
+        $labels = [];
+        foreach ($keys as $name => $key) {
+            $labels[$name] = (string)(LocalizationUtility::translate($key, 'ai_assistant') ?? '');
+        }
+
+        return $labels;
     }
 }

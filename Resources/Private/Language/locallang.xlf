@@ -84,6 +84,9 @@
 			<trans-unit id="templates_index_index.apply_language" resname="templates_index_index.apply_language">
 				<source>Use selected language</source>
 			</trans-unit>
+			<trans-unit id="templates_index_index.language_confirmation_fallback" resname="templates_index_index.language_confirmation_fallback">
+				<source>Language selected: %s</source>
+			</trans-unit>
 			<trans-unit id="templates_index_index.chat_history" resname="templates_index_index.chat_history">
 				<source>Chat history</source>
 			</trans-unit>

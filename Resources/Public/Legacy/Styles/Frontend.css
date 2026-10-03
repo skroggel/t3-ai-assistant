@@ -178,7 +178,7 @@
     }
 
     .chat-box-message.is-typing {
-        white-space: pre-wrap;
+        /* white-space: pre-wrap; */
     }
 
     /* ==========================================================================
@@ -266,7 +266,7 @@
     }
 
     .chat-box-message--from-user .chat-box-message-content {
-    / / white-space: pre-wrap;
+        white-space: pre-wrap;
     }
 
     .chat-box-message-content.is-typing {

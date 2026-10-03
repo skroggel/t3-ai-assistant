@@ -1,11 +1,11 @@
 plugin.tx_aiassistant {
     view {
         # cat=plugin.tx_aiassistant/file; type=string; label=Path to template root (FE)
-        templateRootPath = EXT:ai_assistant/Resources/Private/Templates/
+        templateRootPath = EXT:ai_assistant/Resources/Private/Frontend/Vue/Templates/
         # cat=plugin.tx_aiassistant/file; type=string; label=Path to template partials (FE)
-        partialRootPath = EXT:ai_assistant/Resources/Private/Partials/
+        partialRootPath = EXT:ai_assistant/Resources/Private/Frontend/Vue/Partials/
         # cat=plugin.tx_aiassistant/file; type=string; label=Path to template layouts (FE)
-        layoutRootPath = EXT:ai_assistant/Resources/Private/Layouts/
+        layoutRootPath = EXT:ai_assistant/Resources/Private/Frontend/Vue/Layouts/
     }
     persistence {
         # cat=plugin.tx_aiassistant//a; type=string; label=Default storage PID

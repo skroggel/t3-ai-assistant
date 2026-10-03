@@ -1,0 +1,46 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:asset.script
+        identifier="ai-assistant-transport"
+        src="EXT:ai_assistant/Resources/Public/JavaScript/ai-assistant-transport.js"
+    />
+
+    <f:asset.script
+        identifier="ai-assistant-chat-vue"
+        src="EXT:ai_assistant/Resources/Public/JavaScript/ai-assistant-chat.js"
+    />
+
+    <f:variable name="resolvedAssistantInitialMessage">
+        <f:if condition="{assistantProfile.initialMessage}">
+            <f:then>{assistantProfile.initialMessage}</f:then>
+            <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.initial_message" /></f:else>
+        </f:if>
+    </f:variable>
+
+    <f:if condition="{assistantProfile.introText}">
+        <p>
+            {assistantProfile.introText}
+        </p>
+    </f:if>
+
+    <ai-assistant-chat
+        endpoint="{f:uri.action(action: 'stream', controller: 'Chat', extensionName: 'AiAssistant', pluginName: 'Chat', pageType: '1790831370')}"
+        assistant-profile="{assistantProfile.uid}"
+        chat-identifier="{chatIdentifier}"
+        start-timestamp="{startTimestamp}"
+
+        settings-json="{settingsJson -> f:format.htmlspecialchars()}"
+        chat-options-json="{chatOptionsJson -> f:format.htmlspecialchars()}"
+        labels-json="{labelsJson -> f:format.htmlspecialchars()}"
+
+        initial-message="{resolvedAssistantInitialMessage -> f:format.htmlspecialchars()}"
+        initial-message-delay="22"
+        response-message-delay="14"
+
+        require-consent="{settings.requireConsent}"
+        show-language-selector="{settings.language.allowUserSelection}"
+
+    ></ai-assistant-chat>
+
+</html>
