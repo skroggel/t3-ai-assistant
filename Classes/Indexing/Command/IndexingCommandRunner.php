@@ -18,12 +18,15 @@ namespace Madj2k\AiAssistant\Indexing\Command;
 use Madj2k\AiCore\Indexing\DTO\IndexingRequest;
 use Madj2k\AiCore\Indexing\DTO\IndexingResult;
 use Madj2k\AiCore\Indexing\Registry\IndexerRegistry;
-use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerRun;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerState;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerRunRepository;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerStateRepository;
+use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository;
 use TYPO3\CMS\Core\Locking\LockFactory;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use Psr\Log\LoggerInterface;
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class IndexingCommandRunner
@@ -37,6 +40,8 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  */
 final readonly class IndexingCommandRunner
 {
+    private LoggerInterface $logger;
+
     /**
      * Constructor.
      *
@@ -51,8 +56,11 @@ final readonly class IndexingCommandRunner
         private IndexerRunRepository $indexerRunRepository,
         private IndexerStateRepository $indexerStateRepository,
         private LockFactory $lockFactory,
-        private PersistenceManager $persistenceManager
+        private PersistenceManager $persistenceManager,
+        ?LogManager $logManager = null,
+        private ?IndexerConfigRepository $indexerConfigRepository = null,
     ) {
+        $this->logger = ($logManager ?? GeneralUtility::makeInstance(LogManager::class))->getLogger(__CLASS__);
     }
 
 
@@ -66,6 +74,62 @@ final readonly class IndexingCommandRunner
      */
     public function run(string $indexerIdentifier, IndexingRequest $request): IndexingResult
     {
+        $requests = $this->resolveConfigurationRequests($indexerIdentifier, $request);
+        $this->logger->debug('Resolved indexing execution requests.', [
+            'indexer' => $indexerIdentifier,
+            'request_count' => count($requests),
+            'explicit_indexer_uid' => $request->getIndexerUid(),
+        ]);
+        $result = new IndexingResult();
+
+        foreach ($requests as $configurationRequest) {
+            $result->merge($this->runSingle($indexerIdentifier, $configurationRequest));
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Creates one request per configured indexer when no explicit UID was given.
+     *
+     * @return array<int, IndexingRequest>
+     */
+    private function resolveConfigurationRequests(string $indexerIdentifier, IndexingRequest $request): array
+    {
+        if ($request->getIndexerUid() !== null) {
+            return [$request];
+        }
+
+        $indexerConfigRepository = $this->indexerConfigRepository
+            ?? GeneralUtility::makeInstance(IndexerConfigRepository::class);
+        $requests = [];
+        foreach ($indexerConfigRepository->findByIndexerIdentifier($indexerIdentifier) as $configuration) {
+            $configurationRequest = clone $request;
+            $configurationRequest->setIndexerUid((int)$configuration->getUid());
+            $configurationRequest->setCursor('');
+            $requests[] = $configurationRequest;
+        }
+
+        $this->logger->info('Prepared one indexing request per configuration.', [
+            'indexer' => $indexerIdentifier,
+            'configuration_count' => count($requests),
+        ]);
+
+        return $requests !== [] ? $requests : [$request];
+    }
+
+
+    private function runSingle(string $indexerIdentifier, IndexingRequest $request): IndexingResult
+    {
+        $this->logger->info('Indexing run started.', [
+            'indexer' => $indexerIdentifier,
+            'source_type' => $request->getSourceType(),
+            'indexer_uid' => $request->getIndexerUid(),
+            'limit' => $request->getLimit(),
+            'cursor' => $request->getCursor(),
+            'dry_run' => $request->isDryRun(),
+        ]);
         $indexer = $this->indexerRegistry->get($indexerIdentifier);
         if ($request->getIndexerIdentifier() === '') {
             $request->setIndexerIdentifier($indexerIdentifier);
@@ -81,6 +145,10 @@ final readonly class IndexingCommandRunner
 
         $locker = $this->lockFactory->createLocker($this->buildLockIdentifier($request));
         if (!$locker->acquire()) {
+            $this->logger->warning('Indexing run lock could not be acquired.', [
+                'indexer' => $indexerIdentifier,
+                'lock' => $this->buildLockIdentifier($request),
+            ]);
             throw new \RuntimeException('The indexer execution lock could not be acquired.', 1788421201);
         }
 
@@ -90,6 +158,12 @@ final readonly class IndexingCommandRunner
                 $request->setCursor($state->getCursor());
             }
 
+            $this->logger->debug('Indexer state resolved.', [
+                'indexer' => $indexerIdentifier,
+                'cursor' => $request->getCursor(),
+                'state_status' => $state->getStatus(),
+            ]);
+
             $startedAt = time();
             if (!$request->isDryRun()) {
                 $this->startState($state, $startedAt);
@@ -98,8 +172,15 @@ final readonly class IndexingCommandRunner
             $result = new IndexingResult();
 
             try {
+                $this->logger->debug('Executing indexer.', [
+                    'indexer' => $indexerIdentifier,
+                ]);
                 $result = $indexer->index($request);
             } catch (\Throwable $exception) {
+                $this->logger->error('Indexer execution failed.', [
+                    'indexer' => $indexerIdentifier,
+                    'exception' => $exception,
+                ]);
                 $result->increaseFailed();
                 $result->addDetail('exception', $exception->getMessage());
                 if (!$request->isDryRun()) {
@@ -116,6 +197,18 @@ final readonly class IndexingCommandRunner
             if ($this->shouldPersistRun($result, $request)) {
                 $this->persistRun($startedAt, $status, $result, $request);
             }
+
+            $this->logger->info('Indexing run finished.', [
+                'indexer' => $indexerIdentifier,
+                'status' => $status,
+                'processed' => $result->getProcessed(),
+                'indexed' => $result->getIndexed(),
+                'skipped' => $result->getSkipped(),
+                'failed' => $result->getFailed(),
+                'chunks' => $result->getChunksTotal(),
+                'next_cursor' => $result->getNextCursor(),
+                'has_more' => $result->hasMore(),
+            ]);
 
             return $result;
         } finally {
@@ -199,24 +292,12 @@ final readonly class IndexingCommandRunner
             return $state;
         }
 
-        $cursor = '';
-        if ($scope === 'default') {
-            $latestRun = $this->indexerRunRepository->findLatestCompleted(
-                $request->getSourceType(),
-                $request->getIndexerUid()
-            );
-            if ($latestRun instanceof IndexerRun) {
-                $messageData = $latestRun->getMessageData();
-                $cursor = (string)($messageData['next_cursor'] ?? '');
-            }
-        }
-
         return $this->indexerStateRepository->createForExecution(
             $request->getIndexerIdentifier(),
             $request->getSourceType(),
             $request->getIndexerUid(),
             $scope,
-            $cursor
+            ''
         );
     }
 

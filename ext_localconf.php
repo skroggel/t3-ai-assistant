@@ -11,10 +11,19 @@ defined('TYPO3') || die();
 
 (static function() {
     $GLOBALS['TYPO3_CONF_VARS']['LOG']['Madj2k']['AiAssistant']['writerConfiguration'] = [
-        LogLevel::INFO => [
+        LogLevel::WARNING => [
             FileWriter::class => [
                 'disabled' => false,
                 'logFile' => Environment::getVarPath() . '/log/tx_aiassistant.log',
+            ],
+        ],
+    ];
+
+    $GLOBALS['TYPO3_CONF_VARS']['LOG']['Madj2k']['AiAssistant']['Indexing']['writerConfiguration'] = [
+        LogLevel::WARNING => [
+            FileWriter::class => [
+                'disabled' => false,
+                'logFile' => Environment::getVarPath() . '/log/tx_aiassistant_indexing.log',
             ],
         ],
     ];

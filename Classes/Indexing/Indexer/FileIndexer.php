@@ -177,14 +177,7 @@ final class FileIndexer extends AbstractIndexer
                             continue;
                         }
 
-                        foreach ($documents as $document) {
-                            $this->indexDocument(
-                                $configuration,
-                                $document,
-                                $request,
-                                $result
-                            );
-                        }
+                        $this->indexDocumentGroup($configuration, $documents, $request, $result);
                     } else {
                         $document = $adapter->extract($file['localPath'], $metadata);
                         if ($document === null) {
@@ -233,6 +226,7 @@ final class FileIndexer extends AbstractIndexer
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration Indexer configuration.
      * @param string $adapterIdentifier Adapter identifier.
      * @return \Madj2k\AiCore\DTO\DocumentMetadata Metadata.
+     * @throws \Doctrine\DBAL\Exception
      */
     private function buildMetadata(
         array $file,

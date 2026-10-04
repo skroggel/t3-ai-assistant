@@ -15,36 +15,67 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Indexing\Indexer;
 
-use Madj2k\AiCore\Indexing\VectorDocumentIndexer;
 use Madj2k\AiCore\DTO\DocumentMetadata;
-use Madj2k\AiCore\Indexing\DTO\IndexableDocument;
-use Madj2k\AiCore\Indexing\DTO\IndexingRequest;
-use Madj2k\AiCore\Indexing\DTO\IndexingResult;
-use Madj2k\AiCore\Indexing\Indexer\IndexerInterface;
+use Madj2k\AiCore\Indexing\Indexer\AbstractIndexer as CoreAbstractIndexer;
+use Madj2k\AiCore\Indexing\VectorDocumentIndexer;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
 use Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository;
 use Madj2k\AiAssistant\Indexing\Service\SourceStateService;
+use Psr\Log\LoggerInterface;
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
+ * Class AbstractIndexer
+ *
  * TYPO3 adapter shared by the concrete source indexers.
  *
  * Configuration lookup and persisted source state remain here; transforming an
  * indexable document into vectors is delegated to ai-core.
+ *
+ * @author Steffen Kroggel <developer@steffenkroggel.de>
+ * @copyright Steffen Kroggel <developer@steffenkroggel.de>, Maximilian Fäßler <maximilian@faesslerweb.de>
+ * @package Madj2k\AiAssistant
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3
  */
-abstract class AbstractIndexer implements IndexerInterface
+abstract class AbstractIndexer extends CoreAbstractIndexer
 {
+    protected readonly LoggerInterface $indexingLogger;
+
+    /**
+     * @param \Madj2k\AiAssistant\Indexing\Domain\Repository\IndexerConfigRepository $indexerConfigRepository
+     * @param \Madj2k\AiAssistant\Indexing\Service\SourceStateService $sourceStateService
+     * @param \Madj2k\AiCore\Indexing\VectorDocumentIndexer $vectorDocumentIndexer
+     * @param \TYPO3\CMS\Core\Log\LogManager|null $logManager
+     */
     public function __construct(
         protected readonly IndexerConfigRepository $indexerConfigRepository,
-        protected readonly SourceStateService $sourceStateService,
-        protected readonly VectorDocumentIndexer $vectorDocumentIndexer,
+        SourceStateService $sourceStateService,
+        VectorDocumentIndexer $vectorDocumentIndexer,
+        ?LogManager $logManager = null,
     ) {
+        parent::__construct($sourceStateService, $vectorDocumentIndexer);
+        $this->indexingLogger = ($logManager ?? GeneralUtility::makeInstance(LogManager::class))->getLogger(static::class);
     }
 
-    /** @return array<int, IndexerConfig> */
+    /**
+     * @param int|null $indexerUid
+     * @return array
+     */
     protected function resolveConfigurations(?int $indexerUid = null): array
     {
+        $this->indexingLogger->debug('Resolving indexer configurations.', [
+            'indexer' => $this->getIdentifier(),
+            'indexer_uid' => $indexerUid,
+        ]);
         if (($indexerUid ?? 0) > 0) {
             $configuration = $this->indexerConfigRepository->findByUid((int)$indexerUid);
+
+            if (!$configuration instanceof IndexerConfig) {
+                $this->indexingLogger->warning('Requested indexer configuration was not found.', [
+                    'indexer_uid' => $indexerUid,
+                ]);
+            }
 
             return $configuration instanceof IndexerConfig ? [$configuration] : [];
         }
@@ -56,12 +87,28 @@ abstract class AbstractIndexer implements IndexerInterface
             }
         }
 
+        $this->indexingLogger->debug('Indexer configurations resolved.', [
+            'count' => count($resolvedConfigurations),
+        ]);
+
         return $resolvedConfigurations;
     }
 
+    /**
+     * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig $configuration
+     * @param string $collectionOverride
+     * @return string
+     */
     protected function resolveCollection(IndexerConfig $configuration, string $collectionOverride = ''): string
     {
-        return $this->vectorDocumentIndexer->resolveCollection($configuration, $collectionOverride);
+        $collection = $this->vectorDocumentIndexer->resolveCollection($configuration, $collectionOverride);
+        $this->indexingLogger->debug('Resolved indexer collection.', [
+            'configuration_uid' => $configuration->getUid(),
+            'collection_override' => $collectionOverride !== '',
+            'collection' => $collection,
+        ]);
+
+        return $collection;
     }
 
     /**
@@ -69,7 +116,7 @@ abstract class AbstractIndexer implements IndexerInterface
      *
      * @param DocumentMetadata $metadata Document metadata.
      * @param IndexerConfig $configuration Indexer configuration.
-     * @return void
+     * @return bool Whether the document was indexed.
      */
     protected function addAdditionalMetadata(
         DocumentMetadata $metadata,
@@ -82,74 +129,4 @@ abstract class AbstractIndexer implements IndexerInterface
         }
     }
 
-    protected function indexDocument(
-        IndexerConfig $configuration,
-        IndexableDocument $document,
-        IndexingRequest $request,
-        IndexingResult $result,
-    ): void {
-        if ($document->getContent() === '') {
-            $result->increaseSkipped();
-            return;
-        }
-
-        $collection = $this->resolveCollection($configuration, $request->getCollection());
-        if ($collection === '') {
-            $result->increaseSkipped();
-            return;
-        }
-
-        if ($this->sourceStateService->shouldSkip(
-            $configuration,
-            $document,
-            $collection,
-            $request->isOnlyChanged(),
-        )) {
-            $result->increaseSkipped();
-            return;
-        }
-
-        try {
-            $sourceHashesToDelete = $this->sourceStateService->getStorageSourceHashesForDeletion(
-                $configuration,
-                $document,
-                $collection,
-            );
-            $chunksWritten = $this->vectorDocumentIndexer->index(
-                $configuration,
-                $document,
-                $collection,
-                $request->isDryRun(),
-                $sourceHashesToDelete,
-            );
-
-            if ($chunksWritten === 0) {
-                $result->increaseSkipped();
-                return;
-            }
-
-            if (!$request->isDryRun()) {
-                $this->sourceStateService->markIndexed($configuration, $document, $collection);
-            }
-
-            $result->increaseIndexed();
-            $result->increaseChunksTotal($chunksWritten);
-        } catch (\Throwable $exception) {
-            $result->increaseFailed();
-            $result->addDetail('source_error_' . $result->getProcessed(), [
-                'source_type' => $document->getMetadata()->getSourceType(),
-                'source_identifier' => $document->getMetadata()->getSourceIdentifier(),
-                'message' => $exception->getMessage(),
-            ]);
-
-            if (!$request->isDryRun()) {
-                $this->sourceStateService->markFailed($configuration, $document, $collection, $exception);
-            }
-        }
-    }
-
-    protected function isLimitReached(IndexingRequest $request, IndexingResult $result): bool
-    {
-        return $request->getLimit() !== null && $result->getProcessed() >= $request->getLimit();
-    }
 }

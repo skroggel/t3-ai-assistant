@@ -104,6 +104,53 @@ class IndexerSourceRepository extends AbstractRepository
         return $query->execute()->getFirst();
     }
 
+    /** @return array<int, IndexerSource> */
+    public function findByStorageCollectionAndGroupHash(int $vectorStoreConnection, string $collection, string $groupHash): array
+    {
+        if ($vectorStoreConnection <= 0 || trim($collection) === '' || trim($groupHash) === '') {
+            return [];
+        }
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->equals('vectorStoreConnection', $vectorStoreConnection),
+            $query->equals('collection', trim($collection)),
+            $query->equals('sourceGroupHash', trim($groupHash))
+        ));
+        return $query->execute()->toArray();
+    }
+
+    /**
+     * Removes source states by storage, collection and source hashes.
+     *
+     * @param int $vectorStoreConnection Vector store connection uid.
+     * @param string $collection Collection name.
+     * @param array<int, string> $hashes Source hashes.
+     * @return int Number of removed states.
+     */
+    public function deleteByStorageCollectionAndHashes(
+        int $vectorStoreConnection,
+        string $collection,
+        array $hashes,
+    ): int {
+        $hashes = array_values(array_unique(array_filter(array_map('trim', $hashes))));
+        if ($vectorStoreConnection <= 0 || trim($collection) === '' || $hashes === []) {
+            return 0;
+        }
+
+        $query = $this->createQuery();
+        $query->matching($query->logicalAnd(
+            $query->equals('vectorStoreConnection', $vectorStoreConnection),
+            $query->equals('collection', trim($collection)),
+            $query->in('sourceHash', $hashes),
+        ));
+        $states = $query->execute()->toArray();
+        foreach ($states as $state) {
+            $this->remove($state);
+        }
+
+        return count($states);
+    }
+
 
     /**
      * Finds source states by source type, vector store and collection.

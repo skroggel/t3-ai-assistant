@@ -13,12 +13,12 @@ return [
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
-        'searchFields' => 'source_type,source_id,source_hash,storage_source_hash,filename,path,content_checksum,collection,vector_store_connection',
+        'searchFields' => 'source_type,source_id,source_hash,source_group_hash,storage_source_hash,filename,path,content_checksum,collection,vector_store_connection',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
     ],
     'types' => [
         '1' => [
-            'showitem' => 'source_type, indexer_uid, vector_store_connection, source_id, source_hash, language, language_id, collection, page_id, path, filename, content_checksum, storage_source_hash, file_mtime, file_ctime, last_changed, last_indexed, status, locked_until, lock_token, last_error',
+            'showitem' => 'source_type, indexer_uid, vector_store_connection, source_id, source_hash, source_group_hash, language, language_id, collection, page_id, path, filename, content_checksum, storage_source_hash, file_mtime, file_ctime, last_changed, last_indexed, status, locked_until, lock_token, last_error',
         ]
     ],
     'columns' => [
@@ -56,6 +56,10 @@ return [
                 'eval' => 'trim',
                 'max' => 64,
             ],
+        ],
+        'source_group_hash' => [
+            'label' => $ll . 'tx_aiassistant_indexer_source.source_group_hash',
+            'config' => ['type' => 'input', 'readOnly' => true, 'eval' => 'trim', 'max' => 64],
         ],
         'language' => [
             'label' => $ll . 'tx_aiassistant_indexer_source.language',
