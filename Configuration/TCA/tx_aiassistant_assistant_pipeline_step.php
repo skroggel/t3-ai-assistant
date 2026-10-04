@@ -40,11 +40,11 @@ return [
         ],
 
         'retrieval' => [
-            'showitem' => 'retrieval_vector_store_connection, --linebreak--, retrieval_collection, --linebreak--, max_retrieval_results, --linebreak--, score_threshold, --linebreak--, max_context_chunks, --linebreak--, max_context_characters, --linebreak--, prompt_metadata_fields',
+            'showitem' => 'retrieval_vector_store_connection, --linebreak--, retrieval_collection, --linebreak--, max_retrieval_results, --linebreak--, score_threshold, --linebreak--, max_context_chunks, --linebreak--, max_context_characters, --linebreak--, max_chunk_characters, --linebreak--, prompt_metadata_fields',
         ],
 
         'context' => [
-            'showitem' => 'max_context_chunks, --linebreak--, max_context_characters, --linebreak--, prompt_metadata_fields',
+            'showitem' => 'max_context_chunks, --linebreak--, max_context_characters, --linebreak--, max_chunk_characters, --linebreak--, prompt_metadata_fields',
         ],
 
         'runtime' => [
@@ -286,6 +286,15 @@ return [
                 'type' => 'number',
                 'format' => 'integer',
                 'default' => 9000,
+            ],
+        ],
+        'max_chunk_characters' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.max_chunk_characters',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.max_chunk_characters.description',
+            'config' => [
+                'type' => 'number',
+                'format' => 'integer',
+                'default' => 1500,
             ],
         ],
         'prompt_metadata_fields' => [

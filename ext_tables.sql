@@ -60,6 +60,8 @@ CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
     `score_threshold` double DEFAULT '0' NOT NULL,
     `max_context_chunks` int(11) DEFAULT '6' NOT NULL,
     `max_context_characters` int(11) DEFAULT '9000' NOT NULL,
+    `max_chunks_per_result` int(11) DEFAULT '1' NOT NULL,
+    `max_chunk_characters` int(11) DEFAULT '0' NOT NULL,
     `prompt_metadata_fields` varchar(255) DEFAULT '' NOT NULL,
     `failure_strategy` varchar(255) DEFAULT 'continue' NOT NULL
 );

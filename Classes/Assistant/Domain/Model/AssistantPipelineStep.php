@@ -229,6 +229,20 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
      */
     protected int $maxContextCharacters = 8000;
 
+    /**
+     * Maximum number of excerpts created from one retrieval result.
+     *
+     * @var int
+     */
+    protected int $maxChunksPerResult = 1;
+
+    /**
+     * Maximum character length of one retrieval excerpt.
+     *
+     * @var int
+     */
+    protected int $maxChunkCharacters = 0;
+
 
     /**
      * Prompt metadata fields.
@@ -827,6 +841,30 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     public function setMaxContextCharacters(int $maxContextCharacters): void
     {
         $this->maxContextCharacters = $maxContextCharacters;
+    }
+
+
+    public function getMaxChunksPerResult(): int
+    {
+        return $this->maxChunksPerResult;
+    }
+
+
+    public function setMaxChunksPerResult(int $maxChunksPerResult): void
+    {
+        $this->maxChunksPerResult = $maxChunksPerResult;
+    }
+
+
+    public function getMaxChunkCharacters(): int
+    {
+        return $this->maxChunkCharacters;
+    }
+
+
+    public function setMaxChunkCharacters(int $maxChunkCharacters): void
+    {
+        $this->maxChunkCharacters = $maxChunkCharacters;
     }
 
 
