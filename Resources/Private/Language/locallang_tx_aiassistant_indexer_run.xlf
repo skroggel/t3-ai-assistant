@@ -4,7 +4,7 @@
 		<header/>
 		<body>
 			<trans-unit id="tx_aiassistant_indexer_run" resname="tx_aiassistant_indexer_run">
-				<source>AI Chat Index Run</source>
+				<source>AI Assistant Index Run</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer_run.chunks_total" resname="tx_aiassistant_indexer_run.chunks_total">
 				<source>Chunks Total</source>

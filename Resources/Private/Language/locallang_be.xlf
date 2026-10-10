@@ -34,7 +34,7 @@
 				<source>Maximum serialized runtime-settings payload accepted by the chat endpoint.</source>
 			</trans-unit>
 			<trans-unit id="plugin.tx_aiassistant_chat.title">
-				<source>AI Chat</source>
+				<source>AI Assistant</source>
 			</trans-unit>
 			<trans-unit id="plugin.tx_aiassistant_chat..description">
 				<source></source>
@@ -54,6 +54,12 @@
 			</trans-unit>
 			<trans-unit id="flexform.chat.sanitize_options.description">
 				<source>Optional DOMPurify configuration as JSON. The configured values are merged with the secure defaults.</source>
+			</trans-unit>
+			<trans-unit id="flexform.chat.include_default_styles">
+				<source>Include default chat styles</source>
+			</trans-unit>
+			<trans-unit id="flexform.chat.include_default_styles.description">
+				<source>Includes the built-in chat component CSS. Disable this when the host project provides its own styles.</source>
 			</trans-unit>
 			<trans-unit id="flexform.chat.sheet.language">
 				<source>Language</source>

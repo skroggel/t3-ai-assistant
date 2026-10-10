@@ -160,9 +160,33 @@
 				<source>Defines formatting, structure, citation behavior, and final answer requirements.</source>
 				<target>Definiert Formatierung, Struktur, Zitierverhalten und Anforderungen an die endgültige Antwort.</target>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.error_handling" resname="tx_aiassistant_assistant_profile.error_handling">
+				<source>Frontend error handling</source>
+				<target>Frontend-Fehlerbehandlung</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.error_handling_desc" resname="tx_aiassistant_assistant_profile.error_handling_desc">
+				<source>Controls whether frontend errors are shown or silently result in an empty answer.</source>
+				<target>Legt fest, ob Fehler im Frontend angezeigt werden oder still zu einer leeren Antwort führen.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.error_handling.default" resname="tx_aiassistant_assistant_profile.error_handling.default">
+				<source>Default: show error message</source>
+				<target>Standard: Fehlermeldung anzeigen</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.error_handling.silent" resname="tx_aiassistant_assistant_profile.error_handling.silent">
+				<source>Silent: return empty answer</source>
+				<target>Still: leere Antwort zurückgeben</target>
+			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.chat_pipeline_steps_desc" resname="tx_aiassistant_assistant_profile.chat_pipeline_steps_desc">
 				<source>Ordered pipeline steps that define how this assistant processes requests.</source>
 				<target>Geordnete Pipeline-Schritte, die definieren, wie dieser Assistent Anfragen verarbeitet.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.ui_components" resname="tx_aiassistant_assistant_profile.ui_components">
+				<source>UI components available to the pipeline</source>
+				<target>Für die Pipeline verfügbare UI-Komponenten</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.ui_components.description" resname="tx_aiassistant_assistant_profile.ui_components.description">
+				<source>Comma-separated UI component record UIDs. Pipeline steps can override this selection.</source>
+				<target>Kommagetrennte UIDs der UI-Komponenten. Pipeline-Schritte können diese Auswahl überschreiben.</target>
 			</trans-unit>
 		</body>
 	</file>

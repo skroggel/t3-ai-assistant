@@ -23,6 +23,14 @@
 				<source>Default Collection</source>
 				<target>Standard-Collection</target>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.collections" resname="tx_aiassistant_connection_vector_database.collections">
+				<source>Allowed Collections</source>
+				<target>Zulässige Collections</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_connection_vector_database.collections_desc" resname="tx_aiassistant_connection_vector_database.collections_desc">
+				<source>Collections available to retriever step overrides. Enter one collection per line. The default collection is always allowed.</source>
+				<target>Collections, die für Overrides in Retriever-Schritten verfügbar sind. Geben Sie pro Zeile eine Collection ein. Die Standard-Collection ist immer zulässig.</target>
+			</trans-unit>
 			<trans-unit id="tx_aiassistant_connection_vector_database.distance" resname="tx_aiassistant_connection_vector_database.distance">
 				<source>Distance</source>
 				<target>Distanz</target>
@@ -83,8 +91,6 @@
 				<source>Optional connector-specific vector database settings. Use one key-value pair per line or JSON if supported.</source>
 				<target>Optionale Connector-spezifische Vektordatenbank-Einstellungen. Verwenden Sie ein Schlüssel-Wert-Paar pro Zeile oder JSON, sofern unterstützt.</target>
 			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_vector_database.collections" resname="tx_aiassistant_connection_vector_database.collections"><source>Allowed Collections</source><target>Zulässige Collections</target></trans-unit>
-			<trans-unit id="tx_aiassistant_connection_vector_database.collections_desc" resname="tx_aiassistant_connection_vector_database.collections_desc"><source>Collections available to retriever step overrides. Enter one collection per line. The default collection is always allowed.</source><target>Collections, die für Overrides in Retriever-Schritten verfügbar sind. Geben Sie pro Zeile eine Collection ein. Die Standard-Collection ist immer zulässig.</target></trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-01-01T00:00:00Z" product-name="ai_assistant">
+        <body>
+            <trans-unit id="tx_aiassistant_ui_component">
+                <source>UI component</source>
+                <target>UI-Komponente</target>
+            </trans-unit>
+            <trans-unit id="override_tab">
+                <source>Override</source>
+                <target>Überschreiben</target>
+            </trans-unit>
+            <trans-unit id="definition_tab">
+            	<source>Definition</source>
+            	<target>Definition</target>
+            </trans-unit>
+            <trans-unit id="title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="identifier">
+                <source>Identifier</source>
+                <target>Identifier</target>
+            </trans-unit>
+            <trans-unit id="identifier.description">
+                <source>Unique technical identifier of the component. Used by the AI for identification. Use only lowercase letters, numbers and hyphens, for example: product-selection.</source>
+                <target>Eindeutiger technischer Identifier der Komponente. Wird von der KI zur Identifikation verwendet. Nur Kleinbuchstaben, Zahlen und Bindestriche verwenden, z. B. product-selection.</target>
+            </trans-unit>
+		   <trans-unit id="preset">
+                <source>Preset</source>
+                <target>Voreinstellung</target>
+            </trans-unit>
+            <trans-unit id="preset.description">
+                <source>Select a built-in component. Choose Custom only when you need to define the template and JSON configuration yourself.</source>
+                <target>Wählen Sie eine vordefinierte Komponente. Wählen Sie nur dann „Benutzerdefiniert“, wenn Sie Template und JSON-Konfiguration selbst definieren möchten.</target>
+            </trans-unit>
+            <trans-unit id="preset.select_list">
+                <source>Select list</source>
+                <target>Auswahlliste</target>
+            </trans-unit>
+            <trans-unit id="preset.link_list">
+                <source>Link list</source>
+                <target>Linkliste</target>
+            </trans-unit>
+            <trans-unit id="preset.link">
+                <source>Inline link</source>
+                <target>Inline-Link</target>
+            </trans-unit>
+            <trans-unit id="preset.buttons">
+                <source>Buttons</source>
+                <target>Buttons</target>
+            </trans-unit>
+            <trans-unit id="preset.progress_indicator">
+                <source>Progress indicator</source>
+                <target>Fortschrittsanzeige</target>
+            </trans-unit>
+            <trans-unit id="preset.decorative">
+                <source>Decorative separator</source>
+                <target>Dekorativer Trenner</target>
+            </trans-unit>
+            <trans-unit id="preset.headline">
+                <source>Headline</source>
+                <target>Überschrift</target>
+            </trans-unit>
+            <trans-unit id="preset.custom">
+                <source>Custom</source>
+                <target>Benutzerdefiniert</target>
+            </trans-unit>
+            <trans-unit id="description">
+                <source>Description for the AI</source>
+                <target>Beschreibung für die KI</target>
+            </trans-unit>
+   			<trans-unit id="override_description">
+   	         	<source>Override description for the AI</source>
+            	<target>Beschreibung für die KI überschreiben</target>
+            </trans-unit>
+            <trans-unit id="override_description.description">
+            	<source>Optional override. Leave empty to use the preset description.</source>
+            	<target>Optionaler Override. Leer lassen, um die Beschreibung der Voreinstellung zu verwenden.</target>
+            </trans-unit>
+            <trans-unit id="css_class">
+                <source>Additional CSS class</source>
+                <target>Zusätzliche CSS-Klasse</target>
+            </trans-unit>
+            <trans-unit id="css_class.description">
+                <source>Optional CSS class added to the outer component wrapper. Example: my-chat-choice-list.</source>
+                <target>Optionale CSS-Klasse, die am äußeren Komponenten-Wrapper ergänzt wird. Beispiel: my-chat-choice-list.</target>
+            </trans-unit>
+            <trans-unit id="template">
+                <source>Frontend template</source>
+                <target>Frontend-Template</target>
+            </trans-unit>
+            <trans-unit id="template.description">
+                <source>HTML-Template with defined placeholder. Example: &lt;div class="ai-select-list"&gt;{{#options}}&lt;button data-ai-action="select" data-ai-value="{{value}}"&gt;{{label}}&lt;/button&gt;{{/options}}&lt;/div&gt;</source>
+                <target>HTML-Template mit kontrollierten Platzhaltern. Beispiel: &lt;div class="ai-select-list"&gt;{{#options}}&lt;button data-ai-action="select" data-ai-value="{{value}}"&gt;{{label}}&lt;/button&gt;{{/options}}&lt;/div&gt;</target>
+            </trans-unit>
+			<trans-unit id="override_template">
+            	<source>Override template</source>
+            	<target>Template überschreiben</target>
+            </trans-unit>
+            <trans-unit id="override_template.description">
+       			<source>Optional override. Leave empty to use the preset. HTML-Template with defined placeholder. Example: &lt;div class="ai-select-list"&gt;{{#options}}&lt;button data-ai-action="select" data-ai-value="{{value}}"&gt;{{label}}&lt;/button&gt;{{/options}}&lt;/div&gt;</source>
+                <target>Optionaler Override. Leer lassen, um Voreinstellung zu verwenden. HTML-Template mit kontrollierten Platzhaltern. Beispiel: &lt;div class="ai-select-list"&gt;{{#options}}&lt;button data-ai-action="select" data-ai-value="{{value}}"&gt;{{label}}&lt;/button&gt;{{/options}}&lt;/div&gt;</target>
+            </trans-unit>
+            <trans-unit id="actions">
+                <source>Actions</source>
+                <target>Aktionen</target>
+            </trans-unit>
+            <trans-unit id="actions.description">
+                <source>JSON array with action identifiers, prompt templates and allowed placeholders. Example: [{"identifier":"select","promptTemplate":"Show me {{label}}.","placeholders":["label","value"]}]</source>
+                <target>JSON-Array mit Aktions-Identifiern, Prompt-Templates und erlaubten Platzhaltern. Beispiel: [{"identifier":"select","promptTemplate":"Zeige mir {{label}}.","placeholders":["label","value"]}]</target>
+            </trans-unit>
+            <trans-unit id="override_actions">
+            	<source>Override actions</source>
+            	<target>Aktionen überschreiben</target>
+            	</trans-unit>
+            <trans-unit id="override_actions.description">
+			   	<source>Optional override. Leave empty to use the preset. JSON array with action identifiers, prompt templates and allowed placeholders. Example: [{"identifier":"select","promptTemplate":"Show me {{label}}.","placeholders":["label","value"]}]</source>
+				<target>Optionaler Override. Leer lassen, um Voreinstellung zu verwenden. JSON-Array mit Aktions-Identifiern, Prompt-Templates und erlaubten Platzhaltern. Beispiel: [{"identifier":"select","promptTemplate":"Zeige mir {{label}}.","placeholders":["label","value"]}]</target>
+			</trans-unit>
+            <trans-unit id="button_actions">
+                <source>Buttons</source>
+                <target>Buttons</target>
+            </trans-unit>
+            <trans-unit id="button_actions.description">
+                <source>Define the visible label and prompt of each button. The technical action identifier is generated automatically.</source>
+                <target>Definieren Sie Label und Prompt jedes Buttons. Der technische Action-Identifier wird automatisch erzeugt.</target>
+            </trans-unit>
+            <trans-unit id="button">
+                <source>Button</source>
+                <target>Button</target>
+            </trans-unit>
+            <trans-unit id="button.label">
+                <source>Label</source>
+                <target>Label</target>
+            </trans-unit>
+            <trans-unit id="button.prompt_template">
+                <source>Prompt template</source>
+                <target>Prompt-Template</target>
+            </trans-unit>
+            <trans-unit id="button.prompt_template.description">
+                <source>Prompt sent when this button is clicked. You may use the configured placeholders.</source>
+                <target>Prompt, der beim Klick auf diesen Button gesendet wird. Die konfigurierten Platzhalter können verwendet werden.</target>
+            </trans-unit>
+            <trans-unit id="button.placeholders">
+                <source>Placeholders</source>
+                <target>Platzhalter</target>
+            </trans-unit>
+            <trans-unit id="data_schema">
+                <source>Data schema</source>
+                <target>Daten-Schema</target>
+            </trans-unit>
+            <trans-unit id="data_schema.description">
+                <source>JSON schema describing the data emitted by the AI. Example: {"options":{"type":"array"},"options[].label":{"type":"string"},"options[].value":{"type":"string"}}</source>
+                <target>JSON-Schema für die von der KI erzeugten Daten. Beispiel: {"options":{"type":"array"},"options[].label":{"type":"string"},"options[].value":{"type":"string"}}</target>
+            </trans-unit>
+			<trans-unit id="override_data_schema">
+            	<source>Override data schema</source>
+            	<target>Daten-Schema überschreiben</target>
+            </trans-unit>
+            <trans-unit id="override_data_schema.description">
+				<source>Optional override. Leave empty to use the preset. JSON schema describing the data emitted by the AI. Example: {"options":{"type":"array"},"options[].label":{"type":"string"},"options[].value":{"type":"string"}}</source>
+                <target>Optionaler Override. Leer lassen, um Voreinstellung zu verwenden. JSON-Schema für die von der KI erzeugten Daten. Beispiel: {"options":{"type":"array"},"options[].label":{"type":"string"},"options[].value":{"type":"string"}}</target>
+            	</trans-unit>
+            <trans-unit id="placeholders">
+                <source>Placeholders</source>
+                <target>Platzhalter</target>
+            </trans-unit>
+            <trans-unit id="placeholders.description">
+                <source>Comma-separated placeholders used by the template or prompt. Examples: label, value, options, context.currentStep, context.total.</source>
+                <target>Kommagetrennte Platzhalter für Template oder Prompt. Beispiele: label, value, options, context.currentStep, context.total.</target>
+            </trans-unit>
+            <trans-unit id="override_placeholders">
+				<source>Override placeholders</source>
+				<target>Platzhalter überschreiben</target>
+			</trans-unit>
+			<trans-unit id="override_placeholders.description">
+ 				<source>Optional override. Leave empty to use the preset. Comma-separated placeholders used by the template or prompt. Examples: label, value, options, context.currentStep, context.total.</source>
+                <target>Optionaler Override. Leer lassen, um Voreinstellung zu verwenden. Kommagetrennte Platzhalter für Template oder Prompt. Beispiele: label, value, options, context.currentStep, context.total.</target>
+			</trans-unit>
+            <trans-unit id="button.type"><source>Button type</source><target>Button-Typ</target></trans-unit>
+            <trans-unit id="button.type.prompt"><source>Prompt</source><target>Prompt</target></trans-unit>
+            <trans-unit id="button.type.link"><source>Link</source><target>Link</target></trans-unit>
+            <trans-unit id="button.url"><source>URL</source><target>URL</target></trans-unit>
+        </body>
+    </file>
+</xliff>

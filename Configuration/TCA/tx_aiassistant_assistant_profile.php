@@ -24,9 +24,10 @@ return [
             'showitem' => '
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_assistant,
                     title, assistant_label,
-                    intro_text, initial_message,
+                     intro_text, initial_message, error_handling,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_prompts,
-                    identity_prompt, behavior_rules, retrieval_rules, output_rules,
+                     identity_prompt, behavior_rules, retrieval_rules, output_rules,
+                     ui_components,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_pipeline,
                     chat_pipeline_steps,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_connections,
@@ -133,6 +134,19 @@ return [
                 'rows' => 5,
             ],
         ],
+        'error_handling' => [
+            'label' => $ll . 'tx_aiassistant_assistant_profile.error_handling',
+            'description' => $ll . 'tx_aiassistant_assistant_profile.error_handling_desc',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['label' => $ll . 'tx_aiassistant_assistant_profile.error_handling.default', 'value' => 'default'],
+                    ['label' => $ll . 'tx_aiassistant_assistant_profile.error_handling.silent', 'value' => 'silent'],
+                ],
+                'default' => 'default',
+            ],
+        ],
         'chat_pipeline_steps' => [
             'label' => $ll . 'tx_aiassistant_assistant_profile.chat_pipeline_steps',
             'description' => $ll . 'tx_aiassistant_assistant_profile.chat_pipeline_steps_desc',
@@ -146,6 +160,16 @@ return [
                     'expandSingle' => true,
                     'useSortable' => true,
                 ],
+            ],
+        ],
+        'ui_components' => [
+            'label' => $ll . 'tx_aiassistant_assistant_profile.ui_components',
+            'description' => $ll . 'tx_aiassistant_assistant_profile.ui_components.description',
+            'config' => [
+                'type' => 'group',
+                'allowed' => 'tx_aiassistant_ui_component',
+                'size' => 20,
+                'maxitems' => 20,
             ],
         ]
     ],

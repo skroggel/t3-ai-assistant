@@ -44,8 +44,8 @@
 				<target>Maximale Größe der serialisierten Runtime-Settings, die der Chat-Endpoint akzeptiert.</target>
 			</trans-unit>
 			<trans-unit id="plugin.tx_aiassistant_chat.title">
-				<source>AI Chat</source>
-				<target>AI Chat</target>
+				<source>AI Assistant</source>
+				<target>AI Assistant</target>
 			</trans-unit>
 			<trans-unit id="plugin.tx_aiassistant_chat..description">
 				<source/>
@@ -63,6 +63,14 @@
 			<trans-unit id="flexform.chat.require_consent">
 				<source>Require consent before starting the chat</source>
 				<target>Zustimmung vor dem Start des Chats erforderlich</target>
+			</trans-unit>
+			<trans-unit id="flexform.chat.include_default_styles">
+				<source>Include default chat styles</source>
+				<target>Standard-Chat-Styles einbinden</target>
+			</trans-unit>
+			<trans-unit id="flexform.chat.include_default_styles.description">
+				<source>Includes the built-in chat component CSS. Disable this when the host project provides its own styles.</source>
+				<target>Bindet das integrierte CSS der Chat-Komponenten ein. Deaktivieren, wenn das Host-Projekt eigene Styles bereitstellt.</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.sheet.language">
 				<source>Language</source>

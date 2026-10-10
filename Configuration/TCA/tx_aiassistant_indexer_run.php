@@ -15,6 +15,7 @@ return [
         ],
         'searchFields' => 'source_type,status',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
+        'hideTable' => true
     ],
     'types' => [
         '1' => [

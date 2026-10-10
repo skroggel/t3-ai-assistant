@@ -32,6 +32,7 @@ return [
         ],
         'searchFields' => 'indexer_identifier,source_type,scope,status',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
+        'hideTable' => true
     ],
     'types' => [
         '1' => [

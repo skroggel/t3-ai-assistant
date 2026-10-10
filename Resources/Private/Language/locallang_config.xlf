@@ -11,13 +11,13 @@
 			</trans-unit>
 
 			<trans-unit id="templates_backend_config.headline" resname="templates_backend_config.headline">
-				<source>AI Chat Configuration</source>
+				<source>AI Assistant Configuration</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.intro" resname="templates_backend_config.intro">
 				<source>Manage indexers, run previews, and review recent indexing activity.</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.tabs_aria_label" resname="templates_backend_config.tabs_aria_label">
-				<source>AI Chat sections</source>
+				<source>AI Assistant sections</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.tab_indexers" resname="templates_backend_config.tab_indexers">
 				<source>Indexing</source>
@@ -108,7 +108,7 @@
 				<source>Save</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.site_profiles_intro" resname="templates_backend_config.site_profiles_intro">
-				<source>Review which TYPO3 sites expose an AI chat profile, which collection they use, and whether their setup is unique and language-aware.</source>
+				<source>Review which TYPO3 sites expose an AI Assistant profile, which collection they use, and whether their setup is unique and language-aware.</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.chat_overview_intro" resname="templates_backend_config.chat_overview_intro">
 				<source>Review the currently active chat behavior for frontend conversations.</source>
@@ -405,7 +405,7 @@
 				<source>Recent errors</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.diagnostics_errors_intro" resname="templates_backend_config.diagnostics_errors_intro">
-				<source>Shows AI Chat error entries from the last two weeks. Expand an entry to inspect the raw log payload and stack trace.</source>
+				<source>Shows AI Assistant error entries from the last two weeks. Expand an entry to inspect the raw log payload and stack trace.</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.diagnostics_errors_component" resname="templates_backend_config.diagnostics_errors_component">
 				<source>Component</source>
@@ -417,7 +417,7 @@
 				<source>No recent ai_assistant errors found in the log file.</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.diagnostics_errors_empty_recent" resname="templates_backend_config.diagnostics_errors_empty_recent">
-				<source>No AI Chat errors in the last %s days.</source>
+				<source>No AI Assistant errors in the last %s days.</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.connectors_intro" resname="templates_backend_config.connectors_intro">
 				<source>Connectors define how external content is fetched. External indexers reference one connector and write the indexed data into their site-specific collection.</source>
@@ -878,6 +878,15 @@
 			<trans-unit id="templates_backend_config.central_configuration" resname="templates_backend_config.central_configuration">
 				<source>Central configuration</source>
 			</trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.title" resname="templates_backend_config.pipeline_export.title"><source>Pipeline Markdown export</source></trans-unit>
+			<trans-unit id="templates_backend_config.tab_pipeline_export" resname="templates_backend_config.tab_pipeline_export"><source>Pipeline export</source></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.intro" resname="templates_backend_config.pipeline_export.intro"><source>Export all relevant assistant prompts and pipeline settings as a Markdown brief for AI-assisted optimization.</source></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.profile" resname="templates_backend_config.pipeline_export.profile"><source>Assistant profile</source></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.choose" resname="templates_backend_config.pipeline_export.choose"><source>Choose an assistant profile</source></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.copy" resname="templates_backend_config.pipeline_export.copy"><source>Copy Markdown</source></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.download" resname="templates_backend_config.pipeline_export.download"><source>Download Markdown</source></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.submit" resname="templates_backend_config.pipeline_export.submit"><source>Start export</source></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.download_hint" resname="templates_backend_config.pipeline_export.download_hint"><source>The selected assistant pipeline will be downloaded as a Markdown file.</source></trans-unit>
 			<trans-unit id="templates_backend_config.central_configuration_intro" resname="templates_backend_config.central_configuration_intro">
 				<source>Only runtime settings for chat memory and pipeline logging are managed here. Connection data, assistants and indexers are regular TCA records.</source>
 			</trans-unit>
@@ -1035,13 +1044,13 @@
 				<source>Payload</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.module_title" resname="templates_backend_config.module_title">
-				<source>AI Chat backend</source>
+				<source>AI Assistant backend</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.module_intro" resname="templates_backend_config.module_intro">
 				<source>Central configuration, connection diagnostics and chat pipeline logs.</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.module_navigation" resname="templates_backend_config.module_navigation">
-				<source>AI Chat backend module navigation</source>
+				<source>AI Assistant backend module navigation</source>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.tab_configuration" resname="templates_backend_config.tab_configuration">
 				<source>Configuration</source>

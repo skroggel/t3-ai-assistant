@@ -4,14 +4,18 @@
             v-for="message in messages"
             :key="message.id"
             class="chat-box-message"
-            :class="message.role === 'user' ? 'chat-box-message--from-user' : 'chat-box-message--from-bot'"
+            :class="[
+                message.source === 'ui'
+                    ? 'chat-box-message--from-ui'
+                    : (message.role === 'user' ? 'chat-box-message--from-user' : 'chat-box-message--from-bot'),
+            ]"
             :lang="message.role === 'assistant' ? message.languageCode : undefined"
         >
             <span class="aiassistant-visually-hidden">
                 {{ message.role === 'user' ? userLabel : assistantLabel }}:
             </span>
             <div class="chat-box-message-content">
-                <span v-html="message.html" />
+                <div v-html="message.html" />
                 <span v-if="message.typing" class="chat-box-typing-dots" aria-label="Loading">
                     <span class="dot" aria-hidden="true"></span>
                     <span class="dot" aria-hidden="true"></span>
@@ -27,6 +31,7 @@
  * @typedef {Object} ChatMessage
  * @property {string} id Stable message identifier.
  * @property {'user'|'assistant'} role Message origin.
+ * @property {'ui'|undefined} source Optional source of a generated user message.
  * @property {string} html Sanitized rendered HTML.
  */
 

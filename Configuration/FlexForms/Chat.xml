@@ -40,6 +40,14 @@
                             <eval>trim</eval>
                         </config>
                     </settings.sanitizeOptions>
+                    <settings.includeDefaultStyles>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.include_default_styles</label>
+                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.include_default_styles.description</description>
+                        <config>
+                            <type>check</type>
+                            <default>1</default>
+                        </config>
+                    </settings.includeDefaultStyles>
                 </el>
             </ROOT>
         </sDEF>

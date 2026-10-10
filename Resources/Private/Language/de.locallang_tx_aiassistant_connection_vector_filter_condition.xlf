@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-01-01T00:00:00Z" product-name="ai_assistant">
+        <body>
+            <trans-unit id="tx_aiassistant_connection_vector_filter_condition" resname="tx_aiassistant_connection_vector_filter_condition">
+                <source>Vector search filter condition</source>
+                <target>Filterbedingung für die Vektorsuche</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_connection_vector_filter_condition.field" resname="tx_aiassistant_connection_vector_filter_condition.field">
+                <source>Payload field path</source>
+                <target>Payload-Feldpfad</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_connection_vector_filter_condition.operator" resname="tx_aiassistant_connection_vector_filter_condition.operator">
+                <source>Operator</source>
+                <target>Operator</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_connection_vector_filter_condition.value" resname="tx_aiassistant_connection_vector_filter_condition.value">
+                <source>Value</source>
+                <target>Wert</target>
+            </trans-unit>
+            <trans-unit id="tx_aiassistant_connection_vector_filter_condition.value.description" resname="tx_aiassistant_connection_vector_filter_condition.value.description">
+                <source>For In list, enter comma- or line-separated values. TYPO3 placeholder: ###FE_LANG###.</source>
+                <target>Bei „In Liste“ kommaseparierte oder zeilengetrennte Werte eingeben. TYPO3-Platzhalter: ###FE_LANG###.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

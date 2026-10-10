@@ -12,16 +12,16 @@
 				<target>AiAssistant: Konfiguration</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.headline" resname="templates_backend_config.headline">
-				<source>AI Chat Configuration</source>
-				<target>AI-Chat-Konfiguration</target>
+				<source>AI Assistant Configuration</source>
+				<target>AI Assistant-Konfiguration</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.intro" resname="templates_backend_config.intro">
 				<source>Manage indexers, run previews, and review recent indexing activity.</source>
 				<target>Verwalte Indexer, starte Previews und prüfe die letzten Indexierungsaktivitäten.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.tabs_aria_label" resname="templates_backend_config.tabs_aria_label">
-				<source>AI Chat sections</source>
-				<target>AI-Chat-Bereiche</target>
+				<source>AI Assistant sections</source>
+				<target>AI Assistant-Bereiche</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.tab_indexers" resname="templates_backend_config.tab_indexers">
 				<source>Indexing</source>
@@ -140,8 +140,8 @@
 				<target>Speichern</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.site_profiles_intro" resname="templates_backend_config.site_profiles_intro">
-				<source>Review which TYPO3 sites expose an AI chat profile, which collection they use, and whether their setup is unique and language-aware.</source>
-				<target>Prüfe, welche TYPO3-Sites ein AI-Chat-Profil bereitstellen, welche Collection sie nutzen und ob ihre Konfiguration eindeutig und sprachabhängig ist.</target>
+				<source>Review which TYPO3 sites expose an AI Assistant profile, which collection they use, and whether their setup is unique and language-aware.</source>
+				<target>Prüfe, welche TYPO3-Sites ein AI Assistant-Profil bereitstellen, welche Collection sie nutzen und ob ihre Konfiguration eindeutig und sprachabhängig ist.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.chat_overview_intro" resname="templates_backend_config.chat_overview_intro">
 				<source>Review the currently active chat behavior for frontend conversations.</source>
@@ -512,8 +512,8 @@
 				<target>Letzte Fehler</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.diagnostics_errors_intro" resname="templates_backend_config.diagnostics_errors_intro">
-				<source>Shows AI Chat error entries from the last two weeks. Expand an entry to inspect the raw log payload and stack trace.</source>
-				<target>Zeigt AI-Chat-Fehler der letzten zwei Wochen. Klappe einen Eintrag auf, um das Raw-Log-Payload und den Stacktrace zu prüfen.</target>
+				<source>Shows AI Assistant error entries from the last two weeks. Expand an entry to inspect the raw log payload and stack trace.</source>
+				<target>Zeigt AI Assistant-Fehler der letzten zwei Wochen. Klappe einen Eintrag auf, um das Raw-Log-Payload und den Stacktrace zu prüfen.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.diagnostics_errors_component" resname="templates_backend_config.diagnostics_errors_component">
 				<source>Component</source>
@@ -528,8 +528,8 @@
 				<target>Keine aktuellen ai_assistant-Fehler in der Logdatei gefunden.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.diagnostics_errors_empty_recent" resname="templates_backend_config.diagnostics_errors_empty_recent">
-				<source>No AI Chat errors in the last %s days.</source>
-				<target>Keine AI-Chat-Fehler in den letzten %s Tagen.</target>
+				<source>No AI Assistant errors in the last %s days.</source>
+				<target>Keine AI Assistant-Fehler in den letzten %s Tagen.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.connectors_intro" resname="templates_backend_config.connectors_intro">
 				<source>Connectors define how external content is fetched. External indexers reference one connector and write the indexed data into their site-specific collection.</source>
@@ -995,6 +995,15 @@
 				<source>Central configuration</source>
 				<target>Zentrale Konfiguration</target>
 			</trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.title" resname="templates_backend_config.pipeline_export.title"><source>Pipeline Markdown export</source><target>Markdown-Export der Pipeline</target></trans-unit>
+			<trans-unit id="templates_backend_config.tab_pipeline_export" resname="templates_backend_config.tab_pipeline_export"><source>Pipeline export</source><target>Pipeline-Export</target></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.intro" resname="templates_backend_config.pipeline_export.intro"><source>Export all relevant assistant prompts and pipeline settings as a Markdown brief for AI-assisted optimization.</source><target>Exportiert alle relevanten Prompts und Pipeline-Einstellungen als Markdown-Briefing zur KI-gestützten Optimierung.</target></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.profile" resname="templates_backend_config.pipeline_export.profile"><source>Assistant profile</source><target>Assistant-Profil</target></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.choose" resname="templates_backend_config.pipeline_export.choose"><source>Choose an assistant profile</source><target>Assistant-Profil auswählen</target></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.copy" resname="templates_backend_config.pipeline_export.copy"><source>Copy Markdown</source><target>Markdown kopieren</target></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.download" resname="templates_backend_config.pipeline_export.download"><source>Download Markdown</source><target>Markdown herunterladen</target></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.submit" resname="templates_backend_config.pipeline_export.submit"><source>Start export</source><target>Export starten</target></trans-unit>
+			<trans-unit id="templates_backend_config.pipeline_export.download_hint" resname="templates_backend_config.pipeline_export.download_hint"><source>The selected assistant pipeline will be downloaded as a Markdown file.</source><target>Die ausgewählte Assistant-Pipeline wird als Markdown-Datei heruntergeladen.</target></trans-unit>
 			<trans-unit id="templates_backend_config.central_configuration_intro" resname="templates_backend_config.central_configuration_intro">
 				<source>Only runtime settings for chat memory and pipeline logging are managed here. Connection data, assistants and indexers are regular TCA records.</source>
 				<target>Hier werden nur Laufzeiteinstellungen für Chat-Speicher und Pipeline-Logging verwaltet. Verbindungen, Assistenten und Indexer sind reguläre TCA-Datensätze.</target>
@@ -1204,16 +1213,16 @@
 				<target>Nutzdaten</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.module_title" resname="templates_backend_config.module_title">
-				<source>AI Chat backend</source>
-				<target>AI-Chat-Backend</target>
+				<source>AI Assistant backend</source>
+				<target>AI Assistant-Backend</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.module_intro" resname="templates_backend_config.module_intro">
 				<source>Central configuration, connection diagnostics and chat pipeline logs.</source>
 				<target>Zentrale Konfiguration, Verbindungsdiagnose und Chat-Pipeline-Logs.</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.module_navigation" resname="templates_backend_config.module_navigation">
-				<source>AI Chat backend module navigation</source>
-				<target>Navigation des AI-Chat-Backend-Moduls</target>
+				<source>AI Assistant backend module navigation</source>
+				<target>Navigation des AI Assistant-Backend-Moduls</target>
 			</trans-unit>
 			<trans-unit id="templates_backend_config.tab_configuration" resname="templates_backend_config.tab_configuration">
 				<source>Configuration</source>

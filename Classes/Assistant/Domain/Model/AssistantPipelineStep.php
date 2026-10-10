@@ -15,14 +15,19 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Assistant\Domain\Model;
 
+use Madj2k\AiCore\Assistant\Configuration\FilterAwarePipelineStepConfigurationInterface;
+use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
 use Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface;
 use Madj2k\AiCore\Assistant\Enum\HistoryMode;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineStage;
-use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
+use Madj2k\AiAssistant\Connection\Domain\Model\VectorFilterCondition;
 use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use Madj2k\AiCore\Connection\VectorStore\Filter\DTO\FilterCondition;
+use Madj2k\AiCore\Connection\VectorStore\Filter\DTO\FilterGroup;
+use Madj2k\AiCore\Connection\VectorStore\Filter\DTO\FilterOperator;
 
 /**
  * Class AssistantPipelineStep
@@ -35,7 +40,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  * @package Madj2k\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3
  */
-class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfigurationInterface
+class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelineStepConfigurationInterface
 {
     /**
      * Assistant profile uid.
@@ -67,6 +72,15 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
      * @var string
      */
     protected string $processorIdentifier = '';
+
+    /**
+     * Stable retrieval target identifier.
+     *
+     * @var string
+     */
+    protected string $retrievalIdentifier = '';
+    protected string $retrievalSelectionInstructions = '';
+    protected string $retrievalSelectionMetadata = '';
 
 
     /**
@@ -139,6 +153,30 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
      * @var string
      */
     protected string $stepOutputRules = '';
+
+
+    /**
+     * UI component selection mode.
+     *
+     * @var string
+     */
+    protected string $uiComponentsMode = 'inherit';
+
+
+    /**
+     * UI component record UIDs configured for this step.
+     *
+     * @var string
+     */
+    protected string $uiComponents = '';
+
+
+    /**
+     * Retrieval filter conditions.
+     *
+     * @var ObjectStorage<VectorFilterCondition>|null
+     */
+    protected ?ObjectStorage $retrievalFilterConditions = null;
 
 
     /**
@@ -361,6 +399,25 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
         $this->processorIdentifier = $processorIdentifier;
     }
 
+    public function getRetrievalIdentifier(): string
+    {
+        return trim($this->retrievalIdentifier);
+    }
+
+    public function setRetrievalIdentifier(string $retrievalIdentifier): void
+    {
+        $this->retrievalIdentifier = $retrievalIdentifier;
+    }
+
+    /** @return string Retrieval selector instructions. */
+    public function getRetrievalSelectionInstructions(): string { return trim($this->retrievalSelectionInstructions); }
+    /** @param string $value Retrieval selector instructions. @return void */
+    public function setRetrievalSelectionInstructions(string $value): void { $this->retrievalSelectionInstructions = $value; }
+    /** @return string Retrieval selector metadata schema. */
+    public function getRetrievalSelectionMetadata(): string { return trim($this->retrievalSelectionMetadata); }
+    /** @param string $value Retrieval selector metadata schema. @return void */
+    public function setRetrievalSelectionMetadata(string $value): void { $this->retrievalSelectionMetadata = $value; }
+
     /**
      * Returns the typed stage.
      *
@@ -576,6 +633,98 @@ class AssistantPipelineStep extends AbstractEntity implements PipelineStepConfig
     public function setStepOutputRules(string $stepOutputRules): void
     {
         $this->stepOutputRules = $stepOutputRules;
+    }
+
+
+    /**
+     * Returns the UI component selection mode.
+     *
+     * @return string Selection mode.
+     */
+    public function getUiComponentsMode(): string
+    {
+        return in_array($this->uiComponentsMode, ['inherit', 'replace', 'extend'], true)
+            ? $this->uiComponentsMode
+            : 'inherit';
+    }
+
+
+    /**
+     * Sets the UI component selection mode.
+     *
+     * @param string $uiComponentsMode Selection mode.
+     * @return void
+     */
+    public function setUiComponentsMode(string $uiComponentsMode): void
+    {
+        $this->uiComponentsMode = $uiComponentsMode;
+    }
+
+
+    /**
+     * Returns the configured UI component record UIDs.
+     *
+     * @return array<int,int> Component record UIDs.
+     */
+    public function getUiComponentUids(): array
+    {
+        return array_values(array_filter(
+            array_map(static fn (string $item): int => (int)trim($item), explode(',', $this->uiComponents)),
+            static fn (int $item): bool => $item > 0,
+        ));
+    }
+
+
+    /**
+     * Sets the configured UI component record UIDs.
+     *
+     * @param string $uiComponents Comma-separated component record UIDs.
+     * @return void
+     */
+    public function setUiComponents(string $uiComponents): void
+    {
+        $this->uiComponents = $uiComponents;
+    }
+
+
+    /**
+     * Returns the configured retrieval filter.
+     *
+     * @return FilterGroup|null Retrieval filter.
+     */
+    public function getRetrievalFilter(): ?FilterGroup
+    {
+        $conditions = [];
+        foreach ($this->retrievalFilterConditions ?? [] as $condition) {
+            if (!$condition instanceof VectorFilterCondition || $condition->getField() === '') {
+                continue;
+            }
+
+            $operator = FilterOperator::tryFrom($condition->getOperator());
+            if ($operator === null) {
+                continue;
+            }
+
+            $value = $condition->getValue();
+            if ($operator === FilterOperator::In) {
+                $value = array_values(array_filter(array_map('trim', preg_split('/[,\r\n]+/', $value) ?: [])));
+            }
+            $conditions[] = new FilterCondition($condition->getField(), $operator, $value);
+        }
+
+        return $conditions === [] ? null : new FilterGroup(conditions: $conditions);
+    }
+
+
+    /**
+     * Sets retrieval filter conditions.
+     *
+     * @param ObjectStorage<VectorFilterCondition> $conditions Filter conditions.
+     * @return void
+     */
+    public function setRetrievalFilterConditions(ObjectStorage $conditions): void
+    {
+        $this->retrievalFilterConditions = $conditions;
     }
 
 

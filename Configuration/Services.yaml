@@ -94,6 +94,7 @@ services:
   Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\QualityGateProcessor: ~
 
   Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\QueryOptimizerProcessor: ~
+  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\RetrievalSelectionProcessor: ~
 
   Madj2k\AiCore\Assistant\Pipeline\Processor\Retrieval\RetrievalReadProcessor: ~
 
@@ -116,6 +117,27 @@ services:
   Madj2k\AiCore\Assistant\Prompt\Context\Builder\QueryContextBuilder: ~
 
   Madj2k\AiCore\Assistant\Prompt\Context\Builder\RetrievalContextBuilder: ~
+
+  Madj2k\AiAssistant\Assistant\UIComponents\Provider: ~
+  Madj2k\AiAssistant\Assistant\Retrieval\Provider: ~
+  Madj2k\AiCore\Assistant\Context\Retrieval\RetrievalTargetProviderInterface:
+    alias: Madj2k\AiAssistant\Assistant\Retrieval\Provider
+
+  Madj2k\AiAssistant\Connection\VectorStore\Filter\TYPO3FilterValueResolver: ~
+
+  Madj2k\AiCore\Connection\VectorStore\Filter\FilterValueResolverInterface:
+    alias: Madj2k\AiAssistant\Connection\VectorStore\Filter\TYPO3FilterValueResolver
+
+  Madj2k\AiCore\Assistant\UIComponents\Defaults\Provider: ~
+
+  Madj2k\AiCore\Assistant\UIComponents\ProviderInterface:
+    alias: Madj2k\AiAssistant\Assistant\UIComponents\Provider
+
+  Madj2k\AiCore\Assistant\Prompt\Context\Builder\UIComponentsContextBuilder: ~
+  Madj2k\AiCore\Assistant\Prompt\Context\Builder\RetrievalSelectionContextBuilder: ~
+  Madj2k\AiCore\Assistant\Prompt\Context\Builder\RetrievalPlanContextBuilder: ~
+
+  Madj2k\AiCore\Assistant\Export\PipelineMarkdownExporter: ~
 
   Madj2k\AiCore\Assistant\Prompt\Context\Registry\ContextBuilderRegistry:
     arguments:

@@ -33,6 +33,8 @@ CREATE TABLE `tx_aiassistant_assistant_profile` (
     `behavior_rules` text,
     `retrieval_rules` text,
     `output_rules` text,
+    `error_handling` varchar(16) DEFAULT 'default' NOT NULL,
+    `ui_components` varchar(2048) DEFAULT '' NOT NULL
 );
 
 CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
@@ -40,6 +42,9 @@ CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
     `title` varchar(255) DEFAULT '' NOT NULL,
     `type` varchar(255) DEFAULT '' NOT NULL,
     `processor_identifier` varchar(255) DEFAULT '' NOT NULL,
+    `retrieval_identifier` varchar(128) DEFAULT '' NOT NULL,
+    `retrieval_selection_instructions` text,
+    `retrieval_selection_metadata` text,
     `stage` varchar(255) DEFAULT 'retrieval' NOT NULL,
     `include_identity_prompt` tinyint(4) unsigned DEFAULT '1' NOT NULL,
     `include_behavior_rules` tinyint(4) unsigned DEFAULT '0' NOT NULL,
@@ -49,6 +54,8 @@ CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
     `step_behavior_rules` text,
     `step_retrieval_rules` text,
     `step_output_rules` text,
+    `ui_components_mode` varchar(16) DEFAULT 'inherit' NOT NULL,
+    `ui_components` varchar(2048) DEFAULT '' NOT NULL,
     `history_mode` varchar(255) DEFAULT 'last_n' NOT NULL,
     `history_limit` int(11) DEFAULT '5' NOT NULL,
     `model` varchar(255) DEFAULT '' NOT NULL,
@@ -64,6 +71,39 @@ CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
     `max_chunk_characters` int(11) DEFAULT '0' NOT NULL,
     `prompt_metadata_fields` varchar(255) DEFAULT '' NOT NULL,
     `failure_strategy` varchar(255) DEFAULT 'continue' NOT NULL
+);
+
+CREATE TABLE `tx_aiassistant_connection_vector_filter_condition` (
+    `pipeline_step` int(11) unsigned DEFAULT '0' NOT NULL,
+    `field` varchar(255) DEFAULT '' NOT NULL,
+    `operator` varchar(32) DEFAULT 'equals' NOT NULL,
+    `value` text
+);
+
+CREATE TABLE `tx_aiassistant_ui_component` (
+    `title` varchar(255) DEFAULT '' NOT NULL,
+    `preset` varchar(128) DEFAULT 'custom' NOT NULL,
+    `css_class` varchar(255) DEFAULT '' NOT NULL,
+    `identifier` varchar(128) DEFAULT '' NOT NULL,
+    `description` text,
+    `template` text,
+    `actions` text,
+    `data_schema` text,
+    `placeholders` varchar(2048) DEFAULT '' NOT NULL,
+    `override_description` text,
+    `override_template` text,
+    `override_actions` text,
+    `override_data_schema` text,
+    `override_placeholders` varchar(2048) DEFAULT '' NOT NULL
+);
+
+CREATE TABLE `tx_aiassistant_ui_component_button` (
+    `ui_component` int(11) unsigned DEFAULT '0' NOT NULL,
+    `label` varchar(255) DEFAULT '' NOT NULL,
+    `type` varchar(16) DEFAULT 'prompt' NOT NULL,
+    `url` varchar(2048) DEFAULT '' NOT NULL,
+    `prompt_template` text,
+    `placeholders` varchar(2048) DEFAULT '' NOT NULL
 );
 
 CREATE TABLE `tx_aiassistant_pipeline_trace` (

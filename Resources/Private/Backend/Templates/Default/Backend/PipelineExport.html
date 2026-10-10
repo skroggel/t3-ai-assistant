@@ -1,0 +1,35 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+<div class="aiassistant-config">
+    <f:render partial="Backend/Module/Header" arguments="{_all}" />
+    <f:render partial="Backend/Module/Navigation" arguments="{_all}" />
+
+    <div class="aiassistant-config__card">
+        <h2 class="aiassistant-config__subtitle">
+            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_export.title" />
+        </h2>
+        <p class="aiassistant-config__intro">
+            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_export.intro" />
+        </p>
+
+        <form action="{actions.pipelineExportDownload}" method="post" class="aiassistant-config__inline-form">
+            <input type="hidden" name="formToken" value="{formToken}" />
+            <label for="pipeline-export-profile"><strong><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_export.profile" /></strong></label>
+            <select id="pipeline-export-profile" name="assistantProfile" class="aiassistant-config__input">
+                <option value="0"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_export.choose" /></option>
+                <f:for each="{pipelineExportProfiles}" as="profile">
+                    <f:if condition="{profile.uid} == {pipelineExportProfileUid}">
+                        <f:then><option value="{profile.uid}" selected="selected">{profile.title}</option></f:then>
+                        <f:else><option value="{profile.uid}">{profile.title}</option></f:else>
+                    </f:if>
+                </f:for>
+            </select>
+            <button type="submit" class="aiassistant-config__button">
+                <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_export.submit" />
+            </button>
+        </form>
+
+        <p class="aiassistant-config__hint">
+            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_export.download_hint" />
+        </p>
+    </div>
+</div>

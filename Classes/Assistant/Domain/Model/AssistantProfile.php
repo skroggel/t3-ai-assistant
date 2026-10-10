@@ -92,6 +92,22 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
 
 
     /**
+     * Frontend error handling mode.
+     *
+     * @var string
+     */
+    protected string $errorHandling = 'default';
+
+
+    /**
+     * UI component record UIDs available to the pipeline.
+     *
+     * @var string
+     */
+    protected string $uiComponents = '';
+
+
+    /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\AiAssistant\Assistant\Domain\Model\AssistantPipelineStep>
      */
     protected ObjectStorage $chatPipelineSteps;
@@ -297,6 +313,31 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
 
 
     /**
+     * Returns the frontend error handling mode.
+     *
+     * @return string Error handling mode.
+     */
+    public function getErrorHandling(): string
+    {
+        return in_array($this->errorHandling, ['default', 'silent'], true)
+            ? $this->errorHandling
+            : 'default';
+    }
+
+
+    /**
+     * Sets the frontend error handling mode.
+     *
+     * @param string $errorHandling Error handling mode.
+     * @return void
+     */
+    public function setErrorHandling(string $errorHandling): void
+    {
+        $this->errorHandling = $errorHandling;
+    }
+
+
+    /**
      * Returns the configured chat pipeline steps.
      *
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\AiAssistant\Assistant\Domain\Model\AssistantPipelineStep>
@@ -343,6 +384,28 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     }
 
     /**
+     * Returns the configured UI component record UIDs.
+     *
+     * @return array<int,int> Component record UIDs.
+     */
+    public function getUiComponentUids(): array
+    {
+        return $this->splitList($this->uiComponents);
+    }
+
+
+    /**
+     * Sets the configured UI component record UIDs.
+     *
+     * @param string $uiComponents Comma-separated component record UIDs.
+     * @return void
+     */
+    public function setUiComponents(string $uiComponents): void
+    {
+        $this->uiComponents = $uiComponents;
+    }
+
+    /**
      * Returns the AI connection.
      *
      * @return \Madj2k\AiAssistant\Connection\Domain\Model\AiConnection|null AI connection.
@@ -385,6 +448,21 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     public function setVectorStoreConnection(?VectorStoreConnection $vectorStoreConnection): void
     {
         $this->vectorStoreConnection = $vectorStoreConnection;
+    }
+
+
+    /**
+     * Splits a comma-separated relation value into numeric UIDs.
+     *
+     * @param string $value Relation value.
+     * @return array<int,int> UIDs.
+     */
+    private function splitList(string $value): array
+    {
+        return array_values(array_filter(
+            array_map(static fn (string $item): int => (int)trim($item), explode(',', $value)),
+            static fn (int $item): bool => $item > 0,
+        ));
     }
 
 }

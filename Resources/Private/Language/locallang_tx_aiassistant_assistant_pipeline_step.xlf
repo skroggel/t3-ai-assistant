@@ -243,6 +243,39 @@
 			<trans-unit id="tx_aiassistant_assistant_pipeline_step.mcp_connections.description" resname="tx_aiassistant_assistant_pipeline_step.mcp_connections.description">
 				<source>Optionally overrides the assistant profile's MCP connections for this step. Leave empty to inherit the profile configuration.</source>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode"><source>UI component selection</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode.description" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode.description"><source>Controls whether this step inherits, replaces or extends the pipeline components.</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode.inherit" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode.inherit"><source>Inherit</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode.replace" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode.replace"><source>Replace</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode.extend" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode.extend"><source>Extend</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components" resname="tx_aiassistant_assistant_pipeline_step.ui_components"><source>UI components for this step</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components.description" resname="tx_aiassistant_assistant_pipeline_step.ui_components.description"><source>Component records used by this step.</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_identifier" resname="tx_aiassistant_assistant_pipeline_step.retrieval_identifier"><source>Retrieval identifier</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_identifier.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_identifier.description"><source>Stable identifier used by retrieval selection. It must be unique within the assistant.</source></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_ui_components" resname="tx_aiassistant_assistant_pipeline_step.tab_ui_components">
+				<source>UI components</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions" resname="tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions">
+				<source>Vector search filters</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions.description">
+				<source>All configured conditions must match the indexed payload.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_retrieval_selection" resname="tx_aiassistant_assistant_pipeline_step.tab_retrieval_selection">
+				<source>Retrieval selection</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions" resname="tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions">
+				<source>Selection instructions</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions.description">
+				<source>Additional rules for selecting retrieval targets. The JSON output contract remains fixed.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata" resname="tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata">
+				<source>Metadata schema (JSON)</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata.description">
+				<source>Optional metadata fields returned inside the fixed metadata object.</source>
+			</trans-unit>
 			</body>
 	</file>
 </xliff>

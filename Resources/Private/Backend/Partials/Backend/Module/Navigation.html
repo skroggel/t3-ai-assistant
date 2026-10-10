@@ -19,4 +19,8 @@
 		<f:then><span class="aiassistant-config__tab is-active"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.tab_pipeline_logs" /></span></f:then>
 		<f:else><a class="aiassistant-config__tab" href="{actions.logs}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.tab_pipeline_logs" /></a></f:else>
 	</f:if>
+	<f:if condition="{activeDomain} == 'pipelineExport'">
+		<f:then><span class="aiassistant-config__tab is-active"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.tab_pipeline_export" /></span></f:then>
+		<f:else><a class="aiassistant-config__tab" href="{actions.pipelineExport}"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.tab_pipeline_export" /></a></f:else>
+	</f:if>
 </nav>

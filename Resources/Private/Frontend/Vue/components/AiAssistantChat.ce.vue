@@ -1,5 +1,10 @@
 <template>
-    <section class="aiassistant-chat chat-box container" role="region" :aria-label="labels.chatLabel || chatLabel">
+    <section
+        :class="['aiassistant-chat', 'chat-box', 'container', { 'aiassistant-chat--default-styles': defaultStylesEnabled }]"
+        role="region"
+        :aria-label="labels.chatLabel || chatLabel"
+        @click="handleComponentClick"
+    >
         <div v-if="requireConsent && !consentGiven" ref="consentPanel" class="chat-box-consent alert alert-warning" role="note">
             <p>{{ labels.consentMessage || consentMessage }}</p>
             <button ref="consentButton" type="button" class="btn btn-primary" @click="acceptConsent">{{ labels.consentLabel || consentLabel }}</button>
@@ -53,6 +58,9 @@ import LanguageSelector from './LanguageSelector.vue';
  * @property {string} settingsJson Serialized runtime settings.
  * @property {string} chatOptionsJson Serialized chat options.
  * @property {string} labelsJson Serialized translated labels.
+ * @property {string} uiComponentsJson Serialized UI component definitions.
+ * @property {string} errorHandling Frontend error handling mode.
+ * @property {boolean|string|number} includeDefaultStyles Whether built-in component styles apply to this instance.
  * @property {object} sanitizeOptions DOMPurify options passed directly as an object.
  * @property {string} autoQuery Optional query sent automatically after mount.
  * @property {string} initialMessage Optional initial assistant message.
@@ -91,6 +99,9 @@ const props = defineProps({
     settingsJson: { type: String, default: '{}' },
     chatOptionsJson: { type: String, default: '{}' },
     labelsJson: { type: String, default: '{}' },
+    uiComponentsJson: { type: String, default: '[]' },
+    errorHandling: { type: String, default: 'default' },
+    includeDefaultStyles: { type: [String, Number, Boolean], default: true },
     sanitizeOptions: { type: Object, default: () => ({}) },
 
     // Chat behavior.
@@ -123,6 +134,8 @@ const props = defineProps({
     assistantLabel: { type: String, default: 'Assistant' },
 });
 
+const emit = defineEmits(['error']);
+
 /** @type {Record<string, any>} Normalized frontend chat options. */
 let chatOptions = {};
 try {
@@ -140,6 +153,21 @@ try {
 } catch (error) {
     labels = {};
 }
+
+/** @type {Array<Record<string, any>>} UI component definitions supplied by the host application. */
+let uiComponents = [];
+try {
+    const parsedComponents = JSON.parse(props.uiComponentsJson || '[]');
+    uiComponents = Array.isArray(parsedComponents) ? parsedComponents : Object.values(parsedComponents || {});
+} catch (error) {
+    uiComponents = [];
+}
+
+const componentDefinitions = Object.fromEntries(
+    uiComponents
+        .filter((definition) => definition && typeof definition.identifier === 'string')
+        .map((definition) => [definition.identifier, definition]),
+);
 
 /**
  * Converts HTML/Fluid boolean values into real booleans.
@@ -185,6 +213,9 @@ const showLanguageSelector = computed(() => toBoolean(props.showLanguageSelector
 
 /** @type {import('vue').ComputedRef<boolean>} */
 const plainLanguage = computed(() => toBoolean(props.plainLanguage) || toBoolean(accessibilityOptions.plainLanguage));
+
+/** @type {import('vue').ComputedRef<boolean>} */
+const defaultStylesEnabled = computed(() => toBoolean(props.includeDefaultStyles));
 
 /** @type {import('vue').Ref<Array<Record<string, any>>>} */
 const messages = ref([]);
@@ -256,6 +287,219 @@ const enhanceLinks = (html) => {
 const renderMarkdown = (content) => enhanceLinks(
     DOMPurify.sanitize(marked.parse(content || '', { gfm: true, breaks: true }), sanitizeOptions),
 );
+
+/**
+ * Escapes a value before it is inserted into a configured HTML template.
+ *
+ * @param {unknown} value Value to escape.
+ * @return {string} Escaped text.
+ */
+const escapeHtml = (value) => String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
+/**
+ * Keeps only valid CSS class tokens from the trusted component configuration.
+ *
+ * @param {string} value CSS class list.
+ * @return {string} Normalized class list.
+ */
+const normalizeCssClass = (value) => String(value || '')
+    .split(/\s+/)
+    .filter((className) => /^[A-Za-z_][A-Za-z0-9_-]*$/.test(className))
+    .join(' ');
+
+/**
+ * Resolves a dot-separated value from component or context data.
+ *
+ * @param {Record<string, any>} values Values.
+ * @param {string} path Value path.
+ * @return {unknown} Resolved value.
+ */
+const resolveValue = (values, path) => path.split('.').reduce((value, segment) => (
+    value && typeof value === 'object' ? value[segment] : undefined
+), values);
+
+/**
+ * Interpolates a configured component template, including simple repeated blocks.
+ *
+ * @param {string} template Trusted host-provided template.
+ * @param {Record<string, any>} values Component and runtime context values.
+ * @param {string[]} allowedPlaceholders Allowed placeholder paths.
+ * @return {string} Interpolated template.
+ */
+const interpolateTemplate = (template, values, allowedPlaceholders = []) => {
+    let result = template.replace(/{{#([A-Za-z0-9_.-]+)}}([\s\S]*?){{\/\1}}/g, (match, path, body) => {
+        if (allowedPlaceholders.length > 0 && !allowedPlaceholders.includes(path)) return '';
+        const list = resolveValue(values, path);
+        if (!Array.isArray(list)) {
+            return list ? interpolateTemplate(body, values, allowedPlaceholders) : '';
+        }
+        return list.map((item) => interpolateTemplate(body, { ...values, ...(item || {}) }, allowedPlaceholders)).join('');
+    });
+
+    return result.replace(/{{\s*([A-Za-z0-9_.-]+)\s*}}/g, (match, path) => (
+        allowedPlaceholders.length > 0 && !allowedPlaceholders.includes(path)
+            ? match
+            : escapeHtml(resolveValue(values, path))
+    ));
+};
+
+/**
+ * Sanitizes a configured component template without allowing the AI to expand the HTML vocabulary.
+ *
+ * @param {string} html Component HTML.
+ * @return {string} Sanitized component HTML.
+ */
+const sanitizeComponentTemplate = (html) => {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    const tags = new Set(defaultSanitizeOptions.ALLOWED_TAGS);
+    const attributes = new Set(defaultSanitizeOptions.ALLOWED_ATTR);
+    template.content.querySelectorAll('*').forEach((element) => {
+        const tagName = element.tagName.toLowerCase();
+        if (!['script', 'style', 'iframe', 'object', 'embed'].includes(tagName)) {
+            tags.add(tagName);
+        }
+        element.getAttributeNames()
+            .filter((attribute) => !attribute.toLowerCase().startsWith('on'))
+            .forEach((attribute) => attributes.add(attribute));
+    });
+
+    return DOMPurify.sanitize(html, {
+        ...sanitizeOptions,
+        ALLOWED_TAGS: [...tags],
+        ALLOWED_ATTR: [...attributes, 'data-ai-action', 'data-ai-value'],
+    });
+};
+
+/**
+ * Renders a complete UI block as configured HTML.
+ *
+ * @param {{identifier: string, id: string, data: Record<string, any>}} block UI block.
+ * @return {string} Rendered HTML.
+ */
+const renderComponent = (block) => {
+    const definition = componentDefinitions[block.identifier];
+    if (!definition || typeof definition.template !== 'string') return '';
+
+    const values = {
+        ...block.data,
+        id: block.id,
+        action: block.data.action || (definition.actions?.length === 1 ? definition.actions[0].identifier : ''),
+        actions: (definition.actions || []).map((action) => ({
+            identifier: action.identifier,
+            label: action.label || action.identifier,
+            promptTemplate: action.promptTemplate,
+            placeholders: action.placeholders || [],
+            type: action.type || 'prompt',
+            url: action.url || '',
+        })),
+    };
+    const html = sanitizeComponentTemplate(interpolateTemplate(definition.template, values));
+    const cssClass = normalizeCssClass(definition.cssClass);
+    const tag = definition.inline ? 'span' : 'div';
+    return `<${tag} class="ai-ui-component${cssClass ? ` ${escapeHtml(cssClass)}` : ''}" data-ai-component="${escapeHtml(block.identifier)}" data-ai-component-id="${escapeHtml(block.id)}" data-ai-component-data="${escapeHtml(JSON.stringify(values))}">${html}</${tag}>`;
+};
+
+/**
+ * Renders flat inline UI components, primarily inline links.
+ *
+ * @param {string} content Markdown content.
+ * @param {Set<string>} usedIds Used component IDs.
+ * @return {string} Rendered content.
+ */
+const renderInlineComponents = (content, usedIds) => {
+    content = content.replace(
+        /\[[^\]]*\]\(\s*:::ui[ \t]+link[ \t]*(\{[\s\S]*?\})[ \t]*\)/g,
+        ':::ui link $1',
+    );
+    content = content.replace(
+        /\[[^\]]*\]\(\s*(:::ui[ \t]+[A-Za-z0-9._-]+[ \t]*(\{"[^\n{}]*"\})(?:(?::){1,3})?[ \t]*>?)\s*\)/g,
+        '$1',
+    );
+    const pattern = /:::ui[ \t]+([A-Za-z0-9._-]+)[ \t]*(\{"[^\n{}]*"\})(?:(?::){1,3})?[ \t]*>?/g;
+    const replacements = [];
+    let markdown = content;
+    let match;
+    while ((match = pattern.exec(content)) !== null) {
+        try {
+            const data = JSON.parse(match[2]);
+            const baseId = String(data.id || `${match[1]}-${match.index}`);
+            let id = baseId;
+            let suffix = 2;
+            while (usedIds.has(id)) id = `${baseId}-${suffix++}`;
+            usedIds.add(id);
+            delete data.id;
+            const definition = componentDefinitions[match[1]];
+            replacements.push({
+                token: `AIUIINLINE${replacements.length}TOKEN`,
+                html: renderComponent({ identifier: match[1], id, data }),
+                raw: match[0],
+                inline: definition?.inline === true,
+            });
+        } catch (error) {
+            replacements.push({ token: '', html: '', raw: match[0] });
+        }
+    }
+    for (const replacement of replacements) {
+        if (replacement.token !== '') {
+            const token = replacement.inline
+                ? replacement.token
+                : `\n\n${replacement.token}\n\n`;
+            markdown = markdown.replace(replacement.raw, token);
+        }
+    }
+    let html = renderMarkdown(markdown);
+    for (const replacement of replacements) {
+        if (replacement.token !== '') {
+            if (replacement.inline) {
+                html = html.replaceAll(replacement.token, replacement.html);
+            } else {
+                html = html.replaceAll(`<p>${replacement.token}</p>`, replacement.html);
+                html = html.replaceAll(replacement.token, replacement.html);
+            }
+        }
+    }
+    return html;
+};
+
+/**
+ * Parses the streamed assistant text into Markdown and UI blocks.
+ *
+ * @param {string} content Accumulated assistant response.
+ * @return {string} Rendered response HTML.
+ */
+const renderResponse = (content) => {
+    const pattern = /^:::ui[ \t]+([A-Za-z0-9._-]+)[ \t]*\n([\s\S]*?)^:::[ \t]*(?:\n|$)/gm;
+    let html = '';
+    let offset = 0;
+    const usedIds = new Set();
+    let match;
+    while ((match = pattern.exec(content)) !== null) {
+        html += renderInlineComponents(content.slice(offset, match.index), usedIds);
+        try {
+            const data = JSON.parse(match[2].trim());
+            if (data && typeof data === 'object') {
+                const baseId = String(data.id || `${match[1]}-${match.index}`);
+                let id = baseId;
+                let suffix = 2;
+                while (usedIds.has(id)) id = `${baseId}-${suffix++}`;
+                usedIds.add(id);
+                delete data.id;
+                html += renderComponent({ identifier: match[1], id, data });
+            }
+        } catch (error) {
+            html += renderInlineComponents(match[0], usedIds);
+        }
+        offset = match.index + match[0].length;
+    }
+    html += renderInlineComponents(content.slice(offset).replace(/^:::ui[ \t]+[A-Za-z0-9._-]+[ \t]*\n[\s\S]*$/m, ''), usedIds);
+    return html;
+};
 
 /**
  * Waits for the next browser paint.
@@ -333,14 +577,19 @@ const acceptConsent = async () => {
  *
  * @param {string} query User query or direct-interaction input.
  * @param {string} directInteraction Optional direct-interaction identifier.
- * @param {{showUserMessage?: boolean, fallbackMessage?: string}} options Request options.
+ * @param {{showUserMessage?: boolean, fallbackMessage?: string, source?: string}} options Request options.
  * @return {Promise<void>} Resolves when the stream is complete.
  */
 const send = async (query, directInteraction = '', options = {}) => {
     if (loading.value) return;
 
     if (options.showUserMessage !== false) {
-        messages.value.push({ id: crypto.randomUUID(), role: 'user', html: renderMarkdown(query) });
+        messages.value.push({
+            id: crypto.randomUUID(),
+            role: 'user',
+            source: options.source || undefined,
+            html: renderMarkdown(query),
+        });
     }
     loading.value = true;
     statusMessage.value = '';
@@ -348,8 +597,8 @@ const send = async (query, directInteraction = '', options = {}) => {
     const formData = new FormData();
     formData.set(`${parameterPrefix}[query]`, query);
     formData.set(`${parameterPrefix}[assistantProfile]`, String(props.assistantProfile));
-        formData.set(`${parameterPrefix}[chatIdentifier]`, props.chatIdentifier);
-        formData.set(`${parameterPrefix}[requestToken]`, props.requestToken);
+    formData.set(`${parameterPrefix}[chatIdentifier]`, props.chatIdentifier);
+    formData.set(`${parameterPrefix}[requestToken]`, props.requestToken);
     formData.set(`${parameterPrefix}[startTimestamp]`, String(props.startTimestamp || Math.floor(Date.now() / 1000)));
     formData.set(`${parameterPrefix}[settingsJson]`, props.settingsJson || '{}');
     formData.set(`${parameterPrefix}[directInteraction]`, directInteraction);
@@ -377,7 +626,7 @@ const send = async (query, directInteraction = '', options = {}) => {
         abortController = new AbortController();
         await transport.streamSse(props.endpoint, formData, async (content) => {
             answer = content;
-            messages.value[messageIndex].html = renderMarkdown(answer);
+        messages.value[messageIndex].html = renderResponse(answer);
             await nextTick();
             await waitForPaint();
             await wait(responseMessageDelay);
@@ -390,11 +639,17 @@ const send = async (query, directInteraction = '', options = {}) => {
         messages.value[messageIndex].typing = false;
     } catch (error) {
         messages.value[messageIndex].typing = false;
+        emit('error', error);
+        if (props.errorHandling === 'silent') {
+            messages.value[messageIndex].html = '';
+            statusMessage.value = '';
+            return;
+        }
         const errorMessage = error instanceof Error
             ? error.message
             : (props.errorMessage || labels.errorMessage || 'The answer could not be loaded.');
         if (options.showUserMessage === false && options.fallbackMessage) {
-            messages.value[messageIndex].html = renderMarkdown(options.fallbackMessage);
+            messages.value[messageIndex].html = renderResponse(options.fallbackMessage);
         } else {
             messages.value[messageIndex].html = renderMarkdown(errorMessage);
             statusMessage.value = errorMessage;
@@ -402,6 +657,44 @@ const send = async (query, directInteraction = '', options = {}) => {
     } finally {
         abortController = null;
         loading.value = false;
+    }
+};
+
+/**
+ * Handles actions declared by a configured component template.
+ *
+ * The resulting value is sent through the same path as a manually entered
+ * prompt. Component templates can therefore only provide an input shortcut;
+ * they do not introduce a second request or execution mechanism.
+ *
+ * @param {MouseEvent} event Click event.
+ * @return {void}
+ */
+const handleComponentClick = (event) => {
+    const target = event.target instanceof Element ? event.target.closest('[data-ai-action]') : null;
+    if (!target || loading.value) return;
+
+    const container = target.closest('[data-ai-component]');
+    if (!container) return;
+
+    const definition = componentDefinitions[container.dataset.aiComponent];
+    const actionIdentifier = target.dataset.aiAction || '';
+    const action = definition?.actions?.find((item) => item.identifier === actionIdentifier);
+    if (!action || typeof action.promptTemplate !== 'string') return;
+
+    event.preventDefault();
+    let values = {};
+    try {
+        values = JSON.parse(container.dataset.aiComponentData || '{}');
+    } catch (error) {
+        values = {};
+    }
+    values.value = target.dataset.aiValue || values.value || '';
+    values.context = chatOptions.context || {};
+
+    const prompt = interpolateTemplate(action.promptTemplate, values, action.placeholders || []).trim();
+    if (prompt !== '') {
+        void send(prompt, '', { source: 'ui' });
     }
 };
 
@@ -460,7 +753,7 @@ defineExpose({ startDirectInteraction });
 </script>
 
 <style lang="scss">
-.aiassistant-chat {
+.aiassistant-chat--default-styles {
     .aiassistant-visually-hidden {
         position: absolute !important;
         width: 1px !important;
@@ -489,13 +782,26 @@ defineExpose({ startDirectInteraction });
     }
 
     .chat-box-language-options {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+        display: flex;
+        flex-direction: column;
         gap: 0.5rem;
         margin-top: 0.75rem;
         padding: 0.75rem;
         border: 1px solid rgba(0, 0, 0, 0.15);
         border-radius: 0.5rem;
+
+        > button,
+        .chat-box-language-custom,
+        .chat-box-language-custom input,
+        .chat-box-language-custom button {
+            width: 100%;
+        }
+
+        .chat-box-language-custom {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
     }
 
     .chat-box-messages {
@@ -516,6 +822,7 @@ defineExpose({ startDirectInteraction });
         overflow-wrap: anywhere;
         border-radius: 0.5rem;
 
+        &--from-ui,
         &--from-user {
             align-self: flex-end;
             color: #fff;
@@ -529,6 +836,11 @@ defineExpose({ startDirectInteraction });
             background-color: var(--chat-box-color-secondary);
             border-bottom-left-radius: 0.125rem;
         }
+
+        &--from-ui {
+            display: none;
+        }
+
     }
 
     .chat-box-message-content {
@@ -588,11 +900,36 @@ defineExpose({ startDirectInteraction });
     .chat-box-prompt {
         display: flex;
         gap: 0.5rem;
+        align-items: flex-end;
         margin-top: 1rem;
         border: 1px solid var(--chat-box-color-secondary);
         border-radius: 0.5rem;
 
-        textarea { flex: 1 1 auto; resize: vertical; }
+        textarea,
+        &-input {
+            flex: 1 1 auto;
+            min-height: 2.75rem;
+            padding: 0.65rem 0.8rem;
+            resize: vertical;
+            color: var(--bs-body-color, #1f2933);
+            background: #fff;
+            border: 1px solid var(--chat-box-color-secondary);
+            border-radius: 0.6rem;
+            font: inherit;
+        }
+
+        &-submit {
+            min-height: 2.75rem;
+            padding: 0.65rem 1rem;
+            color: #fff;
+            background: var(--chat-box-color-primary);
+            border: 1px solid var(--chat-box-color-primary);
+            border-radius: 0.55rem;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+            white-space: nowrap;
+        }
     }
 
     .chat-box-typing-dots {
@@ -628,178 +965,4 @@ defineExpose({ startDirectInteraction });
     50% { opacity: 1; transform: translateY(-0.2rem); }
 }
 
-/* Basic host styling stays with the portable custom element. */
-.aiassistant-chat {
-    --aiassistant-primary: #1769aa;
-    --aiassistant-primary-dark: #0f4f82;
-    --aiassistant-surface: #f4f7fa;
-    --aiassistant-border: #d9e1e8;
-    --aiassistant-text: #1f2933;
-    width: min(100%, 48rem);
-    max-width: 48rem;
-    margin: 0 auto;
-    padding: 1.25rem;
-    color: var(--aiassistant-text);
-}
-
-.aiassistant-chat .chat-box-messages {
-    min-height: 12rem;
-    max-height: 34rem;
-    padding: 1rem;
-    overflow-y: auto;
-    background: var(--aiassistant-surface);
-    border: 1px solid var(--aiassistant-border);
-    border-radius: 1rem;
-}
-
-.aiassistant-chat .chat-box-message {
-    width: fit-content;
-    max-width: min(85%, 38rem);
-    padding: 0.8rem 1rem;
-    line-height: 1.5;
-    border: 1px solid var(--aiassistant-border);
-    border-radius: 1rem;
-    box-shadow: 0 0.15rem 0.4rem rgb(31 41 51 / 5%);
-}
-
-.aiassistant-chat .chat-box-message--from-bot {
-    align-self: flex-start;
-    background: #fff;
-    border-bottom-left-radius: 0.3rem;
-}
-
-.aiassistant-chat .chat-box-message--from-user {
-    align-self: flex-end;
-    color: #fff;
-    background: var(--aiassistant-primary);
-    border-color: var(--aiassistant-primary);
-    border-bottom-right-radius: 0.3rem;
-}
-
-.aiassistant-chat .chat-box-language-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-    margin-top: 0.65rem;
-    padding: 0.75rem;
-    background: #fff;
-    border: 1px solid var(--aiassistant-border);
-    border-radius: 0.75rem;
-}
-
-.aiassistant-chat .chat-box-language-options {
-    display: flex;
-}
-
-.aiassistant-chat .chat-box-language-custom {
-    display: flex;
-    flex: 1 1 100%;
-    gap: 0.5rem;
-    align-items: stretch;
-}
-
-.aiassistant-chat .chat-box-language-custom input {
-    flex: 1 1 auto;
-}
-
-.aiassistant-chat .chat-box-language-custom button {
-    flex: 0 0 auto;
-}
-
-.aiassistant-chat .chat-box-language-toggle,
-.aiassistant-chat .chat-box-language-options button,
-.aiassistant-chat .chat-box-prompt-submit {
-    border: 1px solid var(--aiassistant-primary);
-    border-radius: 0.55rem;
-    cursor: pointer;
-    font: inherit;
-}
-
-.aiassistant-chat .chat-box-language-toggle,
-.aiassistant-chat .chat-box-language-options button {
-    padding: 0.45rem 0.75rem;
-    color: var(--aiassistant-primary);
-    background: #fff;
-    font-weight: 600;
-}
-
-.aiassistant-chat .chat-box-language-options input,
-.aiassistant-chat .chat-box-prompt-input {
-    padding: 0.65rem 0.8rem;
-    color: var(--aiassistant-text);
-    background: #fff;
-    border: 1px solid var(--aiassistant-border);
-    border-radius: 0.6rem;
-    font: inherit;
-}
-
-.aiassistant-chat .chat-box-language-options input {
-    flex: 1 1 12rem;
-    min-width: 12rem;
-}
-
-.aiassistant-chat .chat-box-prompt {
-    display: flex;
-    gap: 0.6rem;
-    align-items: flex-end;
-    margin-top: 1rem;
-}
-
-.aiassistant-chat .chat-box-prompt-input {
-    flex: 1 1 auto;
-    min-height: 2.75rem;
-    resize: vertical;
-}
-
-.aiassistant-chat .chat-box-prompt-submit {
-    min-height: 2.75rem;
-    padding: 0.65rem 1rem;
-    color: #fff;
-    background: var(--aiassistant-primary);
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.aiassistant-chat .chat-box-consent {
-    padding: 1rem;
-    background: #fff8e6;
-    border: 1px solid #f0cf78;
-    border-radius: 0.75rem;
-}
-
-@media (max-width: 40rem) {
-    .aiassistant-chat {
-        padding: 0.75rem 0;
-    }
-
-    .aiassistant-chat .chat-box-message {
-        max-width: 92%;
-    }
-
-    .aiassistant-chat .chat-box-prompt {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .aiassistant-chat .chat-box-prompt-submit {
-        width: 100%;
-    }
-
-    .aiassistant-chat .chat-box-language-options {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .aiassistant-chat .chat-box-language-options > button,
-    .aiassistant-chat .chat-box-language-custom,
-    .aiassistant-chat .chat-box-language-custom input,
-    .aiassistant-chat .chat-box-language-custom button {
-        width: 100%;
-    }
-
-    .aiassistant-chat .chat-box-language-custom {
-        flex-direction: column;
-    }
-}
 </style>

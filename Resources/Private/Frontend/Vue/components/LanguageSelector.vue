@@ -158,7 +158,10 @@ const select = (value) => {
     applied.value = value;
     draft.value = value;
     closePanel(true);
-    emit('language-selected', { value, name: languageName(value), code: resolveLanguageCode(value) });
+    const effectiveValue = value || props.siteLanguage;
+    const effectiveName = value ? languageName(value) : siteLanguageName.value;
+    const effectiveCode = value ? resolveLanguageCode(value) : props.languageCode;
+    emit('language-selected', { value: effectiveValue, name: effectiveName, code: effectiveCode });
 };
 
 /**

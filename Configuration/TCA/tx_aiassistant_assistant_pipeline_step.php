@@ -24,7 +24,7 @@ return [
     'types' => \Madj2k\AiAssistant\Assistant\TCA\PipelineStepTypeConfiguration::getTypes(),
     'palettes' => [
         'base' => [
-            'showitem' => 'title, --linebreak--, type, --linebreak--, processor_identifier, --linebreak--, enabled, sorting, stage',
+            'showitem' => 'title, --linebreak--, type, --linebreak--, processor_identifier, --linebreak--, retrieval_identifier, --linebreak--, enabled, sorting, stage',
         ],
 
         'includes' => [
@@ -34,13 +34,16 @@ return [
         'stepPrompts' => [
             'showitem' => 'step_identity, --linebreak--, step_behavior_rules, --linebreak--, step_retrieval_rules, --linebreak--, step_output_rules',
         ],
+        'retrievalSelection' => [
+            'showitem' => 'retrieval_selection_instructions, --linebreak--, retrieval_selection_metadata',
+        ],
 
         'llm' => [
             'showitem' => 'history_mode, --linebreak--, history_limit, --linebreak--, model, --linebreak--, temperature, --linebreak--, max_tokens',
         ],
 
         'retrieval' => [
-            'showitem' => 'retrieval_vector_store_connection, --linebreak--, retrieval_collection, --linebreak--, max_retrieval_results, --linebreak--, score_threshold, --linebreak--, max_context_chunks, --linebreak--, max_context_characters, --linebreak--, max_chunk_characters, --linebreak--, prompt_metadata_fields',
+            'showitem' => 'retrieval_vector_store_connection, --linebreak--, retrieval_collection, --linebreak--, max_retrieval_results, --linebreak--, score_threshold, --linebreak--, max_context_chunks, --linebreak--, max_context_characters, --linebreak--, max_chunk_characters, --linebreak--, prompt_metadata_fields, --linebreak--, retrieval_filter_conditions',
         ],
 
         'context' => [
@@ -49,6 +52,10 @@ return [
 
         'runtime' => [
             'showitem' => 'failure_strategy',
+        ],
+
+        'uiComponents' => [
+            'showitem' => 'ui_components_mode, --linebreak--, ui_components',
         ],
     ],
     'columns' => [
@@ -94,6 +101,36 @@ return [
                 'renderType' => 'selectSingle',
                 'required' => true,
                 'itemsProcFunc' => \Madj2k\AiAssistant\Assistant\TCA\PipelineProcessorItems::class . '->items',
+            ],
+        ],
+        'retrieval_identifier' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_identifier',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_identifier.description',
+            'displayCond' => 'FIELD:type:=:retriever',
+            'config' => [
+                'type' => 'input',
+                'required' => true,
+                'eval' => 'trim,lower',
+                'max' => 128,
+                'placeholder' => 'products',
+            ],
+        ],
+        'retrieval_selection_instructions' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions.description',
+            'config' => [
+                'type' => 'text',
+                'rows' => 4,
+                'placeholder' => 'If the user intent is a product search, include the retrieval-step with the identifier "products". Otherwise skip it.',
+            ],
+        ],
+        'retrieval_selection_metadata' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata.description',
+            'config' => [
+                'type' => 'text',
+                'rows' => 6,
+                'placeholder' => '{"primary_intent":{"type":"string"}}',
             ],
         ],
         'stage' => [
@@ -322,6 +359,45 @@ return [
                     ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.failure_strategy.fallback', 'value' => 'fallback'],
                 ],
             ],
-        ]
+        ],
+        'retrieval_filter_conditions' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions.description',
+            'config' => [
+                'type' => 'inline',
+                'foreign_table' => 'tx_aiassistant_connection_vector_filter_condition',
+                'foreign_field' => 'pipeline_step',
+                'foreign_sortby' => 'sorting',
+                'appearance' => [
+                    'collapseAll' => true,
+                    'expandSingle' => true,
+                    'useSortable' => true,
+                ],
+            ],
+        ],
+        'ui_components_mode' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.ui_components_mode',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.ui_components_mode.description',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.ui_components_mode.inherit', 'value' => 'inherit'],
+                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.ui_components_mode.replace', 'value' => 'replace'],
+                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.ui_components_mode.extend', 'value' => 'extend'],
+                ],
+                'default' => 'inherit',
+            ],
+        ],
+        'ui_components' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.ui_components',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.ui_components.description',
+            'config' => [
+                'type' => 'group',
+                'allowed' => 'tx_aiassistant_ui_component',
+                'size' => 20,
+                'maxitems' => 20,
+            ],
+        ],
     ],
 ];

@@ -17,14 +17,16 @@
             </div>
         </div>
 
-        <form action="{formAction}" method="post" class="aiassistant-config__inline-form aiassistant-config__inline-form--logs" data-aiassistant-confirm="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_clear_confirm')}">
+        <form action="{formAction}" method="post" class="aiassistant-config__inline-form aiassistant-config__inline-form--logs"
+              data-aiassistant-confirm="{f:translate(key:'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_clear_confirm')}">
             <input type="hidden" name="formToken" value="{formToken}" />
             <button type="submit" name="purgeChatLog" value="1" class="aiassistant-config__button aiassistant-config__button--danger">
                 <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_clear" />
             </button>
         </form>
 
-        <form action="{formAction}" method="get" target="_top" class="aiassistant-config__inline-form aiassistant-config__inline-form--logs">
+        <form action="{formAction}" method="post" class="aiassistant-config__inline-form aiassistant-config__inline-form--logs">
+            <input type="hidden" name="formToken" value="{formToken}" />
             <div class="aiassistant-config__form-row">
                 <label for="aiassistant-pipeline-log-limit">
                     <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:templates_backend_config.pipeline_logs_limit" />

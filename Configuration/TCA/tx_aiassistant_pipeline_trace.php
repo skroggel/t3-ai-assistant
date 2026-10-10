@@ -15,6 +15,7 @@ return [
         ],
         'searchFields' => 'level,event_name,route,chat_identifier,trace_id,processor_type,query_text',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
+        'hideTable' => true
     ],
     'types' => [
         '1' => [

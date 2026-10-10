@@ -16,6 +16,9 @@ return [
         'controllerActions' => [
             BackendController::class => [
                 'configuration',
+                'pipelineExport',
+                'pipelineExportData',
+                'pipelineExportDownload',
                 'diagnostics',
                 'indexerStatus',
                 'purge',

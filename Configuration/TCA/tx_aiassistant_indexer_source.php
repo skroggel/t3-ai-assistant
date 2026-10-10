@@ -15,6 +15,7 @@ return [
         ],
         'searchFields' => 'source_type,source_id,source_hash,source_group_hash,storage_source_hash,filename,path,content_checksum,collection,vector_store_connection',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
+        'hideTable' => true
     ],
     'types' => [
         '1' => [

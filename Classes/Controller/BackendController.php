@@ -21,6 +21,7 @@ use Madj2k\AiAssistant\Backend\Diagnostics\BackendDiagnosticsHandler;
 use Madj2k\AiAssistant\Backend\Form\BackendFormTokenService;
 use Madj2k\AiAssistant\Backend\Form\BackendRequestDataService;
 use Madj2k\AiAssistant\Backend\Purge\BackendPurgeHandler;
+use Madj2k\AiAssistant\Backend\Export\PipelineMarkdownExportProvider;
 use Madj2k\AiAssistant\Backend\View\BackendViewDataFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -36,6 +37,9 @@ use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Core\Http\Response;
+use TYPO3\CMS\Core\Http\Stream;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextFactory;
 use TYPO3\CMS\Fluid\View\FluidViewAdapter;
@@ -61,6 +65,7 @@ class BackendController extends ActionController
      * @param \Madj2k\AiAssistant\Backend\Diagnostics\BackendConnectionTestHandler $connectionTestHandler Connection test handler.
      * @param \Madj2k\AiAssistant\Backend\Diagnostics\BackendDiagnosticsHandler $diagnosticsHandler Diagnostics handler.
      * @param \Madj2k\AiAssistant\Backend\Purge\BackendPurgeHandler $purgeHandler Purge handler.
+     * @param \Madj2k\AiAssistant\Backend\Export\PipelineMarkdownExportProvider $pipelineMarkdownExportProvider Pipeline export provider.
      */
     public function __construct(
         private readonly BackendRequestDataService $requestDataService,
@@ -69,7 +74,8 @@ class BackendController extends ActionController
         private readonly BackendConfigurationHandler $configurationHandler,
         private readonly BackendConnectionTestHandler $connectionTestHandler,
         private readonly BackendDiagnosticsHandler $diagnosticsHandler,
-        private readonly BackendPurgeHandler $purgeHandler
+         private readonly BackendPurgeHandler $purgeHandler,
+         private readonly PipelineMarkdownExportProvider $pipelineMarkdownExportProvider
     ) {
     }
 
@@ -86,6 +92,85 @@ class BackendController extends ActionController
             'configuration',
             'Backend/Configuration',
             [$this->configurationHandler]
+        );
+    }
+
+    /**
+     * Shows the Markdown pipeline export.
+     *
+     * @return \Psr\Http\Message\ResponseInterface HTML response.
+     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
+     */
+    public function pipelineExportAction(): ResponseInterface
+    {
+        return $this->renderModuleArea('pipelineExport', 'Backend/PipelineExport', []);
+    }
+
+    /**
+     * Returns a Markdown pipeline export as JSON for the backend module.
+     *
+     * @return \Psr\Http\Message\ResponseInterface JSON response.
+     */
+    public function pipelineExportDataAction(): ResponseInterface
+    {
+        $profileUid = $this->resolveAssistantProfileArgument();
+        $markdown = $this->pipelineMarkdownExportProvider->export($profileUid);
+
+        return new JsonResponse(
+            ['markdown' => $markdown ?? ''],
+            $markdown === null ? 404 : 200,
+        );
+    }
+
+    /**
+     * Downloads the Markdown pipeline export for one assistant profile.
+     *
+     * @return \Psr\Http\Message\ResponseInterface Markdown download response.
+     */
+    public function pipelineExportDownloadAction(): ResponseInterface
+    {
+        $profileUid = $this->resolveAssistantProfileArgument();
+        $markdown = $this->pipelineMarkdownExportProvider->export($profileUid);
+
+        if ($markdown === null) {
+            return new JsonResponse(['error' => 'Assistant profile was not found.'], 404);
+        }
+
+        $body = new Stream('php://temp', 'r+');
+        $body->write($markdown);
+        $body->rewind();
+
+        return (new Response())
+            ->withHeader('Content-Type', 'text/markdown; charset=utf-8')
+            ->withHeader('Content-Disposition', 'attachment; filename="assistant-pipeline.md"')
+            ->withBody($body);
+    }
+
+    /**
+     * Resolves the selected assistant profile from all TYPO3 backend request forms.
+     *
+     * @return int Assistant profile UID.
+     */
+    private function resolveAssistantProfileArgument(): int
+    {
+        if (method_exists($this->request, 'hasArgument')
+            && method_exists($this->request, 'getArgument')
+            && $this->request->hasArgument('assistantProfile')
+        ) {
+            return (int)$this->request->getArgument('assistantProfile');
+        }
+
+        $backendRequest = $this->requestDataService->getBackendRequest();
+        $query = $backendRequest instanceof ServerRequestInterface
+            ? $backendRequest->getQueryParams()
+            : [];
+
+        return (int)(
+            $query['assistantProfile']
+            ?? $query['tx_aiassistant']['assistantProfile']
+            ?? $query['tx_aiassistant_web_aiassistant']['assistantProfile']
+            ?? $_GET['assistantProfile']
+            ?? 0
         );
     }
 
@@ -303,6 +388,9 @@ class BackendController extends ActionController
         /** @var array<string, string> $actions */
         $actions = [
             'configuration' => (string)$uriBuilder->buildUriFromRoute('web_aiassistant', ['action' => 'configuration']),
+            'pipelineExport' => (string)$uriBuilder->buildUriFromRoute('web_aiassistant', ['action' => 'pipelineExport']),
+            'pipelineExportData' => (string)$uriBuilder->buildUriFromRoute('web_aiassistant', ['action' => 'pipelineExportData']),
+            'pipelineExportDownload' => (string)$uriBuilder->buildUriFromRoute('web_aiassistant', ['action' => 'pipelineExportDownload']),
             'diagnostics' => (string)$uriBuilder->buildUriFromRoute('web_aiassistant', ['action' => 'diagnostics']),
             'indexerStatus' => (string)$uriBuilder->buildUriFromRoute('web_aiassistant', ['action' => 'indexerStatus']),
             'purge' => (string)$uriBuilder->buildUriFromRoute('web_aiassistant', ['action' => 'purge']),

@@ -121,8 +121,26 @@
 			<trans-unit id="tx_aiassistant_assistant_profile.output_rules_desc" resname="tx_aiassistant_assistant_profile.output_rules_desc">
 				<source>Defines formatting, structure, citation behavior, and final answer requirements.</source>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.error_handling" resname="tx_aiassistant_assistant_profile.error_handling">
+				<source>Frontend error handling</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.error_handling_desc" resname="tx_aiassistant_assistant_profile.error_handling_desc">
+				<source>Controls whether frontend errors are shown or silently result in an empty answer.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.error_handling.default" resname="tx_aiassistant_assistant_profile.error_handling.default">
+				<source>Default: show error message</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.error_handling.silent" resname="tx_aiassistant_assistant_profile.error_handling.silent">
+				<source>Silent: return empty answer</source>
+			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.chat_pipeline_steps_desc" resname="tx_aiassistant_assistant_profile.chat_pipeline_steps_desc">
 				<source>Ordered pipeline steps that define how this assistant processes requests.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.ui_components" resname="tx_aiassistant_assistant_profile.ui_components">
+				<source>UI components available to the pipeline</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.ui_components.description" resname="tx_aiassistant_assistant_profile.ui_components.description">
+				<source>Comma-separated UI component record UIDs. Pipeline steps can override this selection.</source>
 			</trans-unit>
 		</body>
 	</file>

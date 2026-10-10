@@ -26,6 +26,7 @@ use Madj2k\AiAssistant\Backend\Dto\BackendPreviewViewData;
 use Madj2k\AiAssistant\Backend\Dto\BackendPurgeViewData;
 use Madj2k\AiAssistant\Backend\Indexing\BackendIndexerProvider;
 use Madj2k\AiAssistant\Backend\Purge\BackendPurgeProvider;
+use Madj2k\AiAssistant\Backend\Export\PipelineMarkdownExportProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -52,7 +53,8 @@ final readonly class BackendViewDataFactory
         private BackendIndexerProvider       $indexerProvider,
         private BackendPurgeProvider         $purgeProvider,
         private BackendConnectionProvider    $connectionProvider,
-        private BackendDiagnosticsProvider   $diagnosticsProvider
+        private BackendDiagnosticsProvider   $diagnosticsProvider,
+        private PipelineMarkdownExportProvider $pipelineMarkdownExportProvider
     ) {
     }
 
@@ -71,9 +73,10 @@ final readonly class BackendViewDataFactory
         array $state
     ): BackendModuleViewData {
         return new BackendModuleViewData(
-            new BackendConfigurationViewData(
-                $this->configurationProvider->getViewData($extbaseRequest, $backendRequest, $state)
-            ),
+            new BackendConfigurationViewData(array_merge(
+                $this->configurationProvider->getViewData($extbaseRequest, $backendRequest, $state),
+                $this->pipelineMarkdownExportProvider->getViewData($backendRequest),
+            )),
             new BackendIndexerViewData(
                 $this->indexerProvider->getViewData($extbaseRequest, $backendRequest, $state)
             ),

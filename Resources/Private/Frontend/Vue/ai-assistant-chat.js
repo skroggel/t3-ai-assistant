@@ -8,8 +8,9 @@ import AiAssistantChat from './components/AiAssistantChat.ce.vue';
 
 // Vue only injects SFC styles automatically into a shadow root. The chat uses
 // light DOM, so expose the component styles globally once for the host page.
+const frontendOptions = window.AiAssistantChatOptions || {};
 const styleId = 'ai-assistant-chat-component-styles';
-if (!document.getElementById(styleId) && Array.isArray(AiAssistantChat.styles)) {
+if (frontendOptions.includeDefaultStyles !== false && !document.getElementById(styleId) && Array.isArray(AiAssistantChat.styles)) {
     const style = document.createElement('style');
     style.id = styleId;
     style.textContent = AiAssistantChat.styles.join('\n');

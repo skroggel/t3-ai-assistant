@@ -14,10 +14,11 @@ final class PipelineStepTypeConfiguration
     {
         return [
             AssistantPipelineProcessorType::QueryOptimizer->value => ['showitem' => self::llmShowItem('context')],
+            AssistantPipelineProcessorType::RetrievalSelector->value => ['showitem' => self::retrievalSelectorShowItem()],
             AssistantPipelineProcessorType::Retriever->value => ['showitem' => self::retrieverShowItem()],
             AssistantPipelineProcessorType::ContextOptimizer->value => ['showitem' => self::llmShowItem('context')],
-            AssistantPipelineProcessorType::AnswerGenerator->value => ['showitem' => self::llmShowItem('contextWithFrontendSources')],
-            AssistantPipelineProcessorType::QualityGate->value => ['showitem' => self::llmShowItem('context')],
+            AssistantPipelineProcessorType::AnswerGenerator->value => ['showitem' => self::llmShowItem('contextWithFrontendSources', true)],
+            AssistantPipelineProcessorType::QualityGate->value => ['showitem' => self::llmShowItem('context', true)],
             AssistantPipelineProcessorType::Memory->value => [
                 'showitem' => '--palette--;;base, --div--;' . self::LABEL_PREFIX . 'tab_runtime, --palette--;;runtime',
             ],
@@ -36,9 +37,9 @@ final class PipelineStepTypeConfiguration
         );
     }
 
-    private static function llmShowItem(string $contextPalette): string
+    private static function llmShowItem(string $contextPalette, bool $includeUiComponents = false): string
     {
-        return implode(', ', [
+        $showItems = [
             '--palette--;;base',
             '--div--;' . self::LABEL_PREFIX . 'tab_prompt_includes',
             '--palette--;;includes',
@@ -50,7 +51,14 @@ final class PipelineStepTypeConfiguration
             '--palette--;;llm',
             '--div--;' . self::LABEL_PREFIX . 'tab_runtime',
             '--palette--;;runtime',
-        ]);
+        ];
+
+        if ($includeUiComponents) {
+            $showItems[] = '--div--;' . self::LABEL_PREFIX . 'tab_ui_components';
+            $showItems[] = '--palette--;;uiComponents';
+        }
+
+        return implode(', ', $showItems);
     }
 
     private static function retrieverShowItem(): string
@@ -59,6 +67,19 @@ final class PipelineStepTypeConfiguration
             '--palette--;;base',
             '--div--;' . self::LABEL_PREFIX . 'tab_retrieval',
             '--palette--;;retrieval',
+            '--div--;' . self::LABEL_PREFIX . 'tab_runtime',
+            '--palette--;;runtime',
+        ]);
+    }
+
+    private static function retrievalSelectorShowItem(): string
+    {
+        return implode(', ', [
+            '--palette--;;base',
+            '--div--;' . self::LABEL_PREFIX . 'tab_retrieval_selection',
+            '--palette--;;retrievalSelection',
+            '--div--;' . self::LABEL_PREFIX . 'tab_llm',
+            '--palette--;;llm',
             '--div--;' . self::LABEL_PREFIX . 'tab_runtime',
             '--palette--;;runtime',
         ]);

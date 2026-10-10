@@ -322,6 +322,44 @@
 				<source>Optionally overrides the assistant profile's MCP connections for this step. Leave empty to inherit the profile configuration.</source>
 				<target>Überschreibt optional die MCP-Verbindungen des Assistentenprofils für diesen Schritt. Leer lassen, um die Profilkonfiguration zu übernehmen.</target>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions" resname="tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions">
+				<source>Vector search filters</source>
+				<target>Filter für die Vektorsuche</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_filter_conditions.description">
+				<source>All configured conditions must match the indexed payload.</source>
+				<target>Alle konfigurierten Bedingungen müssen zum indexierten Payload passen.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode"><source>UI component selection</source><target>Auswahl der UI-Komponenten</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode.description" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode.description"><source>Controls whether this step inherits, replaces or extends the pipeline components.</source><target>Legt fest, ob dieser Schritt die Pipeline-Komponenten übernimmt, ersetzt oder erweitert.</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode.inherit" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode.inherit"><source>Inherit</source><target>Übernehmen</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode.replace" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode.replace"><source>Replace</source><target>Ersetzen</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components_mode.extend" resname="tx_aiassistant_assistant_pipeline_step.ui_components_mode.extend"><source>Extend</source><target>Erweitern</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components" resname="tx_aiassistant_assistant_pipeline_step.ui_components"><source>UI components for this step</source><target>UI-Komponenten für diesen Schritt</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.ui_components.description" resname="tx_aiassistant_assistant_pipeline_step.ui_components.description"><source>Component records used by this step.</source><target>Komponentendatensätze, die von diesem Schritt verwendet werden.</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_identifier" resname="tx_aiassistant_assistant_pipeline_step.retrieval_identifier"><source>Retrieval identifier</source><target>Retrieval-Identifier</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_identifier.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_identifier.description"><source>Stable identifier used by retrieval selection. It must be unique within the assistant.</source><target>Stabiler Identifier für die Retrieval-Auswahl. Er muss innerhalb des Assistenten eindeutig sein.</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_ui_components" resname="tx_aiassistant_assistant_pipeline_step.tab_ui_components"><source>UI components</source><target>UI-Komponenten</target></trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_retrieval_selection" resname="tx_aiassistant_assistant_pipeline_step.tab_retrieval_selection">
+				<source>Retrieval selection</source>
+				<target>Retrieval-Auswahl</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions" resname="tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions">
+				<source>Selection instructions</source>
+				<target>Auswahlanweisungen</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions.description">
+				<source>Additional rules for selecting retrieval targets. The JSON output contract remains fixed.</source>
+				<target>Zusätzliche Regeln für die Auswahl von Retrieval-Zielen. Der JSON-Output-Vertrag bleibt unverändert.</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata" resname="tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata">
+				<source>Metadata schema (JSON)</source>
+				<target>Metadata-Schema (JSON)</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata.description" resname="tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata.description">
+				<source>Optional metadata fields returned inside the fixed metadata object.</source>
+				<target>Optionale Metadatenfelder, die innerhalb des festen Metadata-Objekts zurückgegeben werden.</target>
+			</trans-unit>
 			</body>
 	</file>
 </xliff>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2026-01-01T00:00:00Z" product-name="ai_assistant">
+        <body>
+            <trans-unit id="tx_aiassistant_ui_component">
+				<source>UI component</source>
+			</trans-unit>
+			<trans-unit id="override_tab">
+				<source>Override</source>
+			</trans-unit>
+			<trans-unit id="definition_tab">
+				<source>Definition</source>
+			</trans-unit>
+			<trans-unit id="title">
+				<source>Title</source>
+			</trans-unit>
+            <trans-unit id="identifier">
+                <source>Identifier</source>
+            </trans-unit>
+            <trans-unit id="identifier.description">
+                <source>Unique technical identifier of the component. Used by the AI for identification. Use only lowercase letters, numbers and hyphens, for example: product-selection.</source>
+            </trans-unit>
+			<trans-unit id="preset">
+				<source>Preset</source>
+			</trans-unit>
+			<trans-unit id="preset.description">
+				<source>Select a built-in component. Choose Custom only when you need to define the template and JSON configuration yourself.</source>
+			</trans-unit>
+			<trans-unit id="preset.select_list">
+				<source>Select list</source>
+			</trans-unit>
+			<trans-unit id="preset.link_list">
+				<source>Link list</source>
+			</trans-unit>
+			<trans-unit id="preset.link">
+				<source>Inline link</source>
+			</trans-unit>
+			<trans-unit id="preset.buttons">
+				<source>Buttons</source>
+			</trans-unit>
+			<trans-unit id="preset.progress_indicator">
+				<source>Progress indicator</source>
+			</trans-unit>
+            <trans-unit id="preset.decorative">
+                <source>Decorative separator</source>
+            </trans-unit>
+            <trans-unit id="preset.headline">
+                <source>Headline</source>
+            </trans-unit>
+			<trans-unit id="preset.custom">
+				<source>Custom</source>
+			</trans-unit>
+			<trans-unit id="description">
+				<source>Description for the AI</source>
+			</trans-unit>
+			<trans-unit id="override_description">
+				<source>Override description for the AI</source>
+			</trans-unit>
+			<trans-unit id="override_description.description">
+				<source>Optional override. Leave empty to use the preset description.</source>
+			</trans-unit>
+			<trans-unit id="css_class">
+				<source>Additional CSS class</source>
+			</trans-unit>
+			<trans-unit id="css_class.description">
+				<source>Optional CSS class added to the outer component wrapper. Example: my-chat-choice-list.</source>
+			</trans-unit>
+			<trans-unit id="template">
+				<source>Frontend template</source>
+			</trans-unit>
+			<trans-unit id="template.description">
+				<source>HTML-Template with defined placeholder. Example: &lt;div class="ai-select-list"&gt;{{#options}}&lt;button data-ai-action="select" data-ai-value="{{value}}"&gt;{{label}}&lt;/button&gt;{{/options}}&lt;/div&gt;</source>
+			</trans-unit>
+			<trans-unit id="override_template">
+				<source>Override template</source>
+			</trans-unit>
+			<trans-unit id="override_template.description">
+				<source>Optional override. Leave empty to use the preset. HTML-Template with defined placeholder. Example: &lt;div class="ai-select-list"&gt;{{#options}}&lt;button data-ai-action="select" data-ai-value="{{value}}"&gt;{{label}}&lt;/button&gt;{{/options}}&lt;/div&gt;</source>
+			</trans-unit>
+			<trans-unit id="actions">
+				<source>Actions</source>
+			</trans-unit>
+			<trans-unit id="actions.description">
+				<source>JSON array with action identifiers, prompt templates and allowed placeholders. Example: [{"identifier":"select","promptTemplate":"Show me {{label}}.","placeholders":["label","value"]}]</source>
+			</trans-unit>
+			<trans-unit id="override_actions">
+				<source>Override actions</source>
+			</trans-unit>
+			<trans-unit id="override_actions.description">
+				<source>Optional override. Leave empty to use the preset. JSON array with action identifiers, prompt templates and allowed placeholders. Example: [{"identifier":"select","promptTemplate":"Show me {{label}}.","placeholders":["label","value"]}]</source>
+			</trans-unit>
+			<trans-unit id="button_actions">
+				<source>Buttons</source>
+			</trans-unit>
+			<trans-unit id="button_actions.description">
+				<source>Define the visible label and prompt of each button. The technical action identifier is generated automatically.</source>
+			</trans-unit>
+			<trans-unit id="button">
+				<source>Button</source>
+			</trans-unit>
+			<trans-unit id="button.label">
+				<source>Label</source>
+			</trans-unit>
+			<trans-unit id="button.prompt_template">
+				<source>Prompt template</source>
+			</trans-unit>
+			<trans-unit id="button.prompt_template.description">
+				<source>Prompt sent when this button is clicked. You may use the configured placeholders.</source>
+			</trans-unit>
+			<trans-unit id="button.placeholders">
+				<source>Placeholders</source>
+			</trans-unit>
+			<trans-unit id="data_schema">
+				<source>Data schema</source>
+			</trans-unit>
+			<trans-unit id="data_schema.description">
+				<source>JSON schema describing the data emitted by the AI. Example: {"options":{"type":"array"},"options[].label":{"type":"string"},"options[].value":{"type":"string"}}</source>
+			</trans-unit>
+			<trans-unit id="override_data_schema">
+				<source>Override data schema</source>
+			</trans-unit>
+			<trans-unit id="override_data_schema.description">
+				<source>Optional override. Leave empty to use the preset. JSON schema describing the data emitted by the AI. Example: {"options":{"type":"array"},"options[].label":{"type":"string"},"options[].value":{"type":"string"}}</source>
+			</trans-unit>
+			<trans-unit id="placeholders">
+				<source>Placeholders</source>
+			</trans-unit>
+			<trans-unit id="placeholders.description">
+				<source>Comma-separated placeholders used by the template or prompt. Examples: label, value, options, context.currentStep, context.total.</source>
+			</trans-unit>
+			<trans-unit id="override_placeholders">
+				<source>Override placeholders</source>
+			</trans-unit>
+			<trans-unit id="override_placeholders.description">
+				<source>Optional override. Leave empty to use the preset. Comma-separated placeholders used by the template or prompt. Examples: label, value, options, context.currentStep, context.total.</source>
+			</trans-unit>
+            <trans-unit id="button.type"><source>Button type</source></trans-unit>
+            <trans-unit id="button.type.prompt"><source>Prompt</source></trans-unit>
+            <trans-unit id="button.type.link"><source>Link</source></trans-unit>
+            <trans-unit id="button.url"><source>URL</source></trans-unit>
+        </body>
+    </file>
+</xliff>
