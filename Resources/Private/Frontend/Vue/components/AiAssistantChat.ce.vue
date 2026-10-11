@@ -401,103 +401,113 @@ const renderComponent = (block) => {
     };
     const html = sanitizeComponentTemplate(interpolateTemplate(definition.template, values));
     const cssClass = normalizeCssClass(definition.cssClass);
-    const tag = definition.inline ? 'span' : 'div';
+    const tag = definition.renderMode === 'inline' ? 'span' : 'div';
     return `<${tag} class="ai-ui-component${cssClass ? ` ${escapeHtml(cssClass)}` : ''}" data-ai-component="${escapeHtml(block.identifier)}" data-ai-component-id="${escapeHtml(block.id)}" data-ai-component-data="${escapeHtml(JSON.stringify(values))}">${html}</${tag}>`;
 };
 
 /**
- * Renders flat inline UI components, primarily inline links.
- *
- * @param {string} content Markdown content.
- * @param {Set<string>} usedIds Used component IDs.
- * @return {string} Rendered content.
- */
-const renderInlineComponents = (content, usedIds) => {
-    content = content.replace(
-        /\[[^\]]*\]\(\s*:::ui[ \t]+link[ \t]*(\{[\s\S]*?\})[ \t]*\)/g,
-        ':::ui link $1',
-    );
-    content = content.replace(
-        /\[[^\]]*\]\(\s*(:::ui[ \t]+[A-Za-z0-9._-]+[ \t]*(\{"[^\n{}]*"\})(?:(?::){1,3})?[ \t]*>?)\s*\)/g,
-        '$1',
-    );
-    const pattern = /:::ui[ \t]+([A-Za-z0-9._-]+)[ \t]*(\{"[^\n{}]*"\})(?:(?::){1,3})?[ \t]*>?/g;
-    const replacements = [];
-    let markdown = content;
-    let match;
-    while ((match = pattern.exec(content)) !== null) {
-        try {
-            const data = JSON.parse(match[2]);
-            const baseId = String(data.id || `${match[1]}-${match.index}`);
-            let id = baseId;
-            let suffix = 2;
-            while (usedIds.has(id)) id = `${baseId}-${suffix++}`;
-            usedIds.add(id);
-            delete data.id;
-            const definition = componentDefinitions[match[1]];
-            replacements.push({
-                token: `AIUIINLINE${replacements.length}TOKEN`,
-                html: renderComponent({ identifier: match[1], id, data }),
-                raw: match[0],
-                inline: definition?.inline === true,
-            });
-        } catch (error) {
-            replacements.push({ token: '', html: '', raw: match[0] });
-        }
-    }
-    for (const replacement of replacements) {
-        if (replacement.token !== '') {
-            const token = replacement.inline
-                ? replacement.token
-                : `\n\n${replacement.token}\n\n`;
-            markdown = markdown.replace(replacement.raw, token);
-        }
-    }
-    let html = renderMarkdown(markdown);
-    for (const replacement of replacements) {
-        if (replacement.token !== '') {
-            if (replacement.inline) {
-                html = html.replaceAll(replacement.token, replacement.html);
-            } else {
-                html = html.replaceAll(`<p>${replacement.token}</p>`, replacement.html);
-                html = html.replaceAll(replacement.token, replacement.html);
-            }
-        }
-    }
-    return html;
-};
-
-/**
- * Parses the streamed assistant text into Markdown and UI blocks.
+ * Parses the streamed assistant text into Markdown and self-contained UI JSON markers.
  *
  * @param {string} content Accumulated assistant response.
  * @return {string} Rendered response HTML.
  */
 const renderResponse = (content) => {
-    const pattern = /^:::ui[ \t]+([A-Za-z0-9._-]+)[ \t]*\n([\s\S]*?)^:::[ \t]*(?:\n|$)/gm;
     let html = '';
+    let markdown = '';
+    const inlineComponents = new Map();
     let offset = 0;
     const usedIds = new Set();
-    let match;
-    while ((match = pattern.exec(content)) !== null) {
-        html += renderInlineComponents(content.slice(offset, match.index), usedIds);
-        try {
-            const data = JSON.parse(match[2].trim());
-            if (data && typeof data === 'object') {
-                const baseId = String(data.id || `${match[1]}-${match.index}`);
-                let id = baseId;
-                let suffix = 2;
-                while (usedIds.has(id)) id = `${baseId}-${suffix++}`;
-                usedIds.add(id);
-                delete data.id;
-                html += renderComponent({ identifier: match[1], id, data });
-            }
-        } catch (error) {
-            html += renderInlineComponents(match[0], usedIds);
+    let marker;
+    const markerPattern = /@@UI_COMPONENT[ \t]*/g;
+
+    const flushMarkdown = () => {
+        if (markdown === '') return;
+        let rendered = renderMarkdown(markdown);
+        inlineComponents.forEach((component, token) => {
+            rendered = rendered.replaceAll(token, component);
+        });
+        html += rendered;
+        markdown = '';
+        inlineComponents.clear();
+    };
+
+    while ((marker = markerPattern.exec(content)) !== null) {
+        markdown += content.slice(offset, marker.index);
+        const jsonStart = markerPattern.lastIndex;
+        if (content[jsonStart] !== '{') {
+            offset = content.length;
+            break;
         }
-        offset = match.index + match[0].length;
+
+        let depth = 0;
+        let inString = false;
+        let escaped = false;
+        let jsonEnd = -1;
+        for (let index = jsonStart; index < content.length; index += 1) {
+            const character = content[index];
+            if (inString) {
+                if (escaped) escaped = false;
+                else if (character === '\\') escaped = true;
+                else if (character === '"') inString = false;
+                continue;
+            }
+            if (character === '"') inString = true;
+            else if (character === '{') depth += 1;
+            else if (character === '}' && --depth === 0) { jsonEnd = index + 1; break; }
+        }
+
+        if (jsonEnd < 0) {
+            offset = content.length;
+            break;
+        }
+
+        let data;
+        try { data = JSON.parse(content.slice(jsonStart, jsonEnd)); } catch (error) {
+            markdown += content.slice(offset, jsonEnd);
+            offset = jsonEnd;
+            markerPattern.lastIndex = jsonEnd;
+            continue;
+        }
+        if (!data || typeof data !== 'object' || Array.isArray(data)) {
+            markdown += content.slice(offset, jsonEnd);
+            offset = jsonEnd;
+            markerPattern.lastIndex = jsonEnd;
+            continue;
+        }
+
+        const componentIdentifier = typeof data.type === 'string' ? data.type : '';
+        if (componentIdentifier === '') {
+            markdown += content.slice(offset, jsonEnd);
+            offset = jsonEnd;
+            markerPattern.lastIndex = jsonEnd;
+            continue;
+        }
+        const isInline = componentDefinitions[componentIdentifier]?.renderMode === 'inline';
+        if (!isInline) flushMarkdown();
+        const baseId = String(data.id || `${componentIdentifier}-${marker.index}`);
+        let id = baseId;
+        let suffix = 2;
+        while (usedIds.has(id)) id = `${baseId}-${suffix++}`;
+        usedIds.add(id);
+        const componentData = data.data && typeof data.data === 'object' ? data.data : {};
+        delete data.id;
+        delete data.type;
+        delete data.data;
+        Object.assign(componentData, data);
+        const component = renderComponent({ identifier: componentIdentifier, id, data: componentData });
+        if (isInline) {
+            const token = `AIUICOMPONENT${usedIds.size}TOKEN`;
+            markdown += token;
+            inlineComponents.set(token, component);
+        } else {
+            flushMarkdown();
+            html += component;
+        }
+        offset = jsonEnd;
+        markerPattern.lastIndex = jsonEnd;
     }
-    html += renderInlineComponents(content.slice(offset).replace(/^:::ui[ \t]+[A-Za-z0-9._-]+[ \t]*\n[\s\S]*$/m, ''), usedIds);
+    markdown += content.slice(offset);
+    flushMarkdown();
     return html;
 };
 

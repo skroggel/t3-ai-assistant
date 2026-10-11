@@ -529,6 +529,11 @@ class PipelineLogger implements PipelineLoggerInterface
         $result = [];
         foreach ($data as $key => $value) {
 
+            if ($key === 'messages' && is_array($value)) {
+                $result[$key] = $this->truncateMessages($value, $maxChars);
+                continue;
+            }
+
             $valueJson = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
             if ($valueJson === false) {
                 $result[$key] = [
@@ -553,5 +558,46 @@ class PipelineLogger implements PipelineLoggerInterface
         }
 
         return json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Creates a bounded preview while preserving every LLM message entry.
+     *
+     * @param array<int,mixed> $messages LLM messages.
+     * @param int $maxChars Maximum preview size.
+     * @return array<string,mixed> Structured message preview.
+     */
+    private function truncateMessages(array $messages, int $maxChars): array
+    {
+        $messageCount = max(1, count($messages));
+        $perMessageChars = max(500, (int)floor($maxChars / $messageCount));
+        $preview = [];
+        $originalLength = 0;
+
+        foreach (array_values($messages) as $index => $message) {
+            if (!is_array($message)) {
+                $preview[] = ['index' => $index, 'content' => (string)$message];
+                continue;
+            }
+
+            $content = (string)($message['content'] ?? '');
+            $originalLength += mb_strlen($content, 'UTF-8');
+            $preview[] = [
+                'index' => $index,
+                'role' => (string)($message['role'] ?? ''),
+                'source' => (string)($message['source'] ?? ''),
+                'content' => mb_strlen($content, 'UTF-8') > $perMessageChars
+                    ? mb_substr($content, 0, $perMessageChars, 'UTF-8') . '...'
+                    : $content,
+                'truncated' => mb_strlen($content, 'UTF-8') > $perMessageChars,
+            ];
+        }
+
+        return [
+            'truncated' => true,
+            'originalLength' => $originalLength,
+            'message_count' => count($messages),
+            'preview' => $preview,
+        ];
     }
 }
