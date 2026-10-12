@@ -399,6 +399,11 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
         $this->processorIdentifier = $processorIdentifier;
     }
 
+    /**
+     * Returns the prompt-visible retrieval identifier.
+     *
+     * @return string Retrieval identifier.
+     */
     public function getRetrievalIdentifier(): string
     {
         return trim($this->retrievalIdentifier);
