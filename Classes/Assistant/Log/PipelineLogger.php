@@ -368,7 +368,7 @@ class PipelineLogger implements PipelineLoggerInterface
     protected function isEnabledForLevel(string $level): bool
     {
         $mode = $this->getMode();
-        if (in_array($mode, ['verbose', 'full'], true)) {
+        if (in_array($mode, ['verbose', 'full', 'profile'], true)) {
             return true;
         }
 
