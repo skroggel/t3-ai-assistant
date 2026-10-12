@@ -51,10 +51,15 @@ After installation:
 See the [Documentation](Documentation/Index.rst) for configuration, commands and extension points.
 
 ## Vue frontend
-
 The extension provides a Vue chat component and a compiled framework-independent
 custom-element bundle. The compiled bundle is included in the extension package
 under `Resources/Public/JavaScript/ai-assistant-chat.js`.
+
+Install npm from the project root:
+
+```bash
+ddev exec sh -lc 'cd /var/www/html/vendor/madj2k/t3-ai-assistant && npm install'
+```
 
 To rebuild it in a DDEV project:
 
@@ -65,7 +70,7 @@ ddev exec sh -lc 'cd /var/www/html/vendor/madj2k/t3-ai-assistant && npm run buil
 To watch:
 
 ```bash
-    ddev exec sh -lc 'cd /var/www/html/vendor/madj2k/t3-ai-assistant && npm run watch'
+ddev exec sh -lc 'cd /var/www/html/vendor/madj2k/t3-ai-assistant && npm run watch'
 ```
 
 The full integration documentation is available in

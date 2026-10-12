@@ -24,7 +24,8 @@ CREATE TABLE `tx_aiassistant_connection_ai` (
 
 CREATE TABLE `tx_aiassistant_assistant_profile` (
     `title` varchar(255) DEFAULT '' NOT NULL,
-    `assistant_label` varchar(255) DEFAULT '' NOT NULL,
+    `assistant_name` varchar(255) DEFAULT '' NOT NULL,
+    `privacy_link` varchar(2048) DEFAULT '' NOT NULL,
     `ai_connection` int(11) unsigned DEFAULT '0' NOT NULL,
     `vector_store_connection` int(11) unsigned DEFAULT '0' NOT NULL,
     `intro_text` text,

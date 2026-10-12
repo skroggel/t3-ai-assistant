@@ -12,7 +12,7 @@
             :lang="message.role === 'assistant' ? message.languageCode : undefined"
         >
             <span class="aiassistant-visually-hidden">
-                {{ message.role === 'user' ? userLabel : assistantLabel }}:
+                {{ message.role === 'user' ? userLabel : assistantName }}:
             </span>
             <div class="chat-box-message-content">
                 <div v-html="message.html" />
@@ -39,6 +39,6 @@
 defineProps({
     messages: { type: Array, required: true },
     userLabel: { type: String, default: 'User' },
-    assistantLabel: { type: String, default: 'Assistant' },
+    assistantName: { type: String, default: 'Assistant' },
 });
 </script>

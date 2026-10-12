@@ -52,7 +52,15 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     /**
      * @var string
      */
-    protected string $assistantLabel = '';
+    protected string $assistantName = '';
+
+
+    /**
+     * TYPO3 link to the privacy policy.
+     *
+     * @var string
+     */
+    protected string $privacyLink = '';
 
 
     /**
@@ -152,25 +160,48 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
 
 
     /**
-     * Returns assistant_label.
+     * Returns assistant_name.
      *
-     * @return string assistant_label.
+     * @return string assistant_name.
      */
-    public function getAssistantLabel(): string
+    public function getAssistantName(): string
     {
-        return $this->assistantLabel;
+        return $this->assistantName;
     }
 
 
     /**
-     * Sets assistant_label.
+     * Sets assistant_name.
      *
-     * @param string $assistantLabel assistant_label.
+     * @param string $assistantName assistant_name.
      * @return void
      */
-    public function setAssistantLabel(string $assistantLabel): void
+    public function setAssistantName(string $assistantName): void
     {
-        $this->assistantLabel = $assistantLabel;
+        $this->assistantName = $assistantName;
+    }
+
+
+    /**
+     * Returns the privacy policy link.
+     *
+     * @return string privacy policy link.
+     */
+    public function getPrivacyLink(): string
+    {
+        return $this->privacyLink;
+    }
+
+
+    /**
+     * Sets the privacy policy link.
+     *
+     * @param string $privacyLink privacy policy link.
+     * @return void
+     */
+    public function setPrivacyLink(string $privacyLink): void
+    {
+        $this->privacyLink = $privacyLink;
     }
 
 

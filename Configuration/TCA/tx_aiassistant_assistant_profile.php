@@ -16,14 +16,14 @@ return [
         ],
         'sortby' => 'sorting',
         'rootLevel' => -1,
-        'searchFields' => 'title,assistant_label',
+        'searchFields' => 'title,assistant_name',
         'iconfile' => 'EXT:ai_assistant/Resources/Public/Icons/Extension.svg',
     ],
     'types' => [
         '1' => [
             'showitem' => '
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_assistant,
-                    title, assistant_label,
+                    title, assistant_name, privacy_link,
                      intro_text, initial_message, error_handling,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_prompts,
                      identity_prompt, behavior_rules, retrieval_rules, output_rules,
@@ -32,7 +32,6 @@ return [
                     chat_pipeline_steps,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_connections,
                     --palette--;;connections,
-
             ',
         ]
     ],
@@ -54,14 +53,21 @@ return [
                 'size' => 40,
             ],
         ],
-        'assistant_label' => [
-            'label' => $ll . 'tx_aiassistant_assistant_profile.assistant_label',
-            'description' => $ll . 'tx_aiassistant_assistant_profile.assistant_label_desc',
+        'assistant_name' => [
+            'label' => $ll . 'tx_aiassistant_assistant_profile.assistant_name',
+            'description' => $ll . 'tx_aiassistant_assistant_profile.assistant_name_desc',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
                 'max' => 255,
                 'size' => 40,
+            ],
+        ],
+        'privacy_link' => [
+            'label' => $ll . 'tx_aiassistant_assistant_profile.privacy_link',
+            'description' => $ll . 'tx_aiassistant_assistant_profile.privacy_link_desc',
+            'config' => [
+                'type' => 'link',
             ],
         ],
         'ai_connection' => [

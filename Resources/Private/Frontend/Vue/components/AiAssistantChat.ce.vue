@@ -2,35 +2,59 @@
     <section
         :class="['aiassistant-chat', 'chat-box', 'container', { 'aiassistant-chat--default-styles': defaultStylesEnabled }]"
         role="region"
-        :aria-label="labels.chatLabel || chatLabel"
+        :aria-label="labels.chatLabel"
         @click="handleComponentClick"
     >
         <div v-if="requireConsent && !consentGiven" ref="consentPanel" class="chat-box-consent alert alert-warning" role="note">
-            <p>{{ labels.consentMessage || consentMessage }}</p>
-            <button ref="consentButton" type="button" class="btn btn-primary" @click="acceptConsent">{{ labels.consentLabel || consentLabel }}</button>
+            <p>
+                {{ labels.consentMessage }}
+                <a v-if="privacyLink" :href="privacyLink" target="_blank" rel="noopener noreferrer">
+                    {{ labels.privacyLinkLabel }}
+                </a>
+            </p>
+            <button ref="consentButton" type="button" class="btn btn-primary" @click="acceptConsent">{{ labels.consentLabel }}</button>
         </div>
 
         <template v-else>
+
+            <header class="chat-box-header" v-if="assistantName || introText || privacyLink">
+                <div class="chat-box-header-top" v-if="assistantName">
+                    <p class="chat-box-header-brand">
+                        {{ assistantName }}
+                    </p>
+                </div>
+
+                <p class="chat-box-header-intro" v-if="introText || privacyLink">
+                    {{ introText }}
+                    <a v-if="privacyLink" :href="privacyLink" target="_blank" rel="noopener noreferrer">
+                        {{ labels.privacyLinkLabel }}
+                    </a>
+                </p>
+
+                <LanguageSelector
+                    :visible="showLanguageSelector"
+                    :site-language="effectiveResponseLanguage"
+                    :language-code="effectiveLanguageCode"
+                    :language-label="labels.languageLabel"
+                    :site-language-label="labels.siteLanguageLabel"
+                    :browser-language-label="labels.browserLanguageLabel"
+                    :apply-label="labels.languageApplyLabel"
+                    :placeholder="labels.languagePlaceholder"
+                    @language-selected="confirmLanguage"
+                />
+
+            </header>
+
             <ChatMessageList
                 :messages="messages"
-                :user-label="labels.userLabel || userLabel"
-                :assistant-label="labels.assistantLabel || assistantLabel"
+                :user-label="labels.userLabel"
+                :assistant-name="labels.assistantName"
             />
-                <ChatStatus :status="statusMessage" />
-            <LanguageSelector
-                :visible="showLanguageSelector"
-                :site-language="effectiveResponseLanguage"
-                :language-code="effectiveLanguageCode"
-                :language-label="labels.languageLabel || languageLabel"
-                :site-language-label="labels.siteLanguageLabel || siteLanguageLabel"
-                :browser-language-label="labels.browserLanguageLabel || browserLanguageLabel"
-                :apply-label="labels.languageApplyLabel || languageApplyLabel"
-                :placeholder="labels.languagePlaceholder || languagePlaceholder"
-                @language-selected="confirmLanguage"
-            />
+            <ChatStatus :status="statusMessage" />
+
             <ChatInput
-                :placeholder="labels.inputPlaceholder || inputPlaceholder"
-                :submit-label="labels.submitLabel || submitLabel"
+                :placeholder="labels.inputPlaceholder"
+                :submit-label="labels.submitLabel"
                 :disabled="loading"
                 @submit="send"
             />
@@ -63,7 +87,6 @@ import LanguageSelector from './LanguageSelector.vue';
  * @property {boolean|string|number} includeDefaultStyles Whether built-in component styles apply to this instance.
  * @property {object} sanitizeOptions DOMPurify options passed directly as an object.
  * @property {string} autoQuery Optional query sent automatically after mount.
- * @property {string} initialMessage Optional initial assistant message.
  * @property {number|string} initialMessageDelay Delay in milliseconds between initial-message updates.
  * @property {number|string} responseMessageDelay Delay in milliseconds between streamed response updates.
  * @property {boolean|string|number} requireConsent Whether consent is required. Accepts boolean values and 0/1 strings or numbers.
@@ -71,19 +94,10 @@ import LanguageSelector from './LanguageSelector.vue';
  * @property {boolean|string|number} showLanguageSelector Whether the language selector is shown. Accepts boolean values and 0/1 strings or numbers.
  * @property {string} responseLanguage Configured response language name.
  * @property {string} languageCode Configured response language code.
- * @property {string} consentMessage Consent text.
- * @property {string} consentLabel Consent button label.
- * @property {string} inputPlaceholder Input placeholder.
- * @property {string} submitLabel Submit button label.
- * @property {string} languageLabel Language selector label.
- * @property {string} siteLanguageLabel Website-language option label.
- * @property {string} browserLanguageLabel Browser-language option label.
- * @property {string} languageApplyLabel Apply-language button label.
- * @property {string} languagePlaceholder Language input placeholder.
- * @property {string} languageConfirmationFallback Fallback confirmation message. `%s` is replaced with the selected language.
- * @property {string} chatLabel Accessible chat region label.
- * @property {string} userLabel Accessible user message label.
- * @property {string} assistantLabel Accessible assistant message label.
+ * @property {string} initialMessage Optional initial assistant message.
+ * @property {string} privacyLink Optional privacy policy URL.
+ * @property {string} assistantName Optional assistant name.
+ * @property {string} introText Optional header text.
  */
 
 /** @type {import('vue').DefineProps<AiAssistantChatProps>} */
@@ -106,7 +120,6 @@ const props = defineProps({
 
     // Chat behavior.
     autoQuery: { type: String, default: '' },
-    initialMessage: { type: String, default: '' },
     initialMessageDelay: { type: [String, Number], default: 22 },
     responseMessageDelay: { type: [String, Number], default: 14 },
     requireConsent: { type: [String, Number, Boolean], default: false },
@@ -117,21 +130,12 @@ const props = defineProps({
     responseLanguage: { type: String, default: '' },
     languageCode: { type: String, default: '' },
 
-    // Labels and messages.
+    // Messages & Text
+    initialMessage: { type: String, default: '' },
     errorMessage: { type: String, default: '' },
-    consentMessage: { type: String, default: '' },
-    consentLabel: { type: String, default: 'Start chat' },
-    inputPlaceholder: { type: String, default: 'Your message...' },
-    submitLabel: { type: String, default: 'Send' },
-    languageLabel: { type: String, default: 'Response language' },
-    siteLanguageLabel: { type: String, default: 'Use website language' },
-    browserLanguageLabel: { type: String, default: 'Use browser language' },
-    languageApplyLabel: { type: String, default: 'Use selected language' },
-    languagePlaceholder: { type: String, default: 'Language' },
-    languageConfirmationFallback: { type: String, default: 'Language selected: %s' },
-    chatLabel: { type: String, default: 'AI Assistant chat' },
-    userLabel: { type: String, default: 'User' },
-    assistantLabel: { type: String, default: 'Assistant' },
+    assistantName: { type: String, default: '' },
+    privacyLink: { type: String, default: '' },
+    introText: { type: String, default: '' },
 });
 
 const emit = defineEmits(['error']);
@@ -260,6 +264,13 @@ const sanitizeOptions = {
 };
 
 /**
+ * Renders Markdown links as their formatted text instead of active anchors.
+ * Registered UI link components are rendered separately and are not affected.
+ */
+const markdownRenderer = new marked.Renderer();
+markdownRenderer.link = ({ tokens }) => markdownRenderer.parser.parseInline(tokens);
+
+/**
  * Adds the legacy external-link behavior after sanitization.
  *
  * @param {string} html Sanitized HTML.
@@ -285,7 +296,11 @@ const enhanceLinks = (html) => {
  * @return {string} Sanitized HTML.
  */
 const renderMarkdown = (content) => enhanceLinks(
-    DOMPurify.sanitize(marked.parse(content || '', { gfm: true, breaks: true }), sanitizeOptions),
+    DOMPurify.sanitize(marked.parse(content || '', {
+        gfm: true,
+        breaks: true,
+        renderer: markdownRenderer,
+    }), sanitizeOptions),
 );
 
 /**
@@ -636,7 +651,7 @@ const send = async (query, directInteraction = '', options = {}) => {
         abortController = new AbortController();
         await transport.streamSse(props.endpoint, formData, async (content) => {
             answer = content;
-        messages.value[messageIndex].html = renderResponse(answer);
+            messages.value[messageIndex].html = renderResponse(answer);
             await nextTick();
             await waitForPaint();
             await wait(responseMessageDelay);
@@ -718,7 +733,7 @@ const confirmLanguage = async (selection) => {
     selectedLanguageCode.value = selection.code || '';
     await send(selection.name || selection.value, 'language_confirmation', {
         showUserMessage: false,
-        fallbackMessage: (labels.languageConfirmationFallback || props.languageConfirmationFallback).replace('%s', selection.name || selection.value),
+        fallbackMessage: (labels.languageConfirmationFallback).replace('%s', selection.name || selection.value),
     });
 };
 
@@ -763,209 +778,264 @@ defineExpose({ startDirectInteraction });
 </script>
 
 <style lang="scss">
-.aiassistant-chat--default-styles {
-    .aiassistant-visually-hidden {
-        position: absolute !important;
-        width: 1px !important;
-        height: 1px !important;
-        padding: 0 !important;
-        margin: -1px !important;
-        overflow: hidden !important;
-        clip: rect(0, 0, 0, 0) !important;
-        white-space: nowrap !important;
-        border: 0 !important;
-    }
+.aiassistant-visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
 
-    max-width: 700px;
-    margin: 0 auto;
-    --chat-box-color-primary: var(--bs-primary, #205eb5);
-    --chat-box-color-secondary: var(--bs-secondary, #d6d6d6);
+.chat-box.aiassistant-chat .btn-primary {
+    background-color: var(--chat-box-color-primary);
+    border-color: var(--chat-box-color-primary);
+}
 
-    .chat-box-consent,
-    .chat-box-language {
-        margin-bottom: 1rem;
-    }
+.chat-box.aiassistant-chat .btn-primary:hover,
+.chat-box.aiassistant-chat .btn-primary:active {
+    background-color: var(--chat-box-color-secondary);
+    border-color: var(--chat-box-color-secondary);
+}
 
-    .chat-box-language-toggle {
-        max-width: 100%;
-        white-space: normal;
-    }
+@layer default, instance;
+@layer default {
+    .chat-box.aiassistant-chat--default-styles {
 
-    .chat-box-language-options {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-top: 0.75rem;
-        padding: 0.75rem;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        border-radius: 0.5rem;
+        max-width: 700px;
+        margin: 0 auto;
+        --chat-box-color-primary: var(--bs-primary, #205eb5);
+        --chat-box-color-secondary: var(--bs-secondary, #d6d6d6);
 
-        > button,
-        .chat-box-language-custom,
-        .chat-box-language-custom input,
-        .chat-box-language-custom button {
-            width: 100%;
+        .chat-box-consent,
+        .chat-box-language {
+            margin-bottom: 1rem;
         }
 
-        .chat-box-language-custom {
+        .chat-box-language-toggle {
+            max-width: 100%;
+            white-space: normal;
+        }
+
+        .chat-box-language-options {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-        }
-    }
-
-    .chat-box-messages {
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-        min-height: 300px;
-        padding: 1rem;
-        overflow-y: auto;
-        background-color: #f8f9fa;
-        border-radius: 0.5rem;
-    }
-
-    .chat-box-message {
-        position: relative;
-        max-width: 80%;
-        padding: 0.75rem;
-        overflow-wrap: anywhere;
-        border-radius: 0.5rem;
-
-        &--from-ui,
-        &--from-user {
-            align-self: flex-end;
-            color: #fff;
-            background-color: var(--chat-box-color-primary);
-            border-bottom-right-radius: 0.125rem;
-        }
-
-        &--from-bot {
-            align-self: flex-start;
-            color: var(--bs-body-color);
-            background-color: var(--chat-box-color-secondary);
-            border-bottom-left-radius: 0.125rem;
-        }
-
-        &--from-ui {
-            display: none;
-        }
-
-    }
-
-    .chat-box-message-content {
-        display: block;
-
-        > :first-child { margin-top: 0; }
-        > :last-child { margin-bottom: 0; }
-
-        p { margin: 0 0 1rem; }
-        ul, ol { margin: 0 0 1rem 1.5rem; padding: 0; }
-        h1, h2, h3, h4, h5, h6 { margin: 0 0 0.75rem; line-height: 1.3; }
-
-        code {
-            padding: 0.125rem 0.25rem;
-            border-radius: 0.25rem;
-            background: rgba(0, 0, 0, 0.08);
-            font-size: 0.9em;
-        }
-
-        pre {
-            margin: 0 0 1rem;
+            margin-top: 0.75rem;
             padding: 0.75rem;
-            overflow-x: auto;
-            border-radius: 0.5rem;
-            background: rgba(0, 0, 0, 0.08);
-
-            code { padding: 0; background: transparent; }
-        }
-
-        blockquote {
-            margin: 0 0 1rem;
-            padding-left: 1rem;
-            border-left: 3px solid rgba(0, 0, 0, 0.15);
-        }
-
-        a {
-            color: inherit;
-            text-decoration: underline;
-            text-underline-offset: 0.12em;
-        }
-
-        table {
-            width: 100%;
-            margin: 0 0 1rem;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 0.5rem;
             border: 1px solid rgba(0, 0, 0, 0.15);
-            text-align: left;
+            border-radius: 0.5rem;
+            align-items: end;
+
+            > button,
+            .chat-box-language-custom,
+            .chat-box-language-custom input,
+            .chat-box-language-custom button {
+                width: 100%;
+            }
+
+            .chat-box-language-custom {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
 
-        th { font-weight: 600; }
-    }
+        .chat-box-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            min-height: 300px;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+        }
 
-    .chat-box-prompt {
-        display: flex;
-        gap: 0.5rem;
-        align-items: flex-end;
-        margin-top: 1rem;
-        border: 1px solid var(--chat-box-color-secondary);
-        border-radius: 0.5rem;
+        .chat-box-message {
+            position: relative;
+            max-width: 80%;
+            padding: 0.75rem;
+            overflow-wrap: anywhere;
+            border-radius: 0.5rem;
 
-        textarea,
-        &-input {
-            flex: 1 1 auto;
-            min-height: 2.75rem;
-            padding: 0.65rem 0.8rem;
-            resize: vertical;
-            color: var(--bs-body-color, #1f2933);
-            background: #fff;
+            &:after {
+                content: "";
+                position: absolute;
+                left: -0.4375rem;
+                bottom: 0;
+                width: 0.75rem;
+                height: 0.875rem;
+                background-color: var(--chat-box-color-secondary);
+                clip-path: polygon(100% 0, 0 100%, 100% 100%);
+            }
+
+            &--from-ui,
+            &--from-user {
+                align-self: flex-end;
+                color: #fff;
+                background-color: var(--chat-box-color-primary);
+                border-bottom-right-radius: 0.125rem;
+                &:after {
+                    background-color: var(--chat-box-color-primary);
+                }
+            }
+
+            &--from-bot {
+                align-self: flex-start;
+                color: var(--bs-body-color);
+                background-color: var(--chat-box-color-secondary);
+                border-bottom-left-radius: 0.125rem;
+            }
+
+            &--from-ui {
+                display: none;
+            }
+
+        }
+
+        .chat-box-message-content {
+            display: block;
+
+            > :first-child {
+                margin-top: 0;
+            }
+
+            > :last-child {
+                margin-bottom: 0;
+            }
+
+            p {
+                margin: 0 0 1rem;
+            }
+
+            ul, ol {
+                margin: 0 0 1rem 1.5rem;
+                padding: 0;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                margin: 0 0 0.75rem;
+                line-height: 1.3;
+            }
+
+            code {
+                padding: 0.125rem 0.25rem;
+                border-radius: 0.25rem;
+                background: rgba(0, 0, 0, 0.08);
+                font-size: 0.9em;
+            }
+
+            pre {
+                margin: 0 0 1rem;
+                padding: 0.75rem;
+                overflow-x: auto;
+                border-radius: 0.5rem;
+                background: rgba(0, 0, 0, 0.08);
+
+                code {
+                    padding: 0;
+                    background: transparent;
+                }
+            }
+
+            blockquote {
+                margin: 0 0 1rem;
+                padding-left: 1rem;
+                border-left: 3px solid rgba(0, 0, 0, 0.15);
+            }
+
+            a {
+                color: inherit;
+                text-decoration: underline;
+                text-underline-offset: 0.12em;
+            }
+
+            table {
+                width: 100%;
+                margin: 0 0 1rem;
+                border-collapse: collapse;
+            }
+
+            th, td {
+                padding: 0.5rem;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                text-align: left;
+            }
+
+            th {
+                font-weight: 600;
+            }
+        }
+
+        .chat-box-prompt {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-end;
+            margin-top: 1rem;
             border: 1px solid var(--chat-box-color-secondary);
-            border-radius: 0.6rem;
-            font: inherit;
+            border-radius: 0.5rem;
+            align-items: stretch;
+
+            &-input {
+                flex: 1 1 auto;
+                min-height: 2.75rem;
+                padding: 0.65rem 0.8rem;
+                resize: vertical;
+                color: var(--bs-body-color, #1f2933);
+                background: #fff;
+                border: 1px solid var(--chat-box-color-secondary);
+                border-radius: 0.6rem;
+                font: inherit;
+            }
+
+            &-submit {
+                min-height: 2.75rem;
+                padding: 0.65rem 1rem;
+                color: #fff;
+                background: var(--chat-box-color-primary);
+                border: 1px solid var(--chat-box-color-primary);
+                border-radius: 0.55rem;
+                cursor: pointer;
+                font: inherit;
+                font-weight: 600;
+                white-space: nowrap;
+            }
         }
 
-        &-submit {
-            min-height: 2.75rem;
-            padding: 0.65rem 1rem;
-            color: #fff;
-            background: var(--chat-box-color-primary);
-            border: 1px solid var(--chat-box-color-primary);
-            border-radius: 0.55rem;
-            cursor: pointer;
-            font: inherit;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-    }
+        .chat-box-typing-dots {
+            display: inline-flex !important;
+            margin-top: 0.6rem;
+            gap: 0.25rem;
+            align-items: center;
+            min-height: 1rem;
+            color: #212529 !important;
+            visibility: visible !important;
+            overflow: visible !important;
 
-    .chat-box-typing-dots {
-        display: inline-flex !important;
-        margin-top: 0.6rem;
-        gap: 0.25rem;
-        align-items: center;
-        min-height: 1rem;
-        color: #212529 !important;
-        visibility: visible !important;
-        overflow: visible !important;
+            .dot {
+                display: inline-block !important;
+                flex: 0 0 0.5rem !important;
+                width: 0.5rem !important;
+                height: 0.5rem !important;
+                min-width: 0.5rem !important;
+                min-height: 0.5rem !important;
+                background-color: #212529 !important;
+                border-radius: 50% !important;
+                animation: aiassistant-vue-blink 1.4s infinite both !important;
+                opacity: 0.35 !important;
 
-        .dot {
-            display: inline-block !important;
-            flex: 0 0 0.5rem !important;
-            width: 0.5rem !important;
-            height: 0.5rem !important;
-            min-width: 0.5rem !important;
-            min-height: 0.5rem !important;
-            background-color: #212529 !important;
-            border-radius: 50% !important;
-            animation: aiassistant-vue-blink 1.4s infinite both !important;
-            opacity: 0.35 !important;
+                &:nth-child(2) {
+                    animation-delay: 0.2s;
+                }
 
-            &:nth-child(2) { animation-delay: 0.2s; }
-            &:nth-child(3) { animation-delay: 0.4s; }
+                &:nth-child(3) {
+                    animation-delay: 0.4s;
+                }
+            }
         }
     }
 }

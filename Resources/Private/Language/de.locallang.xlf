@@ -7,18 +7,6 @@
 				<source>en</source>
 				<target>de</target>
 			</trans-unit>
-			<trans-unit id="templates_index_index.title" resname="templates_index_index.title">
-				<source>ChatGPT Example with SSE</source>
-				<target>ChatGPT-Beispiel mit SSE</target>
-			</trans-unit>
-			<trans-unit id="templates_index_index.brand" resname="templates_index_index.brand">
-				<source>madj2k Assistant</source>
-				<target>madj2k-Assistent</target>
-			</trans-unit>
-			<trans-unit id="templates_index_index.intro" resname="templates_index_index.intro">
-				<source>Ask about the website content or just start a short conversation.</source>
-				<target>Fragen Sie nach Inhalten der Website oder starten Sie einfach eine kurze Unterhaltung.</target>
-			</trans-unit>
 			<trans-unit id="templates_index_index.initial_message" resname="templates_index_index.initial_message">
 				<source>Hello, I am your AI-Assistant. How can I help you?</source>
 				<target>Hallo, ich bin Ihr KI-Assistent. Wie kann ich Ihnen helfen?</target>
@@ -30,6 +18,10 @@
 			<trans-unit id="templates_index_index.consent_button" resname="templates_index_index.consent_button">
 				<source>I understand, start chat</source>
 				<target>Verstanden, Chat starten</target>
+			</trans-unit>
+			<trans-unit id="templates_index_index.privacy_link" resname="templates_index_index.privacy_link">
+				<source>Privacy policy</source>
+				<target>Datenschutzerklärung</target>
 			</trans-unit>
 			<trans-unit id="chat.recommendation.line" resname="chat.recommendation.line">
 				<source>I found a matching page for you here: %s (%s)</source>
@@ -123,7 +115,7 @@
 				<source>User message</source>
 				<target>Nutzendeneingabe</target>
 			</trans-unit>
-			<trans-unit id="templates_index_index.assistant_label" resname="templates_index_index.assistant_label">
+            <trans-unit id="templates_index_index.assistant_name" resname="templates_index_index.assistant_name">
 				<source>AI assistant</source>
 				<target>KI-Assistent</target>
 			</trans-unit>

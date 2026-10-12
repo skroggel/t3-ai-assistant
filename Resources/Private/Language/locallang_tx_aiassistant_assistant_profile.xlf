@@ -36,11 +36,17 @@
 			<trans-unit id="tx_aiassistant_assistant_profile.scope_mode_prefer" resname="tx_aiassistant_assistant_profile.scope_mode_prefer">
 				<source>Prefer</source>
 			</trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_profile.assistant_label" resname="tx_aiassistant_assistant_profile.assistant_label">
-				<source>Assistant label</source>
+            <trans-unit id="tx_aiassistant_assistant_profile.assistant_name" resname="tx_aiassistant_assistant_profile.assistant_name">
+                <source>Assistant name</source>
 			</trans-unit>
-			<trans-unit id="tx_aiassistant_assistant_profile.assistant_label_desc" resname="tx_aiassistant_assistant_profile.assistant_label_desc">
-				<source>Optional frontend label and assistant identity, for example `Founding Assistant`. When set, the bot also uses this label when users ask who it is.</source>
+			<trans-unit id="tx_aiassistant_assistant_profile.assistant_name_desc" resname="tx_aiassistant_assistant_profile.assistant_name_desc">
+				<source>Optional frontend name and assistant identity, for example `Founding Assistant`. When set, the bot also uses this name when users ask who it is.</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.privacy_link" resname="tx_aiassistant_assistant_profile.privacy_link">
+				<source>Privacy policy link</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.privacy_link_desc" resname="tx_aiassistant_assistant_profile.privacy_link_desc">
+				<source>Optional link to the privacy policy shown in the consent notice.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.intro_text" resname="tx_aiassistant_assistant_profile.intro_text">
 				<source>Intro text</source>
@@ -58,7 +64,7 @@
 				<source>Identity prompt</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.identity_prompt_desc" resname="tx_aiassistant_assistant_profile.identity_prompt_desc">
-				<source>Optional explicit system instruction for how this profile should identify itself. Overrides the derived assistant label behavior.</source>
+                <source>Optional explicit system instruction for how this profile should identify itself. Overrides the derived assistant name behavior.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_assistant_profile.profile_prompt" resname="tx_aiassistant_assistant_profile.profile_prompt">
 				<source>Profile prompt</source>

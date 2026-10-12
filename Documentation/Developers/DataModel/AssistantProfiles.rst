@@ -5,7 +5,7 @@ Assistant profile records
 
 Assistant profile records store global assistant configuration:
 
-* title and assistant label;
+* title and assistant name;
 * AI connection reference;
 * default vector store connection reference;
 * introduction and initial message;

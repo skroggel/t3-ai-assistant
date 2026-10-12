@@ -6,15 +6,7 @@
 			<trans-unit id="templates_index_index.lang" resname="templates_index_index.lang">
 				<source>en</source>
 			</trans-unit>
-			<trans-unit id="templates_index_index.title" resname="templates_index_index.title">
-				<source>ChatGPT Example with SSE</source>
-			</trans-unit>
-			<trans-unit id="templates_index_index.brand" resname="templates_index_index.brand">
-				<source>madj2k Assistant</source>
-			</trans-unit>
-			<trans-unit id="templates_index_index.intro" resname="templates_index_index.intro">
-				<source>Ask about the website content or just start a short conversation.</source>
-			</trans-unit>
+
 			<trans-unit id="templates_index_index.initial_message" resname="templates_index_index.initial_message">
 				<source>Hello, I am your AI-Assistant. How can I help you?</source>
 			</trans-unit>
@@ -23,6 +15,9 @@
 			</trans-unit>
 			<trans-unit id="templates_index_index.consent_button" resname="templates_index_index.consent_button">
 				<source>I understand, start chat</source>
+			</trans-unit>
+			<trans-unit id="templates_index_index.privacy_link" resname="templates_index_index.privacy_link">
+				<source>Privacy policy</source>
 			</trans-unit>
 			<trans-unit id="chat.recommendation.line" resname="chat.recommendation.line">
 				<source>I found a matching page for you here: %s (%s)</source>
@@ -93,7 +88,7 @@
 			<trans-unit id="templates_index_index.user_label" resname="templates_index_index.user_label">
 				<source>User message</source>
 			</trans-unit>
-			<trans-unit id="templates_index_index.assistant_label" resname="templates_index_index.assistant_label">
+            <trans-unit id="templates_index_index.assistant_name" resname="templates_index_index.assistant_name">
 				<source>AI assistant</source>
 			</trans-unit>
 			<trans-unit id="templates_index_index.loading" resname="templates_index_index.loading">

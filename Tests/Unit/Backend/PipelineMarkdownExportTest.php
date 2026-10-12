@@ -34,7 +34,7 @@ final class PipelineMarkdownExportTest extends TestCase
     {
         $profile = new AssistantProfile();
         $profile->setTitle('Test assistant');
-        $profile->setAssistantLabel('Assistant');
+        $profile->setAssistantName('Assistant');
         $profile->setIdentityPrompt('Be helpful.');
 
         $markdown = (new PipelineMarkdownExporter())->export($profile, [

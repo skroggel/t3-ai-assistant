@@ -12,7 +12,7 @@ Important profile fields
 Title
     Backend label for administrators and integrators.
 
-Assistant label
+Assistant name
     Name or label shown to users.
 
 AI connection
@@ -48,4 +48,3 @@ pipeline steps:
 * context selection rules belong to context optimizer steps;
 * answer format rules belong to answer generator steps;
 * validation rules belong to quality gate steps.
-

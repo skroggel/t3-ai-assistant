@@ -45,7 +45,13 @@
     <section class="chat-box container py-4 js-aiassistant-container">
         <f:if condition="{settings.requireConsent}">
             <div class="chat-box-consent alert alert-warning js-aiassistant-consent" role="note">
-                <p><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.consent_message" /></p>
+                <p><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.consent_message" />
+                    <f:if condition="{assistantProfile.privacyLink}">
+                        <f:link.typolink parameter="{assistantProfile.privacyLink}">
+                            <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.privacy_link" />
+                        </f:link.typolink>
+                    </f:if>
+                </p>
                 <button class="btn btn-primary js-aiassistant-init" type="button"><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.consent_button" /></button>
             </div>
         </f:if>
@@ -65,8 +71,8 @@
                 <header class="chat-box-header">
                     <div class="chat-box-header-top">
                         <p class="chat-box-header-brand">
-                            <f:if condition="{assistantLabel}">
-                                <f:then>{assistantLabel}</f:then>
+                            <f:if condition="{assistantName}">
+                                <f:then>{assistantName}</f:then>
                                 <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.brand" /></f:else>
                             </f:if>
                         </p>

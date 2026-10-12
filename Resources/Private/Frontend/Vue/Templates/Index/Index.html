@@ -11,19 +11,6 @@
         src="EXT:ai_assistant/Resources/Public/JavaScript/ai-assistant-chat.js"
     />
 
-    <f:variable name="resolvedAssistantInitialMessage">
-        <f:if condition="{assistantProfile.initialMessage}">
-            <f:then>{assistantProfile.initialMessage}</f:then>
-            <f:else><f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.initial_message" /></f:else>
-        </f:if>
-    </f:variable>
-
-    <f:if condition="{assistantProfile.introText}">
-        <p>
-            {assistantProfile.introText}
-        </p>
-    </f:if>
-
     <ai-assistant-chat
         endpoint="{f:uri.action(action: 'stream', controller: 'Chat', extensionName: 'AiAssistant', pluginName: 'Chat', pageType: '1790831370', arguments: '{id: pageUid}')}"
         assistant-profile="{assistantProfile.uid}"
@@ -38,9 +25,13 @@
         error-handling="{assistantProfile.errorHandling}"
         include-default-styles="{settings.includeDefaultStyles}"
 
-        initial-message="{resolvedAssistantInitialMessage -> f:format.htmlspecialchars()}"
         initial-message-delay="22"
         response-message-delay="14"
+
+        initial-message="{initialMessage -> f:format.htmlspecialchars()}"
+        assistant-name="{assistantProfile.assistantName -> f:format.htmlspecialchars()}"
+        intro-text="{assistantProfile.introText -> f:format.htmlspecialchars()}"
+        privacy-link="{f:uri.typolink(parameter: assistantProfile.privacyLink)}"
 
         require-consent="{settings.requireConsent}"
         show-language-selector="{settings.language.allowUserSelection}"
