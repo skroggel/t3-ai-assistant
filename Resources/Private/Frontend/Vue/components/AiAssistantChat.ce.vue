@@ -556,7 +556,7 @@ const wait = (milliseconds) => new Promise((resolve) => {
  * @return {Promise<void>} Resolves when the initial message is complete.
  */
 const addInitialMessage = async () => {
-    const initialContent = props.initialMessage.trim();
+    const initialContent = String(props.initialMessage || '').trim();
     if (initialMessageAdded || initialContent === '') {
         return;
     }
@@ -852,7 +852,8 @@ defineExpose({ startDirectInteraction });
             padding: 1rem;
             overflow-y: auto;
             background-color: #f8f9fa;
-            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .chat-box-message {
@@ -873,15 +874,19 @@ defineExpose({ startDirectInteraction });
                 clip-path: polygon(100% 0, 0 100%, 100% 100%);
             }
 
+            &--from-user::after {
+                right: -0.4375rem;
+                left: unset;
+                background-color: var(--chat-box-color-primary);
+                clip-path: polygon(0 0, 0 100%, 100% 100%);
+            }
+
             &--from-ui,
             &--from-user {
                 align-self: flex-end;
                 color: #fff;
                 background-color: var(--chat-box-color-primary);
                 border-bottom-right-radius: 0.125rem;
-                &:after {
-                    background-color: var(--chat-box-color-primary);
-                }
             }
 
             &--from-bot {
