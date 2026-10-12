@@ -1085,6 +1085,18 @@
 			<trans-unit id="registry.pipeline_log_mode.verbose" resname="registry.pipeline_log_mode.verbose">
 				<source>verbose</source>
 			</trans-unit>
+			<trans-unit id="registry.pipeline_log_mode.profile" resname="registry.pipeline_log_mode.profile">
+				<source>Selected assistant profile</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_profile.label" resname="registry.pipeline_log_profile.label">
+				<source>Assistant profile for logging</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_profile.description" resname="registry.pipeline_log_profile.description">
+				<source>When the selected assistant profile mode is active, only trace events for this profile are persisted.</source>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_profile.none" resname="registry.pipeline_log_profile.none">
+				<source>No profile selected</source>
+			</trans-unit>
 			<trans-unit id="registry.pipeline_log_write_psr.label" resname="registry.pipeline_log_write_psr.label">
 				<source>Write PSR log</source>
 			</trans-unit>

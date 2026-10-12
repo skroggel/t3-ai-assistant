@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 namespace Madj2k\AiAssistant\Backend\Configuration;
 
+use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
+
 /**
  * Class BackendRegistryFieldProvider
  *
@@ -28,12 +30,40 @@ namespace Madj2k\AiAssistant\Backend\Configuration;
 final class BackendRegistryFieldProvider
 {
     /**
+     * Constructor.
+     *
+     * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant profile repository.
      * @param iterable<\Madj2k\AiAssistant\Backend\Configuration\BackendRegistryFieldContributorInterface> $fieldContributors
      */
     public function __construct(
+        private readonly AssistantProfileRepository $assistantProfileRepository,
         private readonly iterable $fieldContributors = []
     ) {
+    }
 
+
+    /**
+     * Returns all assistant profile options for the log profile filter.
+     *
+     * @return array<int, array{value: string, label: string}> Profile options.
+     */
+    private function getAssistantProfileOptions(): array
+    {
+        $options = [
+            [
+                'value' => '0',
+                'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.pipeline_log_profile.none',
+            ],
+        ];
+
+        foreach ($this->assistantProfileRepository->findAll() as $assistantProfile) {
+            $options[] = [
+                'value' => (string)$assistantProfile->getUid(),
+                'label' => $assistantProfile->getTitle(),
+            ];
+        }
+
+        return $options;
     }
 
 
@@ -66,7 +96,18 @@ final class BackendRegistryFieldProvider
                     ['value' => 'off', 'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.pipeline_log_mode.off'],
                     ['value' => 'errors', 'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.pipeline_log_mode.errors'],
                     ['value' => 'verbose', 'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.pipeline_log_mode.verbose'],
+                    ['value' => 'profile', 'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.pipeline_log_mode.profile'],
                 ],
+            ],
+            [
+                'key' => 'chat.pipelineLog.profileUid',
+                'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.pipeline_log_profile.label',
+                'description' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.pipeline_log_profile.description',
+                'type' => 'select',
+                'default' => '0',
+                'maxLength' => 10,
+                'allowDelete' => false,
+                'options' => $this->getAssistantProfileOptions(),
             ],
             [
                 'key' => 'chat.pipelineLog.writePsrLog',

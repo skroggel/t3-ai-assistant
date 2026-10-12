@@ -328,7 +328,7 @@ class PipelineLogger implements PipelineLoggerInterface
      */
     protected function log(string $level, string $eventName, PipelineLogMetaData $logMetaData, array $payload = []): void
     {
-        if (!$this->isEnabledForLevel($level)) {
+        if (!$this->isEnabledForLevel($level) || !$this->isEnabledForProfile($logMetaData)) {
             return;
         }
 
@@ -373,6 +373,25 @@ class PipelineLogger implements PipelineLoggerInterface
         }
 
         return $level === 'error' && $mode === 'errors';
+    }
+
+
+    /**
+     * Checks whether tracing is enabled for the assistant profile in the metadata.
+     *
+     * @param \Madj2k\AiCore\Assistant\Log\PipelineLogMetaData $logMetaData Trace context.
+     * @return bool True when the configured profile matches or no profile filter is active.
+     * @throws \Madj2k\AiCore\Exception\AppException
+     */
+    protected function isEnabledForProfile(PipelineLogMetaData $logMetaData): bool
+    {
+        if ($this->getMode() !== 'profile') {
+            return true;
+        }
+
+        $profileUid = (int)Config::get('chat.pipelineLog.profileUid', 0);
+        return $profileUid > 0
+            && $logMetaData->getAssistantProfile()->getUid() === $profileUid;
     }
 
 

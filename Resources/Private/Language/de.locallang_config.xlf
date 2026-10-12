@@ -1268,6 +1268,22 @@
 				<source>verbose</source>
 				<target>ausführlich</target>
 			</trans-unit>
+			<trans-unit id="registry.pipeline_log_mode.profile" resname="registry.pipeline_log_mode.profile">
+				<source>Selected assistant profile</source>
+				<target>Ausgewähltes Assistant-Profil</target>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_profile.label" resname="registry.pipeline_log_profile.label">
+				<source>Assistant profile for logging</source>
+				<target>Assistant-Profil für Logging</target>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_profile.description" resname="registry.pipeline_log_profile.description">
+				<source>When the selected assistant profile mode is active, only trace events for this profile are persisted.</source>
+				<target>Im Modus für das ausgewählte Profil werden nur Trace-Ereignisse dieses Profils gespeichert.</target>
+			</trans-unit>
+			<trans-unit id="registry.pipeline_log_profile.none" resname="registry.pipeline_log_profile.none">
+				<source>No profile selected</source>
+				<target>Kein Profil ausgewählt</target>
+			</trans-unit>
 			<trans-unit id="registry.pipeline_log_write_psr.label" resname="registry.pipeline_log_write_psr.label">
 				<source>Write PSR log</source>
 				<target>PSR-Log schreiben</target>
