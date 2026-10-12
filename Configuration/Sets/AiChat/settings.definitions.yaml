@@ -7,8 +7,8 @@ settings:
   aiAssistant.useLegacyFrontend:
     label: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.useLegacyFrontend.label'
     description: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.useLegacyFrontend.description'
-    type: bool
-    default: false
+    type: int
+    default: 0
     category: aiAssistant
 
   aiAssistant.allowedAssistantProfiles:

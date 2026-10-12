@@ -1,6 +1,7 @@
 aiAssistant:
   # Render the legacy chat templates instead of the Vue custom element.
-  useLegacyFrontend: false
+  # Keep this numeric because TypoScript conditions render boolean false as an empty constant.
+  useLegacyFrontend: 0
 
   # Assistant profile UIDs allowed for public frontend requests.
   allowedAssistantProfiles: []
