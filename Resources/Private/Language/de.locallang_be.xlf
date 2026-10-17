@@ -52,6 +52,8 @@
 				<target></target>
 			</trans-unit>
 
+
+
 			<trans-unit id="flexform.chat.sheet.general">
 				<source>Chat Settings</source>
 				<target>Chat-Einstellungen</target>
@@ -71,6 +73,14 @@
 			<trans-unit id="flexform.chat.include_default_styles.description">
 				<source>Includes the built-in chat component CSS. Disable this when the host project provides its own styles.</source>
 				<target>Bindet das integrierte CSS der Chat-Komponenten ein. Deaktivieren, wenn das Host-Projekt eigene Styles bereitstellt.</target>
+			</trans-unit>
+			<trans-unit id="flexform.chat.number_of_typing_dots">
+				<source>Number of typing dots</source>
+				<target>Anzahl der Typing-Dots</target>
+			</trans-unit>
+			<trans-unit id="flexform.chat.number_of_typing_dots.description">
+				<source>Number of dots shown while the assistant is generating a response.</source>
+				<target>Anzahl der Punkte, die während der Antwortgenerierung angezeigt werden.</target>
 			</trans-unit>
 			<trans-unit id="flexform.chat.sheet.language">
 				<source>Language</source>

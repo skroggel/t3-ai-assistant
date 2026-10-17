@@ -54,22 +54,31 @@ const emit = defineEmits(['language-selected']);
 
 /** @type {import('vue').Ref<boolean>} Whether the language panel is open. */
 const open = ref(false);
+
 /** @type {import('vue').Ref<string>} Current uncommitted input value. */
 const draft = ref('');
+
 /** @type {import('vue').Ref<string>} Last language submitted by the user. */
 const applied = ref('');
+
 /** @type {string} Unique input identifier for labels and accessibility. */
 const inputId = `aiassistant-language-${Math.random().toString(36).slice(2)}`;
+
 /** @type {string} Unique language-panel identifier. */
 const panelId = `${inputId}-panel`;
+
 /** @type {string} Unique datalist identifier. */
 const optionsId = `${inputId}-options`;
+
 /** @type {import('vue').Ref<HTMLInputElement|null>} Language input element. */
 const input = ref(null);
+
 /** @type {import('vue').Ref<HTMLElement|null>} Language panel element. */
 const panel = ref(null);
+
 /** @type {string} Browser language reported by the current user agent. */
 const browserLanguage = typeof navigator !== 'undefined' ? String(navigator.languages?.[0] || navigator.language || '') : '';
+
 /** @type {string[]} Common language suggestions shown by the native datalist. */
 const languageOptions = [
     'Deutsch (de)',
@@ -171,3 +180,42 @@ const select = (value) => {
  */
 const apply = () => { if (draft.value.trim()) select(draft.value.trim()); };
 </script>
+
+
+<style lang="scss">
+@layer default, instance;
+@layer default {
+    .chat-box-language {
+
+        &-toggle {
+            max-width: 100%;
+            white-space: normal;
+        }
+
+        &-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0.5rem;
+            align-items: end;
+
+            > button,
+            .chat-box-language-custom,
+            .chat-box-language-custom input,
+            .chat-box-language-custom button {
+                width: 100%;
+            }
+
+            .chat-box-language-custom {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    }
+}
+</style>
+

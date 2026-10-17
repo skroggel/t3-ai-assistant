@@ -11,6 +11,10 @@
         src="EXT:ai_assistant/Resources/Public/JavaScript/ai-assistant-chat.js"
     />
 
+    <f:if condition="{settings.includeDefaultStyles}">
+        <f:asset.css identifier="ai-assistant-chat-css" href="EXT:ai_assistant/Resources/Public/Css/t3-ai-assistant-frontend.css" />
+    </f:if>
+
     <ai-assistant-chat
         endpoint="{f:uri.action(action: 'stream', controller: 'Chat', extensionName: 'AiAssistant', pluginName: 'Chat', pageType: '1790831370', arguments: '{id: pageUid}')}"
         assistant-profile="{assistantProfile.uid}"
@@ -22,9 +26,9 @@
         chat-options-json="{chatOptionsJson -> f:format.htmlspecialchars()}"
         labels-json="{labelsJson -> f:format.htmlspecialchars()}"
         ui-components-json="{uiComponentsJson -> f:format.htmlspecialchars()}"
-        error-handling="{assistantProfile.errorHandling}"
-        include-default-styles="{settings.includeDefaultStyles}"
 
+        error-handling="{assistantProfile.errorHandling}"
+        numberOfLoadingDots="{settings.numberOfTypingDots}"
         initial-message-delay="22"
         response-message-delay="14"
 

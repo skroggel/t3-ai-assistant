@@ -282,7 +282,7 @@ class BackendController extends ActionController
         $moduleTemplate->assignMultiple($viewData);
 
         GeneralUtility::makeInstance(AssetCollector::class)
-            ->addStyleSheet('aiassistant-backend', 'EXT:ai_assistant/Resources/Public/Styles/Backend.css');
+            ->addStyleSheet('aiassistant-backend', 'EXT:ai_assistant/Resources/Public/Css/backend.css');
 
         return $moduleTemplate->renderResponse($templateName);
     }

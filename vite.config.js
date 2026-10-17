@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
-    plugins: [vue()],
     define: {
         'process.env.NODE_ENV': JSON.stringify('production'),
     },
@@ -11,9 +10,18 @@ export default defineConfig({
             entry: 'Resources/Private/Frontend/Vue/ai-assistant-chat.js',
             formats: ['iife'],
             name: 'AiAssistantChatElement',
-            fileName: () => 'ai-assistant-chat.js',
+            fileName: () => 'JavaScript/ai-assistant-chat.js',
+            cssFileName: 'Css/t3-ai-assistant-frontend',
         },
-        outDir: 'Resources/Public/JavaScript',
+        // combine CSS to ONE file
+        cssCodeSplit: false,
+        outDir: 'Resources/Public',
         emptyOutDir: false,
     },
+    plugins: [
+        // treat as SingleFileComponent while compiling (only while compiling!)
+        vue({
+            customElement: false,
+        }),
+    ],
 });

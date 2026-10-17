@@ -102,6 +102,7 @@ final class ChatOptionsResolver
             'accessibility' => [
                 'plainLanguage' => $chatOptions->plainLanguage,
             ],
+            'numberOfLoadingDots' => max(1, min(10, (int)($settings['numberOfTypingDots'] ?? 3))),
             'sanitizeOptions' => is_array($sanitizeOptions) ? $sanitizeOptions : [],
         ];
     }

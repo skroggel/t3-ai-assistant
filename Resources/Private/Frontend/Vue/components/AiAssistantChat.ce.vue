@@ -1,6 +1,6 @@
 <template>
     <section
-        :class="['aiassistant-chat', 'chat-box', 'container', { 'aiassistant-chat--default-styles': defaultStylesEnabled }]"
+        :class="['aiassistant-chat', 'container', 'chat-box']"
         role="region"
         :aria-label="labels.chatLabel"
         @click="handleComponentClick"
@@ -12,6 +12,7 @@
                     {{ labels.privacyLinkLabel }}
                 </a>
             </p>
+            <p>{{ labels.consentMessage }}</p>
             <button ref="consentButton" type="button" class="btn btn-primary" @click="acceptConsent">{{ labels.consentLabel }}</button>
         </div>
 
@@ -49,7 +50,9 @@
                 :messages="messages"
                 :user-label="labels.userLabel"
                 :assistant-name="labels.assistantName"
+                :number-of-loading-dots="numberOfLoadingDots"
             />
+
             <ChatStatus :status="statusMessage" />
 
             <ChatInput
@@ -84,7 +87,6 @@ import LanguageSelector from './LanguageSelector.vue';
  * @property {string} labelsJson Serialized translated labels.
  * @property {string} uiComponentsJson Serialized UI component definitions.
  * @property {string} errorHandling Frontend error handling mode.
- * @property {boolean|string|number} includeDefaultStyles Whether built-in component styles apply to this instance.
  * @property {object} sanitizeOptions DOMPurify options passed directly as an object.
  * @property {string} autoQuery Optional query sent automatically after mount.
  * @property {number|string} initialMessageDelay Delay in milliseconds between initial-message updates.
@@ -115,7 +117,6 @@ const props = defineProps({
     labelsJson: { type: String, default: '{}' },
     uiComponentsJson: { type: String, default: '[]' },
     errorHandling: { type: String, default: 'default' },
-    includeDefaultStyles: { type: [String, Number, Boolean], default: true },
     sanitizeOptions: { type: Object, default: () => ({}) },
 
     // Chat behavior.
@@ -124,6 +125,7 @@ const props = defineProps({
     responseMessageDelay: { type: [String, Number], default: 14 },
     requireConsent: { type: [String, Number, Boolean], default: false },
     plainLanguage: { type: [String, Number, Boolean], default: false },
+    numberOfLoadingDots: { type: [Number], default: 3 },
 
     // Language behavior.
     showLanguageSelector: { type: [String, Number, Boolean], default: false },
@@ -133,9 +135,11 @@ const props = defineProps({
     // Messages & Text
     initialMessage: { type: String, default: '' },
     errorMessage: { type: String, default: '' },
+
     assistantName: { type: String, default: '' },
     privacyLink: { type: String, default: '' },
     introText: { type: String, default: '' },
+
 });
 
 const emit = defineEmits(['error']);
@@ -148,6 +152,11 @@ try {
 } catch (error) {
     chatOptions = {};
 }
+
+const numberOfLoadingDots = Math.max(
+    1,
+    Math.min(10, Number(chatOptions.numberOfLoadingDots ?? props.numberOfLoadingDots) || 3),
+);
 
 /** @type {Record<string, string>} Translated labels provided by TYPO3. */
 let labels = {};
@@ -217,9 +226,6 @@ const showLanguageSelector = computed(() => toBoolean(props.showLanguageSelector
 
 /** @type {import('vue').ComputedRef<boolean>} */
 const plainLanguage = computed(() => toBoolean(props.plainLanguage) || toBoolean(accessibilityOptions.plainLanguage));
-
-/** @type {import('vue').ComputedRef<boolean>} */
-const defaultStylesEnabled = computed(() => toBoolean(props.includeDefaultStyles));
 
 /** @type {import('vue').Ref<Array<Record<string, any>>>} */
 const messages = ref([]);
@@ -790,264 +796,32 @@ defineExpose({ startDirectInteraction });
     border: 0 !important;
 }
 
-.chat-box.aiassistant-chat .btn-primary {
+.btn-primary {
     background-color: var(--chat-box-color-primary);
     border-color: var(--chat-box-color-primary);
 }
 
-.chat-box.aiassistant-chat .btn-primary:hover,
-.chat-box.aiassistant-chat .btn-primary:active {
+.btn-primary:hover,
+.btn-primary:active {
     background-color: var(--chat-box-color-secondary);
     border-color: var(--chat-box-color-secondary);
 }
 
 @layer default, instance;
 @layer default {
-    .chat-box.aiassistant-chat--default-styles {
 
+    .chat-box {
         max-width: 700px;
         margin: 0 auto;
         --chat-box-color-primary: var(--bs-primary, #205eb5);
         --chat-box-color-secondary: var(--bs-secondary, #d6d6d6);
 
-        .chat-box-consent,
-        .chat-box-language {
+        &-consent,
+        &-language {
             margin-bottom: 1rem;
-        }
-
-        .chat-box-language-toggle {
-            max-width: 100%;
-            white-space: normal;
-        }
-
-        .chat-box-language-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-            padding: 0.75rem;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            border-radius: 0.5rem;
-            align-items: end;
-
-            > button,
-            .chat-box-language-custom,
-            .chat-box-language-custom input,
-            .chat-box-language-custom button {
-                width: 100%;
-            }
-
-            .chat-box-language-custom {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
-
-        .chat-box-messages {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            min-height: 300px;
-            padding: 1rem;
-            overflow-y: auto;
-            background-color: #f8f9fa;
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .chat-box-message {
-            position: relative;
-            max-width: 80%;
-            padding: 0.75rem;
-            overflow-wrap: anywhere;
-            border-radius: 0.5rem;
-
-            &:after {
-                content: "";
-                position: absolute;
-                left: -0.4375rem;
-                bottom: 0;
-                width: 0.75rem;
-                height: 0.875rem;
-                background-color: var(--chat-box-color-secondary);
-                clip-path: polygon(100% 0, 0 100%, 100% 100%);
-            }
-
-            &--from-user::after {
-                right: -0.4375rem;
-                left: unset;
-                background-color: var(--chat-box-color-primary);
-                clip-path: polygon(0 0, 0 100%, 100% 100%);
-            }
-
-            &--from-ui,
-            &--from-user {
-                align-self: flex-end;
-                color: #fff;
-                background-color: var(--chat-box-color-primary);
-                border-bottom-right-radius: 0.125rem;
-            }
-
-            &--from-bot {
-                align-self: flex-start;
-                color: var(--bs-body-color);
-                background-color: var(--chat-box-color-secondary);
-                border-bottom-left-radius: 0.125rem;
-            }
-
-            &--from-ui {
-                display: none;
-            }
-
-        }
-
-        .chat-box-message-content {
-            display: block;
-
-            > :first-child {
-                margin-top: 0;
-            }
-
-            > :last-child {
-                margin-bottom: 0;
-            }
-
-            p {
-                margin: 0 0 1rem;
-            }
-
-            ul, ol {
-                margin: 0 0 1rem 1.5rem;
-                padding: 0;
-            }
-
-            h1, h2, h3, h4, h5, h6 {
-                margin: 0 0 0.75rem;
-                line-height: 1.3;
-            }
-
-            code {
-                padding: 0.125rem 0.25rem;
-                border-radius: 0.25rem;
-                background: rgba(0, 0, 0, 0.08);
-                font-size: 0.9em;
-            }
-
-            pre {
-                margin: 0 0 1rem;
-                padding: 0.75rem;
-                overflow-x: auto;
-                border-radius: 0.5rem;
-                background: rgba(0, 0, 0, 0.08);
-
-                code {
-                    padding: 0;
-                    background: transparent;
-                }
-            }
-
-            blockquote {
-                margin: 0 0 1rem;
-                padding-left: 1rem;
-                border-left: 3px solid rgba(0, 0, 0, 0.15);
-            }
-
-            a {
-                color: inherit;
-                text-decoration: underline;
-                text-underline-offset: 0.12em;
-            }
-
-            table {
-                width: 100%;
-                margin: 0 0 1rem;
-                border-collapse: collapse;
-            }
-
-            th, td {
-                padding: 0.5rem;
-                border: 1px solid rgba(0, 0, 0, 0.15);
-                text-align: left;
-            }
-
-            th {
-                font-weight: 600;
-            }
-        }
-
-        .chat-box-prompt {
-            display: flex;
-            gap: 0.5rem;
-            align-items: flex-end;
-            margin-top: 1rem;
-            border: 1px solid var(--chat-box-color-secondary);
-            border-radius: 0.5rem;
-            align-items: stretch;
-
-            &-input {
-                flex: 1 1 auto;
-                min-height: 2.75rem;
-                padding: 0.65rem 0.8rem;
-                resize: vertical;
-                color: var(--bs-body-color, #1f2933);
-                background: #fff;
-                border: 1px solid var(--chat-box-color-secondary);
-                border-radius: 0.6rem;
-                font: inherit;
-            }
-
-            &-submit {
-                min-height: 2.75rem;
-                padding: 0.65rem 1rem;
-                color: #fff;
-                background: var(--chat-box-color-primary);
-                border: 1px solid var(--chat-box-color-primary);
-                border-radius: 0.55rem;
-                cursor: pointer;
-                font: inherit;
-                font-weight: 600;
-                white-space: nowrap;
-            }
-        }
-
-        .chat-box-typing-dots {
-            display: inline-flex !important;
-            margin-top: 0.6rem;
-            gap: 0.25rem;
-            align-items: center;
-            min-height: 1rem;
-            color: #212529 !important;
-            visibility: visible !important;
-            overflow: visible !important;
-
-            .dot {
-                display: inline-block !important;
-                flex: 0 0 0.5rem !important;
-                width: 0.5rem !important;
-                height: 0.5rem !important;
-                min-width: 0.5rem !important;
-                min-height: 0.5rem !important;
-                background-color: #212529 !important;
-                border-radius: 50% !important;
-                animation: aiassistant-vue-blink 1.4s infinite both !important;
-                opacity: 0.35 !important;
-
-                &:nth-child(2) {
-                    animation-delay: 0.2s;
-                }
-
-                &:nth-child(3) {
-                    animation-delay: 0.4s;
-                }
-            }
         }
     }
 }
 
-@keyframes aiassistant-vue-blink {
-    0%, 100% { opacity: 0.35; transform: translateY(0); }
-    50% { opacity: 1; transform: translateY(-0.2rem); }
-}
 
 </style>

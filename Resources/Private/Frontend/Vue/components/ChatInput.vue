@@ -1,5 +1,5 @@
 <template>
-<form class="chat-box-prompt" @submit.prevent="submit">
+    <form class="chat-box-prompt" @submit.prevent="submit">
         <input
             v-model="value"
             class="chat-box-prompt-input form-control"
@@ -48,3 +48,46 @@ const submit = () => {
     emit('submit', prompt);
 };
 </script>
+
+
+<style lang="scss">
+@layer default, instance;
+@layer default {
+    .chat-box-prompt {
+        display: flex;
+        gap: 0.5rem;
+        align-items: flex-end;
+        margin-top: 1rem;
+        border: 1px solid var(--chat-box-color-secondary);
+        border-radius: 0.5rem;
+        align-items: stretch;
+
+        &-input {
+            flex: 1 1 auto;
+            min-height: 2.75rem;
+            padding: 0.65rem 0.8rem;
+            resize: vertical;
+            color: var(--bs-body-color, #1f2933);
+            background: #fff;
+            border: 1px solid var(--chat-box-color-secondary);
+            border-radius: 0.6rem;
+            font: inherit;
+        }
+
+        &-submit {
+            min-height: 2.75rem;
+            padding: 0.65rem 1rem;
+            color: #fff;
+            background: var(--chat-box-color-primary);
+            border: 1px solid var(--chat-box-color-primary);
+            border-radius: 0.55rem;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+    }
+}
+
+</style>
+

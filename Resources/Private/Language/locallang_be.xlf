@@ -61,6 +61,12 @@
 			<trans-unit id="flexform.chat.include_default_styles.description">
 				<source>Includes the built-in chat component CSS. Disable this when the host project provides its own styles.</source>
 			</trans-unit>
+			<trans-unit id="flexform.chat.number_of_typing_dots">
+				<source>Number of typing dots</source>
+			</trans-unit>
+			<trans-unit id="flexform.chat.number_of_typing_dots.description">
+				<source>Number of dots shown while the assistant is generating a response.</source>
+			</trans-unit>
 			<trans-unit id="flexform.chat.sheet.language">
 				<source>Language</source>
 			</trans-unit>

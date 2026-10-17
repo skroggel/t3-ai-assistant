@@ -48,6 +48,19 @@
                             <default>1</default>
                         </config>
                     </settings.includeDefaultStyles>
+                    <settings.numberOfTypingDots>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.number_of_typing_dots</label>
+                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.number_of_typing_dots.description</description>
+                        <config>
+                            <type>number</type>
+                            <format>integer</format>
+                            <default>3</default>
+                            <range>
+                                <lower>1</lower>
+                                <upper>10</upper>
+                            </range>
+                        </config>
+                    </settings.numberOfTypingDots>
                 </el>
             </ROOT>
         </sDEF>
