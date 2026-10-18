@@ -4,9 +4,12 @@ declare(strict_types=1);
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
 use Madj2k\AiAssistant\Assistant\Domain\Model\PipelineTrace;
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantPipelineStep;
+use Madj2k\AiAssistant\Assistant\Domain\Model\PresentationRule;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorFilterCondition;
+use Madj2k\AiAssistant\Assistant\Domain\Model\UIComponent;
+use Madj2k\AiAssistant\Assistant\Domain\Model\UIComponentButton;
 use Madj2k\AiAssistant\Indexing\Domain\Model\ConnectorConfig;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerConfig;
 use Madj2k\AiAssistant\Indexing\Domain\Model\IndexerRun;
@@ -23,8 +26,13 @@ return [
     VectorFilterCondition::class => [
         'tableName' => 'tx_aiassistant_connection_vector_filter_condition',
     ],
+    UIComponent::class => ['tableName' => 'tx_aiassistant_ui_component'],
+    UIComponentButton::class => ['tableName' => 'tx_aiassistant_ui_component_button'],
     AssistantPipelineStep::class => [
         'tableName' => 'tx_aiassistant_assistant_pipeline_step',
+    ],
+    PresentationRule::class => [
+        'tableName' => 'tx_aiassistant_presentation_rule',
     ],
     AssistantProfile::class => [
         'tableName' => 'tx_aiassistant_assistant_profile',

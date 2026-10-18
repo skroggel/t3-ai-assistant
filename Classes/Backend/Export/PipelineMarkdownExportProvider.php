@@ -14,7 +14,8 @@ declare(strict_types=1);
 namespace Madj2k\AiAssistant\Backend\Export;
 
 use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
-use Madj2k\AiAssistant\Assistant\UIComponents\Provider as UiComponentProvider;
+use Madj2k\AiAssistant\Assistant\Presentation\UIComponents\UIComponentProvider as UiComponentProvider;
+use Madj2k\AiAssistant\Assistant\Presentation\Rules\PresentationRuleProvider;
 use Madj2k\AiCore\Assistant\Export\PipelineMarkdownExporter;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -34,6 +35,7 @@ final readonly class PipelineMarkdownExportProvider
         private AssistantProfileRepository $profileRepository,
         private PipelineMarkdownExporter $exporter,
         private UiComponentProvider $uiComponentProvider,
+        private PresentationRuleProvider $presentationRuleProvider,
     ) {
     }
 
@@ -85,6 +87,7 @@ final readonly class PipelineMarkdownExportProvider
         return $this->exporter->export(
             $profile,
             $this->uiComponentProvider->getDefinitionsForProfile((int)$profile->getUid()),
+            $this->presentationRuleProvider->getAll(),
         );
     }
 }

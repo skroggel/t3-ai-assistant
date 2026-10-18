@@ -31,11 +31,11 @@ return [
             'showitem' => 'include_identity_prompt, --linebreak--, include_behavior_rules, --linebreak--, include_retrieval_rules, --linebreak--, include_output_rules',
         ],
 
-        'stepPrompts' => [
-            'showitem' => 'step_identity, --linebreak--, step_behavior_rules, --linebreak--, step_retrieval_rules, --linebreak--, step_output_rules',
+         'stepPrompts' => [
+            'showitem' => 'step_identity, --linebreak--, step_behavior_rules, --linebreak--, step_retrieval_rules, --linebreak--, step_output_rules, --linebreak--, --palette--;;presentationRules',
         ],
-        'retrievalSelection' => [
-            'showitem' => 'retrieval_selection_instructions, --linebreak--, retrieval_selection_metadata',
+        'intentSelection' => [
+            'showitem' => 'intent_selection_instructions, --linebreak--, intent_selection_metadata',
         ],
 
         'llm' => [
@@ -56,6 +56,9 @@ return [
 
         'uiComponents' => [
             'showitem' => 'ui_components_mode, --linebreak--, ui_components',
+        ],
+        'presentationRules' => [
+            'showitem' => 'presentation_rules_mode, --linebreak--, presentation_rules',
         ],
     ],
     'columns' => [
@@ -115,18 +118,18 @@ return [
                 'placeholder' => 'products',
             ],
         ],
-        'retrieval_selection_instructions' => [
-            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions',
-            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_selection_instructions.description',
+        'intent_selection_instructions' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_instructions',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_instructions.description',
             'config' => [
                 'type' => 'text',
                 'rows' => 4,
                 'placeholder' => 'If the user intent is a product search, include the retrieval-step with the identifier "products". Otherwise skip it.',
             ],
         ],
-        'retrieval_selection_metadata' => [
-            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata',
-            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.retrieval_selection_metadata.description',
+        'intent_selection_metadata' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_metadata',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_metadata.description',
             'config' => [
                 'type' => 'text',
                 'rows' => 6,
@@ -215,6 +218,30 @@ return [
             'config' => [
                 'type' => 'text',
                 'rows' => 4,
+            ],
+        ],
+        'presentation_rules' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.presentation_rules',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.presentation_rules.description',
+            'config' => [
+                'type' => 'group',
+                'allowed' => 'tx_aiassistant_presentation_rule',
+                'size' => 20,
+                'maxitems' => 20,
+            ],
+        ],
+        'presentation_rules_mode' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.presentation_rules_mode',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.presentation_rules_mode.description',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.presentation_rules_mode.inherit', 'value' => 'inherit'],
+                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.presentation_rules_mode.replace', 'value' => 'replace'],
+                    ['label' => $ll . 'tx_aiassistant_assistant_pipeline_step.presentation_rules_mode.extend', 'value' => 'extend'],
+                ],
+                'default' => 'inherit',
             ],
         ],
         'history_mode' => [

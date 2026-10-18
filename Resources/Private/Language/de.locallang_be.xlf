@@ -82,6 +82,13 @@
 				<source>Number of dots shown while the assistant is generating a response.</source>
 				<target>Anzahl der Punkte, die während der Antwortgenerierung angezeigt werden.</target>
 			</trans-unit>
+			<trans-unit id="flexform.chat.sheet.advanced"><source>Advanced</source><target>Erweitert</target></trans-unit>
+			<trans-unit id="flexform.chat.render_lag_characters"><source>Render lag (characters)</source><target>Render-Verzögerung (Zeichen)</target></trans-unit>
+			<trans-unit id="flexform.chat.render_lag_characters.description"><source>Number of streamed characters kept ahead of the visual renderer.</source><target>Anzahl der Zeichen, um die die Darstellung dem Stream voraus bleibt.</target></trans-unit>
+			<trans-unit id="flexform.chat.render_chunk_characters"><source>Render chunk size (characters)</source><target>Render-Schrittgröße (Zeichen)</target></trans-unit>
+			<trans-unit id="flexform.chat.render_chunk_characters.description"><source>Number of characters rendered per visual catch-up step.</source><target>Anzahl der Zeichen pro sichtbarem Aufholschritt.</target></trans-unit>
+			<trans-unit id="flexform.chat.initial_message_delay"><source>Initial message delay (milliseconds)</source><target>Verzögerung der Anfangsnachricht (Millisekunden)</target></trans-unit>
+			<trans-unit id="flexform.chat.response_message_delay"><source>Response message delay (milliseconds)</source><target>Verzögerung der Antwort (Millisekunden)</target></trans-unit>
 			<trans-unit id="flexform.chat.sheet.language">
 				<source>Language</source>
 				<target>Sprache</target>

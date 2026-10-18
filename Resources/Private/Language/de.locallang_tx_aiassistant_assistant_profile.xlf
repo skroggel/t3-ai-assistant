@@ -196,6 +196,14 @@
 				<source>Comma-separated UI component record UIDs. Pipeline steps can override this selection.</source>
 				<target>Kommagetrennte UIDs der UI-Komponenten. Pipeline-Schritte können diese Auswahl überschreiben.</target>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.presentation_rules" resname="tx_aiassistant_assistant_profile.presentation_rules">
+				<source>Presentation rules available to the pipeline</source>
+				<target>Für die Pipeline verfügbare Darstellungsregeln</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.presentation_rules.description" resname="tx_aiassistant_assistant_profile.presentation_rules.description">
+                <source>Select reusable presentation rules available to the pipeline. Pipeline steps can override this selection.</source>
+                <target>Wählen Sie wiederverwendbare Darstellungsregeln für die Pipeline aus. Pipeline-Schritte können diese Auswahl überschreiben.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

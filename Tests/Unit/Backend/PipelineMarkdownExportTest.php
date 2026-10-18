@@ -15,7 +15,7 @@ namespace Madj2k\AiAssistant\Tests\Unit\Backend;
 
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
 use Madj2k\AiCore\Assistant\Export\PipelineMarkdownExporter;
-use Madj2k\AiCore\Assistant\UIComponents\Definition;
+use Madj2k\AiCore\Assistant\Presentation\UIComponents\Definition;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -47,7 +47,7 @@ final class PipelineMarkdownExportTest extends TestCase
                 ['label', 'url'],
                 'custom-link',
                 'Helpful link',
-                true,
+                'inline',
             ),
         ]);
 

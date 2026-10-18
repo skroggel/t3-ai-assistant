@@ -14,7 +14,7 @@ final class PipelineStepTypeConfiguration
     {
         return [
             AssistantPipelineProcessorType::QueryOptimizer->value => ['showitem' => self::llmShowItem('context')],
-            AssistantPipelineProcessorType::RetrievalSelector->value => ['showitem' => self::retrievalSelectorShowItem()],
+            AssistantPipelineProcessorType::IntentSelector->value => ['showitem' => self::intentSelectionShowItem()],
             AssistantPipelineProcessorType::Retriever->value => ['showitem' => self::retrieverShowItem()],
             AssistantPipelineProcessorType::ContextOptimizer->value => ['showitem' => self::llmShowItem('context')],
             AssistantPipelineProcessorType::AnswerGenerator->value => ['showitem' => self::llmShowItem('contextWithFrontendSources', true)],
@@ -72,12 +72,12 @@ final class PipelineStepTypeConfiguration
         ]);
     }
 
-    private static function retrievalSelectorShowItem(): string
+    private static function intentSelectionShowItem(): string
     {
         return implode(', ', [
             '--palette--;;base',
-            '--div--;' . self::LABEL_PREFIX . 'tab_retrieval_selection',
-            '--palette--;;retrievalSelection',
+            '--div--;' . self::LABEL_PREFIX . 'tab_intent_selection',
+            '--palette--;;intentSelection',
             '--div--;' . self::LABEL_PREFIX . 'tab_llm',
             '--palette--;;llm',
             '--div--;' . self::LABEL_PREFIX . 'tab_runtime',

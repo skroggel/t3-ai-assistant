@@ -114,6 +114,9 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
      */
     protected string $uiComponents = '';
 
+    /** Stable identifiers of reusable presentation rules available to the pipeline. */
+    protected string $presentationRules = '';
+
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\AiAssistant\Assistant\Domain\Model\AssistantPipelineStep>
@@ -434,6 +437,18 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     public function setUiComponents(string $uiComponents): void
     {
         $this->uiComponents = $uiComponents;
+    }
+
+    /** @return array<int,string> */
+    public function getPresentationRuleIdentifiers(): array
+    {
+        return array_values(array_filter(array_map('trim', explode(',', $this->presentationRules))));
+    }
+
+    /** @param string $presentationRules Comma-separated stable identifiers. */
+    public function setPresentationRules(string $presentationRules): void
+    {
+        $this->presentationRules = $presentationRules;
     }
 
     /**

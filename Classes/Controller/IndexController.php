@@ -18,7 +18,7 @@ namespace Madj2k\AiAssistant\Controller;
 use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiAssistant\Assistant\Frontend\PluginConfigurationResolver;
 use Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver;
-use Madj2k\AiAssistant\Assistant\UIComponents\Provider as UiComponentProvider;
+use Madj2k\AiAssistant\Assistant\Presentation\UIComponents\UIComponentProvider as UiComponentProvider;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -44,7 +44,7 @@ class IndexController extends AbstractController
      *
      * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant repository.
      * @param \Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver $chatOptionsResolver Chat options resolver.
-     * @param \Madj2k\AiAssistant\Assistant\UIComponents\Provider $uiComponentProvider UI component provider.
+     * @param \Madj2k\AiAssistant\Assistant\Presentation\UIComponents\UIComponentProvider $uiComponentProvider UI component provider.
      * @param \Madj2k\AiAssistant\Assistant\Service\FrontendRequestTokenService $requestTokenService Frontend request token service.
      */
     public function __construct(
@@ -85,7 +85,7 @@ class IndexController extends AbstractController
             'chatOptionsJson' => $this->jsonEncodeSettings($frontendOptions),
             'labelsJson' => $this->jsonEncodeSettings($this->getFrontendLabels()),
             'uiComponentsJson' => $this->jsonEncodeSettings(array_map(
-                static fn (\Madj2k\AiCore\Assistant\UIComponents\Definition $definition): array => $definition->toArray(),
+                static fn (\Madj2k\AiCore\Assistant\Presentation\UIComponents\Definition $definition): array => $definition->toArray(),
                 $this->uiComponentProvider->getDefinitionsForProfile((int)($assistantProfile?->getUid() ?? 0)),
             )),
             'showLanguageSelector' => $this->chatOptionsResolver->showLanguageSelector($this->settings),

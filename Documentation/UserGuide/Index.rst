@@ -13,7 +13,9 @@ User guide
     WorkingWithSources
     RetrievalAndContext
     VectorFilters
+    RetrievalSelection
     UIComponents
+    PipelineExport
     ManagingIndexer
     ConnectionManagement
     LoggingAndDebugging

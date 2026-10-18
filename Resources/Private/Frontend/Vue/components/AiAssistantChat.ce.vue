@@ -91,8 +91,11 @@ import LanguageSelector from './LanguageSelector.vue';
  * @property {string} autoQuery Optional query sent automatically after mount.
  * @property {number|string} initialMessageDelay Delay in milliseconds between initial-message updates.
  * @property {number|string} responseMessageDelay Delay in milliseconds between streamed response updates.
+ * @property {number|string} renderLagCharacters Number of streamed characters kept ahead of the visual renderer.
+ * @property {number|string} renderChunkCharacters Number of characters rendered per visual catch-up step.
  * @property {boolean|string|number} requireConsent Whether consent is required. Accepts boolean values and 0/1 strings or numbers.
  * @property {boolean|string|number} plainLanguage Whether plain-language mode is enabled. Accepts boolean values and 0/1 strings or numbers.
+ * @property {number|string} numberOfLoadingDots Number of dots shown while the assistant is generating a response.
  * @property {boolean|string|number} showLanguageSelector Whether the language selector is shown. Accepts boolean values and 0/1 strings or numbers.
  * @property {string} responseLanguage Configured response language name.
  * @property {string} languageCode Configured response language code.
@@ -123,6 +126,8 @@ const props = defineProps({
     autoQuery: { type: String, default: '' },
     initialMessageDelay: { type: [String, Number], default: 22 },
     responseMessageDelay: { type: [String, Number], default: 14 },
+    renderLagCharacters: { type: [String, Number], default: 300 },
+    renderChunkCharacters: { type: [String, Number], default: 15 },
     requireConsent: { type: [String, Number, Boolean], default: false },
     plainLanguage: { type: [String, Number, Boolean], default: false },
     numberOfLoadingDots: { type: [Number], default: 3 },
@@ -156,6 +161,22 @@ try {
 const numberOfLoadingDots = Math.max(
     1,
     Math.min(10, Number(chatOptions.numberOfLoadingDots ?? props.numberOfLoadingDots) || 3),
+);
+const initialMessageDelay = Math.max(
+    0,
+    Math.min(500, Number(chatOptions.initialMessageDelay ?? props.initialMessageDelay) || 0),
+);
+const responseMessageDelay = Math.max(
+    0,
+    Math.min(500, Number(chatOptions.responseMessageDelay ?? props.responseMessageDelay) || 0),
+);
+const renderLagCharacters = Math.max(
+    0,
+    Number(chatOptions.renderLagCharacters ?? props.renderLagCharacters) || 0,
+);
+const renderChunkCharacters = Math.max(
+    1,
+    Math.min(500, Number(chatOptions.renderChunkCharacters ?? props.renderChunkCharacters) || 15),
 );
 
 /** @type {Record<string, string>} Translated labels provided by TYPO3. */
@@ -212,12 +233,6 @@ const effectiveLanguageCode = props.languageCode || chatOptions.language?.langua
 /** @type {string} Extbase plugin parameter namespace. */
 const parameterPrefix = 'tx_aiassistant_chat';
 
-/** @type {number} Initial-message delay in milliseconds. */
-const initialMessageDelay = Math.max(0, Number(props.initialMessageDelay) || 0);
-
-/** @type {number} Response-chunk delay in milliseconds. */
-const responseMessageDelay = Math.max(0, Number(props.responseMessageDelay) || 0);
-
 /** @type {import('vue').ComputedRef<boolean>} */
 const requireConsent = computed(() => toBoolean(props.requireConsent));
 
@@ -269,12 +284,7 @@ const sanitizeOptions = {
     ...props.sanitizeOptions,
 };
 
-/**
- * Renders Markdown links as their formatted text instead of active anchors.
- * Registered UI link components are rendered separately and are not affected.
- */
 const markdownRenderer = new marked.Renderer();
-markdownRenderer.link = ({ tokens }) => markdownRenderer.parser.parseInline(tokens);
 
 /**
  * Adds the legacy external-link behavior after sanitization.
@@ -496,14 +506,16 @@ const renderResponse = (content) => {
             continue;
         }
 
-        const componentIdentifier = typeof data.type === 'string' ? data.type : '';
-        if (componentIdentifier === '') {
+        const componentType = typeof data.type === 'string' ? data.type : '';
+        const componentIdentifier = typeof data.identifier === 'string' ? data.identifier : componentType;
+        if (componentType === '' || componentIdentifier === '') {
             markdown += content.slice(offset, jsonEnd);
             offset = jsonEnd;
             markerPattern.lastIndex = jsonEnd;
             continue;
         }
-        const isInline = componentDefinitions[componentIdentifier]?.renderMode === 'inline';
+        const definition = componentDefinitions[componentIdentifier] || componentDefinitionsByType[componentType];
+        const isInline = definition?.renderMode === 'inline';
         if (!isInline) flushMarkdown();
         const baseId = String(data.id || `${componentIdentifier}-${marker.index}`);
         let id = baseId;
@@ -513,9 +525,10 @@ const renderResponse = (content) => {
         const componentData = data.data && typeof data.data === 'object' ? data.data : {};
         delete data.id;
         delete data.type;
+        delete data.identifier;
         delete data.data;
         Object.assign(componentData, data);
-        const component = renderComponent({ identifier: componentIdentifier, id, data: componentData });
+        const component = renderComponent({ type: componentType, identifier: componentIdentifier, id, data: componentData });
         if (isInline) {
             const token = `AIUICOMPONENT${usedIds.size}TOKEN`;
             markdown += token;
@@ -653,20 +666,43 @@ const send = async (query, directInteraction = '', options = {}) => {
         }
 
         let answer = '';
+        let renderedAnswer = '';
         const transport = new Transport();
         abortController = new AbortController();
+
+        const renderSnapshot = async (force = false) => {
+            const availableLength = force
+                ? answer.length
+                : Math.max(0, answer.length - renderLagCharacters);
+            if (availableLength <= renderedAnswer.length) {
+                return;
+            }
+
+            while (renderedAnswer.length < availableLength) {
+                const nextLength = Math.min(
+                    availableLength,
+                    renderedAnswer.length + renderChunkCharacters,
+                );
+                renderedAnswer = answer.slice(0, nextLength);
+                messages.value[messageIndex].html = renderResponse(renderedAnswer);
+                await nextTick();
+                await waitForPaint();
+                if (renderedAnswer.length < availableLength) {
+                    await wait(responseMessageDelay);
+                }
+            }
+        };
+
         await transport.streamSse(props.endpoint, formData, async (content) => {
             answer = content;
-            messages.value[messageIndex].html = renderResponse(answer);
-            await nextTick();
-            await waitForPaint();
-            await wait(responseMessageDelay);
+            await renderSnapshot();
         }, {
             signal: abortController.signal,
             method: requestOptions.method || 'POST',
             accept: requestOptions.accept || 'text/event-stream',
             credentials: requestOptions.credentials || 'same-origin',
         });
+        await renderSnapshot(true);
         messages.value[messageIndex].typing = false;
     } catch (error) {
         messages.value[messageIndex].typing = false;
@@ -708,7 +744,8 @@ const handleComponentClick = (event) => {
     const container = target.closest('[data-ai-component]');
     if (!container) return;
 
-    const definition = componentDefinitions[container.dataset.aiComponent];
+    const definition = componentDefinitions[container.dataset.aiComponentIdentifier]
+        || componentDefinitionsByType[container.dataset.aiComponent];
     const actionIdentifier = target.dataset.aiAction || '';
     const action = definition?.actions?.find((item) => item.identifier === actionIdentifier);
     if (!action || typeof action.promptTemplate !== 'string') return;

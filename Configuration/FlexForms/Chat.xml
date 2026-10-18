@@ -48,22 +48,40 @@
                             <default>1</default>
                         </config>
                     </settings.includeDefaultStyles>
-                    <settings.numberOfTypingDots>
-                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.number_of_typing_dots</label>
-                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.number_of_typing_dots.description</description>
-                        <config>
-                            <type>number</type>
-                            <format>integer</format>
-                            <default>3</default>
-                            <range>
-                                <lower>1</lower>
-                                <upper>10</upper>
-                            </range>
-                        </config>
-                    </settings.numberOfTypingDots>
                 </el>
             </ROOT>
         </sDEF>
+        <advanced>
+            <ROOT>
+                <sheetTitle>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.sheet.advanced</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.numberOfTypingDots>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.number_of_typing_dots</label>
+                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.number_of_typing_dots.description</description>
+                        <config><type>number</type><format>integer</format><default>3</default><range><lower>1</lower><upper>10</upper></range></config>
+                    </settings.numberOfTypingDots>
+                    <settings.renderLagCharacters>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.render_lag_characters</label>
+                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.render_lag_characters.description</description>
+                        <config><type>number</type><format>integer</format><default>300</default><range><lower>0</lower><upper>5000</upper></range></config>
+                    </settings.renderLagCharacters>
+                    <settings.renderChunkCharacters>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.render_chunk_characters</label>
+                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.render_chunk_characters.description</description>
+                        <config><type>number</type><format>integer</format><default>15</default><range><lower>1</lower><upper>500</upper></range></config>
+                    </settings.renderChunkCharacters>
+                    <settings.initialMessageDelay>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.initial_message_delay</label>
+                        <config><type>number</type><format>integer</format><default>22</default><range><lower>0</lower><upper>500</upper></range></config>
+                    </settings.initialMessageDelay>
+                    <settings.responseMessageDelay>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.response_message_delay</label>
+                        <config><type>number</type><format>integer</format><default>14</default><range><lower>0</lower><upper>500</upper></range></config>
+                    </settings.responseMessageDelay>
+                </el>
+            </ROOT>
+        </advanced>
         <language>
             <ROOT>
                 <sheetTitle>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.sheet.language</sheetTitle>

@@ -79,8 +79,8 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      * @var string
      */
     protected string $retrievalIdentifier = '';
-    protected string $retrievalSelectionInstructions = '';
-    protected string $retrievalSelectionMetadata = '';
+    protected string $intentSelectionInstructions = '';
+    protected string $intentSelectionMetadata = '';
 
 
     /**
@@ -153,6 +153,12 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      * @var string
      */
     protected string $stepOutputRules = '';
+
+    /** Stable identifiers of reusable presentation rules. */
+    protected string $presentationRules = '';
+
+    /** Presentation rule selection mode. */
+    protected string $presentationRulesMode = 'inherit';
 
 
     /**
@@ -414,14 +420,14 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
         $this->retrievalIdentifier = $retrievalIdentifier;
     }
 
-    /** @return string Retrieval selector instructions. */
-    public function getRetrievalSelectionInstructions(): string { return trim($this->retrievalSelectionInstructions); }
-    /** @param string $value Retrieval selector instructions. @return void */
-    public function setRetrievalSelectionInstructions(string $value): void { $this->retrievalSelectionInstructions = $value; }
-    /** @return string Retrieval selector metadata schema. */
-    public function getRetrievalSelectionMetadata(): string { return trim($this->retrievalSelectionMetadata); }
-    /** @param string $value Retrieval selector metadata schema. @return void */
-    public function setRetrievalSelectionMetadata(string $value): void { $this->retrievalSelectionMetadata = $value; }
+    /** @return string Intent selector instructions. */
+    public function getIntentSelectionInstructions(): string { return trim($this->intentSelectionInstructions); }
+    /** @param string $value Intent selector instructions. @return void */
+    public function setIntentSelectionInstructions(string $value): void { $this->intentSelectionInstructions = $value; }
+    /** @return string Intent selector metadata schema. */
+    public function getIntentSelectionMetadata(): string { return trim($this->intentSelectionMetadata); }
+    /** @param string $value Intent selector metadata schema. @return void */
+    public function setIntentSelectionMetadata(string $value): void { $this->intentSelectionMetadata = $value; }
 
     /**
      * Returns the typed stage.
@@ -638,6 +644,52 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
     public function setStepOutputRules(string $stepOutputRules): void
     {
         $this->stepOutputRules = $stepOutputRules;
+    }
+
+
+    /**
+     * Get the presentation rule identifiers
+     *
+     * @return string[]
+     */
+    public function getPresentationRuleIdentifiers(): array
+    {
+        return $this->splitList($this->presentationRules);
+    }
+
+
+    /**
+     * Set the presentation rule identifiers
+     *
+     * @param string $presentationRules
+     * @return void
+     */
+    public function setPresentationRules(string $presentationRules): void
+    {
+        $this->presentationRules = $presentationRules;
+    }
+
+    /**
+     * Get the presentation rule modes
+     *
+     * @return string
+     */
+    public function getPresentationRulesMode(): string
+    {
+        return in_array($this->presentationRulesMode, ['inherit', 'replace', 'extend'], true)
+            ? $this->presentationRulesMode
+            : 'inherit';
+    }
+
+    /**
+     * Set the presentation rule modes
+     *
+     * @param string $presentationRulesMode
+     * @return void
+     */
+    public function setPresentationRulesMode(string $presentationRulesMode): void
+    {
+        $this->presentationRulesMode = $presentationRulesMode;
     }
 
 
@@ -1107,7 +1159,7 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      */
     public function isLlmStep(): bool
     {
-        return $this->getType() !== AssistantPipelineProcessorType::QdrantRetrieval;
+        return $this->getType() !== AssistantPipelineProcessorType::Retriever;
     }
 
 

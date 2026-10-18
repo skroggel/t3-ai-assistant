@@ -27,7 +27,7 @@ return [
                      intro_text, initial_message, error_handling,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_prompts,
                      identity_prompt, behavior_rules, retrieval_rules, output_rules,
-                     ui_components,
+                     ui_components, presentation_rules,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_pipeline,
                     chat_pipeline_steps,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_profile.xlf:tx_aiassistant_assistant_profile.tab_connections,
@@ -177,6 +177,16 @@ return [
                 'size' => 20,
                 'maxitems' => 20,
             ],
-        ]
+        ],
+        'presentation_rules' => [
+            'label' => $ll . 'tx_aiassistant_assistant_profile.presentation_rules',
+            'description' => $ll . 'tx_aiassistant_assistant_profile.presentation_rules.description',
+            'config' => [
+                'type' => 'group',
+                'allowed' => 'tx_aiassistant_presentation_rule',
+                'size' => 20,
+                'maxitems' => 20,
+            ],
+        ],
     ],
 ];

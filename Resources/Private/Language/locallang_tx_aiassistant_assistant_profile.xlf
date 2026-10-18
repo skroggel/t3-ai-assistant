@@ -148,6 +148,12 @@
 			<trans-unit id="tx_aiassistant_assistant_profile.ui_components.description" resname="tx_aiassistant_assistant_profile.ui_components.description">
 				<source>Comma-separated UI component record UIDs. Pipeline steps can override this selection.</source>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.presentation_rules" resname="tx_aiassistant_assistant_profile.presentation_rules">
+				<source>Presentation rules available to the pipeline</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_assistant_profile.presentation_rules.description" resname="tx_aiassistant_assistant_profile.presentation_rules.description">
+                <source>Select reusable presentation rules available to the pipeline. Pipeline steps can override this selection.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

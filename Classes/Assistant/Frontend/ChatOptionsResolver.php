@@ -103,6 +103,10 @@ final class ChatOptionsResolver
                 'plainLanguage' => $chatOptions->plainLanguage,
             ],
             'numberOfLoadingDots' => max(1, min(10, (int)($settings['numberOfTypingDots'] ?? 3))),
+            'renderLagCharacters' => max(0, min(5000, (int)($settings['renderLagCharacters'] ?? 300))),
+            'renderChunkCharacters' => max(1, min(500, (int)($settings['renderChunkCharacters'] ?? 15))),
+            'initialMessageDelay' => max(0, min(500, (int)($settings['initialMessageDelay'] ?? 22))),
+            'responseMessageDelay' => max(0, min(500, (int)($settings['responseMessageDelay'] ?? 14))),
             'sanitizeOptions' => is_array($sanitizeOptions) ? $sanitizeOptions : [],
         ];
     }
