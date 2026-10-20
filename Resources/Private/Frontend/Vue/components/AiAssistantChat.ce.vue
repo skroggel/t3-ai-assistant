@@ -12,7 +12,6 @@
                     {{ labels.privacyLinkLabel }}
                 </a>
             </p>
-            <p>{{ labels.consentMessage }}</p>
             <button ref="consentButton" type="button" class="btn btn-primary" @click="acceptConsent">{{ labels.consentLabel }}</button>
         </div>
 
