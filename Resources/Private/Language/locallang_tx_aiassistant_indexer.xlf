@@ -27,8 +27,23 @@
 			<trans-unit id="tx_aiassistant_indexer.connector_uid" resname="tx_aiassistant_indexer.connector_uid">
 				<source>Connector</source>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.indexer.file" resname="tx_aiassistant_indexer.indexer.file">
+				<source>File indexer</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.indexer.page" resname="tx_aiassistant_indexer.indexer.page">
+				<source>Page indexer</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.indexer.external" resname="tx_aiassistant_indexer.indexer.external">
+				<source>External indexer</source>
+			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size" resname="tx_aiassistant_indexer.chunk_size">
 				<source>Chunk size</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunking_strategy" resname="tx_aiassistant_indexer.chunking_strategy">
+				<source>Chunking strategy</source>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunking_strategy_desc" resname="tx_aiassistant_indexer.chunking_strategy_desc">
+				<source>Fixed splits by character count and overlap. Atomic keeps each extracted document complete; chunk size is then a hard maximum. Overlap, minimum length and maximum chunk count do not apply.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap" resname="tx_aiassistant_indexer.chunk_overlap">
 				<source>Chunk overlap</source>
@@ -67,13 +82,13 @@
 				<source>Select the external connector that provides the content for this indexer. Connectors can be created in the backend module under Settings &gt; Connectors.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size_desc" resname="tx_aiassistant_indexer.chunk_size_desc">
-                <source>Chunk size in characters. Leave empty to use global defaults.</source>
+				<source>Fixed: chunk size in characters. Atomic: maximum characters for the complete extracted document; oversized documents fail without truncation or splitting. Leave empty to use global defaults.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size_placeholder" resname="tx_aiassistant_indexer.chunk_size_placeholder">
 				<source>500</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_desc" resname="tx_aiassistant_indexer.chunk_overlap_desc">
-                <source>Overlap in characters between chunks. Leave empty to use defaults.</source>
+				<source>Overlap in characters between chunks. Leave empty to use defaults.</source>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_placeholder" resname="tx_aiassistant_indexer.chunk_overlap_placeholder">
 				<source>50</source>

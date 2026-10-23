@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Madj2k\AiAssistant\Indexing\Domain\Model;
 
 use Madj2k\AiCore\Indexing\Configuration\IndexingConfigurationInterface;
+use Madj2k\AiCore\Indexing\Enum\ChunkingStrategy;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
@@ -168,6 +169,14 @@ class IndexerConfig extends AbstractEntity implements IndexingConfigurationInter
      * @var int
      */
     protected int $chunkSize = 0;
+
+
+    /**
+     * Chunking strategy persisted as its string-backed enum value.
+     *
+     * @var string
+     */
+    protected string $chunkingStrategy = '';
 
 
     /**
@@ -723,6 +732,47 @@ class IndexerConfig extends AbstractEntity implements IndexingConfigurationInter
     public function setChunkSize(int $chunkSize): void
     {
         $this->chunkSize = $chunkSize;
+    }
+
+
+    /**
+     * Returns the configured chunking strategy.
+     *
+     * Empty legacy values resolve to fixed chunking. Invalid non-empty values
+     * are rejected instead of silently changing the indexing behaviour.
+     *
+     * @return \Madj2k\AiCore\Indexing\Enum\ChunkingStrategy Chunking strategy.
+     * @throws \InvalidArgumentException For an unknown strategy value.
+     */
+    public function getChunkingStrategy(): ChunkingStrategy
+    {
+        $value = trim($this->chunkingStrategy);
+        if ($value === '') {
+            return ChunkingStrategy::Fixed;
+        }
+
+        try {
+            return ChunkingStrategy::from($value);
+        } catch (\ValueError $exception) {
+            throw new \InvalidArgumentException(sprintf(
+                'Unknown chunking strategy "%s". Allowed values are "%s" and "%s".',
+                $value,
+                ChunkingStrategy::Fixed->value,
+                ChunkingStrategy::Atomic->value,
+            ), 1781002005, $exception);
+        }
+    }
+
+
+    /**
+     * Sets the persisted chunking strategy value.
+     *
+     * @param string $chunkingStrategy String-backed strategy value.
+     * @return void
+     */
+    public function setChunkingStrategy(string $chunkingStrategy): void
+    {
+        $this->chunkingStrategy = trim($chunkingStrategy);
     }
 
 

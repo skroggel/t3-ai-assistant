@@ -35,9 +35,29 @@
 				<source>Connector</source>
 				<target>Connector</target>
 			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.indexer.file" resname="tx_aiassistant_indexer.indexer.file">
+				<source>File indexer</source>
+				<target>Datei-Indexer</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.indexer.page" resname="tx_aiassistant_indexer.indexer.page">
+				<source>Page indexer</source>
+				<target>Seiten-Indexer</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.indexer.external" resname="tx_aiassistant_indexer.indexer.external">
+				<source>External indexer</source>
+				<target>Externer Indexer</target>
+			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size" resname="tx_aiassistant_indexer.chunk_size">
 				<source>Chunk size</source>
 				<target>Chunk-Größe</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunking_strategy" resname="tx_aiassistant_indexer.chunking_strategy">
+				<source>Chunking strategy</source>
+				<target>Chunking-Strategie</target>
+			</trans-unit>
+			<trans-unit id="tx_aiassistant_indexer.chunking_strategy_desc" resname="tx_aiassistant_indexer.chunking_strategy_desc">
+				<source>Fixed: splits by character count and overlap. Atomic: keeps each extracted document complete; chunk size is a hard maximum. Overlap, minimum length and maximum chunk count do not apply.</source>
+				<target>Fixed: teilt nach Zeichenanzahl und Überlappung auf. Atomic: übernimmt jedes extrahierte Dokument vollständig; die Chunk-Größe ist das harte Maximum. Überlappung, Mindestlänge und maximale Chunk-Anzahl werden nicht angewendet.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap" resname="tx_aiassistant_indexer.chunk_overlap">
 				<source>Chunk overlap</source>
@@ -88,16 +108,16 @@
 				<target>Wählen Sie den externen Connector aus, der die Inhalte für diesen Indexer bereitstellt. Connectoren können im Backend-Modul unter Einstellungen &gt; Connectoren erstellt werden.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size_desc" resname="tx_aiassistant_indexer.chunk_size_desc">
-                <source>Chunk size in characters. Leave empty to use global defaults.</source>
-                <target>Chunk-Größe in Zeichen. Leer lassen, um globale Standardwerte zu verwenden.</target>
+				<source>Fixed: chunk size in characters. Atomic: maximum characters for the complete extracted document; oversized documents fail without truncation or splitting. Leave empty to use global defaults.</source>
+				<target>Fixed: Chunk-Größe in Zeichen. Atomic: maximale Zeichenzahl für das vollständige extrahierte Dokument; zu große Dokumente führen ohne Kürzen oder Aufteilen zu einem Fehler. Leer lassen, um globale Standardwerte zu verwenden.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_size_placeholder" resname="tx_aiassistant_indexer.chunk_size_placeholder">
 				<source>500</source>
 				<target>500</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_desc" resname="tx_aiassistant_indexer.chunk_overlap_desc">
-                <source>Overlap in characters between chunks. Leave empty to use defaults.</source>
-                <target>Überlappung in Zeichen zwischen Chunks. Leer lassen, um Standardwerte zu verwenden.</target>
+				<source>Overlap in characters between chunks. Leave empty to use defaults.</source>
+				<target>Überlappung in Zeichen zwischen Chunks. Leer lassen, um Standardwerte zu verwenden.</target>
 			</trans-unit>
 			<trans-unit id="tx_aiassistant_indexer.chunk_overlap_placeholder" resname="tx_aiassistant_indexer.chunk_overlap_placeholder">
 				<source>50</source>

@@ -184,6 +184,8 @@ services:
 
   Madj2k\AiCore\Indexing\Adapter\JsonAdapter: ~
 
+  Madj2k\AiCore\Indexing\Adapter\MarkdownAdapter: ~
+
   Madj2k\AiCore\Indexing\Adapter\PlainAdapter: ~
 
   Madj2k\AiCore\Indexing\TextChunker: ~

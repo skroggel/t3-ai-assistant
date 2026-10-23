@@ -152,6 +152,17 @@ final class IndexerItems
      */
     protected function createLabel(string $identifier): string
     {
+        $localizedIdentifiers = [
+            'aiassistant.indexer.file' => 'tx_aiassistant_indexer.indexer.file',
+            'aiassistant.indexer.page' => 'tx_aiassistant_indexer.indexer.page',
+            'aiassistant.indexer.external' => 'tx_aiassistant_indexer.indexer.external',
+        ];
+
+        if (isset($localizedIdentifiers[$identifier])) {
+            return 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_indexer.xlf:'
+                . $localizedIdentifiers[$identifier];
+        }
+
         return ucwords(str_replace(['.', '_', '-'], ' ', $identifier));
     }
 }

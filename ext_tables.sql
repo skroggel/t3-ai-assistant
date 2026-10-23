@@ -219,6 +219,7 @@ CREATE TABLE `tx_aiassistant_indexer` (
     `shopware_custom_fields` text,
     `shopware_indexed_fields` text,
     `chunk_size` int(11) DEFAULT '0' NOT NULL,
+    `chunking_strategy` varchar(16) DEFAULT '' NOT NULL,
     `chunk_overlap` int(11) DEFAULT '0' NOT NULL,
     `max_chunks` int(11) DEFAULT '0' NOT NULL,
     `min_chunk_chars` int(11) DEFAULT '0' NOT NULL,

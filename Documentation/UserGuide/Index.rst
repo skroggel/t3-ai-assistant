@@ -17,6 +17,7 @@ User guide
     UIComponents
     PipelineExport
     ManagingIndexer
+    ChunkingStrategies
     ConnectionManagement
     LoggingAndDebugging
     BestPractices

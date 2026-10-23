@@ -29,7 +29,7 @@ return [
             'showitem' => 'ai_connection, --linebreak--, vector_store_connection',
         ],
         'chunking' => [
-            'showitem' => 'chunk_size, --linebreak--, chunk_overlap, --linebreak--, max_chunks, --linebreak--, min_chunk_chars',
+            'showitem' => 'chunking_strategy, --linebreak--, chunk_size, --linebreak--, chunk_overlap, --linebreak--, max_chunks, --linebreak--, min_chunk_chars',
         ],
         'file' => [
             'showitem' => 'import_path, --linebreak--, include_subfolders',
@@ -151,9 +151,24 @@ return [
                 'format' => 'integer',
             ],
         ],
+        'chunking_strategy' => [
+            'label' => $ll . 'tx_aiassistant_indexer.chunking_strategy',
+            'description' => $ll . 'tx_aiassistant_indexer.chunking_strategy_desc',
+            'onChange' => 'reload',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['Fixed', 'fixed'],
+                    ['Atomic', 'atomic'],
+                ],
+                'default' => 'fixed',
+            ],
+        ],
         'chunk_overlap' => [
             'label' => $ll . 'tx_aiassistant_indexer.chunk_overlap',
             'description' => $ll . 'tx_aiassistant_indexer.chunk_overlap_desc',
+            'displayCond' => 'FIELD:chunking_strategy:!=:atomic',
             'config' => [
                 'type' => 'number',
                 'placeholder' => $ll . 'tx_aiassistant_indexer.chunk_overlap_placeholder',
@@ -164,6 +179,7 @@ return [
         'max_chunks' => [
             'label' => $ll . 'tx_aiassistant_indexer.max_chunks',
             'description' => $ll . 'tx_aiassistant_indexer.max_chunks_desc',
+            'displayCond' => 'FIELD:chunking_strategy:!=:atomic',
             'config' => [
                 'type' => 'number',
                 'placeholder' => $ll . 'tx_aiassistant_indexer.max_chunks_placeholder',
@@ -174,6 +190,7 @@ return [
         'min_chunk_chars' => [
             'label' => $ll . 'tx_aiassistant_indexer.min_chunk_chars',
             'description' => $ll . 'tx_aiassistant_indexer.min_chunk_chars_desc',
+            'displayCond' => 'FIELD:chunking_strategy:!=:atomic',
             'config' => [
                 'type' => 'number',
                 'placeholder' => $ll . 'tx_aiassistant_indexer.min_chunk_chars_placeholder',
