@@ -23,7 +23,7 @@ use Madj2k\AiCore\Assistant\Presentation\UIComponents\Action;
 use Madj2k\AiCore\Assistant\Presentation\UIComponents\Definition;
 use Madj2k\AiCore\Assistant\Presentation\UIComponents\Defaults\Provider as DefaultProvider;
 use Madj2k\AiCore\Assistant\Presentation\UIComponents\UIComponentProviderInterface;
-use Madj2k\AiCore\Assistant\UIComponents\ProviderInterface as PromptUIComponentProviderInterface;
+use Madj2k\AiCore\Assistant\Presentation\UIComponents\ProviderInterface as PromptUIComponentProviderInterface;
 
 /**
  * Class UIComponentProvider

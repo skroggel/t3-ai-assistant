@@ -136,7 +136,7 @@ services:
   Madj2k\AiCore\Assistant\Presentation\UIComponents\UIComponentProviderInterface:
     alias: Madj2k\AiAssistant\Assistant\Presentation\UIComponents\UIComponentProvider
 
-  Madj2k\AiCore\Assistant\UIComponents\ProviderInterface:
+  Madj2k\AiCore\Assistant\Presentation\UIComponents\ProviderInterface:
     alias: Madj2k\AiAssistant\Assistant\Presentation\UIComponents\UIComponentProvider
 
   Madj2k\AiCore\Assistant\Prompt\Context\Builder\UIComponentsContextBuilder: ~
