@@ -136,6 +136,9 @@ services:
   Madj2k\AiCore\Assistant\Presentation\UIComponents\UIComponentProviderInterface:
     alias: Madj2k\AiAssistant\Assistant\Presentation\UIComponents\UIComponentProvider
 
+  Madj2k\AiCore\Assistant\UIComponents\ProviderInterface:
+    alias: Madj2k\AiAssistant\Assistant\Presentation\UIComponents\UIComponentProvider
+
   Madj2k\AiCore\Assistant\Prompt\Context\Builder\UIComponentsContextBuilder: ~
   Madj2k\AiCore\Assistant\Prompt\Context\Builder\PresentationRuleBuilder:
     tags:

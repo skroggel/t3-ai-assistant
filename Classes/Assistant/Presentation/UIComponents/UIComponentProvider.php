@@ -23,6 +23,7 @@ use Madj2k\AiCore\Assistant\Presentation\UIComponents\Action;
 use Madj2k\AiCore\Assistant\Presentation\UIComponents\Definition;
 use Madj2k\AiCore\Assistant\Presentation\UIComponents\Defaults\Provider as DefaultProvider;
 use Madj2k\AiCore\Assistant\Presentation\UIComponents\UIComponentProviderInterface;
+use Madj2k\AiCore\Assistant\UIComponents\ProviderInterface as PromptUIComponentProviderInterface;
 
 /**
  * Class UIComponentProvider
@@ -36,7 +37,7 @@ use Madj2k\AiCore\Assistant\Presentation\UIComponents\UIComponentProviderInterfa
  * @package Madj2k\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3
  */
-final readonly class UIComponentProvider implements UIComponentProviderInterface
+final readonly class UIComponentProvider implements UIComponentProviderInterface, PromptUIComponentProviderInterface
 {
     /**
      * Constructor.
