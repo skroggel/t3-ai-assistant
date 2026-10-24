@@ -68,6 +68,7 @@ return [
         'api_key' => [
             'label' => $ll . 'tx_aiassistant_connection_ai.api_key',
             'description' => $ll . 'tx_aiassistant_connection_ai.api_key_desc',
+            'displayCond' => 'FIELD:authentication:=:api_key',
             'config' => [
                 'type' => 'password',
                 'eval' => 'trim',
@@ -76,12 +77,12 @@ return [
                  'passwordGenerator' => false,
                  'hashed' => false,
                  'required' => false,
-                 'displayCond' => 'FIELD:authentication:=:api_key',
-            ],
-        ],
+             ],
+         ],
         'authentication' => [
             'label' => $ll . 'tx_aiassistant_connection_ai.authentication',
             'description' => $ll . 'tx_aiassistant_connection_ai.authentication.description',
+            'onChange' => 'reload',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -95,22 +96,44 @@ return [
         'oauth_token_endpoint' => [
             'label' => $ll . 'tx_aiassistant_connection_ai.oauth_token_endpoint',
             'description' => $ll . 'tx_aiassistant_connection_ai.oauth_token_endpoint.description',
-            'config' => ['type' => 'input', 'eval' => 'trim', 'max' => 2048, 'size' => 60, 'displayCond' => 'FIELD:authentication:=:oauth_client_credentials'],
+            'displayCond' => 'FIELD:authentication:=:oauth_client_credentials',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'max' => 2048,
+                'size' => 60,
+            ],
         ],
         'oauth_client_id' => [
             'label' => $ll . 'tx_aiassistant_connection_ai.oauth_client_id',
             'description' => $ll . 'tx_aiassistant_connection_ai.oauth_client_id.description',
-            'config' => ['type' => 'input', 'eval' => 'trim', 'max' => 255, 'displayCond' => 'FIELD:authentication:=:oauth_client_credentials'],
+            'displayCond' => 'FIELD:authentication:=:oauth_client_credentials',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'max' => 255,
+            ],
         ],
         'oauth_client_secret' => [
             'label' => $ll . 'tx_aiassistant_connection_ai.oauth_client_secret',
             'description' => $ll . 'tx_aiassistant_connection_ai.oauth_client_secret.description',
-            'config' => ['type' => 'password', 'eval' => 'trim', 'max' => 4096, 'hashed' => false, 'displayCond' => 'FIELD:authentication:=:oauth_client_credentials'],
+            'displayCond' => 'FIELD:authentication:=:oauth_client_credentials',
+            'config' => [
+                'type' => 'password',
+                'eval' => 'trim',
+                'max' => 4096,
+                'hashed' => false,
+            ],
         ],
         'oauth_scope' => [
             'label' => $ll . 'tx_aiassistant_connection_ai.oauth_scope',
             'description' => $ll . 'tx_aiassistant_connection_ai.oauth_scope.description',
-            'config' => ['type' => 'input', 'eval' => 'trim', 'max' => 2048, 'displayCond' => 'FIELD:authentication:=:oauth_client_credentials'],
+            'displayCond' => 'FIELD:authentication:=:oauth_client_credentials',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'max' => 2048,
+            ],
         ],
         'organization' => [
             'label' => $ll . 'tx_aiassistant_connection_ai.organization',

@@ -54,3 +54,29 @@ This is useful for language-aware retrieval:
 The filter model remains framework-independent in ``ai-core``. TYPO3-specific
 runtime placeholders are resolved by the TYPO3 adapter before the connector is
 called.
+
+Intent-selector payload filters
+-------------------------------
+
+An intent selector can create a filter dynamically from the AI-selected values.
+The payload field path is configured on the intent-selector step, for example:
+
+..  code-block:: text
+
+    meta.additional.category_ids
+
+The AI returns only the values:
+
+..  code-block:: json
+
+    {
+        "retrieverPayload": {
+            "values": [12, 15]
+        }
+    }
+
+The selected retriever steps are configured separately in the
+``Payload filter retrievers`` multi-select. With no selected retrievers, the
+dynamic filter applies to all retrievers allowed by the intent-selection plan.
+The ``and``/``or`` conjunction is configured in TYPO3 and is applied by the
+server. It is not part of the AI response.

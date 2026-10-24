@@ -1,128 +1,128 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_ai.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
-		<header/>
-		<body>
-			<trans-unit id="tx_aiassistant_connection_ai" resname="tx_aiassistant_connection_ai">
-				<source>Connection AI-API</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.additional_options" resname="tx_aiassistant_connection_ai.additional_options">
-				<source>Additional Options</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.api_key" resname="tx_aiassistant_connection_ai.api_key">
-				<source>Api Key</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.authentication" resname="tx_aiassistant_connection_ai.authentication">
-				<source>Authentication</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.authentication.description" resname="tx_aiassistant_connection_ai.authentication.description">
-				<source>Select API key authentication or OAuth 2.0 Client Credentials for this AI provider.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.authentication.api_key" resname="tx_aiassistant_connection_ai.authentication.api_key">
-				<source>API Key</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.authentication.oauth_client_credentials" resname="tx_aiassistant_connection_ai.authentication.oauth_client_credentials">
-				<source>OAuth 2.0 Client Credentials</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.oauth_token_endpoint" resname="tx_aiassistant_connection_ai.oauth_token_endpoint">
-				<source>OAuth Token Endpoint</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.oauth_token_endpoint.description" resname="tx_aiassistant_connection_ai.oauth_token_endpoint.description">
-				<source>URL of the OAuth 2.0 token endpoint used to obtain access tokens.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.oauth_client_id" resname="tx_aiassistant_connection_ai.oauth_client_id">
-				<source>OAuth Client ID</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.oauth_client_id.description" resname="tx_aiassistant_connection_ai.oauth_client_id.description">
-				<source>Client identifier registered with the OAuth 2.0 authorization server.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.oauth_client_secret" resname="tx_aiassistant_connection_ai.oauth_client_secret">
-				<source>OAuth Client Secret</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.oauth_client_secret.description" resname="tx_aiassistant_connection_ai.oauth_client_secret.description">
-				<source>Client secret used to authenticate this server-to-server OAuth 2.0 client.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.oauth_scope" resname="tx_aiassistant_connection_ai.oauth_scope">
-				<source>OAuth Scope</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.oauth_scope.description" resname="tx_aiassistant_connection_ai.oauth_scope.description">
-				<source>Optional space-separated scopes requested from the OAuth 2.0 authorization server.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.base_url" resname="tx_aiassistant_connection_ai.base_url">
-				<source>Base Url</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.connector_identifier" resname="tx_aiassistant_connection_ai.connector_identifier">
-				<source>Connector Identifier</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.default_model" resname="tx_aiassistant_connection_ai.default_model">
-				<source>Default Model</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.default_temperature" resname="tx_aiassistant_connection_ai.default_temperature">
-				<source>Default Temperature</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.embedding_model" resname="tx_aiassistant_connection_ai.embedding_model">
-				<source>Embedding Model</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.embedding_dimension" resname="tx_aiassistant_connection_ai.embedding_dimension">
-				<source>Embedding Dimension</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.embedding_temperature" resname="tx_aiassistant_connection_ai.embedding_temperature">
-				<source>Embedding Temperature</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.organization" resname="tx_aiassistant_connection_ai.organization">
-				<source>Organization</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.project" resname="tx_aiassistant_connection_ai.project">
-				<source>Project</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.tab_credentials" resname="tx_aiassistant_connection_ai.tab_credentials">
-				<source>Credentials</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.tab_defaults" resname="tx_aiassistant_connection_ai.tab_defaults">
-				<source>Defaults</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.title" resname="tx_aiassistant_connection_ai.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.title_desc" resname="tx_aiassistant_connection_ai.title_desc">
-				<source>Internal name used to identify this AI connection.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.connector_identifier_desc" resname="tx_aiassistant_connection_ai.connector_identifier_desc">
-				<source>Registered AI connector implementation used for this connection.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.base_url_desc" resname="tx_aiassistant_connection_ai.base_url_desc">
-				<source>Base URL of the AI provider API. Leave empty if the connector uses its default endpoint.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.base_url_placeholder" resname="tx_aiassistant_connection_ai.base_url_placeholder">
-				<source>Leave empty to use the connector default</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.api_key_desc" resname="tx_aiassistant_connection_ai.api_key_desc">
-				<source>API key used to authenticate against the AI provider.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.organization_desc" resname="tx_aiassistant_connection_ai.organization_desc">
-				<source>Optional organization identifier sent to the AI provider.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.project_desc" resname="tx_aiassistant_connection_ai.project_desc">
-				<source>Optional project identifier sent to the AI provider.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.default_model_desc" resname="tx_aiassistant_connection_ai.default_model_desc">
-				<source>Default chat/completion model used when a pipeline step does not define a model.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.default_temperature_desc" resname="tx_aiassistant_connection_ai.default_temperature_desc">
-				<source>Default sampling temperature used for chat/completion requests without an explicit step value.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.embedding_model_desc" resname="tx_aiassistant_connection_ai.embedding_model_desc">
-				<source>Model used to create embeddings for indexing and retrieval queries.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.embedding_dimension_desc" resname="tx_aiassistant_connection_ai.embedding_dimension_desc">
-				<source>Requested and expected vector dimension of the embedding model. The default is 1536. Use the connection test to verify it. Changing this value requires a compatible or rebuilt collection.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.embedding_temperature_desc" resname="tx_aiassistant_connection_ai.embedding_temperature_desc">
-				<source>Temperature used for embedding requests if supported by the selected connector.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_connection_ai.additional_options_desc" resname="tx_aiassistant_connection_ai.additional_options_desc">
-				<source>Optional connector-specific settings. Use one key-value pair per line or JSON if supported by the connector.</source>
-			</trans-unit>
-		</body>
-	</file>
+  <file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_ai.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+    <header/>
+    <body>
+      <trans-unit id="tx_aiassistant_connection_ai" resname="tx_aiassistant_connection_ai">
+        <source>Connection AI-API</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.additional_options" resname="tx_aiassistant_connection_ai.additional_options">
+        <source>Additional Options</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.api_key" resname="tx_aiassistant_connection_ai.api_key">
+        <source>Api Key</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.authentication" resname="tx_aiassistant_connection_ai.authentication">
+        <source>Authentication</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.authentication.description" resname="tx_aiassistant_connection_ai.authentication.description">
+        <source>Select API key authentication or OAuth 2.0 Client Credentials for this AI provider.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.authentication.api_key" resname="tx_aiassistant_connection_ai.authentication.api_key">
+        <source>API Key</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.authentication.oauth_client_credentials" resname="tx_aiassistant_connection_ai.authentication.oauth_client_credentials">
+        <source>OAuth 2.0 Client Credentials</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.oauth_token_endpoint" resname="tx_aiassistant_connection_ai.oauth_token_endpoint">
+        <source>OAuth Token Endpoint</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.oauth_token_endpoint.description" resname="tx_aiassistant_connection_ai.oauth_token_endpoint.description">
+        <source>URL of the OAuth 2.0 token endpoint used to obtain access tokens.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.oauth_client_id" resname="tx_aiassistant_connection_ai.oauth_client_id">
+        <source>OAuth Client ID</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.oauth_client_id.description" resname="tx_aiassistant_connection_ai.oauth_client_id.description">
+        <source>Client identifier registered with the OAuth 2.0 authorization server.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.oauth_client_secret" resname="tx_aiassistant_connection_ai.oauth_client_secret">
+        <source>OAuth Client Secret</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.oauth_client_secret.description" resname="tx_aiassistant_connection_ai.oauth_client_secret.description">
+        <source>Client secret used to authenticate this server-to-server OAuth 2.0 client.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.oauth_scope" resname="tx_aiassistant_connection_ai.oauth_scope">
+        <source>OAuth Scope</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.oauth_scope.description" resname="tx_aiassistant_connection_ai.oauth_scope.description">
+        <source>Optional space-separated scopes requested from the OAuth 2.0 authorization server.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.base_url" resname="tx_aiassistant_connection_ai.base_url">
+        <source>Base Url</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.connector_identifier" resname="tx_aiassistant_connection_ai.connector_identifier">
+        <source>Connector Identifier</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.default_model" resname="tx_aiassistant_connection_ai.default_model">
+        <source>Default Model</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.default_temperature" resname="tx_aiassistant_connection_ai.default_temperature">
+        <source>Default Temperature</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_model" resname="tx_aiassistant_connection_ai.embedding_model">
+        <source>Embedding Model</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_dimension" resname="tx_aiassistant_connection_ai.embedding_dimension">
+        <source>Embedding Dimension</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_temperature" resname="tx_aiassistant_connection_ai.embedding_temperature">
+        <source>Embedding Temperature</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.organization" resname="tx_aiassistant_connection_ai.organization">
+        <source>Organization</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.project" resname="tx_aiassistant_connection_ai.project">
+        <source>Project</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.tab_credentials" resname="tx_aiassistant_connection_ai.tab_credentials">
+        <source>Credentials</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.tab_defaults" resname="tx_aiassistant_connection_ai.tab_defaults">
+        <source>Defaults</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.title" resname="tx_aiassistant_connection_ai.title">
+        <source>Title</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.title_desc" resname="tx_aiassistant_connection_ai.title_desc">
+        <source>Internal name used to identify this AI connection.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.connector_identifier_desc" resname="tx_aiassistant_connection_ai.connector_identifier_desc">
+        <source>Registered AI connector implementation used for this connection.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.base_url_desc" resname="tx_aiassistant_connection_ai.base_url_desc">
+        <source>Base URL of the AI provider API. Leave empty if the connector uses its default endpoint.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.base_url_placeholder" resname="tx_aiassistant_connection_ai.base_url_placeholder">
+        <source>Leave empty to use the connector default</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.api_key_desc" resname="tx_aiassistant_connection_ai.api_key_desc">
+        <source>API key used to authenticate against the AI provider.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.organization_desc" resname="tx_aiassistant_connection_ai.organization_desc">
+        <source>Optional organization identifier sent to the AI provider.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.project_desc" resname="tx_aiassistant_connection_ai.project_desc">
+        <source>Optional project identifier sent to the AI provider.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.default_model_desc" resname="tx_aiassistant_connection_ai.default_model_desc">
+        <source>Default chat/completion model used when a pipeline step does not define a model.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.default_temperature_desc" resname="tx_aiassistant_connection_ai.default_temperature_desc">
+        <source>Default sampling temperature used for chat/completion requests without an explicit step value.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_model_desc" resname="tx_aiassistant_connection_ai.embedding_model_desc">
+        <source>Model used to create embeddings for indexing and retrieval queries.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_dimension_desc" resname="tx_aiassistant_connection_ai.embedding_dimension_desc">
+        <source>Requested and expected vector dimension of the embedding model. The default is 1536. Use the connection test to verify it. Changing this value requires a compatible or rebuilt collection.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_temperature_desc" resname="tx_aiassistant_connection_ai.embedding_temperature_desc">
+        <source>Temperature used for embedding requests if supported by the selected connector.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.additional_options_desc" resname="tx_aiassistant_connection_ai.additional_options_desc">
+        <source>Optional connector-specific settings. Use one key-value pair per line or JSON if supported by the connector.</source>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

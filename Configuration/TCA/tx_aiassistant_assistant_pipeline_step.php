@@ -34,8 +34,9 @@ return [
          'stepPrompts' => [
             'showitem' => 'step_identity, --linebreak--, step_behavior_rules, --linebreak--, step_retrieval_rules, --linebreak--, step_output_rules, --linebreak--, --palette--;;presentationRules',
         ],
+
         'intentSelection' => [
-            'showitem' => 'intent_selection_instructions, --linebreak--, intent_selection_metadata',
+            'showitem' => 'intent_selection_output_types, --linebreak--, intent_selection_payload_retrievers, --linebreak--, intent_selection_payload_field, --linebreak--, intent_selection_payload_conjunction, --linebreak--, intent_selection_instructions, --linebreak--, intent_selection_metadata',
         ],
 
         'llm' => [
@@ -57,6 +58,7 @@ return [
         'uiComponents' => [
             'showitem' => 'ui_components_mode, --linebreak--, ui_components',
         ],
+
         'presentationRules' => [
             'showitem' => 'presentation_rules_mode, --linebreak--, presentation_rules',
         ],
@@ -134,6 +136,73 @@ return [
                 'type' => 'text',
                 'rows' => 6,
                 'placeholder' => '{"primary_intent":{"type":"string"}}',
+            ],
+        ],
+        'intent_selection_output_types' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.description',
+            'onChange' => 'reload',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectCheckBox',
+                'items' => [
+                    [
+                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.retriever',
+                        'value' => 'retriever',
+                    ],
+                    [
+                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.presentation_rules',
+                        'value' => 'presentation_rules',
+                    ],
+                    [
+                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.retriever_payload',
+                        'value' => 'retriever_payload',
+                    ],
+                ],
+                'default' => 'retriever,presentation_rules',
+            ],
+        ],
+        'intent_selection_payload_field' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_field',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_field.description',
+            'displayCond' => 'FIELD:intent_selection_output_types:IN:retriever_payload',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'max' => 255,
+                'placeholder' => 'meta.additional.category_ids',
+            ],
+        ],
+        'intent_selection_payload_retrievers' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_retrievers',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_retrievers.description',
+            'displayCond' => 'FIELD:intent_selection_output_types:IN:retriever_payload',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'itemsProcFunc' => \Madj2k\AiAssistant\Assistant\TCA\IntentSelectionRetrieverItems::class . '->items',
+                'size' => 5,
+                'maxitems' => 999,
+            ],
+        ],
+        'intent_selection_payload_conjunction' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.description',
+            'displayCond' => 'FIELD:intent_selection_output_types:IN:retriever_payload',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [
+                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.and',
+                        'value' => 'and',
+                    ],
+                    [
+                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.or',
+                        'value' => 'or',
+                    ],
+                ],
+                'default' => 'or',
             ],
         ],
         'stage' => [

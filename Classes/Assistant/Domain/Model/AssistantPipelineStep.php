@@ -21,6 +21,7 @@ use Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface;
 use Madj2k\AiCore\Assistant\Enum\HistoryMode;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineStage;
+use Madj2k\AiCore\Assistant\Enum\IntentSelectionOutputType;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorFilterCondition;
 use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
@@ -28,6 +29,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use Madj2k\AiCore\Connection\VectorStore\Filter\DTO\FilterCondition;
 use Madj2k\AiCore\Connection\VectorStore\Filter\DTO\FilterGroup;
 use Madj2k\AiCore\Connection\VectorStore\Filter\DTO\FilterOperator;
+use Madj2k\AiCore\Connection\VectorStore\Filter\DTO\FilterConjunction;
 
 /**
  * Class AssistantPipelineStep
@@ -79,6 +81,35 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      * @var string
      */
     protected string $retrievalIdentifier = '';
+
+    /**
+     * Intent selector output areas stored as comma-separated enum values.
+     *
+     * @var string
+     */
+    protected string $intentSelectionOutputTypes = '';
+
+    /**
+     * Payload field path used by the intent selector filter.
+     *
+     * @var string
+     */
+    protected string $intentSelectionPayloadField = '';
+
+    /**
+     * Retriever identifiers targeted by the dynamic payload filter.
+     *
+     * @var string
+     */
+    protected string $intentSelectionPayloadRetrievers = '';
+
+    /**
+     * Conjunction used for multiple dynamic payload values.
+     *
+     * @var string
+     */
+    protected string $intentSelectionPayloadConjunction = 'and';
+
     protected string $intentSelectionInstructions = '';
     protected string $intentSelectionMetadata = '';
 
@@ -420,14 +451,160 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
         $this->retrievalIdentifier = $retrievalIdentifier;
     }
 
-    /** @return string Intent selector instructions. */
-    public function getIntentSelectionInstructions(): string { return trim($this->intentSelectionInstructions); }
-    /** @param string $value Intent selector instructions. @return void */
-    public function setIntentSelectionInstructions(string $value): void { $this->intentSelectionInstructions = $value; }
-    /** @return string Intent selector metadata schema. */
-    public function getIntentSelectionMetadata(): string { return trim($this->intentSelectionMetadata); }
-    /** @param string $value Intent selector metadata schema. @return void */
-    public function setIntentSelectionMetadata(string $value): void { $this->intentSelectionMetadata = $value; }
+    /**
+     * Returns the configured intent selector output areas.
+     *
+     * Empty legacy values resolve to retriever and presentation rules.
+     *
+     * @return array<int,\Madj2k\AiCore\Assistant\Enum\IntentSelectionOutputType> Output areas.
+     */
+    public function getIntentSelectionOutputTypes(): array
+    {
+        $value = trim($this->intentSelectionOutputTypes);
+        if ($value === '') {
+            return [
+                IntentSelectionOutputType::Retriever,
+                IntentSelectionOutputType::PresentationRules,
+            ];
+        }
+
+        $types = [];
+        foreach (preg_split('/[,\r\n]+/', $value) ?: [] as $item) {
+            try {
+                $types[] = IntentSelectionOutputType::from(trim($item));
+            } catch (\ValueError) {
+                continue;
+            }
+        }
+
+        return array_values(array_unique($types, SORT_REGULAR));
+    }
+
+    /**
+     * Sets the configured intent selector output areas.
+     *
+     * @param string $value Comma-separated enum values.
+     * @return void
+     */
+    public function setIntentSelectionOutputTypes(string $value): void
+    {
+        $this->intentSelectionOutputTypes = trim($value);
+    }
+
+    /**
+     * Returns the dynamic retriever payload field path.
+     *
+     * @return string Payload field path.
+     */
+    public function getIntentSelectionPayloadField(): string
+    {
+        return trim($this->intentSelectionPayloadField);
+    }
+
+    /**
+     * Sets the dynamic retriever payload field path.
+     *
+     * @param string $value Payload field path.
+     * @return void
+     */
+    public function setIntentSelectionPayloadField(string $value): void
+    {
+        $this->intentSelectionPayloadField = trim($value);
+    }
+
+    /**
+     * Returns retriever identifiers targeted by the dynamic payload filter.
+     *
+     * An empty array means that all retrievers receive the filter.
+     *
+     * @return array<int,string> Retriever identifiers.
+     */
+    public function getIntentSelectionPayloadRetrievers(): array
+    {
+        $identifiers = preg_split('/[,\r\n]+/', $this->intentSelectionPayloadRetrievers) ?: [];
+        $identifiers = array_map('trim', $identifiers);
+
+        return array_values(array_unique(array_filter(
+            $identifiers,
+            static fn (string $identifier): bool => $identifier !== '',
+        )));
+    }
+
+    /**
+     * Sets retriever identifiers targeted by the dynamic payload filter.
+     *
+     * @param string $value Comma-separated retriever identifiers.
+     * @return void
+     */
+    public function setIntentSelectionPayloadRetrievers(string $value): void
+    {
+        $this->intentSelectionPayloadRetrievers = trim($value);
+    }
+
+    /**
+     * Returns the conjunction for dynamic payload values.
+     *
+     * @return \Madj2k\AiCore\Connection\VectorStore\Filter\DTO\FilterConjunction Value conjunction.
+     */
+    public function getIntentSelectionPayloadConjunction(): FilterConjunction
+    {
+        return FilterConjunction::tryFrom(trim($this->intentSelectionPayloadConjunction))
+            ?? FilterConjunction::And;
+    }
+
+    /**
+     * Sets the conjunction for dynamic payload values.
+     *
+     * @param string $value Conjunction value.
+     * @return void
+     */
+    public function setIntentSelectionPayloadConjunction(string $value): void
+    {
+        $this->intentSelectionPayloadConjunction = FilterConjunction::tryFrom(trim($value))?->value
+            ?? FilterConjunction::And->value;
+    }
+
+    /**
+     * Returns additional intent selection instructions.
+     *
+     * @return string Additional instructions.
+     */
+    public function getIntentSelectionInstructions(): string
+    {
+        return trim($this->intentSelectionInstructions);
+    }
+
+    /**
+     * Sets additional intent selection instructions.
+     *
+     * @param string $value Additional instructions.
+     * @return void
+     */
+    public function setIntentSelectionInstructions(string $value): void
+    {
+        $this->intentSelectionInstructions = $value;
+    }
+
+    /**
+     * Returns the optional intent selection metadata schema.
+     *
+     * @return string Metadata schema.
+     */
+    public function getIntentSelectionMetadata(): string
+    {
+        return trim($this->intentSelectionMetadata);
+    }
+
+    /**
+     * Sets the optional intent selection metadata schema.
+     *
+     * @param string $value Metadata schema.
+     * @return void
+     */
+    public function setIntentSelectionMetadata(string $value): void
+    {
+        $this->intentSelectionMetadata = $value;
+    }
 
     /**
      * Returns the typed stage.

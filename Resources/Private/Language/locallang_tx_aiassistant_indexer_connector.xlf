@@ -1,100 +1,100 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_indexer_connector.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
-		<header/>
-		<body>
-			<trans-unit id="tx_aiassistant_indexer_connector" resname="tx_aiassistant_indexer_connector">
-				<source>Indexer Connector</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.title" resname="tx_aiassistant_indexer_connector.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.type" resname="tx_aiassistant_indexer_connector.type">
-				<source>Type</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.type_shopware" resname="tx_aiassistant_indexer_connector.type_shopware">
-                <source>External service</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.base_url" resname="tx_aiassistant_indexer_connector.base_url">
-				<source>Base URL</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.client_id" resname="tx_aiassistant_indexer_connector.client_id">
-				<source>Client ID</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.download_base_url" resname="tx_aiassistant_indexer_connector.download_base_url">
-                <source>Download base URL</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.download_path" resname="tx_aiassistant_indexer_connector.download_path">
-                <source>Download path</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.client_secret" resname="tx_aiassistant_indexer_connector.client_secret">
-				<source>Client Secret</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.verify_tls" resname="tx_aiassistant_indexer_connector.verify_tls">
-				<source>Verify TLS</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.lookback_days" resname="tx_aiassistant_indexer_connector.lookback_days">
-				<source>Default lookback days</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.custom_fields" resname="tx_aiassistant_indexer_connector.custom_fields">
-				<source>Custom fields</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.indexed_fields" resname="tx_aiassistant_indexer_connector.indexed_fields">
-				<source>Additional indexed fields</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.title_desc" resname="tx_aiassistant_indexer_connector.title_desc">
-				<source>Human-readable name for this external connector.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.type_desc" resname="tx_aiassistant_indexer_connector.type_desc">
-				<source>Connector implementation used to fetch external content.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.base_url_desc" resname="tx_aiassistant_indexer_connector.base_url_desc">
-                <source>Base URL of the external service, without trailing slash.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.client_id_desc" resname="tx_aiassistant_indexer_connector.client_id_desc">
-                <source>Client ID used to authenticate against the external service.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.download_base_url_desc" resname="tx_aiassistant_indexer_connector.download_base_url_desc">
-                <source>Optional base URL for download links stored in the index, without trailing slash. When set, the form reloads and requires a download path.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.download_path_desc" resname="tx_aiassistant_indexer_connector.download_path_desc">
-                <source>Required when a download base URL is set. Enter the path between that base URL and the external record ID, for example `/documents/download`. The record ID is appended automatically.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.client_secret_desc" resname="tx_aiassistant_indexer_connector.client_secret_desc">
-                <source>Client secret used to authenticate against the external service. The value is stored, but not shown again in plain text when editing the record.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.verify_tls_desc" resname="tx_aiassistant_indexer_connector.verify_tls_desc">
-                <source>Enable TLS certificate verification for outgoing requests.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.lookback_days_desc" resname="tx_aiassistant_indexer_connector.lookback_days_desc">
-				<source>Default lookback window when no explicit --since value is provided.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.custom_fields_desc" resname="tx_aiassistant_indexer_connector.custom_fields_desc">
-                <source>Comma- or line-separated list of connector-specific custom field keys to include in indexed text.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.custom_fields_placeholder" resname="tx_aiassistant_indexer_connector.custom_fields_placeholder">
-				<source>custom_meta_subheader
+  <file source-language="en" datatype="plaintext" original="EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_indexer_connector.xlf" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+    <header/>
+    <body>
+      <trans-unit id="tx_aiassistant_indexer_connector" resname="tx_aiassistant_indexer_connector">
+        <source>Indexer Connector</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.title" resname="tx_aiassistant_indexer_connector.title">
+        <source>Title</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.type" resname="tx_aiassistant_indexer_connector.type">
+        <source>Type</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.type_shopware" resname="tx_aiassistant_indexer_connector.type_shopware">
+        <source>External service</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.base_url" resname="tx_aiassistant_indexer_connector.base_url">
+        <source>Base URL</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.client_id" resname="tx_aiassistant_indexer_connector.client_id">
+        <source>Client ID</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.download_base_url" resname="tx_aiassistant_indexer_connector.download_base_url">
+        <source>Download base URL</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.download_path" resname="tx_aiassistant_indexer_connector.download_path">
+        <source>Download path</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.client_secret" resname="tx_aiassistant_indexer_connector.client_secret">
+        <source>Client Secret</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.verify_tls" resname="tx_aiassistant_indexer_connector.verify_tls">
+        <source>Verify TLS</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.lookback_days" resname="tx_aiassistant_indexer_connector.lookback_days">
+        <source>Default lookback days</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.custom_fields" resname="tx_aiassistant_indexer_connector.custom_fields">
+        <source>Custom fields</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.indexed_fields" resname="tx_aiassistant_indexer_connector.indexed_fields">
+        <source>Additional indexed fields</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.title_desc" resname="tx_aiassistant_indexer_connector.title_desc">
+        <source>Human-readable name for this external connector.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.type_desc" resname="tx_aiassistant_indexer_connector.type_desc">
+        <source>Connector implementation used to fetch external content.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.base_url_desc" resname="tx_aiassistant_indexer_connector.base_url_desc">
+        <source>Base URL of the external service, without trailing slash.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.client_id_desc" resname="tx_aiassistant_indexer_connector.client_id_desc">
+        <source>Client ID used to authenticate against the external service.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.download_base_url_desc" resname="tx_aiassistant_indexer_connector.download_base_url_desc">
+        <source>Optional base URL for download links stored in the index, without trailing slash. When set, the form reloads and requires a download path.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.download_path_desc" resname="tx_aiassistant_indexer_connector.download_path_desc">
+        <source>Required when a download base URL is set. Enter the path between that base URL and the external record ID, for example `/documents/download`. The record ID is appended automatically.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.client_secret_desc" resname="tx_aiassistant_indexer_connector.client_secret_desc">
+        <source>Client secret used to authenticate against the external service. The value is stored, but not shown again in plain text when editing the record.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.verify_tls_desc" resname="tx_aiassistant_indexer_connector.verify_tls_desc">
+        <source>Enable TLS certificate verification for outgoing requests.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.lookback_days_desc" resname="tx_aiassistant_indexer_connector.lookback_days_desc">
+        <source>Default lookback window when no explicit --since value is provided.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.custom_fields_desc" resname="tx_aiassistant_indexer_connector.custom_fields_desc">
+        <source>Comma- or line-separated list of connector-specific custom field keys to include in indexed text.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.custom_fields_placeholder" resname="tx_aiassistant_indexer_connector.custom_fields_placeholder">
+        <source>custom_meta_subheader
 custom_meta_covertext
 custom_product_oai_identifier_journal</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.indexed_fields_desc" resname="tx_aiassistant_indexer_connector.indexed_fields_desc">
-                <source>Comma- or line-separated list of connector-specific payload paths to append to the indexed text.</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.indexed_fields_placeholder" resname="tx_aiassistant_indexer_connector.indexed_fields_placeholder">
-				<source>translated.customSearchKeywords
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.indexed_fields_desc" resname="tx_aiassistant_indexer_connector.indexed_fields_desc">
+        <source>Comma- or line-separated list of connector-specific payload paths to append to the indexed text.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.indexed_fields_placeholder" resname="tx_aiassistant_indexer_connector.indexed_fields_placeholder">
+        <source>translated.customSearchKeywords
 translated.metaDescription
 releaseDate
 properties[].name
 manufacturer.translated.customFields.custom_manufacturer_oai_place
 cover.media.url
 states[]</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.tab_connection" resname="tx_aiassistant_indexer_connector.tab_connection">
-				<source>Connection</source>
-			</trans-unit>
-			<trans-unit id="tx_aiassistant_indexer_connector.tab_indexing" resname="tx_aiassistant_indexer_connector.tab_indexing">
-				<source>Indexing</source>
-			</trans-unit>
-		</body>
-	</file>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.tab_connection" resname="tx_aiassistant_indexer_connector.tab_connection">
+        <source>Connection</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_indexer_connector.tab_indexing" resname="tx_aiassistant_indexer_connector.tab_indexing">
+        <source>Indexing</source>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

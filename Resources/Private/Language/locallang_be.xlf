@@ -1,103 +1,116 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
-		<header/>
-		<body>
-			<trans-unit id="settings.category.aiAssistant.label">
-				<source>AI Assistant</source>
-			</trans-unit>
-			<trans-unit id="settings.category.aiAssistant.description">
-				<source>Frontend chat mode and request security.</source>
-			</trans-unit>
-			<trans-unit id="settings.useLegacyFrontend.label">
-				<source>Use legacy frontend</source>
-			</trans-unit>
-			<trans-unit id="settings.useLegacyFrontend.description">
-				<source>Use the legacy Fluid/JavaScript chat frontend instead of the Vue custom element.</source>
-			</trans-unit>
-			<trans-unit id="settings.allowedAssistantProfiles.label">
-				<source>Allowed Assistant profiles</source>
-			</trans-unit>
-			<trans-unit id="settings.allowedAssistantProfiles.description">
-				<source>Assistant profile UIDs allowed for public frontend requests.</source>
-			</trans-unit>
-			<trans-unit id="settings.requestTokenTtl.label">
-				<source>Frontend request token lifetime</source>
-			</trans-unit>
-			<trans-unit id="settings.requestTokenTtl.description">
-				<source>Lifetime of signed frontend request tokens in seconds.</source>
-			</trans-unit>
-			<trans-unit id="settings.maxPayloadBytes.label">
-				<source>Maximum frontend payload size</source>
-			</trans-unit>
-			<trans-unit id="settings.maxPayloadBytes.description">
-				<source>Maximum serialized runtime-settings payload accepted by the chat endpoint.</source>
-			</trans-unit>
-			<trans-unit id="plugin.tx_aiassistant_chat.title">
-				<source>AI Assistant</source>
-			</trans-unit>
-			<trans-unit id="plugin.tx_aiassistant_chat..description">
-				<source></source>
-			</trans-unit>
-
-			<trans-unit id="flexform.chat.sheet.general" >
-				<source>Chat Settings</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.assistant_profile" >
-				<source>Assistant Profile</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.require_consent" >
-				<source>Require consent before starting the chat</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.sanitize_options">
-				<source>Markdown HTML sanitizing options (JSON)</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.sanitize_options.description">
-				<source>Optional DOMPurify configuration as JSON. The configured values are merged with the secure defaults.</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.include_default_styles">
-				<source>Include default chat styles</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.include_default_styles.description">
-				<source>Includes the built-in chat component CSS. Disable this when the host project provides its own styles.</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.number_of_typing_dots">
-				<source>Number of typing dots</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.number_of_typing_dots.description">
-				<source>Number of dots shown while the assistant is generating a response.</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.sheet.advanced"><source>Advanced</source></trans-unit>
-			<trans-unit id="flexform.chat.render_lag_characters"><source>Render lag (characters)</source></trans-unit>
-			<trans-unit id="flexform.chat.render_lag_characters.description"><source>Number of streamed characters kept ahead of the visual renderer.</source></trans-unit>
-			<trans-unit id="flexform.chat.render_chunk_characters"><source>Render chunk size (characters)</source></trans-unit>
-			<trans-unit id="flexform.chat.render_chunk_characters.description"><source>Number of characters rendered per visual catch-up step.</source></trans-unit>
-			<trans-unit id="flexform.chat.initial_message_delay"><source>Initial message delay (milliseconds)</source></trans-unit>
-			<trans-unit id="flexform.chat.response_message_delay"><source>Response message delay (milliseconds)</source></trans-unit>
-			<trans-unit id="flexform.chat.sheet.language">
-				<source>Language</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.response_language">
-				<source>Fixed response language</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.response_language.description">
-				<source>Optional language name or BCP 47 code. When empty, the current TYPO3 site language is used.</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.allow_user_language">
-				<source>Allow users to select the response language</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.allow_user_language.description">
-				<source>Shows a searchable, free-text language field. A fixed response language takes priority.</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.sheet.accessibility">
-				<source>Accessibility</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.plain_language">
-				<source>Use plain language</source>
-			</trans-unit>
-			<trans-unit id="flexform.chat.plain_language.description">
-				<source>Instructs answer-generating pipeline steps to use familiar words, short sentences and a clear structure.</source>
-			</trans-unit>
-		</body>
-	</file>
+  <file source-language="en" datatype="plaintext" date="2026-02-19T11:35:55Z" product-name="ai_assistant">
+    <header/>
+    <body>
+      <trans-unit id="settings.category.aiAssistant.label">
+        <source>AI Assistant</source>
+      </trans-unit>
+      <trans-unit id="settings.category.aiAssistant.description">
+        <source>Frontend chat mode and request security.</source>
+      </trans-unit>
+      <trans-unit id="settings.useLegacyFrontend.label">
+        <source>Use legacy frontend</source>
+      </trans-unit>
+      <trans-unit id="settings.useLegacyFrontend.description">
+        <source>Use the legacy Fluid/JavaScript chat frontend instead of the Vue custom element.</source>
+      </trans-unit>
+      <trans-unit id="settings.allowedAssistantProfiles.label">
+        <source>Allowed Assistant profiles</source>
+      </trans-unit>
+      <trans-unit id="settings.allowedAssistantProfiles.description">
+        <source>Assistant profile UIDs allowed for public frontend requests.</source>
+      </trans-unit>
+      <trans-unit id="settings.requestTokenTtl.label">
+        <source>Frontend request token lifetime</source>
+      </trans-unit>
+      <trans-unit id="settings.requestTokenTtl.description">
+        <source>Lifetime of signed frontend request tokens in seconds.</source>
+      </trans-unit>
+      <trans-unit id="settings.maxPayloadBytes.label">
+        <source>Maximum frontend payload size</source>
+      </trans-unit>
+      <trans-unit id="settings.maxPayloadBytes.description">
+        <source>Maximum serialized runtime-settings payload accepted by the chat endpoint.</source>
+      </trans-unit>
+      <trans-unit id="plugin.tx_aiassistant_chat.title">
+        <source>AI Assistant</source>
+      </trans-unit>
+      <trans-unit id="plugin.tx_aiassistant_chat..description">
+        <source/>
+      </trans-unit>
+      <trans-unit id="flexform.chat.sheet.general">
+        <source>Chat Settings</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.assistant_profile">
+        <source>Assistant Profile</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.require_consent">
+        <source>Require consent before starting the chat</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.sanitize_options">
+        <source>Markdown HTML sanitizing options (JSON)</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.sanitize_options.description">
+        <source>Optional DOMPurify configuration as JSON. The configured values are merged with the secure defaults.</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.include_default_styles">
+        <source>Include default chat styles</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.include_default_styles.description">
+        <source>Includes the built-in chat component CSS. Disable this when the host project provides its own styles.</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.number_of_typing_dots">
+        <source>Number of typing dots</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.number_of_typing_dots.description">
+        <source>Number of dots shown while the assistant is generating a response.</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.sheet.advanced">
+        <source>Advanced</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.render_lag_characters">
+        <source>Render lag (characters)</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.render_lag_characters.description">
+        <source>Number of streamed characters kept ahead of the visual renderer.</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.render_chunk_characters">
+        <source>Render chunk size (characters)</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.render_chunk_characters.description">
+        <source>Number of characters rendered per visual catch-up step.</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.initial_message_delay">
+        <source>Initial message delay (milliseconds)</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.response_message_delay">
+        <source>Response message delay (milliseconds)</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.sheet.language">
+        <source>Language</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.response_language">
+        <source>Fixed response language</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.response_language.description">
+        <source>Optional language name or BCP 47 code. When empty, the current TYPO3 site language is used.</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.allow_user_language">
+        <source>Allow users to select the response language</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.allow_user_language.description">
+        <source>Shows a searchable, free-text language field. A fixed response language takes priority.</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.sheet.accessibility">
+        <source>Accessibility</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.plain_language">
+        <source>Use plain language</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.plain_language.description">
+        <source>Instructs answer-generating pipeline steps to use familiar words, short sentences and a clear structure.</source>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
