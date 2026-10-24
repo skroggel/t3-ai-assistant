@@ -55,6 +55,28 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
 
 
     /**
+     * Complete embedding endpoint URL.
+     *
+     * @var string
+     */
+    protected string $embeddingBaseUrl = '';
+
+    /**
+     * Prevents appending the chat resource path to the base URL.
+     *
+     * @var bool
+     */
+    protected bool $baseUrlNoExtend = false;
+
+    /**
+     * Prevents appending the embedding resource path to the embedding URL.
+     *
+     * @var bool
+     */
+    protected bool $embeddingBaseUrlNoExtend = false;
+
+
+    /**
      * API key.
      *
      * @var string
@@ -188,6 +210,69 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
+    }
+
+    /**
+     * Returns the complete embedding endpoint URL.
+     *
+     * @return string Embedding endpoint URL or an empty string to use the base URL.
+     */
+    public function getEmbeddingBaseUrl(): string
+    {
+        return rtrim(trim($this->embeddingBaseUrl), '/');
+    }
+
+    /**
+     * Sets the complete embedding endpoint URL.
+     *
+     * @param string $embeddingBaseUrl Embedding endpoint URL.
+     * @return void
+     */
+    public function setEmbeddingBaseUrl(string $embeddingBaseUrl): void
+    {
+        $this->embeddingBaseUrl = trim($embeddingBaseUrl);
+    }
+
+    /**
+     * Returns whether the base URL is used without appending a resource path.
+     *
+     * @return bool Complete URL flag.
+     */
+    public function isBaseUrlNoExtend(): bool
+    {
+        return $this->baseUrlNoExtend;
+    }
+
+    /**
+     * Sets whether the base URL is used without appending a resource path.
+     *
+     * @param bool $baseUrlNoExtend Complete URL flag.
+     * @return void
+     */
+    public function setBaseUrlNoExtend(bool $baseUrlNoExtend): void
+    {
+        $this->baseUrlNoExtend = $baseUrlNoExtend;
+    }
+
+    /**
+     * Returns whether the embedding URL is used without appending a resource path.
+     *
+     * @return bool Complete URL flag.
+     */
+    public function isEmbeddingBaseUrlNoExtend(): bool
+    {
+        return $this->embeddingBaseUrlNoExtend;
+    }
+
+    /**
+     * Sets whether the embedding URL is used without appending a resource path.
+     *
+     * @param bool $embeddingBaseUrlNoExtend Complete URL flag.
+     * @return void
+     */
+    public function setEmbeddingBaseUrlNoExtend(bool $embeddingBaseUrlNoExtend): void
+    {
+        $this->embeddingBaseUrlNoExtend = $embeddingBaseUrlNoExtend;
     }
 
 

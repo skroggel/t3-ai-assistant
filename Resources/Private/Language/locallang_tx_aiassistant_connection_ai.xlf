@@ -18,6 +18,27 @@
       <trans-unit id="tx_aiassistant_connection_ai.authentication.description" resname="tx_aiassistant_connection_ai.authentication.description">
         <source>Select API key authentication or OAuth 2.0 Client Credentials for this AI provider.</source>
       </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url" resname="tx_aiassistant_connection_ai.embedding_base_url">
+        <source>Embedding URL</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url.description" resname="tx_aiassistant_connection_ai.embedding_base_url.description">
+        <source>Complete URL used for embedding requests. Leave empty to use the default OpenAI-compatible embedding path below the base URL.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url.placeholder" resname="tx_aiassistant_connection_ai.embedding_base_url.placeholder">
+        <source>https://example.org/embedding-endpoint</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.base_url_no_extend" resname="tx_aiassistant_connection_ai.base_url_no_extend">
+        <source>Use base URL as-is</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.base_url_no_extend.description" resname="tx_aiassistant_connection_ai.base_url_no_extend.description">
+        <source>Do not append the chat resource path to the base URL.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url_no_extend" resname="tx_aiassistant_connection_ai.embedding_base_url_no_extend">
+        <source>Use embedding URL as-is</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url_no_extend.description" resname="tx_aiassistant_connection_ai.embedding_base_url_no_extend.description">
+        <source>Do not append the embedding resource path to the embedding URL.</source>
+      </trans-unit>
       <trans-unit id="tx_aiassistant_connection_ai.authentication.api_key" resname="tx_aiassistant_connection_ai.authentication.api_key">
         <source>API Key</source>
       </trans-unit>

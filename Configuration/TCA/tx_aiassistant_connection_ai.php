@@ -24,7 +24,7 @@ return [
             'showitem' => '
                 title, connector_identifier,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_ai.xlf:tx_aiassistant_connection_ai.tab_credentials,
-                    base_url, authentication, api_key, oauth_token_endpoint, oauth_client_id, oauth_client_secret, oauth_scope, organization, project,
+                    base_url, base_url_no_extend, embedding_base_url, embedding_base_url_no_extend, authentication, api_key, oauth_token_endpoint, oauth_client_id, oauth_client_secret, oauth_scope, organization, project,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_ai.xlf:tx_aiassistant_connection_ai.tab_defaults,
                     default_model, default_temperature, embedding_model, embedding_dimension, embedding_temperature, additional_options
             ',
@@ -79,6 +79,35 @@ return [
                  'required' => false,
              ],
          ],
+        'embedding_base_url' => [
+            'label' => $ll . 'tx_aiassistant_connection_ai.embedding_base_url',
+            'description' => $ll . 'tx_aiassistant_connection_ai.embedding_base_url.description',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'max' => 2048,
+                'size' => 60,
+                'placeholder' => $ll . 'tx_aiassistant_connection_ai.embedding_base_url.placeholder',
+            ],
+        ],
+        'base_url_no_extend' => [
+            'label' => $ll . 'tx_aiassistant_connection_ai.base_url_no_extend',
+            'description' => $ll . 'tx_aiassistant_connection_ai.base_url_no_extend.description',
+            'config' => [
+                'type' => 'check',
+                'renderType' => 'checkboxToggle',
+                'default' => 0,
+            ],
+        ],
+        'embedding_base_url_no_extend' => [
+            'label' => $ll . 'tx_aiassistant_connection_ai.embedding_base_url_no_extend',
+            'description' => $ll . 'tx_aiassistant_connection_ai.embedding_base_url_no_extend.description',
+            'config' => [
+                'type' => 'check',
+                'renderType' => 'checkboxToggle',
+                'default' => 0,
+            ],
+        ],
         'authentication' => [
             'label' => $ll . 'tx_aiassistant_connection_ai.authentication',
             'description' => $ll . 'tx_aiassistant_connection_ai.authentication.description',

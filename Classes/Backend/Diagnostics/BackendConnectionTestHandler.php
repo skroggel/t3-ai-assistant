@@ -23,6 +23,7 @@ use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Repository\AiConnectionRepository;
 use Madj2k\AiAssistant\Connection\Domain\Repository\VectorStoreConnectionRepository;
+use Madj2k\AiCore\Exception\ApiException;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -155,78 +156,67 @@ final readonly class BackendConnectionTestHandler
             return;
         }
 
+        $message = [];
+        $status = 'ok';
         try {
             $embeddingResponse = $this->connectionHealthChecker->probeAiEmbedding(
                 $connection,
                 'TYPO3 AI Chat backend connection test',
             );
             $embeddingDimension = count($embeddingResponse->getEmbedding());
+
+            if ($embeddingDimension === 0) {
+                throw new ApiException('AI connection test returned an empty embedding.', 1792831006);
+            }
+
+            $configuredEmbeddingDimension = $connection->getEmbeddingDimension();
+            if ($configuredEmbeddingDimension <= 0) {
+                throw new ApiException('The configured embedding dimension must be greater than zero.', 1792831007);
+            }
+
+            if ($configuredEmbeddingDimension !== $embeddingDimension) {
+                throw new ApiException(sprintf(
+                    'Embedding dimension mismatch: provider returned %d dimensions, but the AI connection is configured for %d.',
+                    $embeddingDimension,
+                    $configuredEmbeddingDimension,
+                ), 1792831008);
+            }
+
+            $message[] =  sprintf(
+                'Embedding test succeeded with %d dimensions.',
+                $embeddingDimension,
+            );
+
         } catch (\Throwable $exception) {
-            $this->setResult(
-                $state,
-                'ai:' . $uid,
-                'error',
-                'Embedding test failed: ' . $exception->getMessage(),
-            );
-            return;
+            $status = 'error';
+            $message[] = 'Embedding test failed.';
         }
 
-        if ($embeddingDimension === 0) {
-            $this->setResult($state, 'ai:' . $uid, 'error', 'AI connection test returned an empty embedding.');
-            return;
-        }
-
-        $configuredEmbeddingDimension = $connection->getEmbeddingDimension();
-        if ($configuredEmbeddingDimension <= 0) {
-            $this->setResult(
-                $state,
-                'ai:' . $uid,
-                'error',
-                'The configured embedding dimension must be greater than zero.',
-                $embeddingDimension,
-            );
-            return;
-        }
-
-        if ($configuredEmbeddingDimension !== $embeddingDimension) {
-            $this->setResult($state, 'ai:' . $uid, 'error', sprintf(
-                'Embedding dimension mismatch: provider returned %d dimensions, but the AI connection is configured for %d.',
-                $embeddingDimension,
-                $configuredEmbeddingDimension,
-            ), $embeddingDimension);
-            return;
-        }
 
         try {
             $chatResponse = $this->connectionHealthChecker->probeAiChat(
                 $connection,
                 'Reply with OK.',
             );
+
             if (trim($chatResponse->getContent()) === '') {
-                $this->setResult($state, 'ai:' . $uid, 'error', sprintf(
-                'Embedding test succeeded with %d dimensions, but the chat test returned an empty response.',
-                    $embeddingDimension,
-                ), $embeddingDimension);
-                return;
+                throw new ApiException('The chat test returned an empty response.', 1792831106);
             }
 
-            $this->setResult(
-                $state,
-                'ai:' . $uid,
-                'ok',
-                sprintf(
-                    'AI connection test succeeded. Embedding: %d dimensions and configuration matches. Chat: response received.',
-                    $embeddingDimension,
-                ),
-                $embeddingDimension,
-            );
+            $message[] = 'hat response successfully received.';
+
         } catch (\Throwable $exception) {
-            $this->setResult($state, 'ai:' . $uid, 'error', sprintf(
-                'Embedding test succeeded with %d dimensions, but the chat test failed: %s',
-                $embeddingDimension,
-                $exception->getMessage(),
-            ), $embeddingDimension);
+            $status = 'error';
+            $message[] = 'Chat test failed.';
         }
+
+        $this->setResult(
+            $state,
+            'ai:' . $uid,
+            $status,
+            implode(" ", $message),
+        );
+        return;
     }
 
 

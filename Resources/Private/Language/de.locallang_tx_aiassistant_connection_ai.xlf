@@ -23,6 +23,34 @@
         <source>Select API key authentication or OAuth 2.0 Client Credentials for this AI provider.</source>
         <target>Wählen Sie für diesen AI-Anbieter die API-Key-Authentifizierung oder OAuth 2.0 Client Credentials.</target>
       </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url" resname="tx_aiassistant_connection_ai.embedding_base_url">
+        <source>Embedding URL</source>
+        <target>Embedding-URL</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url.description" resname="tx_aiassistant_connection_ai.embedding_base_url.description">
+        <source>Complete URL used for embedding requests. Leave empty to use the default OpenAI-compatible embedding path below the base URL.</source>
+        <target>Vollständige URL für Embedding-Anfragen. Leer lassen, um den standardmäßigen OpenAI-kompatiblen Embedding-Pfad unterhalb der Basis-URL zu verwenden.</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url.placeholder" resname="tx_aiassistant_connection_ai.embedding_base_url.placeholder">
+        <source>https://example.org/embedding-endpoint</source>
+        <target>https://example.org/embedding-endpoint</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.base_url_no_extend" resname="tx_aiassistant_connection_ai.base_url_no_extend">
+        <source>Use base URL as-is</source>
+        <target>Basis-URL unverändert verwenden</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.base_url_no_extend.description" resname="tx_aiassistant_connection_ai.base_url_no_extend.description">
+        <source>Do not append the chat resource path to the base URL.</source>
+        <target>Den Chat-Ressourcenpfad nicht an die Basis-URL anhängen.</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url_no_extend" resname="tx_aiassistant_connection_ai.embedding_base_url_no_extend">
+        <source>Use embedding URL as-is</source>
+        <target>Embedding-URL unverändert verwenden</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url_no_extend.description" resname="tx_aiassistant_connection_ai.embedding_base_url_no_extend.description">
+        <source>Do not append the embedding resource path to the embedding URL.</source>
+        <target>Den Embedding-Ressourcenpfad nicht an die Embedding-URL anhängen.</target>
+      </trans-unit>
       <trans-unit id="tx_aiassistant_connection_ai.authentication.api_key" resname="tx_aiassistant_connection_ai.authentication.api_key">
         <source>API Key</source>
         <target>API-Schlüssel</target>
