@@ -39,6 +39,15 @@
       <trans-unit id="tx_aiassistant_connection_ai.embedding_base_url_no_extend.description" resname="tx_aiassistant_connection_ai.embedding_base_url_no_extend.description">
         <source>Do not append the embedding resource path to the embedding URL.</source>
       </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.ignored_parameters" resname="tx_aiassistant_connection_ai.ignored_parameters">
+        <source>Ignored parameters</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.ignored_parameters.description" resname="tx_aiassistant_connection_ai.ignored_parameters.description">
+        <source>Comma-separated request parameters that this provider does not support, for example temperature.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.ignored_parameters.placeholder" resname="tx_aiassistant_connection_ai.ignored_parameters.placeholder">
+        <source>temperature, max_completion_tokens</source>
+      </trans-unit>
       <trans-unit id="tx_aiassistant_connection_ai.authentication.api_key" resname="tx_aiassistant_connection_ai.authentication.api_key">
         <source>API Key</source>
       </trans-unit>

@@ -19,14 +19,14 @@ use Doctrine\DBAL\ParameterType;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
 /**
- * Provides retriever identifiers from the current assistant pipeline.
+ * Provides retriever identifiers for decision payload filters.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>, Maximilian Fäßler <maximilian@faesslerweb.de>
  * @package Madj2k\AiAssistant
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3
  */
-final readonly class IntentSelectionRetrieverItems
+final readonly class DecisionPayloadRetrieverItems
 {
     /**
      * Constructor.

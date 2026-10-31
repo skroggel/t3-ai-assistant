@@ -13,8 +13,8 @@ final class PipelineStepTypeConfiguration
     public static function getTypes(): array
     {
         return [
-            AssistantPipelineProcessorType::QueryOptimizer->value => ['showitem' => self::llmShowItem('context')],
-            AssistantPipelineProcessorType::IntentSelector->value => ['showitem' => self::intentSelectionShowItem()],
+            AssistantPipelineProcessorType::QueryOptimizer->value => ['showitem' => self::llmShowItem('context', false, true)],
+            AssistantPipelineProcessorType::IntentSelector->value => ['showitem' => self::decisionShowItem()],
             AssistantPipelineProcessorType::Retriever->value => ['showitem' => self::retrieverShowItem()],
             AssistantPipelineProcessorType::ContextOptimizer->value => ['showitem' => self::llmShowItem('context')],
             AssistantPipelineProcessorType::AnswerGenerator->value => ['showitem' => self::llmShowItem('contextWithFrontendSources', true)],
@@ -37,7 +37,11 @@ final class PipelineStepTypeConfiguration
         );
     }
 
-    private static function llmShowItem(string $contextPalette, bool $includeUiComponents = false): string
+    private static function llmShowItem(
+        string $contextPalette,
+        bool $includeUiComponents = false,
+        bool $includeDecision = false,
+    ): string
     {
         $showItems = [
             '--palette--;;base',
@@ -58,6 +62,11 @@ final class PipelineStepTypeConfiguration
             $showItems[] = '--palette--;;uiComponents';
         }
 
+        if ($includeDecision) {
+            $showItems[] = '--div--;' . self::LABEL_PREFIX . 'tab_decision';
+            $showItems[] = '--palette--;;decision';
+        }
+
         return implode(', ', $showItems);
     }
 
@@ -72,12 +81,12 @@ final class PipelineStepTypeConfiguration
         ]);
     }
 
-    private static function intentSelectionShowItem(): string
+    private static function decisionShowItem(): string
     {
         return implode(', ', [
             '--palette--;;base',
-            '--div--;' . self::LABEL_PREFIX . 'tab_intent_selection',
-            '--palette--;;intentSelection',
+            '--div--;' . self::LABEL_PREFIX . 'tab_decision',
+            '--palette--;;decision',
             '--div--;' . self::LABEL_PREFIX . 'tab_llm',
             '--palette--;;llm',
             '--div--;' . self::LABEL_PREFIX . 'tab_runtime',

@@ -75,6 +75,13 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
      */
     protected bool $embeddingBaseUrlNoExtend = false;
 
+    /**
+     * Comma-separated provider parameters ignored in outgoing requests.
+     *
+     * @var string
+     */
+    protected string $ignoredParameters = '';
+
 
     /**
      * API key.
@@ -273,6 +280,32 @@ class AiConnection extends AbstractEntity implements AiConnectionConfigurationIn
     public function setEmbeddingBaseUrlNoExtend(bool $embeddingBaseUrlNoExtend): void
     {
         $this->embeddingBaseUrlNoExtend = $embeddingBaseUrlNoExtend;
+    }
+
+    /**
+     * Returns ignored provider parameter names.
+     *
+     * @return array<int,string> Ignored parameter names.
+     */
+    public function getIgnoredParameters(): array
+    {
+        $parameters = preg_split('/[,\r\n]+/', $this->ignoredParameters) ?: [];
+
+        return array_values(array_unique(array_filter(
+            array_map('trim', $parameters),
+            static fn (string $parameter): bool => $parameter !== '',
+        )));
+    }
+
+    /**
+     * Sets ignored provider parameter names.
+     *
+     * @param string $ignoredParameters Comma-separated parameter names.
+     * @return void
+     */
+    public function setIgnoredParameters(string $ignoredParameters): void
+    {
+        $this->ignoredParameters = trim($ignoredParameters);
     }
 
 

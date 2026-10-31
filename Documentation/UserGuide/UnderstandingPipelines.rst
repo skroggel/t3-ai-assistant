@@ -12,8 +12,27 @@ Common step types
 Query optimizer
     Rewrites or clarifies the search query. Before retrieval it uses the current
     query and optional chat history. After retrieval it can also use the first
-    retrieved context to improve the search query. It must return only a search
-    query, never an answer.
+    retrieved context to decide whether a follow-up retrieval is needed. The
+    shared JSON contract is:
+
+    ..  code-block:: json
+
+        {
+            "query": "Which requirements apply to the application?",
+            "retrieval": {
+                "mode": "selected",
+                "targets": ["detail_retrieval"]
+            }
+        }
+
+    Before retrieval, ``query`` rewrites the search query and the retrieval
+    decision normally remains ``all``. After retrieval, one LLM run can decide
+    whether the existing context is sufficient, create a follow-up query and
+    select the next retrievers. ``none`` skips further retrieval, ``selected``
+    limits it to the named targets and ``all`` is the default. The response must
+    use this JSON contract; configuration backwards compatibility does not mean
+    that plain-text responses remain valid. The optimizer never generates the
+    answer.
 
 Retriever
     Searches the vector store and stores retrieved documents in the context.
@@ -36,8 +55,8 @@ Example pipeline
 
     1. Query optimization before retrieval
     2. Retrieval
-    3. Query refinement after retrieval
-    4. Retrieval with refined query
+    3. Query decision after retrieval
+    4. Optional detail retrieval with the follow-up query
     5. Context optimization
     6. Answer generation
     7. Quality gate

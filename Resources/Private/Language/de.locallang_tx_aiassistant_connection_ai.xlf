@@ -51,6 +51,18 @@
         <source>Do not append the embedding resource path to the embedding URL.</source>
         <target>Den Embedding-Ressourcenpfad nicht an die Embedding-URL anhängen.</target>
       </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.ignored_parameters" resname="tx_aiassistant_connection_ai.ignored_parameters">
+        <source>Ignored parameters</source>
+        <target>Ignorierte Parameter</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.ignored_parameters.description" resname="tx_aiassistant_connection_ai.ignored_parameters.description">
+        <source>Comma-separated request parameters that this provider does not support, for example temperature.</source>
+        <target>Kommagetrennte Request-Parameter, die dieser Provider nicht unterstützt, zum Beispiel temperature.</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_connection_ai.ignored_parameters.placeholder" resname="tx_aiassistant_connection_ai.ignored_parameters.placeholder">
+        <source>temperature, max_completion_tokens</source>
+        <target>temperature, max_completion_tokens</target>
+      </trans-unit>
       <trans-unit id="tx_aiassistant_connection_ai.authentication.api_key" resname="tx_aiassistant_connection_ai.authentication.api_key">
         <source>API Key</source>
         <target>API-Schlüssel</target>

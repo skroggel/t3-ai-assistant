@@ -35,8 +35,8 @@ return [
             'showitem' => 'step_identity, --linebreak--, step_behavior_rules, --linebreak--, step_retrieval_rules, --linebreak--, step_output_rules, --linebreak--, --palette--;;presentationRules',
         ],
 
-        'intentSelection' => [
-            'showitem' => 'intent_selection_output_types, --linebreak--, intent_selection_payload_retrievers, --linebreak--, intent_selection_payload_field, --linebreak--, intent_selection_payload_conjunction, --linebreak--, intent_selection_instructions, --linebreak--, intent_selection_metadata',
+        'decision' => [
+            'showitem' => 'decision_contracts, --linebreak--, decision_payload_retrievers, --linebreak--, decision_payload_field, --linebreak--, decision_payload_conjunction, --linebreak--, decision_instructions, --linebreak--, decision_metadata',
         ],
 
         'llm' => [
@@ -120,52 +120,39 @@ return [
                 'placeholder' => 'products',
             ],
         ],
-        'intent_selection_instructions' => [
-            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_instructions',
-            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_instructions.description',
+        'decision_instructions' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_instructions',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_instructions.description',
             'config' => [
                 'type' => 'text',
                 'rows' => 4,
                 'placeholder' => 'If the user intent is a product search, include the retrieval-step with the identifier "products". Otherwise skip it.',
             ],
         ],
-        'intent_selection_metadata' => [
-            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_metadata',
-            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_metadata.description',
+        'decision_metadata' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_metadata',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_metadata.description',
             'config' => [
                 'type' => 'text',
                 'rows' => 6,
                 'placeholder' => '{"primary_intent":{"type":"string"}}',
             ],
         ],
-        'intent_selection_output_types' => [
-            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types',
-            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.description',
+        'decision_contracts' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_contracts',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_contracts.description',
             'onChange' => 'reload',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectCheckBox',
-                'items' => [
-                    [
-                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.retriever',
-                        'value' => 'retriever',
-                    ],
-                    [
-                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.presentation_rules',
-                        'value' => 'presentation_rules',
-                    ],
-                    [
-                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.retriever_payload',
-                        'value' => 'retriever_payload',
-                    ],
-                ],
-                'default' => 'retriever,presentation_rules',
+                'itemsProcFunc' => \Madj2k\AiAssistant\Assistant\TCA\DecisionContractItems::class . '->items',
+                'default' => 'retrieval,presentationRules',
             ],
         ],
-        'intent_selection_payload_field' => [
-            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_field',
-            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_field.description',
-            'displayCond' => 'FIELD:intent_selection_output_types:IN:retriever_payload',
+        'decision_payload_field' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_payload_field',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_payload_field.description',
+            'displayCond' => 'FIELD:decision_contracts:IN:retrieverPayload',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
@@ -173,32 +160,32 @@ return [
                 'placeholder' => 'meta.additional.category_ids',
             ],
         ],
-        'intent_selection_payload_retrievers' => [
-            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_retrievers',
-            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_retrievers.description',
-            'displayCond' => 'FIELD:intent_selection_output_types:IN:retriever_payload',
+        'decision_payload_retrievers' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_payload_retrievers',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_payload_retrievers.description',
+            'displayCond' => 'FIELD:decision_contracts:IN:retrieverPayload',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'itemsProcFunc' => \Madj2k\AiAssistant\Assistant\TCA\IntentSelectionRetrieverItems::class . '->items',
+                'itemsProcFunc' => \Madj2k\AiAssistant\Assistant\TCA\DecisionPayloadRetrieverItems::class . '->items',
                 'size' => 5,
                 'maxitems' => 999,
             ],
         ],
-        'intent_selection_payload_conjunction' => [
-            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction',
-            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.description',
-            'displayCond' => 'FIELD:intent_selection_output_types:IN:retriever_payload',
+        'decision_payload_conjunction' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction.description',
+            'displayCond' => 'FIELD:decision_contracts:IN:retrieverPayload',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     [
-                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.and',
+                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction.and',
                         'value' => 'and',
                     ],
                     [
-                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.or',
+                        'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction.or',
                         'value' => 'or',
                     ],
                 ],
@@ -251,6 +238,7 @@ return [
         'include_output_rules' => [
             'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.include_output_rules',
             'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.include_output_rules.description',
+            'displayCond' => 'FIELD:type:!=:query_optimizer',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
@@ -284,6 +272,7 @@ return [
         'step_output_rules' => [
             'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.step_output_rules',
             'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.step_output_rules.description',
+            'displayCond' => 'FIELD:type:!=:query_optimizer',
             'config' => [
                 'type' => 'text',
                 'rows' => 4,

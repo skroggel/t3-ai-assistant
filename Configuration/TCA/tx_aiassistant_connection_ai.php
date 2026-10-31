@@ -26,7 +26,7 @@ return [
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_ai.xlf:tx_aiassistant_connection_ai.tab_credentials,
                     base_url, base_url_no_extend, embedding_base_url, embedding_base_url_no_extend, authentication, api_key, oauth_token_endpoint, oauth_client_id, oauth_client_secret, oauth_scope, organization, project,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_connection_ai.xlf:tx_aiassistant_connection_ai.tab_defaults,
-                    default_model, default_temperature, embedding_model, embedding_dimension, embedding_temperature, additional_options
+                    default_model, default_temperature, embedding_model, embedding_dimension, embedding_temperature, additional_options, ignored_parameters
             ',
         ]
     ],
@@ -106,6 +106,17 @@ return [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
                 'default' => 0,
+            ],
+        ],
+        'ignored_parameters' => [
+            'label' => $ll . 'tx_aiassistant_connection_ai.ignored_parameters',
+            'description' => $ll . 'tx_aiassistant_connection_ai.ignored_parameters.description',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'max' => 1024,
+                'size' => 60,
+                'placeholder' => $ll . 'tx_aiassistant_connection_ai.ignored_parameters.placeholder',
             ],
         ],
         'authentication' => [
