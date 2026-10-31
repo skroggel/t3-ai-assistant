@@ -189,7 +189,7 @@ final readonly class BackendConnectionTestHandler
 
         } catch (\Throwable $exception) {
             $status = 'error';
-            $message[] = 'Embedding test failed.';
+            $message[] = sprintf('Embedding test failed (%s).', $exception->getMessage());
         }
 
 
@@ -203,7 +203,7 @@ final readonly class BackendConnectionTestHandler
                 throw new ApiException('The chat test returned an empty response.', 1792831106);
             }
 
-            $message[] = 'hat response successfully received.';
+            $message[] = 'Chat response successfully received.';
 
         } catch (\Throwable $exception) {
             $status = 'error';

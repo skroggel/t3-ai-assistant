@@ -21,7 +21,6 @@ use Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface;
 use Madj2k\AiCore\Assistant\Enum\HistoryMode;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineFailureStrategy;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineStage;
-use Madj2k\AiCore\Assistant\Enum\IntentSelectionOutputType;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorFilterCondition;
 use Madj2k\AiCore\Connection\Configuration\VectorStoreConnectionConfigurationInterface;
@@ -90,28 +89,42 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
     protected string $intentSelectionOutputTypes = '';
 
     /**
+     * Generic response contract identifiers stored as comma-separated values.
+     *
+     * @var string
+     */
+    protected string $contracts = '';
+
+    /**
+     * Primary response contract identifier.
+     *
+     * @var string
+     */
+    protected string $decisionContracts = '';
+
+    /**
      * Payload field path used by the intent selector filter.
      *
      * @var string
      */
-    protected string $intentSelectionPayloadField = '';
+    protected string $decisionPayloadField = '';
 
     /**
      * Retriever identifiers targeted by the dynamic payload filter.
      *
      * @var string
      */
-    protected string $intentSelectionPayloadRetrievers = '';
+    protected string $decisionPayloadRetrievers = '';
 
     /**
      * Conjunction used for multiple dynamic payload values.
      *
      * @var string
      */
-    protected string $intentSelectionPayloadConjunction = 'and';
+    protected string $decisionPayloadConjunction = 'and';
 
-    protected string $intentSelectionInstructions = '';
-    protected string $intentSelectionMetadata = '';
+    protected string $decisionInstructions = '';
+    protected string $decisionMetadata = '';
 
 
     /**
@@ -456,28 +469,27 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      *
      * Empty legacy values resolve to retriever and presentation rules.
      *
-     * @return array<int,\Madj2k\AiCore\Assistant\Enum\IntentSelectionOutputType> Output areas.
+     * @return array<int,string> Legacy output identifiers.
      */
     public function getIntentSelectionOutputTypes(): array
     {
         $value = trim($this->intentSelectionOutputTypes);
         if ($value === '') {
             return [
-                IntentSelectionOutputType::Retriever,
-                IntentSelectionOutputType::PresentationRules,
+                'retriever',
+                'presentation_rules',
             ];
         }
 
         $types = [];
         foreach (preg_split('/[,\r\n]+/', $value) ?: [] as $item) {
-            try {
-                $types[] = IntentSelectionOutputType::from(trim($item));
-            } catch (\ValueError) {
-                continue;
-            }
+            $types[] = trim($item);
         }
 
-        return array_values(array_unique($types, SORT_REGULAR));
+        return array_values(array_unique(array_filter(
+            $types,
+            static fn (string $type): bool => $type !== '',
+        )));
     }
 
     /**
@@ -492,13 +504,89 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
     }
 
     /**
+     * Returns configured response contracts with legacy fallback.
+     *
+     * @return array<int,string> Contract identifiers.
+     */
+    public function getContracts(): array
+    {
+        $contracts = $this->parseContractList($this->contracts);
+        if ($contracts !== []) {
+            return $contracts;
+        }
+
+        return array_values(array_filter(array_map(
+            static fn (string $type): string => match ($type) {
+                'retriever' => 'retrieval',
+                'presentation_rules' => 'presentationRules',
+                'retriever_payload' => 'retrieverPayload',
+                default => '',
+            },
+            $this->getIntentSelectionOutputTypes(),
+        )));
+    }
+
+    /**
+     * Sets response contract identifiers.
+     *
+     * @param string $contracts Comma-separated contract identifiers.
+     * @return void
+     */
+    public function setContracts(string $contracts): void
+    {
+        $this->contracts = trim($contracts);
+    }
+
+    /**
+     * Returns the explicitly selected primary response contract.
+     *
+     * @return string Contract identifier or an empty string for automatic resolution.
+     */
+    public function getDecisionContracts(): array
+    {
+        $contracts = preg_split('/[,\r\n]+/', $this->decisionContracts) ?: [];
+
+        return array_values(array_unique(array_filter(
+            array_map('trim', $contracts),
+            static fn (string $contract): bool => $contract !== '',
+        )));
+    }
+
+    /**
+     * Sets the primary response contract identifier.
+     *
+     * @param string $decisionContracts Contract identifiers.
+     * @return void
+     */
+    public function setDecisionContracts(string $decisionContracts): void
+    {
+        $this->decisionContracts = trim($decisionContracts);
+    }
+
+    /**
+     * Parses a comma- or line-separated contract list.
+     *
+     * @param string $value Contract list.
+     * @return array<int,string> Contract identifiers.
+     */
+    private function parseContractList(string $value): array
+    {
+        $contracts = preg_split('/[,\r\n]+/', trim($value)) ?: [];
+
+        return array_values(array_unique(array_filter(
+            array_map('trim', $contracts),
+            static fn (string $contract): bool => $contract !== '',
+        )));
+    }
+
+    /**
      * Returns the dynamic retriever payload field path.
      *
      * @return string Payload field path.
      */
-    public function getIntentSelectionPayloadField(): string
+    public function getDecisionPayloadField(): string
     {
-        return trim($this->intentSelectionPayloadField);
+        return trim($this->decisionPayloadField);
     }
 
     /**
@@ -507,9 +595,9 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      * @param string $value Payload field path.
      * @return void
      */
-    public function setIntentSelectionPayloadField(string $value): void
+    public function setDecisionPayloadField(string $value): void
     {
-        $this->intentSelectionPayloadField = trim($value);
+        $this->decisionPayloadField = trim($value);
     }
 
     /**
@@ -519,9 +607,9 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      *
      * @return array<int,string> Retriever identifiers.
      */
-    public function getIntentSelectionPayloadRetrievers(): array
+    public function getDecisionPayloadRetrievers(): array
     {
-        $identifiers = preg_split('/[,\r\n]+/', $this->intentSelectionPayloadRetrievers) ?: [];
+        $identifiers = preg_split('/[,\r\n]+/', $this->decisionPayloadRetrievers) ?: [];
         $identifiers = array_map('trim', $identifiers);
 
         return array_values(array_unique(array_filter(
@@ -536,9 +624,9 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      * @param string $value Comma-separated retriever identifiers.
      * @return void
      */
-    public function setIntentSelectionPayloadRetrievers(string $value): void
+    public function setDecisionPayloadRetrievers(string $value): void
     {
-        $this->intentSelectionPayloadRetrievers = trim($value);
+        $this->decisionPayloadRetrievers = trim($value);
     }
 
     /**
@@ -546,9 +634,9 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      *
      * @return \Madj2k\AiCore\Connection\VectorStore\Filter\DTO\FilterConjunction Value conjunction.
      */
-    public function getIntentSelectionPayloadConjunction(): FilterConjunction
+    public function getDecisionPayloadConjunction(): FilterConjunction
     {
-        return FilterConjunction::tryFrom(trim($this->intentSelectionPayloadConjunction))
+        return FilterConjunction::tryFrom(trim($this->decisionPayloadConjunction))
             ?? FilterConjunction::And;
     }
 
@@ -558,9 +646,9 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      * @param string $value Conjunction value.
      * @return void
      */
-    public function setIntentSelectionPayloadConjunction(string $value): void
+    public function setDecisionPayloadConjunction(string $value): void
     {
-        $this->intentSelectionPayloadConjunction = FilterConjunction::tryFrom(trim($value))?->value
+        $this->decisionPayloadConjunction = FilterConjunction::tryFrom(trim($value))?->value
             ?? FilterConjunction::And->value;
     }
 
@@ -569,9 +657,9 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      *
      * @return string Additional instructions.
      */
-    public function getIntentSelectionInstructions(): string
+    public function getDecisionInstructions(): string
     {
-        return trim($this->intentSelectionInstructions);
+        return trim($this->decisionInstructions);
     }
 
     /**
@@ -580,9 +668,9 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      * @param string $value Additional instructions.
      * @return void
      */
-    public function setIntentSelectionInstructions(string $value): void
+    public function setDecisionInstructions(string $value): void
     {
-        $this->intentSelectionInstructions = $value;
+        $this->decisionInstructions = $value;
     }
 
     /**
@@ -590,9 +678,9 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      *
      * @return string Metadata schema.
      */
-    public function getIntentSelectionMetadata(): string
+    public function getDecisionMetadata(): string
     {
-        return trim($this->intentSelectionMetadata);
+        return trim($this->decisionMetadata);
     }
 
     /**
@@ -601,9 +689,9 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      * @param string $value Metadata schema.
      * @return void
      */
-    public function setIntentSelectionMetadata(string $value): void
+    public function setDecisionMetadata(string $value): void
     {
-        $this->intentSelectionMetadata = $value;
+        $this->decisionMetadata = $value;
     }
 
     /**

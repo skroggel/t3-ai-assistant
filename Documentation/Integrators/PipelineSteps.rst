@@ -49,8 +49,41 @@ Intent selector settings
     conjunction can be ``and`` or ``or`` and is applied by the server, not by
     the AI.
 
+Post-retrieval query optimization
+    A ``query_optimizer`` step may be placed after retrieval. In that position
+    it receives the current retrieval context and returns the shared decision
+    contract:
+
+    ..  code-block:: json
+
+        {
+            "query": "Which requirements apply to the application?",
+            "retrieval": {
+                "mode": "selected",
+                "targets": ["detail_retrieval"]
+            }
+        }
+
+    ``none`` skips subsequent retrieval, ``selected`` runs only the named
+    retriever steps and ``all`` remains the default. This combines the decision
+    whether further information is needed with the follow-up query in one LLM
+    run.
+
 Failure strategy
     Defines how the pipeline reacts if the step fails.
+
+Response contract
+    LLM steps resolve a response contract through the registered contract
+    services. The default contract produces plain text. ``intent_selector`` and
+    ``query_optimizer`` use the decision contract, whose parts define retrieval
+    selection, presentation-rule selection and optional retriever-payload
+    values.
+
+    The same contract supplies the prompt instructions and parses the response.
+    A step can explicitly select its decision contract through the contract
+    field; otherwise the registry selects the contract supporting the processor
+    type. Decision contracts use ``all``, ``selected``, ``all_except`` and
+    ``none``. For ``all`` and ``none``, the target list must be empty.
 
 Step prompt placement
 ---------------------

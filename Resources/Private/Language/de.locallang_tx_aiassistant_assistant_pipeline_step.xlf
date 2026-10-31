@@ -407,6 +407,14 @@
         <source>Intent selector outputs</source>
         <target>Ausgaben der Intent-Auswahl</target>
       </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_contracts" resname="tx_aiassistant_assistant_pipeline_step.decision_contracts">
+        <source>Decision contracts</source>
+        <target>Ablaufsteuerung</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_contracts.description" resname="tx_aiassistant_assistant_pipeline_step.decision_contracts.description">
+        <source>Select the decision contract parts used by this step.</source>
+        <target>Die für diesen Schritt verwendeten Ablaufsteuerungen auswählen.</target>
+      </trans-unit>
       <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.description" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_output_types.description">
         <source>Select which areas the intent selector may control.</source>
         <target>Legt fest, welche Bereiche die Intent-Auswahl steuern darf.</target>
@@ -423,35 +431,35 @@
         <source>Retriever payload filter</source>
         <target>Retriever-Payload-Filter</target>
       </trans-unit>
-      <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_field" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_field">
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_payload_field" resname="tx_aiassistant_assistant_pipeline_step.decision_payload_field">
         <source>Retriever payload field</source>
         <target>Retriever-Payload-Feld</target>
       </trans-unit>
-      <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_retrievers" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_retrievers">
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_payload_retrievers" resname="tx_aiassistant_assistant_pipeline_step.decision_payload_retrievers">
         <source>Payload filter retrievers</source>
         <target>Retriever für Payload-Filter</target>
       </trans-unit>
-      <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_retrievers.description" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_retrievers.description">
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_payload_retrievers.description" resname="tx_aiassistant_assistant_pipeline_step.decision_payload_retrievers.description">
         <source>Limit the dynamic payload filter to selected retriever steps. Leave empty to apply it to all retrievers.</source>
         <target>Begrenzt den dynamischen Payload-Filter auf ausgewählte Retriever-Schritte. Leer lassen, um ihn auf alle Retriever anzuwenden.</target>
       </trans-unit>
-      <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_field.description" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_field.description">
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_payload_field.description" resname="tx_aiassistant_assistant_pipeline_step.decision_payload_field.description">
         <source>Dot-notated payload path used for dynamic filtering, for example meta.additional.category_ids.</source>
         <target>Per Punktnotation angegebener Payload-Pfad für dynamische Filter, zum Beispiel meta.additional.category_ids.</target>
       </trans-unit>
-      <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction">
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction" resname="tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction">
         <source>Payload value conjunction</source>
         <target>Verknüpfung der Payload-Werte</target>
       </trans-unit>
-      <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.description" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.description">
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction.description" resname="tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction.description">
         <source>Choose whether multiple values returned in retrieverPayload.values must all match or whether one matching value is sufficient.</source>
         <target>Legt fest, ob mehrere in retrieverPayload.values gelieferte Werte alle übereinstimmen müssen oder ein passender Wert genügt.</target>
       </trans-unit>
-      <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.and" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.and">
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction.and" resname="tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction.and">
         <source>All values (AND)</source>
         <target>Alle Werte (UND)</target>
       </trans-unit>
-      <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.or" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_payload_conjunction.or">
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction.or" resname="tx_aiassistant_assistant_pipeline_step.decision_payload_conjunction.or">
         <source>Any value (OR)</source>
         <target>Beliebiger Wert (ODER)</target>
       </trans-unit>
@@ -470,6 +478,26 @@
       <trans-unit id="tx_aiassistant_assistant_pipeline_step.intent_selection_metadata.description" resname="tx_aiassistant_assistant_pipeline_step.intent_selection_metadata.description">
         <source>Optional metadata fields returned inside the fixed metadata object.</source>
         <target>Optionale Metadatenfelder, die innerhalb des festen Metadata-Objekts zurückgegeben werden.</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.tab_decision" resname="tx_aiassistant_assistant_pipeline_step.tab_decision">
+        <source>Decision</source>
+        <target>Ablaufsteuerung</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_instructions" resname="tx_aiassistant_assistant_pipeline_step.decision_instructions">
+        <source>Decision instructions</source>
+        <target>Anweisungen für die Ablaufsteuerung</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_instructions.description" resname="tx_aiassistant_assistant_pipeline_step.decision_instructions.description">
+        <source>Additional instructions for the decision contract.</source>
+        <target>Zusätzliche Anweisungen für die Ablaufsteuerung.</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_metadata" resname="tx_aiassistant_assistant_pipeline_step.decision_metadata">
+        <source>Decision metadata schema (JSON)</source>
+        <target>Metadaten-Schema für die Ablaufsteuerung (JSON)</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.decision_metadata.description" resname="tx_aiassistant_assistant_pipeline_step.decision_metadata.description">
+        <source>Additional decision data is returned in the JSON metadata property.</source>
+        <target>Zusätzliche Entscheidungsdaten werden im JSON-Feld metadata zurückgegeben.</target>
       </trans-unit>
     </body>
   </file>

@@ -14,6 +14,9 @@ services:
       - '../Classes/Domain/Model/*'
       - '../Classes/Indexing/Domain/Model/*'
 
+  Madj2k\AiCore\:
+    resource: '../../ai-core/src/*'
+
   # set public explictily
   Madj2k\AiAssistant\Assistant\TCA\PipelineCollectionItems:
     public: true
@@ -21,12 +24,20 @@ services:
   Madj2k\AiAssistant\Assistant\TCA\PipelineProcessorItems:
     public: true
 
-  Madj2k\AiAssistant\Assistant\TCA\IntentSelectionRetrieverItems:
+  Madj2k\AiAssistant\Assistant\TCA\ContractItems:
+    public: true
+
+  Madj2k\AiAssistant\Assistant\TCA\DecisionContractItems:
+    public: true
+    arguments:
+      $contracts: !tagged_iterator 'aiassistant.assistant.contract.decision_contract'
+
+  Madj2k\AiAssistant\Assistant\TCA\DecisionPayloadRetrieverItems:
     public: true
 
   Madj2k\AiAssistant\Controller\:
-    public: true
     resource: '../Classes/Controller/*'
+    public: true
 
   Madj2k\AiAssistant\Connection\TCA\AiConnectorItems:
     public: true
@@ -61,6 +72,14 @@ services:
 
   # define interfaces that act as tags
   _instanceof:
+    Madj2k\AiCore\Assistant\Contract\ContractInterface:
+      tags:
+        - name: 'aiassistant.assistant.contract'
+
+    Madj2k\AiCore\Assistant\Contract\DecisionContract\DecisionContractInterface:
+      tags:
+        - name: 'aiassistant.assistant.contract.decision_contract'
+
     Madj2k\AiCore\Assistant\Pipeline\Processor\ProcessorInterface:
       tags:
         - name: 'aiassistant.assistant.pipeline.processor'
@@ -104,7 +123,7 @@ services:
         command: 'aiassistant:index:pages'
 
   # Aliasesfor autowireing
-  Madj2k\AiCore\Assistant\Context\Retrieval\RetrievalTargetProviderInterface:
+  Madj2k\AiCore\Assistant\Retrieval\RetrievalTargetProviderInterface:
     alias: Madj2k\AiAssistant\Assistant\Retrieval\Provider
 
   Madj2k\AiCore\Assistant\Log\PipelineLoggerInterface:
@@ -131,6 +150,14 @@ services:
       $fieldContributors: !tagged_iterator 'aiassistant.backend.configuration.registry_field_contributor'
 
   # registries for services
+  Madj2k\AiCore\Assistant\Contract\ContractRegistry:
+    arguments:
+      $contracts: !tagged_iterator 'aiassistant.assistant.contract'
+
+  Madj2k\AiCore\Assistant\Contract\DecisionContract:
+    arguments:
+      $parts: !tagged_iterator 'aiassistant.assistant.contract.decision_contract'
+
   Madj2k\AiCore\Assistant\Pipeline\Registry\ProcessorRegistry:
     arguments:
       $processors: !tagged_iterator 'aiassistant.assistant.pipeline.processor'
@@ -167,47 +194,3 @@ services:
   # factories
   Madj2k\AiCore\Assistant\Memory\SessionMemory:
     factory: ['@Madj2k\AiAssistant\Assistant\Memory\MemoryFactory', 'create']
-
-  # Simple services (~) are intentionally defined last.
-  Madj2k\AiAssistant\Assistant\Presentation\Rules\PresentationRuleProvider: ~
-  Madj2k\AiAssistant\Assistant\Presentation\UIComponents\UIComponentProvider: ~
-  Madj2k\AiAssistant\Assistant\Retrieval\Provider: ~
-  Madj2k\AiAssistant\Connection\VectorStore\Filter\TYPO3FilterValueResolver: ~
-  Madj2k\AiCore\Assistant\Application\Orchestrator: ~
-  Madj2k\AiCore\Assistant\Context\Assistant\AssistantContextFactory: ~
-  Madj2k\AiCore\Assistant\Context\ContextFactory: ~
-  Madj2k\AiCore\Assistant\Context\Retrieval\AnswerContextBuilder: ~
-  Madj2k\AiCore\Assistant\Export\PipelineMarkdownExporter: ~
-  Madj2k\AiCore\Assistant\Memory\PhpSessionStore: ~
-  Madj2k\AiCore\Assistant\Pipeline\Pipeline: ~
-  Madj2k\AiCore\Assistant\Pipeline\PipelineValidator: ~
-  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\AnswerGeneratorProcessor: ~
-  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\ContextOptimizerProcessor: ~
-  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\IntentSelectionProcessor: ~
-  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\QualityGateProcessor: ~
-  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\QueryOptimizerProcessor: ~
-  Madj2k\AiCore\Assistant\Pipeline\Processor\Llm\ToolCallingProcessor: ~
-  Madj2k\AiCore\Assistant\Pipeline\Processor\Retrieval\RetrievalReadProcessor: ~
-  Madj2k\AiCore\Assistant\Pipeline\Processor\Retrieval\RetrievalWriteProcessor: ~
-  Madj2k\AiCore\Assistant\Pipeline\Processor\Retrieval\RetrieverProcessor: ~
-  Madj2k\AiCore\Assistant\Presentation\UIComponents\Defaults\Provider: ~
-  Madj2k\AiCore\Assistant\Prompt\Context\Builder\AnswerCandidateContextBuilder: ~
-  Madj2k\AiCore\Assistant\Prompt\Context\Builder\IntentSelectionContextBuilder: ~
-  Madj2k\AiCore\Assistant\Prompt\Context\Builder\PresentationRuleBuilder: ~
-  Madj2k\AiCore\Assistant\Prompt\Context\Builder\QueryContextBuilder: ~
-  Madj2k\AiCore\Assistant\Prompt\Context\Builder\RetrievalContextBuilder: ~
-  Madj2k\AiCore\Assistant\Prompt\Context\Builder\RetrievalPlanContextBuilder: ~
-  Madj2k\AiCore\Assistant\Prompt\Context\Builder\UIComponentsContextBuilder: ~
-  Madj2k\AiCore\Assistant\Prompt\Context\Formatter: ~
-  Madj2k\AiCore\Assistant\Prompt\PromptBuilder: ~
-  Madj2k\AiCore\Assistant\Tool\Execution\ToolCallingService: ~
-  Madj2k\AiCore\Connection\Ai\GeminiConnector: ~
-  Madj2k\AiCore\Connection\Ai\OpenAiConnector: ~
-  Madj2k\AiCore\Connection\Health\ConnectionHealthChecker: ~
-  Madj2k\AiCore\Connection\VectorStore\QdrantVectorStoreConnector: ~
-  Madj2k\AiCore\Indexing\Adapter\JsonAdapter: ~
-  Madj2k\AiCore\Indexing\Adapter\MarkdownAdapter: ~
-  Madj2k\AiCore\Indexing\Adapter\PlainAdapter: ~
-  Madj2k\AiCore\Indexing\Identity\SourceIdentityGenerator: ~
-  Madj2k\AiCore\Indexing\TextChunker: ~
-  Madj2k\AiCore\Indexing\VectorDocumentIndexer: ~

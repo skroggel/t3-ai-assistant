@@ -7,7 +7,7 @@ use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiCore\Assistant\Configuration\PipelineStepConfigurationInterface;
 use Madj2k\AiCore\Assistant\Context\Context;
 use Madj2k\AiCore\Assistant\Context\Retrieval\RetrievalTarget;
-use Madj2k\AiCore\Assistant\Context\Retrieval\RetrievalTargetProviderInterface;
+use Madj2k\AiCore\Assistant\Retrieval\RetrievalTargetProviderInterface;
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
 
 /**
