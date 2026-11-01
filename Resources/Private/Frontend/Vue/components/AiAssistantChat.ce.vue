@@ -50,6 +50,9 @@
                 :user-label="labels.userLabel"
                 :assistant-name="labels.assistantName"
                 :number-of-loading-dots="numberOfLoadingDots"
+                :loading-html="loadingHtml"
+                :loading-messages="loadingMessages"
+                :loading-messages-timeout="loadingMessagesTimeout"
             />
 
             <ChatStatus :status="statusMessage" />
@@ -76,7 +79,9 @@ import LanguageSelector from './LanguageSelector.vue';
 
 /**
  * @typedef {Object} AiAssistantChatProps
- * @property {string} endpoint SSE chat endpoint.
+ * @property {string} endpoint Chat endpoint.
+ * @property {boolean|string|number} streamResponse Whether to stream the response.
+ * @property {string} parameterPrefix Extbase request parameter namespace.
  * @property {string|number} assistantProfile Assistant profile uid.
  * @property {string} chatIdentifier Conversation identifier.
  * @property {string} requestToken Signed frontend request token.
@@ -92,6 +97,9 @@ import LanguageSelector from './LanguageSelector.vue';
  * @property {number|string} responseMessageDelay Delay in milliseconds between streamed response updates.
  * @property {number|string} renderLagCharacters Number of streamed characters kept ahead of the visual renderer.
  * @property {number|string} renderChunkCharacters Number of characters rendered per visual catch-up step.
+ * @property {string} loadingHtml Optional HTML shown while the assistant is typing.
+ * @property {Array|string} loadingMessages Optional rotating loading messages.
+ * @property {number|string} loadingMessagesTimeout Delay between loading messages in milliseconds.
  * @property {boolean|string|number} requireConsent Whether consent is required. Accepts boolean values and 0/1 strings or numbers.
  * @property {boolean|string|number} plainLanguage Whether plain-language mode is enabled. Accepts boolean values and 0/1 strings or numbers.
  * @property {number|string} numberOfLoadingDots Number of dots shown while the assistant is generating a response.
@@ -108,6 +116,8 @@ import LanguageSelector from './LanguageSelector.vue';
 const props = defineProps({
     // Request identity.
     endpoint: { type: String, default: '' },
+    streamResponse: { type: [String, Number, Boolean], default: true },
+    parameterPrefix: { type: String, default: 'tx_aiassistant_chat' },
     assistantProfile: { type: [String, Number], default: 0 },
     chatIdentifier: { type: String, default: '' },
     requestToken: { type: String, default: '' },
@@ -127,6 +137,9 @@ const props = defineProps({
     responseMessageDelay: { type: [String, Number], default: 14 },
     renderLagCharacters: { type: [String, Number], default: 300 },
     renderChunkCharacters: { type: [String, Number], default: 15 },
+    loadingHtml: { type: String, default: '' },
+    loadingMessages: { type: [Array, String], default: () => [] },
+    loadingMessagesTimeout: { type: [String, Number], default: 3000 },
     requireConsent: { type: [String, Number, Boolean], default: false },
     plainLanguage: { type: [String, Number, Boolean], default: false },
     numberOfLoadingDots: { type: [Number], default: 3 },
@@ -157,22 +170,32 @@ try {
     chatOptions = {};
 }
 
+/** @type {number} number of loading dots */
+const configuredLoadingDots = Number(chatOptions.numberOfLoadingDots ?? props.numberOfLoadingDots);
 const numberOfLoadingDots = Math.max(
-    1,
-    Math.min(10, Number(chatOptions.numberOfLoadingDots ?? props.numberOfLoadingDots) || 3),
+    0,
+    Math.min(10, Number.isFinite(configuredLoadingDots) ? configuredLoadingDots : 3),
 );
+
+/** @type {number} number of initialMessageDelay */
 const initialMessageDelay = Math.max(
     0,
     Math.min(500, Number(chatOptions.initialMessageDelay ?? props.initialMessageDelay) || 0),
 );
+
+/** @type {number} number of responseMessageDelay */
 const responseMessageDelay = Math.max(
     0,
     Math.min(500, Number(chatOptions.responseMessageDelay ?? props.responseMessageDelay) || 0),
 );
+
+/** @type {number} number of renderLagCharacters */
 const renderLagCharacters = Math.max(
     0,
     Number(chatOptions.renderLagCharacters ?? props.renderLagCharacters) || 0,
 );
+
+/** @type {number} number of renderChunkCharacters */
 const renderChunkCharacters = Math.max(
     1,
     Math.min(500, Number(chatOptions.renderChunkCharacters ?? props.renderChunkCharacters) || 15),
@@ -196,6 +219,10 @@ try {
     uiComponents = [];
 }
 
+/**
+ * build object with identifier as key from array
+ * @type {{[p: string]: Record<string, *>}}
+ */
 const componentDefinitions = Object.fromEntries(
     uiComponents
         .filter((definition) => definition && typeof definition.identifier === 'string')
@@ -230,7 +257,7 @@ const effectiveResponseLanguage = props.responseLanguage || chatOptions.language
 const effectiveLanguageCode = props.languageCode || chatOptions.language?.languageCode || '';
 
 /** @type {string} Extbase plugin parameter namespace. */
-const parameterPrefix = 'tx_aiassistant_chat';
+const parameterPrefix = props.parameterPrefix || 'tx_aiassistant_chat';
 
 /** @type {import('vue').ComputedRef<boolean>} */
 const requireConsent = computed(() => toBoolean(props.requireConsent));
@@ -240,6 +267,28 @@ const showLanguageSelector = computed(() => toBoolean(props.showLanguageSelector
 
 /** @type {import('vue').ComputedRef<boolean>} */
 const plainLanguage = computed(() => toBoolean(props.plainLanguage) || toBoolean(accessibilityOptions.plainLanguage));
+
+/** @type {import('vue').ComputedRef<boolean>} */
+const streamResponse = computed(() => toBoolean(props.streamResponse));
+
+/** @type {import('vue').ComputedRef<string>} */
+const loadingHtml = computed(() => props.loadingHtml || chatOptions.loadingHtml || '');
+
+/** @type {import('vue').ComputedRef<Array|string>} */
+const loadingMessages = computed(() => {
+    if (Array.isArray(props.loadingMessages) && props.loadingMessages.length > 0) {
+        return props.loadingMessages;
+    }
+    if (typeof props.loadingMessages === 'string' && props.loadingMessages.trim() !== '') {
+        return props.loadingMessages;
+    }
+    return chatOptions.loadingMessages || [];
+});
+
+/** @type {import('vue').ComputedRef<number|string>} */
+const loadingMessagesTimeout = computed(() => (
+    chatOptions.loadingMessagesTimeout ?? props.loadingMessagesTimeout
+));
 
 /** @type {import('vue').Ref<Array<Record<string, any>>>} */
 const messages = ref([]);
@@ -343,6 +392,17 @@ const normalizeCssClass = (value) => String(value || '')
     .join(' ');
 
 /**
+ * Validates a configured custom element name.
+ *
+ * @param {unknown} value Configured element name.
+ * @return {string} Valid custom element name or an empty string.
+ */
+const normalizeCustomElementName = (value) => {
+    const elementName = String(value || '').trim().toLowerCase();
+    return /^[a-z][a-z0-9]*-[a-z0-9-]+$/.test(elementName) ? elementName : '';
+};
+
+/**
  * Resolves a dot-separated value from component or context data.
  *
  * @param {Record<string, any>} values Values.
@@ -431,7 +491,10 @@ const renderComponent = (block) => {
     };
     const html = sanitizeComponentTemplate(interpolateTemplate(definition.template, values));
     const cssClass = normalizeCssClass(definition.cssClass);
-    const tag = definition.renderMode === 'inline' ? 'span' : 'div';
+    const customElement = definition.renderMode === 'customElement'
+        ? normalizeCustomElementName(definition.elementName)
+        : '';
+    const tag = customElement || (definition.renderMode === 'inline' ? 'span' : 'div');
     return `<${tag} class="ai-ui-component${cssClass ? ` ${escapeHtml(cssClass)}` : ''}" data-ai-component="${escapeHtml(block.identifier)}" data-ai-component-id="${escapeHtml(block.id)}" data-ai-component-data="${escapeHtml(JSON.stringify(values))}">${html}</${tag}>`;
 };
 
@@ -692,16 +755,31 @@ const send = async (query, directInteraction = '', options = {}) => {
             }
         };
 
-        await transport.streamSse(props.endpoint, formData, async (content) => {
-            answer = content;
-            await renderSnapshot();
-        }, {
-            signal: abortController.signal,
-            method: requestOptions.method || 'POST',
-            accept: requestOptions.accept || 'text/event-stream',
-            credentials: requestOptions.credentials || 'same-origin',
-        });
-        await renderSnapshot(true);
+        if (streamResponse.value) {
+            await transport.streamSse(props.endpoint, formData, async (content) => {
+                answer = content;
+                await renderSnapshot();
+            }, {
+                signal: abortController.signal,
+                method: requestOptions.method || 'POST',
+                accept: requestOptions.accept || 'text/event-stream',
+                credentials: requestOptions.credentials || 'same-origin',
+            });
+        } else {
+            const payload = await transport.requestJson(props.endpoint, formData, {
+                signal: abortController.signal,
+                method: requestOptions.method || 'POST',
+                accept: requestOptions.accept || 'application/json',
+                credentials: requestOptions.credentials || 'same-origin',
+            });
+            answer = typeof payload.answer === 'string' ? payload.answer : '';
+            renderedAnswer = answer;
+            messages.value[messageIndex].html = renderResponse(answer);
+            await nextTick();
+        }
+        if (streamResponse.value) {
+            await renderSnapshot(true);
+        }
         messages.value[messageIndex].typing = false;
     } catch (error) {
         messages.value[messageIndex].typing = false;

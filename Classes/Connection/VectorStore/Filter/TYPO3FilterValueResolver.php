@@ -24,7 +24,8 @@ use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
  *
  * Resolves TYPO3 frontend filter placeholders.
  *
- * Supported placeholders include `###FE_LANG###` for the current ISO language code.
+ * Supported placeholders include `###FE_LANG###` for the current ISO language
+ * code and `###FE_LANG_UID###` for the current TYPO3 language uid.
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @author Maximilian Fäßler <maximilian@faesslerweb.de>
@@ -46,11 +47,12 @@ final class TYPO3FilterValueResolver implements FilterValueResolverInterface
         }
 
         $languageCode = $this->resolveLanguageCode($context);
+        $languageId = $this->resolveLanguageId($context);
         $conditions = array_map(
-            static fn (FilterCondition $condition): FilterCondition => new FilterCondition(
+            fn (FilterCondition $condition): FilterCondition => new FilterCondition(
                 $condition->field,
                 $condition->operator,
-                $this->replaceValue($condition->value, $languageCode),
+                $this->replaceValue($condition->value, $languageCode, $languageId),
             ),
             $filter->conditions,
         );
@@ -58,14 +60,21 @@ final class TYPO3FilterValueResolver implements FilterValueResolverInterface
         return new FilterGroup($filter->conjunction, $conditions);
     }
 
-    private function replaceValue(mixed $value, string $languageCode): mixed
+    private function replaceValue(mixed $value, string $languageCode, int $languageId): mixed
     {
         if (is_array($value)) {
-            return array_map(fn (mixed $item): mixed => $this->replaceValue($item, $languageCode), $value);
+            return array_map(
+                fn (mixed $item): mixed => $this->replaceValue($item, $languageCode, $languageId),
+                $value,
+            );
         }
 
         return is_string($value)
-            ? str_replace('###FE_LANG###', $languageCode, $value)
+            ? str_replace(
+                ['###FE_LANG###', '###FE_LANG_UID###'],
+                [$languageCode, (string)$languageId],
+                $value,
+            )
             : $value;
     }
 
@@ -81,5 +90,19 @@ final class TYPO3FilterValueResolver implements FilterValueResolverInterface
         }
 
         return $language->getLocale()->getLanguageCode();
+    }
+
+    /**
+     * @param \Madj2k\AiCore\Assistant\Context\Context $context
+     * @return int
+     */
+    private function resolveLanguageId(Context $context): int
+    {
+        $language = $context->getRequest()->getServerRequest()?->getAttribute('language');
+        if (!$language instanceof SiteLanguage) {
+            return 0;
+        }
+
+        return $language->getLanguageId();
     }
 }

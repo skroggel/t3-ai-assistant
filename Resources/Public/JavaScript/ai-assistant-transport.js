@@ -65,6 +65,7 @@ class AiAssistantTransport {
             method: options.method || this.options.method,
             body: formData,
             credentials: options.credentials || this.options.credentials,
+            signal: options.signal,
             headers: {
                 Accept: options.accept || this.options.jsonAccept,
                 'X-Requested-With': 'XMLHttpRequest',

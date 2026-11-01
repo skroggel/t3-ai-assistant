@@ -124,6 +124,10 @@ final readonly class UIComponentProvider implements UIComponentProviderInterface
                 $this->splitList($record->getPlaceholders()),
                 $record->getCssClass(),
                 $record->getTitle(),
+                $record->getRenderMode(),
+                '',
+                '',
+                $record->getElementName(),
             );
         } else {
             $definition = $preset === 'buttons'

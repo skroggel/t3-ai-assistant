@@ -1324,11 +1324,13 @@ class AiAssistantChatBox {
                 defaultEventName: this.options.defaultEventName,
                 doneEventName: this.options.doneEventName,
             });
-            const response = await transport.streamSse(this.streamUrl, formData, (content) => {
-                this.renderPlainMessageContent(message, content);
-                message.classList.add(this.options.classes.typing);
-                this.scrollMessageIntoView(message);
-            });
+            const response = this.options.streamResponse === false
+                ? (await transport.requestJson(this.streamUrl, formData)).answer || ''
+                : await transport.streamSse(this.streamUrl, formData, (content) => {
+                    this.renderPlainMessageContent(message, content);
+                    message.classList.add(this.options.classes.typing);
+                    this.scrollMessageIntoView(message);
+                });
 
             this.removeTypingIndicator(message);
             this.renderMessageContent(message, response);
@@ -1391,11 +1393,13 @@ class AiAssistantChatBox {
                 doneEventName: this.options.doneEventName,
             });
 
-            const botBuffer = await transport.streamSse(this.streamUrl, formData, (content) => {
-                this.renderPlainMessageContent(message, content);
-                message.classList.add(this.options.classes.typing);
-                this.scrollMessageIntoView(message);
-            });
+            const botBuffer = this.options.streamResponse === false
+                ? (await transport.requestJson(this.streamUrl, formData)).answer || ''
+                : await transport.streamSse(this.streamUrl, formData, (content) => {
+                    this.renderPlainMessageContent(message, content);
+                    message.classList.add(this.options.classes.typing);
+                    this.scrollMessageIntoView(message);
+                });
 
             this.removeTypingIndicator(message);
             this.renderMessageContent(message, botBuffer);

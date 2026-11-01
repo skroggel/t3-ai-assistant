@@ -66,6 +66,34 @@
         <source>Custom</source>
         <target>Benutzerdefiniert</target>
       </trans-unit>
+      <trans-unit id="render_mode">
+        <source>Render mode</source>
+        <target>Render-Modus</target>
+      </trans-unit>
+      <trans-unit id="render_mode.description">
+        <source>Choose how the component is inserted into the frontend.</source>
+        <target>Legt fest, wie die Komponente im Frontend eingefügt wird.</target>
+      </trans-unit>
+      <trans-unit id="render_mode.block">
+        <source>Block HTML</source>
+        <target>Block-HTML</target>
+      </trans-unit>
+      <trans-unit id="render_mode.inline">
+        <source>Inline HTML</source>
+        <target>Inline-HTML</target>
+      </trans-unit>
+      <trans-unit id="render_mode.custom_element">
+        <source>Custom Element</source>
+        <target>Custom Element</target>
+      </trans-unit>
+      <trans-unit id="element_name">
+        <source>Custom Element name</source>
+        <target>Name des Custom Elements</target>
+      </trans-unit>
+      <trans-unit id="element_name.description">
+        <source>Registered custom element tag, for example mv-card-slider.</source>
+        <target>Registrierter Custom-Element-Tag, zum Beispiel mv-card-slider.</target>
+      </trans-unit>
       <trans-unit id="description">
         <source>Description for the AI</source>
         <target>Beschreibung für die KI</target>

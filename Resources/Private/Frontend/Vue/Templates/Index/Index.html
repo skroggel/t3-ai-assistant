@@ -15,8 +15,18 @@
         <f:asset.css identifier="ai-assistant-chat-css" href="EXT:ai_assistant/Resources/Public/Css/t3-ai-assistant-frontend.css" />
     </f:if>
 
+    <f:variable name="chatEndpointAction">stream</f:variable>
+    <f:variable name="chatEndpointController">Chat</f:variable>
+    <f:variable name="chatEndpointType">1790831370</f:variable>
+    <f:if condition="{settings.streamResponse} == 0">
+        <f:variable name="chatEndpointAction">assistant</f:variable>
+        <f:variable name="chatEndpointController">Json</f:variable>
+        <f:variable name="chatEndpointType">1790831371</f:variable>
+    </f:if>
+
     <ai-assistant-chat
-        endpoint="{f:uri.action(action: 'stream', controller: 'Chat', extensionName: 'AiAssistant', pluginName: 'Chat', pageType: '1790831370', arguments: '{id: pageUid}')}"
+        endpoint="{f:uri.action(action: chatEndpointAction, controller: chatEndpointController, extensionName: 'AiAssistant', pluginName: 'Chat', pageType: chatEndpointType, arguments: '{id: pageUid}')}"
+        stream-response="{settings.streamResponse}"
         assistant-profile="{assistantProfile.uid}"
         chat-identifier="{chatIdentifier}"
         request-token="{requestToken}"
@@ -35,7 +45,6 @@
 
         require-consent="{settings.requireConsent}"
         show-language-selector="{settings.language.allowUserSelection}"
-
     ></ai-assistant-chat>
 
 </html>

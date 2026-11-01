@@ -41,6 +41,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class PipelineLogger implements PipelineLoggerInterface
 {
     /**
+     * Maximum serialized payload size kept below MariaDB TEXT capacity.
+     *
+     * @var int
+     */
+    private const int MAX_TRACE_PAYLOAD_BYTES = 60000;
+
+    /**
      * @var \Madj2k\AiAssistant\Assistant\Domain\Repository\PipelineTraceRepository
      */
     protected PipelineTraceRepository $pipelineTraceRepository;
@@ -576,7 +583,23 @@ class PipelineLogger implements PipelineLoggerInterface
             ];
         }
 
-        return json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $json = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        if (!is_string($json) || strlen($json) <= self::MAX_TRACE_PAYLOAD_BYTES) {
+            return (string)$json;
+        }
+
+        $preview = mb_strcut(
+            $json,
+            0,
+            self::MAX_TRACE_PAYLOAD_BYTES - 200,
+            'UTF-8',
+        );
+
+        return (string)json_encode([
+            'truncated' => true,
+            'originalLength' => strlen($json),
+            'preview' => $preview,
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**

@@ -79,6 +79,14 @@
         <source>Number of dots shown while the assistant is generating a response.</source>
         <target>Anzahl der Punkte, die während der Antwortgenerierung angezeigt werden.</target>
       </trans-unit>
+      <trans-unit id="flexform.chat.stream_response">
+        <source>Stream response</source>
+        <target>Antwort streamen</target>
+      </trans-unit>
+      <trans-unit id="flexform.chat.stream_response.description">
+        <source>Stream the answer while it is generated. Disable this to use the complete JSON response.</source>
+        <target>Die Antwort während der Generierung streamen. Deaktivieren, um die vollständige JSON-Antwort zu verwenden.</target>
+      </trans-unit>
       <trans-unit id="flexform.chat.sheet.advanced">
         <source>Advanced</source>
         <target>Erweitert</target>
@@ -106,6 +114,30 @@
       <trans-unit id="flexform.chat.response_message_delay">
         <source>Response message delay (milliseconds)</source>
         <target>Verzögerung der Antwort (Millisekunden)</target>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_messages">
+        <source>Loading messages</source>
+        <target>Ladenachrichten</target>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_messages.description">
+        <source>JSON array of messages shown while the assistant is preparing the response. Example: [&quot;I am searching ...&quot;, &quot;I am preparing the answer ...&quot;]</source>
+        <target>JSON-Array mit Nachrichten, die während der Antwortvorbereitung angezeigt werden. Beispiel: [&quot;Ich suche passende Informationen ...&quot;, &quot;Ich bereite die Antwort vor ...&quot;]</target>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_messages_timeout">
+        <source>Loading message interval (milliseconds)</source>
+        <target>Intervall der Ladenachrichten (Millisekunden)</target>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_messages_timeout.description">
+        <source>Time between rotating loading messages in milliseconds. Messages rotate only while the assistant is generating.</source>
+        <target>Zeit zwischen wechselnden Ladenachrichten in Millisekunden. Die Nachrichten wechseln nur während der Antwortgenerierung.</target>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_html">
+        <source>Loading HTML</source>
+        <target>Lade-HTML</target>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_html.description">
+        <source>Optional HTML shown next to the loading messages while the assistant is preparing the response. Example: &lt;span class=&quot;spinner&quot;&gt;&lt;/span&gt;</source>
+        <target>Optionales HTML, das während der Antwortvorbereitung neben den Ladenachrichten angezeigt wird. Beispiel: &lt;span class=&quot;spinner&quot;&gt;&lt;/span&gt;</target>
       </trans-unit>
       <trans-unit id="flexform.chat.sheet.language">
         <source>Language</source>

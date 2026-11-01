@@ -88,8 +88,8 @@
         <target>Distanzmetrik, die von der Vektordatenbank für die Ähnlichkeitssuche verwendet wird.</target>
       </trans-unit>
       <trans-unit id="tx_aiassistant_connection_vector_database.additional_options_desc" resname="tx_aiassistant_connection_vector_database.additional_options_desc">
-        <source>Optional connector-specific vector database settings. Use one key-value pair per line or JSON if supported.</source>
-        <target>Optionale Connector-spezifische Vektordatenbank-Einstellungen. Verwenden Sie ein Schlüssel-Wert-Paar pro Zeile oder JSON, sofern unterstützt.</target>
+        <source>Optional connector-specific vector database settings as JSON. Qdrant automatically indexes scalar DocumentMetadata fields. Additional metadata indexes can be configured with payload_indexes, for example {"payload_indexes":{"asset_id":"integer","document_type":"keyword","teaser":"text","modified_at":"datetime"}}. This creates meta.additional.asset_id, meta.additional.document_type, meta.additional.teaser and meta.additional.modified_at. Fields without a meta.additional. prefix are stored below meta.additional.</source>
+        <target>Optionale Connector-spezifische Vektordatenbank-Einstellungen als JSON. Qdrant legt für skalare DocumentMetadata-Felder automatisch Indizes an. Zusätzliche Metadaten-Indizes können mit payload_indexes konfiguriert werden, z. B. {"payload_indexes":{"asset_id":"integer","document_type":"keyword","teaser":"text","modified_at":"datetime"}}. Dadurch entstehen meta.additional.asset_id, meta.additional.document_type, meta.additional.teaser und meta.additional.modified_at. Felder ohne Präfix meta.additional. werden darunter abgelegt.</target>
       </trans-unit>
     </body>
   </file>

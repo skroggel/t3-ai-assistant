@@ -15,7 +15,7 @@
         <source>Value</source>
       </trans-unit>
       <trans-unit id="tx_aiassistant_connection_vector_filter_condition.value.description" resname="tx_aiassistant_connection_vector_filter_condition.value.description">
-        <source>For In list, enter comma- or line-separated values. TYPO3 placeholder: ###FE_LANG###.</source>
+        <source>For In list, enter comma- or line-separated values. TYPO3 placeholders: ###FE_LANG### (ISO language code) and ###FE_LANG_UID### (numeric language uid).</source>
       </trans-unit>
     </body>
   </file>

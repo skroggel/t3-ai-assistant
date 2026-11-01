@@ -20,7 +20,7 @@ return [
     'types' => [
         '1' => [
             'showitem' => '
-                title, identifier, preset, css_class, button_actions,
+                title, identifier, preset, render_mode, element_name, css_class, button_actions,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_ui_component.xlf:definition_tab,
                     description, template, actions, data_schema, placeholders,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_ui_component.xlf:override_tab,
@@ -57,6 +57,32 @@ return [
                     ['label' => $ll . 'preset.custom', 'value' => 'custom'],
                 ],
                 'default' => 'custom',
+            ],
+        ],
+        'render_mode' => [
+            'label' => $ll . 'render_mode',
+            'description' => $ll . 'render_mode.description',
+            'onChange' => 'reload',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['label' => $ll . 'render_mode.block', 'value' => 'block'],
+                    ['label' => $ll . 'render_mode.inline', 'value' => 'inline'],
+                    ['label' => $ll . 'render_mode.custom_element', 'value' => 'customElement'],
+                ],
+                'default' => 'block',
+            ],
+        ],
+        'element_name' => [
+            'label' => $ll . 'element_name',
+            'description' => $ll . 'element_name.description',
+            'displayCond' => 'FIELD:render_mode:=:customElement',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim,lower',
+                'max' => 128,
+                'placeholder' => 'mv-card-slider',
             ],
         ],
         'css_class' => [

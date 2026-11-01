@@ -47,30 +47,29 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class ChatController extends AbstractController
 {
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected readonly LoggerInterface $logger;
 
     /**
      * Constructor.
      *
+     * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant profile repository.
      * @param \Madj2k\AiCore\Assistant\Application\Orchestrator $orchestrator Chat turn orchestrator.
      * @param \Madj2k\AiAssistant\Assistant\Http\SseResponseFactory $sseResponseFactory SSE response factory.
-     * @param \Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository $assistantProfileRepository Assistant profile repository.
      * @param \Madj2k\AiAssistant\Assistant\Frontend\ChatOptionsResolver $chatOptionsResolver Chat options resolver.
-     * @param \Psr\Log\LoggerInterface|null $logger Frontend stream logger.
+     * @param \Madj2k\AiAssistant\Assistant\Service\FrontendRequestTokenService $requestTokenService
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
+        AssistantProfileRepository                    $assistantProfileRepository,
         protected readonly Orchestrator               $orchestrator,
         protected readonly SseResponseFactory         $sseResponseFactory,
-        AssistantProfileRepository $assistantProfileRepository,
         protected readonly ChatOptionsResolver        $chatOptionsResolver,
         FrontendRequestTokenService                   $requestTokenService,
-        ?LoggerInterface                              $logger = null,
+        private readonly LoggerInterface              $logger,
     ) {
-        parent::__construct($assistantProfileRepository, $requestTokenService);
-        $this->logger = $logger ?? GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+        parent::__construct(
+            $assistantProfileRepository,
+            $requestTokenService
+        );
     }
 
 

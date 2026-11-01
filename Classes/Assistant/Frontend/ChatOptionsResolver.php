@@ -94,7 +94,21 @@ final class ChatOptionsResolver
             $sanitizeOptions = is_array($decodedOptions) ? $decodedOptions : [];
         }
 
+        $loadingMessages = $settings['loadingMessages'] ?? '';
+        if (is_string($loadingMessages)) {
+            $decodedMessages = json_decode($loadingMessages, true);
+            $loadingMessages = is_array($decodedMessages) ? $decodedMessages : [];
+        }
+        if (!is_array($loadingMessages)) {
+            $loadingMessages = [];
+        }
+
         return [
+            'streamResponse' => !in_array(
+                strtolower(trim((string)($settings['streamResponse'] ?? '1'))),
+                ['0', 'false', 'no', 'off'],
+                true,
+            ),
             'language' => [
                 'responseLanguage' => $chatOptions->responseLanguage,
                 'languageCode' => $chatOptions->languageCode,
@@ -102,11 +116,17 @@ final class ChatOptionsResolver
             'accessibility' => [
                 'plainLanguage' => $chatOptions->plainLanguage,
             ],
-            'numberOfLoadingDots' => max(1, min(10, (int)($settings['numberOfTypingDots'] ?? 3))),
+            'numberOfLoadingDots' => max(0, min(10, (int)($settings['numberOfTypingDots'] ?? 3))),
             'renderLagCharacters' => max(0, min(5000, (int)($settings['renderLagCharacters'] ?? 300))),
             'renderChunkCharacters' => max(1, min(500, (int)($settings['renderChunkCharacters'] ?? 15))),
             'initialMessageDelay' => max(0, min(500, (int)($settings['initialMessageDelay'] ?? 22))),
             'responseMessageDelay' => max(0, min(500, (int)($settings['responseMessageDelay'] ?? 14))),
+            'loadingMessages' => array_values(array_filter(
+                array_map('strval', $loadingMessages),
+                static fn (string $message): bool => trim($message) !== '',
+            )),
+            'loadingMessagesTimeout' => max(250, min(30000, (int)($settings['loadingMessagesTimeout'] ?? 3000))),
+            'loadingHtml' => (string)($settings['loadingHtml'] ?? ''),
             'sanitizeOptions' => is_array($sanitizeOptions) ? $sanitizeOptions : [],
         ];
     }

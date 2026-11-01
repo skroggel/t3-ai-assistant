@@ -67,7 +67,7 @@
         <source>Distance metric used by the vector database for similarity search.</source>
       </trans-unit>
       <trans-unit id="tx_aiassistant_connection_vector_database.additional_options_desc" resname="tx_aiassistant_connection_vector_database.additional_options_desc">
-        <source>Optional connector-specific vector database settings. Use one key-value pair per line or JSON if supported.</source>
+        <source>Optional connector-specific vector database settings as JSON. Qdrant automatically indexes scalar DocumentMetadata fields. Additional metadata indexes can be configured with payload_indexes, for example {"payload_indexes":{"asset_id":"integer","document_type":"keyword","teaser":"text","modified_at":"datetime"}}. This creates meta.additional.asset_id, meta.additional.document_type, meta.additional.teaser and meta.additional.modified_at. Fields without a meta.additional. prefix are stored below meta.additional.</source>
       </trans-unit>
     </body>
   </file>

@@ -66,6 +66,12 @@
       <trans-unit id="flexform.chat.number_of_typing_dots.description">
         <source>Number of dots shown while the assistant is generating a response.</source>
       </trans-unit>
+      <trans-unit id="flexform.chat.stream_response">
+        <source>Stream response</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.stream_response.description">
+        <source>Stream the answer while it is generated. Disable this to use the complete JSON response.</source>
+      </trans-unit>
       <trans-unit id="flexform.chat.sheet.advanced">
         <source>Advanced</source>
       </trans-unit>
@@ -86,6 +92,24 @@
       </trans-unit>
       <trans-unit id="flexform.chat.response_message_delay">
         <source>Response message delay (milliseconds)</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_messages">
+        <source>Loading messages</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_messages.description">
+        <source>JSON array of messages shown while the assistant is preparing the response. Example: [&quot;I am searching ...&quot;, &quot;I am preparing the answer ...&quot;]</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_messages_timeout">
+        <source>Loading message interval (milliseconds)</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_messages_timeout.description">
+        <source>Time between rotating loading messages in milliseconds. Messages rotate only while the assistant is generating.</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_html">
+        <source>Loading HTML</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.loading_html.description">
+        <source>Optional HTML shown next to the loading messages while the assistant is preparing the response. Example: &lt;span class=&quot;spinner&quot;&gt;&lt;/span&gt;</source>
       </trans-unit>
       <trans-unit id="flexform.chat.sheet.language">
         <source>Language</source>

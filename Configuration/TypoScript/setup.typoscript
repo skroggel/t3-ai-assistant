@@ -98,3 +98,26 @@ ajaxOld < ajax
 ajaxOld {
     typeNum = 1700000000
 }
+
+assistantJson = PAGE
+assistantJson {
+    typeNum = 1790831371
+    config {
+        disableAllHeaderCode = 1
+        no_cache = 1
+        additionalHeaders.10.header = Content-Type: application/json; charset=utf-8
+    }
+
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        extensionName = AiAssistant
+        pluginName = Chat
+        vendorName = Madj2k
+        switchableControllerActions {
+            Json {
+                1 = assistant
+            }
+        }
+    }
+}

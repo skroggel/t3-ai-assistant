@@ -104,6 +104,8 @@ CREATE TABLE `tx_aiassistant_connection_vector_filter_condition` (
 CREATE TABLE `tx_aiassistant_ui_component` (
     `title` varchar(255) DEFAULT '' NOT NULL,
     `preset` varchar(128) DEFAULT 'custom' NOT NULL,
+    `render_mode` varchar(32) DEFAULT 'block' NOT NULL,
+    `element_name` varchar(128) DEFAULT '' NOT NULL,
     `css_class` varchar(255) DEFAULT '' NOT NULL,
     `identifier` varchar(128) DEFAULT '' NOT NULL,
     `description` text,

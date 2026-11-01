@@ -16,8 +16,16 @@
             </span>
             <div class="chat-box-message-content">
                 <div v-html="message.html" v-if="message.html"/>
-                <span v-if="message.typing" class="chat-box-typing-dots" aria-label="Loading">
-                    <span v-for="n in numberOfLoadingDots" class="dot" aria-hidden="true"></span>
+                <span v-if="message.typing" class="chat-box-typing-placeholder" aria-label="Loading">
+                    <LoadingMessages
+                        :message="message"
+                        :loading-messages="loadingMessages"
+                        :loading-messages-timeout="loadingMessagesTimeout"
+                    />
+                    <span v-if="loadingHtml" class="chat-box-typing-html" v-html="loadingHtml" aria-hidden="true"></span>
+                    <span v-if="numberOfLoadingDots" class="chat-box-typing-dots" aria-hidden="true">
+                        <span v-for="n in numberOfLoadingDots" :key="n" class="dot" aria-hidden="true"></span>
+                    </span>
                 </span>
             </div>
         </article>
@@ -25,21 +33,35 @@
 </template>
 
 <script setup>
+import LoadingMessages from "./LoadingMessages.vue";
+
 /**
  * @typedef {Object} ChatMessage
  * @property {string} id Stable message identifier.
  * @property {'user'|'assistant'} role Message origin.
  * @property {'ui'|undefined} source Optional source of a generated user message.
  * @property {string} html Sanitized rendered HTML.
+ *
+ * @typedef {Object} ChatMessageListProps
+ * @property {ChatMessage[]} messages Chat messages.
+ * @property {string} userLabel User label for accessibility output.
+ * @property {string} assistantName Assistant label for accessibility output.
+ * @property {number} numberOfLoadingDots Number of fallback loading dots.
+ * @property {string} loadingHtml Optional HTML for the loading indicator.
+ * @property {Array|string} loadingMessages Optional rotating loading messages.
+ * @property {number|string} loadingMessagesTimeout Rotation interval in milliseconds.
  */
 
-/** @type {import('vue').DefineProps<{messages: ChatMessage[]}>} */
-defineProps({
+const props = defineProps({
     messages: { type: Array, required: true },
     userLabel: { type: String, default: 'User' },
     assistantName: { type: String, default: 'Assistant' },
-    numberOfLoadingDots: { type: Number, default: 3 }
+    numberOfLoadingDots: { type: Number, default: 3 },
+    loadingHtml: { type: String, default: '' },
+    loadingMessages: { type: [Array, String], default: () => [] },
+    loadingMessagesTimeout: { type: [String, Number], default: 2000 },
 });
+
 </script>
 
 
@@ -220,4 +242,3 @@ defineProps({
 }
 
 </style>
-

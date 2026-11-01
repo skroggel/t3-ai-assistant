@@ -2,6 +2,7 @@
 
 use Madj2k\AiAssistant\Controller\ChatController;
 use Madj2k\AiAssistant\Controller\IndexController;
+use Madj2k\AiAssistant\Controller\JsonController;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Log\LogLevel;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
@@ -43,12 +44,14 @@ defined('TYPO3') || die();
         'Chat',
         [
             IndexController::class => 'index',
-            ChatController::class => 'stream'
+            ChatController::class => 'stream',
+            JsonController::class => 'assistant'
         ],
         // non-cacheable actions
         [
             IndexController::class => 'index',
-            ChatController::class => 'stream'
+            ChatController::class => 'stream',
+            JsonController::class => 'assistant'
         ],
         ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );

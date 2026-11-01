@@ -53,6 +53,20 @@ final class UIComponent extends AbstractEntity
      */
     protected string $cssClass = '';
 
+    /**
+     * Component rendering mode.
+     *
+     * @var string
+     */
+    protected string $renderMode = 'block';
+
+    /**
+     * Custom element tag name.
+     *
+     * @var string
+     */
+    protected string $elementName = '';
+
 
     /**
      * Stable technical identifier.
@@ -225,6 +239,48 @@ final class UIComponent extends AbstractEntity
     public function setCssClass(string $cssClass): void
     {
         $this->cssClass = $cssClass;
+    }
+
+    /**
+     * Returns the component rendering mode.
+     *
+     * @return string Rendering mode.
+     */
+    public function getRenderMode(): string
+    {
+        return trim($this->renderMode);
+    }
+
+    /**
+     * Sets the component rendering mode.
+     *
+     * @param string $renderMode Rendering mode.
+     * @return void
+     */
+    public function setRenderMode(string $renderMode): void
+    {
+        $this->renderMode = trim($renderMode);
+    }
+
+    /**
+     * Returns the custom element tag name.
+     *
+     * @return string Custom element tag name.
+     */
+    public function getElementName(): string
+    {
+        return trim($this->elementName);
+    }
+
+    /**
+     * Sets the custom element tag name.
+     *
+     * @param string $elementName Custom element tag name.
+     * @return void
+     */
+    public function setElementName(string $elementName): void
+    {
+        $this->elementName = trim($elementName);
     }
 
 

@@ -467,18 +467,13 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
     /**
      * Returns the configured intent selector output areas.
      *
-     * Empty legacy values resolve to retriever and presentation rules.
-     *
-     * @return array<int,string> Legacy output identifiers.
+     * @return array<int,string> Configured output identifiers.
      */
     public function getIntentSelectionOutputTypes(): array
     {
         $value = trim($this->intentSelectionOutputTypes);
         if ($value === '') {
-            return [
-                'retriever',
-                'presentation_rules',
-            ];
+            return [];
         }
 
         $types = [];

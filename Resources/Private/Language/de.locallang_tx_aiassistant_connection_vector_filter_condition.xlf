@@ -19,8 +19,8 @@
         <target>Wert</target>
       </trans-unit>
       <trans-unit id="tx_aiassistant_connection_vector_filter_condition.value.description" resname="tx_aiassistant_connection_vector_filter_condition.value.description">
-        <source>For In list, enter comma- or line-separated values. TYPO3 placeholder: ###FE_LANG###.</source>
-        <target>Bei „In Liste“ kommaseparierte oder zeilengetrennte Werte eingeben. TYPO3-Platzhalter: ###FE_LANG###.</target>
+        <source>For In list, enter comma- or line-separated values. TYPO3 placeholders: ###FE_LANG### (ISO language code) and ###FE_LANG_UID### (numeric language uid).</source>
+        <target>Bei „In Liste“ kommaseparierte oder zeilengetrennte Werte eingeben. TYPO3-Platzhalter: ###FE_LANG### (ISO-Sprachcode) und ###FE_LANG_UID### (numerische Sprach-UID).</target>
       </trans-unit>
     </body>
   </file>

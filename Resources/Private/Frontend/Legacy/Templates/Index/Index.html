@@ -42,6 +42,15 @@
         <f:translate key="LLL:EXT:ai_assistant/Resources/Private/Language/locallang.xlf:templates_index_index.error_message" />
     </f:variable>
 
+    <f:variable name="chatEndpointAction">stream</f:variable>
+    <f:variable name="chatEndpointController">Chat</f:variable>
+    <f:variable name="chatEndpointType">1790831370</f:variable>
+    <f:if condition="{settings.streamResponse} == 0">
+        <f:variable name="chatEndpointAction">assistant</f:variable>
+        <f:variable name="chatEndpointController">Json</f:variable>
+        <f:variable name="chatEndpointType">1790831371</f:variable>
+    </f:if>
+
     <section class="chat-box container py-4 js-aiassistant-container">
         <f:if condition="{settings.requireConsent}">
             <div class="chat-box-consent alert alert-warning js-aiassistant-consent" role="note">
@@ -58,11 +67,11 @@
 
         <div class="chat-box-content js-aiassistant-chat-content" hidden="hidden">
             <f:form
-                action="stream"
-                controller="Chat"
+                action="{chatEndpointAction}"
+                controller="{chatEndpointController}"
                 extensionName="AiAssistant"
                 pluginName="Chat"
-                pageType="1790831370"
+                pageType="{chatEndpointType}"
                 method="post"
                 class="chat-box-form js-aiassistant-form"
                 additionalAttributes="{data-initial-message: resolvedAssistantInitialMessage, data-error-message: resolvedErrorMessage, data-chat-options: chatOptionsJson}"
