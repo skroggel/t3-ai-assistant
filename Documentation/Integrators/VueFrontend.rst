@@ -335,7 +335,9 @@ markup.
         summaryProps.value = {
             sseEndpoint: bridge.dataset.sseEndpoint || '',
             jsonEndpoint: bridge.dataset.jsonEndpoint || '',
-            query: bridge.dataset.query || '',
+             // The bridge contains the initially cached query. SearchApp's
+             // reactive value is authoritative after a client-side search.
+             query: searchWord.value,
             assistantProfile: bridge.dataset.assistantProfile || '',
             chatIdentifier: bridge.dataset.chatIdentifier || '',
             requestToken: bridge.dataset.requestToken || '',
@@ -349,7 +351,12 @@ markup.
             streamResponse: bridge.dataset.streamResponse || '1',
             showWithoutResults: bridge.dataset.showWithoutResults || '0',
             capturedResults,
-        };
+         };
+
+The ``data-query`` value is the query that was present when TYPO3 rendered the
+page. It must not be reused blindly after a client-side search. Always use the
+current ``searchWord.value`` when preparing Summary props, otherwise the second
+Summary request can use the previous search query.
 
 12. Let Vue render the Summary. In this direct Vue integration, no Premium
     payload event is required because ``capturedResults`` is passed directly.
