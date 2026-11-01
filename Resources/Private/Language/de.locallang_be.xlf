@@ -11,13 +11,13 @@
         <source>Frontend chat mode and request security.</source>
         <target>Frontend-Chat-Modus und Sicherheit der Anfragen.</target>
       </trans-unit>
-      <trans-unit id="settings.useLegacyFrontend.label">
-        <source>Use legacy frontend</source>
-        <target>Legacy-Frontend verwenden</target>
+      <trans-unit id="settings.useVueIntegration.label">
+        <source>Use Vue integration templates</source>
+        <target>Vue-Integration-Templates verwenden</target>
       </trans-unit>
-      <trans-unit id="settings.useLegacyFrontend.description">
-        <source>Use the legacy Fluid/JavaScript chat frontend instead of the Vue custom element.</source>
-        <target>Das Legacy-Fluid-/JavaScript-Chat-Frontend anstelle des Vue-Custom-Elements verwenden.</target>
+      <trans-unit id="settings.useVueIntegration.description">
+        <source>Render Vue integration mount containers instead of registering the standalone chat custom element.</source>
+        <target>Vue-Integration-Mount-Container anstelle des eigenständigen Chat-Custom-Elements ausgeben.</target>
       </trans-unit>
       <trans-unit id="settings.allowedAssistantProfiles.label">
         <source>Allowed Assistant profiles</source>
@@ -58,6 +58,14 @@
       <trans-unit id="flexform.chat.assistant_profile">
         <source>Assistant Profile</source>
         <target>Assistant-Profil</target>
+      </trans-unit>
+      <trans-unit id="flexform.chat.element_id">
+        <source>HTML element ID</source>
+        <target>HTML-Element-ID</target>
+      </trans-unit>
+      <trans-unit id="flexform.chat.element_id.description">
+        <source>Stable ID of the Integration mount element. Use the same value for all translations of this content element.</source>
+        <target>Stabile ID des Integration-Mount-Elements. Für alle Übersetzungen dieses Inhaltselements denselben Wert verwenden.</target>
       </trans-unit>
       <trans-unit id="flexform.chat.require_consent">
         <source>Require consent before starting the chat</source>

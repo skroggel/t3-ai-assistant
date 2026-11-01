@@ -1,0 +1,51 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <!--
+        The Integration template deliberately does not register or render the
+        standalone custom element. The consuming Vue application mounts its
+        own component into this data bridge and supplies the Vue runtime.
+    -->
+    <f:asset.script
+        identifier="ai-assistant-transport"
+        src="EXT:ai_assistant/Resources/Public/JavaScript/ai-assistant-transport.js"
+    />
+
+    <f:if condition="{settings.includeDefaultStyles}">
+        <f:asset.css identifier="ai-assistant-chat-css" href="EXT:ai_assistant/Resources/Public/Css/t3-ai-assistant-frontend.css" />
+    </f:if>
+
+    <f:variable name="chatEndpointAction">stream</f:variable>
+    <f:variable name="chatEndpointController">Chat</f:variable>
+    <f:variable name="chatEndpointType">1790831370</f:variable>
+    <f:if condition="{settings.streamResponse} == 0">
+        <f:variable name="chatEndpointAction">assistant</f:variable>
+        <f:variable name="chatEndpointController">Json</f:variable>
+        <f:variable name="chatEndpointType">1790831371</f:variable>
+    </f:if>
+
+    <div
+        id="{settings.elementId}"
+        data-ai-assistant-chat-mount="1"
+        data-endpoint="{f:uri.action(action: chatEndpointAction, controller: chatEndpointController, extensionName: 'AiAssistant', pluginName: 'Chat', pageType: chatEndpointType, arguments: '{id: pageUid}')}"
+        data-stream-response="{settings.streamResponse}"
+        data-assistant-profile="{assistantProfile.uid}"
+        data-chat-identifier="{chatIdentifier}"
+        data-request-token="{requestToken}"
+        data-start-timestamp="{startTimestamp}"
+
+        data-settings-json="{settingsJson -> f:format.htmlspecialchars()}"
+        data-chat-options-json="{chatOptionsJson -> f:format.htmlspecialchars()}"
+        data-labels-json="{labelsJson -> f:format.htmlspecialchars()}"
+        data-ui-components-json="{uiComponentsJson -> f:format.htmlspecialchars()}"
+        data-error-handling="{assistantProfile.errorHandling}"
+
+        data-initial-message="{assistantProfile.initialMessage -> f:format.htmlspecialchars()}"
+        data-assistant-name="{assistantProfile.assistantName -> f:format.htmlspecialchars()}"
+        data-intro-text="{assistantProfile.introText -> f:format.htmlspecialchars()}"
+        data-privacy-link="{f:uri.typolink(parameter: assistantProfile.privacyLink)}"
+
+        data-require-consent="{settings.requireConsent}"
+        data-show-language-selector="{settings.language.allowUserSelection}"
+    ></div>
+</html>

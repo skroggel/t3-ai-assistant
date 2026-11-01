@@ -1,7 +1,7 @@
 plugin.tx_aiassistant {
     view {
         # cat=plugin.tx_aiassistant/file; type=string; label=Path to template root (FE)
-        templateRootPath = EXT:ai_assistant/Resources/Private/Frontend/Vue/Templates/
+        templateRootPath = EXT:ai_assistant/Resources/Private/Frontend/Vue/Standalone/Templates/
         # cat=plugin.tx_aiassistant/file; type=string; label=Path to template partials (FE)
         partialRootPath = EXT:ai_assistant/Resources/Private/Frontend/Vue/Partials/
         # cat=plugin.tx_aiassistant/file; type=string; label=Path to template layouts (FE)

@@ -9,16 +9,18 @@ overridden in the site-specific ``settings.yaml`` file:
 ..  code-block:: yaml
 
     aiAssistant:
-      useLegacyFrontend: false
+      useVueIntegration: false
       allowedAssistantProfiles:
         - 1000
       requestTokenTtl: 7200
       maxPayloadBytes: 524288
 
-``aiAssistant.useLegacyFrontend``
-    Boolean, default ``false``. If enabled, the legacy Fluid/JavaScript chat
-    frontend is rendered instead of the Vue custom element. Keep this disabled
-    to use the current Vue frontend.
+``aiAssistant.useVueIntegration``
+    Boolean, default ``false``. If disabled, the standalone Fluid template
+    renders the complete ``<ai-assistant-chat>`` custom element. If enabled,
+    the Integration Fluid template renders a mount container for an existing
+    site-owned Vue application. The application must load the transport and
+    mount the regular Vue component or a customer-owned template.
 
 ``aiAssistant.allowedAssistantProfiles``
     List of assistant profile UIDs that may be used by public frontend chat
@@ -40,10 +42,10 @@ overridden in the site-specific ``settings.yaml`` file:
     settings payload accepted by the chat endpoint.
 
 The settings are available to TypoScript conditions as site settings. For
-example, the legacy frontend can be selected conditionally with:
+example, the Vue integration template can be selected conditionally with:
 
 ..  code-block:: typoscript
 
-    [traverse(site('configuration'), 'settings/aiAssistant/useLegacyFrontend') == true]
-        # Legacy-specific TypoScript
+    [traverse(site('configuration'), 'settings/aiAssistant/useVueIntegration') == true]
+        # Vue-integration-specific TypoScript
     [END]

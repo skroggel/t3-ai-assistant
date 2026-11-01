@@ -22,6 +22,16 @@
                             <foreign_table_where> AND {#tx_aiassistant_assistant_profile}.{#hidden}=0 AND {#tx_aiassistant_assistant_profile}.{#deleted}=0</foreign_table_where>
                         </config>
                     </settings.assistantProfile>
+                    <settings.elementId>
+                        <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.element_id</label>
+                        <description>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.element_id.description</description>
+                        <config>
+                            <type>input</type>
+                            <size>40</size>
+                            <max>255</max>
+                            <eval>trim</eval>
+                        </config>
+                    </settings.elementId>
                     <settings.requireConsent>
                         <label>LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:flexform.chat.require_consent</label>
                         <config>

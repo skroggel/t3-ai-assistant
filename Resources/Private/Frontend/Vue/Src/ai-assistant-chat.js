@@ -5,6 +5,7 @@
  */
 import { defineCustomElement } from 'vue';
 import AiAssistantChat from './components/AiAssistantChat.ce.vue';
+import './styles/chat-default.scss';
 
 
 // Keep the component's DOM themeable by host applications. The component

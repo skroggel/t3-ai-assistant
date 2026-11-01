@@ -11,8 +11,8 @@ Architecture
     IndexingArchitecture
     JsonJsonlIndexing
     ConnectionArchitecture
+    JsonController
     RetrievalArchitecture
     HashingAndSourceIdentity
     DataFlow
     ADR
-

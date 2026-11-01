@@ -4,9 +4,9 @@ categories:
     description: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.category.aiAssistant.description'
 
 settings:
-  aiAssistant.useLegacyFrontend:
-    label: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.useLegacyFrontend.label'
-    description: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.useLegacyFrontend.description'
+  aiAssistant.useVueIntegration:
+    label: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.useVueIntegration.label'
+    description: 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_be.xlf:settings.useVueIntegration.description'
     type: int
     default: 0
     category: aiAssistant

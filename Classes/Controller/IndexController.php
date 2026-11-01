@@ -73,7 +73,6 @@ class IndexController extends AbstractController
 
         $this->view->assignMultiple([
             'pageUid' => (int)($this->currentContentObject->data['pid'] ?? 0),
-            'contentElementUid' => (int)($this->currentContentObject->data['uid'] ?? 0),
             'chatIdentifier' => $chatIdentifier,
             'assistantProfile' => $assistantProfile,
             'startTimestamp' => time(),

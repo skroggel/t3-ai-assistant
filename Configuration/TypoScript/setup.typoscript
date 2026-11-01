@@ -1,6 +1,6 @@
 plugin.tx_aiassistant {
     view {
-        templateRootPaths.0 = EXT:ai_assistant/Resources/Private/Frontend/Vue/Templates/
+        templateRootPaths.0 = EXT:ai_assistant/Resources/Private/Frontend/Vue/Standalone/Templates/
         templateRootPaths.1 = {$plugin.tx_aiassistant.view.templateRootPath}
         partialRootPaths.0 = EXT:ai_assistant/Resources/Private/Frontend/Vue/Partials/
         partialRootPaths.1 = {$plugin.tx_aiassistant.view.partialRootPath}
@@ -24,11 +24,9 @@ plugin.tx_aiassistant {
     }
 }
 
-[{$aiAssistant.useLegacyFrontend} == 1]
+[{$aiAssistant.useVueIntegration} == 1]
     plugin.tx_aiassistant.view {
-        templateRootPaths.1791031407 = EXT:ai_assistant/Resources/Private/Frontend/Legacy/Templates/
-        partialRootPaths.1791031407 = EXT:ai_assistant/Resources/Private/Frontend/Legacy/Partials/
-        layoutRootPaths.1791031407 = EXT:ai_assistant/Resources/Private/Frontend/Legacy/Layouts/
+        templateRootPaths.100 = EXT:ai_assistant/Resources/Private/Frontend/Vue/Integration/Templates/
     }
 [END]
 

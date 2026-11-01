@@ -1,0 +1,12 @@
+/*
+ * Optional default styling entry point for the AI Assistant chat.
+ *
+ * Standalone imports this file to create the public default CSS asset.
+ * Integration consumers do not receive these styles through component imports.
+ */
+@use './chat';
+@use './chat-input';
+@use './chat-message-list';
+@use './language-selector';
+
+@layer default, instance;

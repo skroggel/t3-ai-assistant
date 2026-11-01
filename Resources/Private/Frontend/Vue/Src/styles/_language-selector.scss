@@ -1,0 +1,30 @@
+@layer default {
+    .chat-box-language {
+        &-toggle {
+            max-width: 100%;
+            white-space: normal;
+        }
+
+        &-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0.5rem;
+            align-items: end;
+
+            > button,
+            .chat-box-language-custom,
+            .chat-box-language-custom input,
+            .chat-box-language-custom button { width: 100%; }
+
+            .chat-box-language-custom {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    }
+}

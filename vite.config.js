@@ -7,7 +7,7 @@ export default defineConfig({
     },
     build: {
         lib: {
-            entry: 'Resources/Private/Frontend/Vue/ai-assistant-chat.js',
+            entry: 'Resources/Private/Frontend/Vue/Src/ai-assistant-chat.js',
             formats: ['iife'],
             name: 'AiAssistantChatElement',
             fileName: () => 'JavaScript/ai-assistant-chat.js',

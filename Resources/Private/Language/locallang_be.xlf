@@ -9,11 +9,11 @@
       <trans-unit id="settings.category.aiAssistant.description">
         <source>Frontend chat mode and request security.</source>
       </trans-unit>
-      <trans-unit id="settings.useLegacyFrontend.label">
-        <source>Use legacy frontend</source>
+      <trans-unit id="settings.useVueIntegration.label">
+        <source>Use Vue integration templates</source>
       </trans-unit>
-      <trans-unit id="settings.useLegacyFrontend.description">
-        <source>Use the legacy Fluid/JavaScript chat frontend instead of the Vue custom element.</source>
+      <trans-unit id="settings.useVueIntegration.description">
+        <source>Render Vue integration mount containers instead of registering the standalone chat custom element.</source>
       </trans-unit>
       <trans-unit id="settings.allowedAssistantProfiles.label">
         <source>Allowed Assistant profiles</source>
@@ -44,6 +44,12 @@
       </trans-unit>
       <trans-unit id="flexform.chat.assistant_profile">
         <source>Assistant Profile</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.element_id">
+        <source>HTML element ID</source>
+      </trans-unit>
+      <trans-unit id="flexform.chat.element_id.description">
+        <source>Stable ID of the Integration mount element. Use the same value for all translations of this content element.</source>
       </trans-unit>
       <trans-unit id="flexform.chat.require_consent">
         <source>Require consent before starting the chat</source>

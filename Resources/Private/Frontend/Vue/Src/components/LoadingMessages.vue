@@ -83,7 +83,7 @@ const startLoadingMessageRotation = () => {
 /** @type {import('vue').ComputedRef<boolean>} Whether the current message is loading. */
 const isTyping = computed(() => props.message.typing === true);
 
-watch(isTyping, (typing) => {
+watch([isTyping, normalizedLoadingMessages], ([typing]) => {
     if (typing) {
         startLoadingMessageRotation();
     } else {
@@ -94,10 +94,3 @@ watch(isTyping, (typing) => {
 onBeforeUnmount(stopLoadingMessageRotation);
 </script>
 
-
-<style lang="scss">
-@layer default, instance;
-@layer default {
-
-}
-</style>
