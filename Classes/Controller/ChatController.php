@@ -207,33 +207,4 @@ class ChatController extends AbstractController
         ]);
     }
 
-
-    /**
-     * Returns a user-facing availability message without exposing provider details.
-     *
-     * @param \Throwable $exception Pipeline exception.
-     * @return string Availability message.
-     */
-    private function getAvailabilityMessage(\Throwable $exception): string
-    {
-        if ($exception instanceof ApiException) {
-            return LocalizationUtility::translate(
-                'chat.error.ai_unavailable',
-                'ai_assistant'
-            );
-        }
-
-        if ($exception instanceof VectorDatabaseException) {
-            return LocalizationUtility::translate(
-                'chat.error.vector_store_unavailable',
-                'ai_assistant'
-            );
-        }
-
-        return LocalizationUtility::translate(
-            'chat.error.generic',
-            'ai_assistant',
-            [$exception->getMessage()]
-        );
-    }
 }

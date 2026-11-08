@@ -238,7 +238,7 @@ return [
         'include_output_rules' => [
             'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.include_output_rules',
             'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.include_output_rules.description',
-            'displayCond' => 'FIELD:type:!=:query_optimizer',
+            'displayCond' => 'FIELD:type:!IN:query_optimizer,intent_selector',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
@@ -272,7 +272,7 @@ return [
         'step_output_rules' => [
             'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.step_output_rules',
             'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.step_output_rules.description',
-            'displayCond' => 'FIELD:type:!=:query_optimizer',
+            'displayCond' => 'FIELD:type:!IN:query_optimizer,intent_selector',
             'config' => [
                 'type' => 'text',
                 'rows' => 4,

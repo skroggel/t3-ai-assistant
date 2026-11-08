@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Madj2k\AiAssistant\Backend\Diagnostics;
 
 use Madj2k\AiAssistant\Assistant\Domain\Repository\PipelineTraceRepository;
+use Madj2k\AiAssistant\Config\Config;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -75,6 +76,7 @@ final readonly class BackendDiagnosticsProvider
                 $payloadPretty = $payloadRaw;
             }
             $payloadPretty = str_replace(['\\r\\n', '\\n', '\\t'], ["\n", "\n", "\t"], $payloadPretty);
+            $payloadPretty = $this->truncatePayloadPreview($payload, $payloadPretty);
 
             $traceRows[] = [
                 'uid' => (int)($trace['uid'] ?? 0),
@@ -98,6 +100,94 @@ final readonly class BackendDiagnosticsProvider
             'chatTraceTotal' => $this->pipelineTraceRepository->countAll($chatIdentifier),
             'hasDiagnosticIssues' => false,
             'diagnosticIssueCount' => 0,
+        ];
+    }
+
+
+    /**
+     * Creates a bounded payload preview for the backend log table.
+     *
+     * Message content receives the complete preview budget divided evenly over
+     * all messages, so long system prompts cannot hide the user or assistant
+     * messages completely.
+     *
+     * @param array<string,mixed> $payload Decoded payload.
+     * @param string $payloadPretty Full pretty-printed payload.
+     * @return string Payload preview.
+     */
+    private function truncatePayloadPreview(array $payload, string $payloadPretty): string
+    {
+        $maxBytes = max(1024, (int)Config::get('chat.pipelineLog.maxBytes', 60000));
+        if (strlen($payloadPretty) <= $maxBytes) {
+            return $payloadPretty;
+        }
+
+        $previewPayload = $payload;
+        $messages = $payload['messages'] ?? null;
+        if (is_array($messages) && array_is_list($messages) && $messages !== []) {
+            $previewPayload['messages'] = $this->buildMessagesPreview($messages, $maxBytes);
+        }
+
+        $preview = json_encode(
+            $previewPayload,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES,
+        );
+        if (!is_string($preview)) {
+            $preview = mb_strcut($payloadPretty, 0, $maxBytes, 'UTF-8');
+        }
+
+        $boundedPreview = [
+            'truncated' => true,
+            'originalLength' => strlen($payloadPretty),
+            'preview' => str_replace(['\\r\\n', '\\n', '\\t'], ["\n", "\n", "\t"], $preview),
+        ];
+
+        return (string)json_encode(
+            $boundedPreview,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES,
+        );
+    }
+
+
+    /**
+     * Builds a proportional preview for a messages array.
+     *
+     * @param array<int,array<string,mixed>> $messages Messages.
+     * @param int $maxBytes Total byte budget for message content.
+     * @return array<string,mixed> Message preview metadata and entries.
+     */
+    private function buildMessagesPreview(array $messages, int $maxBytes): array
+    {
+        $messageCount = count($messages);
+        $messageBudget = intdiv($maxBytes, $messageCount);
+        $remainingBytes = $maxBytes % $messageCount;
+        $originalLength = 0;
+        $truncated = false;
+        $previewMessages = [];
+
+        foreach (array_values($messages) as $index => $message) {
+            $content = is_string($message['content'] ?? null)
+                ? $message['content']
+                : (string)json_encode($message['content'] ?? '', JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            $contentLength = strlen($content);
+            $originalLength += $contentLength;
+            $allowedLength = $messageBudget + ($index < $remainingBytes ? 1 : 0);
+            $messageTruncated = $contentLength > $allowedLength;
+            $truncated = $truncated || $messageTruncated;
+
+            $previewMessage = $message;
+            $previewMessage['index'] = $index;
+            $previewMessage['content'] = mb_strcut($content, 0, $allowedLength, 'UTF-8');
+            $previewMessage['originalLength'] = $contentLength;
+            $previewMessage['truncated'] = $messageTruncated;
+            $previewMessages[] = $previewMessage;
+        }
+
+        return [
+            'truncated' => $truncated,
+            'originalLength' => $originalLength,
+            'message_count' => $messageCount,
+            'preview' => $previewMessages,
         ];
     }
 

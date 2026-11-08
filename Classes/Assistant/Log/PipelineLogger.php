@@ -41,13 +41,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class PipelineLogger implements PipelineLoggerInterface
 {
     /**
-     * Maximum serialized payload size kept below MariaDB TEXT capacity.
-     *
-     * @var int
-     */
-    private const int MAX_TRACE_PAYLOAD_BYTES = 60000;
-
-    /**
      * @var \Madj2k\AiAssistant\Assistant\Domain\Repository\PipelineTraceRepository
      */
     protected PipelineTraceRepository $pipelineTraceRepository;
@@ -529,14 +522,14 @@ class PipelineLogger implements PipelineLoggerInterface
      */
     protected function truncate(string $value): string
     {
-        $maxChars = max(50, (int)Config::get(
-            'chat.pipelineLog.maxChars', 12000)
+        $maxBytes = max(1024, (int)Config::get(
+            'chat.pipelineLog.maxBytes', 60000)
         );
-        if (mb_strlen($value, 'UTF-8') <= $maxChars) {
+        if (strlen($value) <= $maxBytes) {
             return $value;
         }
 
-        return mb_substr($value, 0, $maxChars, 'UTF-8') . '...';
+        return mb_strcut($value, 0, max(0, $maxBytes - 3), 'UTF-8') . '...';
     }
 
 
@@ -548,15 +541,15 @@ class PipelineLogger implements PipelineLoggerInterface
     function truncatedJson($data): string
     {
 
-        $maxChars = max(50, (int)Config::get(
-            'chat.pipelineLog.maxChars', 12000)
+        $maxBytes = max(1024, (int)Config::get(
+            'chat.pipelineLog.maxBytes', 60000)
         );
 
         $result = [];
         foreach ($data as $key => $value) {
 
             if ($key === 'messages' && is_array($value)) {
-                $result[$key] = $this->truncateMessages($value, $maxChars);
+                $result[$key] = $this->truncateMessages($value, $maxBytes);
                 continue;
             }
 
@@ -569,29 +562,29 @@ class PipelineLogger implements PipelineLoggerInterface
                 continue;
             }
 
-            if (mb_strlen($valueJson) <= $maxChars) {
+            if (strlen($valueJson) <= $maxBytes) {
                 $result[$key] = $value;
                 continue;
             }
 
-            $previewLength = max(0, $maxChars - 100);
+            $previewLength = max(0, $maxBytes - 100);
 
             $result[$key] = [
                 'truncated' => true,
                 'originalLength' => mb_strlen($valueJson),
-                'preview' => mb_substr($valueJson, 0, $previewLength),
+                'preview' => mb_strcut($valueJson, 0, $previewLength, 'UTF-8'),
             ];
         }
 
         $json = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        if (!is_string($json) || strlen($json) <= self::MAX_TRACE_PAYLOAD_BYTES) {
+        if (!is_string($json) || strlen($json) <= $maxBytes) {
             return (string)$json;
         }
 
         $preview = mb_strcut(
             $json,
             0,
-            self::MAX_TRACE_PAYLOAD_BYTES - 200,
+            max(0, $maxBytes - 200),
             'UTF-8',
         );
 
@@ -602,17 +595,18 @@ class PipelineLogger implements PipelineLoggerInterface
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
+
     /**
      * Creates a bounded preview while preserving every LLM message entry.
      *
      * @param array<int,mixed> $messages LLM messages.
-     * @param int $maxChars Maximum preview size.
+     * @param int $maxBytes Maximum preview size in bytes.
      * @return array<string,mixed> Structured message preview.
      */
-    private function truncateMessages(array $messages, int $maxChars): array
+    private function truncateMessages(array $messages, int $maxBytes): array
     {
         $messageCount = max(1, count($messages));
-        $perMessageChars = max(500, (int)floor($maxChars / $messageCount));
+        $perMessageBytes = max(500, (int)floor($maxBytes / $messageCount));
         $preview = [];
         $originalLength = 0;
 
@@ -623,15 +617,16 @@ class PipelineLogger implements PipelineLoggerInterface
             }
 
             $content = (string)($message['content'] ?? '');
-            $originalLength += mb_strlen($content, 'UTF-8');
+            $originalLength += strlen($content);
+            $contentLength = strlen($content);
             $preview[] = [
                 'index' => $index,
                 'role' => (string)($message['role'] ?? ''),
                 'source' => (string)($message['source'] ?? ''),
-                'content' => mb_strlen($content, 'UTF-8') > $perMessageChars
-                    ? mb_substr($content, 0, $perMessageChars, 'UTF-8') . '...'
+                'content' => $contentLength > $perMessageBytes
+                    ? mb_strcut($content, 0, max(0, $perMessageBytes - 3), 'UTF-8') . '...'
                     : $content,
-                'truncated' => mb_strlen($content, 'UTF-8') > $perMessageChars,
+                'truncated' => $contentLength > $perMessageBytes,
             ];
         }
 

@@ -1,5 +1,5 @@
 {namespace core=TYPO3\CMS\Core\ViewHelpers}
-<f:asset.script identifier="aiassistant-backend" src="EXT:ai_assistant/Resources/Public/JavaScript/backend.js" />
+<f:asset.script identifier="aiassistant-backend" src="EXT:ai_assistant/Resources/Public/JavaScript/Backend.js" />
 <div class="aiassistant-config">
     <f:render partial="Backend/Module/Header" arguments="{_all}" />
     <f:render partial="Backend/Module/Navigation" arguments="{_all}" />
@@ -81,7 +81,7 @@
                 </thead>
                 <tbody>
                     <f:for each="{chatTraces}" as="trace">
-                        <tr>
+                        <tr data-aiassistant-log-entry="1">
                             <td>{trace.uid}</td>
                             <td>
                                 <f:if condition="{trace.crdate}">
@@ -110,5 +110,15 @@
                 </tbody>
             </table>
         </div>
+
+        <nav class="aiassistant-log-navigation" data-aiassistant-log-navigation hidden aria-label="Pipeline log navigation">
+            <button type="button" class="aiassistant-log-navigation__button" data-aiassistant-log-previous aria-label="Previous pipeline log entry" title="Previous entry">
+                <span aria-hidden="true">↑</span>
+            </button>
+            <span class="aiassistant-log-navigation__position" data-aiassistant-log-position aria-live="polite"></span>
+            <button type="button" class="aiassistant-log-navigation__button" data-aiassistant-log-next aria-label="Next pipeline log entry" title="Next entry">
+                <span aria-hidden="true">↓</span>
+            </button>
+        </nav>
     </div>
 </div>

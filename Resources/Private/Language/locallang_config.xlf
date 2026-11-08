@@ -1122,11 +1122,11 @@
       <trans-unit id="registry.pipeline_log_mask_sensitive.description" resname="registry.pipeline_log_mask_sensitive.description">
         <source>Masks sensitive values before they are written into the pipeline log.</source>
       </trans-unit>
-      <trans-unit id="registry.pipeline_log_max_chars.label" resname="registry.pipeline_log_max_chars.label">
-        <source>Maximum log characters</source>
+      <trans-unit id="registry.pipeline_log_max_bytes.label" resname="registry.pipeline_log_max_bytes.label">
+        <source>Maximum pipeline log bytes</source>
       </trans-unit>
-      <trans-unit id="registry.pipeline_log_max_chars.description" resname="registry.pipeline_log_max_chars.description">
-        <source>Maximum number of characters stored for long prompt, response or payload values.</source>
+      <trans-unit id="registry.pipeline_log_max_bytes.description" resname="registry.pipeline_log_max_bytes.description">
+        <source>Maximum serialized byte budget for pipeline logs. Message previews share this budget proportionally across all messages.</source>
       </trans-unit>
       <trans-unit id="registry.no" resname="registry.no">
         <source>no</source>

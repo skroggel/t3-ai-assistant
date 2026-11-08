@@ -1327,13 +1327,13 @@
         <source>Masks sensitive values before they are written into the pipeline log.</source>
         <target>Maskiert sensible Werte, bevor sie in das Pipeline-Log geschrieben werden.</target>
       </trans-unit>
-      <trans-unit id="registry.pipeline_log_max_chars.label" resname="registry.pipeline_log_max_chars.label">
-        <source>Maximum log characters</source>
-        <target>Maximale Anzahl Log-Zeichen</target>
+      <trans-unit id="registry.pipeline_log_max_bytes.label" resname="registry.pipeline_log_max_bytes.label">
+        <source>Maximum pipeline log bytes</source>
+        <target>Maximale Pipeline-Log-Bytes</target>
       </trans-unit>
-      <trans-unit id="registry.pipeline_log_max_chars.description" resname="registry.pipeline_log_max_chars.description">
-        <source>Maximum number of characters stored for long prompt, response or payload values.</source>
-        <target>Maximale Anzahl gespeicherter Zeichen für lange Prompt-, Antwort- oder Payload-Werte.</target>
+      <trans-unit id="registry.pipeline_log_max_bytes.description" resname="registry.pipeline_log_max_bytes.description">
+        <source>Maximum serialized byte budget for pipeline logs. Message previews share this budget proportionally across all messages.</source>
+        <target>Maximales serialisiertes Bytebudget für Pipeline-Logs. Message-Previews teilen dieses Budget proportional auf alle Messages auf.</target>
       </trans-unit>
       <trans-unit id="registry.no" resname="registry.no">
         <source>no</source>

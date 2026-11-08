@@ -1017,3 +1017,66 @@ button.aiassistant-config__badge:hover {
 .aiassistant-config__preview-source--hidden {
     display: none;
 }
+
+.aiassistant-log-navigation {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid var(--aiassistant-card-border);
+    border-radius: 10px;
+    background: var(--aiassistant-card-bg, #fff);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+}
+
+.aiassistant-log-navigation__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--aiassistant-card-border);
+    border-radius: 6px;
+    color: var(--aiassistant-text);
+    background: var(--aiassistant-card-bg, #fff);
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.aiassistant-log-navigation__button:hover:not(:disabled),
+.aiassistant-log-navigation__button:focus-visible {
+    color: #fff;
+    background: var(--aiassistant-primary, #205eb5);
+    border-color: var(--aiassistant-primary, #205eb5);
+}
+
+.aiassistant-log-navigation__button:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.aiassistant-log-navigation__position {
+    min-width: 58px;
+    color: var(--aiassistant-text);
+    text-align: center;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.aiassistant-log-entry--active {
+    outline: 2px solid var(--aiassistant-primary, #205eb5);
+    outline-offset: -2px;
+}
+
+@media (max-width: 700px) {
+    .aiassistant-log-navigation {
+        right: 12px;
+        bottom: 12px;
+    }
+}

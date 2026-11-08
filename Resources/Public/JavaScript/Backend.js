@@ -160,6 +160,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    const logNavigation = document.querySelector('[data-aiassistant-log-navigation]');
+    const logEntries = Array.from(document.querySelectorAll('[data-aiassistant-log-entry]'));
+    const previousLogEntry = logNavigation?.querySelector('[data-aiassistant-log-previous]');
+    const nextLogEntry = logNavigation?.querySelector('[data-aiassistant-log-next]');
+    const logPosition = logNavigation?.querySelector('[data-aiassistant-log-position]');
+
+    if (logNavigation && logEntries.length > 0 && previousLogEntry && nextLogEntry && logPosition) {
+        let activeLogIndex = 0;
+
+        const updateLogNavigation = (scrollToEntry = false) => {
+            previousLogEntry.disabled = activeLogIndex === 0;
+            nextLogEntry.disabled = activeLogIndex === logEntries.length - 1;
+            logPosition.textContent = `${activeLogIndex + 1} / ${logEntries.length}`;
+
+            logEntries.forEach((entry, index) => {
+                entry.classList.toggle('aiassistant-log-entry--active', index === activeLogIndex);
+            });
+
+            if (scrollToEntry) {
+                logEntries[activeLogIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
+        previousLogEntry.addEventListener('click', () => {
+            if (activeLogIndex > 0) {
+                activeLogIndex -= 1;
+                updateLogNavigation(true);
+            }
+        });
+
+        nextLogEntry.addEventListener('click', () => {
+            if (activeLogIndex < logEntries.length - 1) {
+                activeLogIndex += 1;
+                updateLogNavigation(true);
+            }
+        });
+
+        updateLogNavigation();
+        logNavigation.hidden = false;
+    }
+
     const indexerRunDialog = document.getElementById('aiassistant-indexer-run-dialog');
     const indexerRunTitle = indexerRunDialog?.querySelector('[data-aiassistant-indexer-run-title]') || null;
     const indexerRunHelp = indexerRunDialog?.querySelector('[data-aiassistant-indexer-run-help]') || null;

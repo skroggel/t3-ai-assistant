@@ -17,8 +17,11 @@ namespace Madj2k\AiAssistant\Controller;
 
 use Madj2k\AiAssistant\Assistant\Domain\Repository\AssistantProfileRepository;
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
+use Madj2k\AiCore\Exception\ApiException;
+use Madj2k\AiCore\Exception\VectorDatabaseException;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use Madj2k\AiAssistant\Assistant\Service\FrontendRequestTokenService;
@@ -282,5 +285,34 @@ abstract class AbstractController extends ActionController
         return $siteLanguage instanceof SiteLanguage
             ? str_replace('_', '-', (string)$siteLanguage->getLocale())
             : '';
+    }
+
+
+    /**
+     * Returns a user-facing availability message without exposing provider details.
+     *
+     * @param \Throwable $exception Pipeline exception.
+     * @return string Availability message.
+     */
+    protected function getAvailabilityMessage(\Throwable $exception): string
+    {
+        if ($exception instanceof ApiException) {
+            return LocalizationUtility::translate(
+                'chat.error.ai_unavailable',
+                'ai_assistant'
+            );
+        }
+
+        if ($exception instanceof VectorDatabaseException) {
+            return LocalizationUtility::translate(
+                'chat.error.vector_store_unavailable',
+                'ai_assistant'
+            );
+        }
+
+        return LocalizationUtility::translate(
+            'chat.error.generic',
+            'ai_assistant',
+        );
     }
 }

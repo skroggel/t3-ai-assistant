@@ -1,15 +1,39 @@
 <?php
 declare(strict_types=1);
 
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
 namespace Madj2k\AiAssistant\Assistant\TCA;
 
 use Madj2k\AiCore\Assistant\Enum\AssistantPipelineProcessorType;
 
+/**
+ * Class PipelineStepTypeConfiguration
+ *
+ *
+ * @author Steffen Kroggel <developer@steffenkroggel.de>
+ * @copyright Steffen Kroggel <developer@steffenkroggel.de>, Maximilian Fäßler <maximilian@faesslerweb.de>
+ * @package Madj2k\AiAssistant
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3
+ */
 final class PipelineStepTypeConfiguration
 {
-    private const LABEL_PREFIX = 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_pipeline_step.xlf:tx_aiassistant_assistant_pipeline_step.';
 
-    /** @return array<string, array{showitem:string}> */
+    private const string LABEL_PREFIX = 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_assistant_pipeline_step.xlf:tx_aiassistant_assistant_pipeline_step.';
+
+    /**
+     * @return array[]
+     */
     public static function getTypes(): array
     {
         return [
@@ -25,7 +49,9 @@ final class PipelineStepTypeConfiguration
         ];
     }
 
-    /** @return array<int, array{label:string,value:string}> */
+    /**
+     * @return array<int, array{label:string,value:string}>
+     */
     public static function getItems(): array
     {
         return array_map(
@@ -37,6 +63,12 @@ final class PipelineStepTypeConfiguration
         );
     }
 
+    /**
+     * @param string $contextPalette
+     * @param bool $includeUiComponents
+     * @param bool $includeDecision
+     * @return string
+     */
     private static function llmShowItem(
         string $contextPalette,
         bool $includeUiComponents = false,
@@ -70,6 +102,9 @@ final class PipelineStepTypeConfiguration
         return implode(', ', $showItems);
     }
 
+    /**
+     * @return string
+     */
     private static function retrieverShowItem(): string
     {
         return implode(', ', [
@@ -81,6 +116,9 @@ final class PipelineStepTypeConfiguration
         ]);
     }
 
+    /**
+     * @return string
+     */
     private static function decisionShowItem(): string
     {
         return implode(', ', [

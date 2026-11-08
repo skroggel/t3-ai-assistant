@@ -184,7 +184,7 @@ final readonly class IndexingCommandRunner
                 $result->increaseFailed();
                 $result->addDetail('exception', $exception->getMessage());
                 if (!$request->isDryRun()) {
-                    $this->finishState($state, 'error', $result, $exception->getMessage());
+                    $this->finishState($state, 'error', $result, $exception->getMessage(), $request);
                 }
                 $this->persistRun($startedAt, 'error', $result, $request);
                 throw $exception;
@@ -192,7 +192,7 @@ final readonly class IndexingCommandRunner
 
             $status = $result->getFailed() > 0 ? 'error' : 'ok';
             if (!$request->isDryRun()) {
-                $this->finishState($state, $status, $result, '');
+                $this->finishState($state, $status, $result, '', $request);
             }
             if ($this->shouldPersistRun($result, $request)) {
                 $this->persistRun($startedAt, $status, $result, $request);
@@ -328,8 +328,9 @@ final readonly class IndexingCommandRunner
      *
      * @param \Madj2k\AiAssistant\Indexing\Domain\Model\IndexerState $state Runtime state.
      * @param string $status Run status.
-     * @param \Madj2k\AiCore\Indexing\DTO\IndexingResult $result Indexing result.
-     * @param string $errorMessage Error message.
+      * @param \Madj2k\AiCore\Indexing\DTO\IndexingResult $result Indexing result.
+      * @param string $errorMessage Error message.
+      * @param \Madj2k\AiCore\Indexing\DTO\IndexingRequest $request Indexing request.
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
@@ -338,13 +339,20 @@ final readonly class IndexingCommandRunner
         IndexerState $state,
         string $status,
         IndexingResult $result,
-        string $errorMessage
+        string $errorMessage,
+        IndexingRequest $request,
     ): void {
         $state->setStatus($status);
         $state->setLastRunFinishedAt(time());
         $state->setLastError($errorMessage);
         if ($status === 'ok') {
-            $state->setCursor($result->hasMore() ? $result->getNextCursor() : '');
+            $nextCursor = $result->getNextCursor();
+            $preserveCursor = (bool)$request->getOption('preserveCursor', false);
+            $state->setCursor(
+                $result->hasMore() || $preserveCursor
+                    ? ($nextCursor !== '' ? $nextCursor : $request->getCursor())
+                    : ''
+            );
         }
 
         $this->indexerStateRepository->save($state);

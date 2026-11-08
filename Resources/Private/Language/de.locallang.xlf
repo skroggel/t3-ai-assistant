@@ -32,8 +32,8 @@
         <target>Die Wissensdatenbank ist derzeit nicht verfügbar.</target>
       </trans-unit>
       <trans-unit id="chat.error.generic" resname="chat.error.generic">
-        <source>The answer could not be loaded: %s</source>
-        <target>Die Antwort konnte nicht geladen werden: %s</target>
+        <source>The answer could not be loaded. Please try again later.</source>
+        <target>Die Antwort konnte nicht geladen werden. Bitte versuchen Sie es später erneut.</target>
       </trans-unit>
       <trans-unit id="chat.recommendation.line_without_reference" resname="chat.recommendation.line_without_reference">
         <source>I found a matching page for you here: %s</source>

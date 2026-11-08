@@ -25,7 +25,7 @@
         <source>The knowledge database is currently unavailable.</source>
       </trans-unit>
       <trans-unit id="chat.error.generic" resname="chat.error.generic">
-        <source>The answer could not be loaded: %s</source>
+        <source>The answer could not be loaded. Please try again later.</source>
       </trans-unit>
       <trans-unit id="chat.recommendation.line_without_reference" resname="chat.recommendation.line_without_reference">
         <source>I found a matching page for you here: %s</source>

@@ -160,7 +160,9 @@ final class JsonController extends AbstractController
                 'exception_message' => $exception->getMessage(),
                 'exception' => $exception,
             ]);
-            return new JsonResponse(['error' => $exception->getMessage()], 500);
+            return new JsonResponse([
+                'error' => $this->getAvailabilityMessage($exception),
+            ], 500);
         }
 
         return new JsonResponse([
