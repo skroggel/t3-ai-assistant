@@ -1,6 +1,6 @@
 <template>
 
-    <span v-if="message.typing && normalizedLoadingMessages.length" class="chat-box-typing-messages"
+    <span v-if="isLoading && normalizedLoadingMessages.length" class="chat-box-typing-messages"
           aria-label="Loading" v-html="normalizedLoadingMessages[currentLoadingMessage]">
 
     </span>
@@ -11,13 +11,13 @@
 import { computed, onBeforeUnmount, ref, watch } from 'vue';
 
 /**
- * @property {Object} message Current chat message.
+ * @property {Boolean} isLoading Current chat message.
  * @property {Array|string} loadingMessages Optional rotating loading messages.
  * @property {number|string} loadingMessagesTimeout Rotation interval in milliseconds.
  */
 
 const props = defineProps({
-    message: { type: Object, required: true },
+    isLoading: { type: Boolean, required: true },
     loadingMessages: { type: [Array, String], default: () => [] },
     loadingMessagesTimeout: { type: [String, Number], default: 2000 },
 });
@@ -81,7 +81,7 @@ const startLoadingMessageRotation = () => {
 };
 
 /** @type {import('vue').ComputedRef<boolean>} Whether the current message is loading. */
-const isTyping = computed(() => props.message.typing === true);
+const isTyping = computed(() => props.isLoading === true);
 
 watch([isTyping, normalizedLoadingMessages], ([typing]) => {
     if (typing) {
@@ -93,4 +93,3 @@ watch([isTyping, normalizedLoadingMessages], ([typing]) => {
 
 onBeforeUnmount(stopLoadingMessageRotation);
 </script>
-

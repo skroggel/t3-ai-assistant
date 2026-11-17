@@ -61,12 +61,40 @@ const parseArray = (value) => {
 };
 
 /**
+ * Public state and actions returned by the shared chat composable.
+ *
+ * Keeping this contract explicit is important for JavaScript consumers that
+ * are checked from a strict TypeScript/Volar Vue project.
+ *
+ * @typedef {Object} AiAssistantChatResult
+ * @property {import('vue').Ref<Array<Record<string, any>>>} messages Chat messages.
+ * @property {import('vue').Ref<boolean>} loading Whether a request is active.
+ * @property {import('vue').Ref<boolean>} consentGiven Whether consent was accepted.
+ * @property {import('vue').ComputedRef<boolean>} requireConsent Whether consent is required.
+ * @property {import('vue').ComputedRef<boolean>} showLanguageSelector Whether the language selector is visible.
+ * @property {string} effectiveResponseLanguage Effective response language name.
+ * @property {string} effectiveLanguageCode Effective response language code.
+ * @property {Record<string, any>} labels Translated labels.
+ * @property {number} numberOfLoadingDots Number of fallback loading dots.
+ * @property {import('vue').ComputedRef<string>} loadingHtml Optional loading HTML.
+ * @property {import('vue').ComputedRef<Array|string>} loadingMessages Configured loading messages.
+ * @property {import('vue').ComputedRef<number|string>} loadingMessagesTimeout Loading message interval.
+ * @property {import('vue').Ref<string>} statusMessage Accessible status message.
+ * @property {Function} send Sends a chat request.
+ * @property {Function} acceptConsent Accepts consent and initializes the chat.
+ * @property {Function} confirmLanguage Confirms a response language.
+ * @property {Function} startDirectInteraction Starts a direct interaction.
+ * @property {Function} handleComponentClick Handles configured UI actions.
+ * @property {Function} initialize Initializes the chat lifecycle.
+ */
+
+/**
  * Provides the complete assistant conversation state and transport behavior.
  * Rendering components only need to provide markup and optional DOM callbacks.
  *
  * @param {Record<string, any>} props Chat props.
  * @param {{emit?: Function, onConsentAccepted?: Function, onConsentRequired?: Function, onMessagesUpdated?: Function}} options Integration callbacks.
- * @return {Record<string, any>} Chat state and actions.
+ * @return {AiAssistantChatResult} Chat state and actions.
  */
 export const useAiAssistantChat = (props, options = {}) => {
     // `emit` is optional because a customer-owned composable consumer may not
@@ -225,6 +253,7 @@ export const useAiAssistantChat = (props, options = {}) => {
 
     /** @type {boolean} Prevents the initial assistant message from being added twice. */
     let initialMessageAdded = false;
+
     /** @type {boolean} Prevents an automatic query from being sent twice. */
     let autoQueryStarted = false;
 
@@ -350,14 +379,14 @@ export const useAiAssistantChat = (props, options = {}) => {
 
 
     /**
-     * Validates a configured custom element name.
+     * Validates a configured component tag name.
      *
-     * @param {unknown} value Configured element name.
-     * @return {string} Valid custom element name or an empty string.
+     * @param {unknown} value Configured tag name.
+     * @return {string} Valid tag name or an empty string.
      */
-    const normalizeCustomElementName = (value) => {
-        const elementName = String(value || '').trim().toLowerCase();
-        return /^[a-z][a-z0-9]*-[a-z0-9-]+$/.test(elementName) ? elementName : '';
+    const normalizeTagName = (value) => {
+        const tagName = String(value || '').trim().toLowerCase();
+        return /^[a-z][a-z0-9-]*$/.test(tagName) ? tagName : '';
     };
 
 
@@ -439,21 +468,19 @@ export const useAiAssistantChat = (props, options = {}) => {
 
 
     /**
-     * Renders a complete UI block as configured HTML.
+     * Builds the values available to a configured UI component template.
      *
      * @param {{identifier: string, id: string, data: Record<string, any>}} block UI block.
-     * @return {string} Rendered UI component.
+     * @param {Record<string, any>} definition Component definition.
+     * @return {Record<string, any>} Interpolation and action values.
      */
-    const renderComponent = (block) => {
-        const definition = componentDefinitions[block.identifier]
-            || componentDefinitionsByType[block.type];
-        if (!definition || typeof definition.template !== 'string') return '';
-
+    const getComponentValues = (block, definition) => {
         // Add action metadata to the values available to the host template.
         // Actions remain declarative and are executed through `send()` below.
-        const values = {
+        return {
             ...block.data,
             id: block.id,
+            tagName: definition.tagName || '',
             action: block.data.action || (definition.actions?.length === 1 ? definition.actions[0].identifier : ''),
             actions: (definition.actions || []).map((action) => ({
                 identifier: action.identifier,
@@ -464,10 +491,26 @@ export const useAiAssistantChat = (props, options = {}) => {
                 url: action.url || '',
             })),
         };
+    };
+
+
+    /**
+     * Renders a complete UI block as configured HTML.
+     *
+     * @param {{identifier: string, id: string, type: string, data: Record<string, any>}} block UI block.
+     * @return {string} Rendered UI component.
+     */
+    const renderComponent = (block) => {
+        const definition = componentDefinitions[block.identifier]
+            || componentDefinitionsByType[block.type];
+        if (!definition || typeof definition.template !== 'string') return '';
+        if (definition.renderMode === 'container') return '';
+
+        const values = getComponentValues(block, definition);
         const html = sanitizeComponentTemplate(interpolateTemplate(definition.template, values));
         const cssClass = normalizeCssClass(definition.cssClass);
-        const customElement = definition.renderMode === 'customElement'
-            ? normalizeCustomElementName(definition.elementName)
+        const customElement = definition.tagName
+            ? normalizeTagName(definition.tagName)
             : '';
         const tag = customElement || (definition.renderMode === 'inline' ? 'span' : 'div');
         // Store the original block data on the wrapper. Click handling can then
@@ -477,18 +520,91 @@ export const useAiAssistantChat = (props, options = {}) => {
 
 
     /**
+     * Renders a completed structural container around already-rendered content.
+     *
+     * @param {{identifier: string, id: string, definition: Record<string, any>, values: Record<string, any>}} container Container context.
+     * @param {string} content Rendered content between the markers.
+     * @return {string} Rendered container HTML.
+     */
+    const renderContainer = (container, content) => {
+        const configuredTemplate = typeof container.definition.template === 'string'
+            ? container.definition.template.trim()
+            : '';
+        const interpolatedTemplate = configuredTemplate !== ''
+            ? interpolateTemplate(configuredTemplate, container.values)
+            : '';
+        const innerTemplate = interpolatedTemplate !== ''
+            ? sanitizeComponentTemplate(interpolatedTemplate)
+            : '';
+        const tagName = normalizeTagName(container.definition.tagName) || 'div';
+        const element = document.createElement(tagName);
+        const cssClass = normalizeCssClass([
+            container.definition.cssClass,
+            container.values.class,
+        ].filter(Boolean).join(' '));
+
+        element.classList.add('ai-ui-component');
+        cssClass.split(/\s+/).filter(Boolean).forEach((className) => element.classList.add(className));
+        element.setAttribute('data-ai-component', container.identifier);
+        element.setAttribute('data-ai-component-id', container.id);
+        element.setAttribute('data-ai-component-data', JSON.stringify(container.values));
+        element.innerHTML = '';
+
+        const openingTag = element.outerHTML.replace(new RegExp(`</${tagName}>$`, 'i'), '');
+        return `${openingTag}${innerTemplate}${content}</${tagName}>`;
+    };
+
+
+    /**
+     * Parses a UI marker JSON payload and repairs known model escaping mistakes.
+     *
+     * @param {string} markerJson Raw marker JSON.
+     * @return {Record<string, any>|null} Parsed marker data or null when invalid.
+     */
+    const parseMarkerJson = (markerJson) => {
+        const candidates = [
+            markerJson,
+            markerJson.replaceAll('\\u0022', '"'),
+        ];
+
+        for (const candidate of candidates) {
+            try {
+                return JSON.parse(candidate);
+            } catch (error) {
+                // Try the narrow repair below before treating the marker as text.
+                const repairedCandidate = candidate.replace(/}\s*}\s*}\s*]/g, '}}]');
+                if (repairedCandidate === candidate) continue;
+
+                try {
+                    return JSON.parse(repairedCandidate);
+                } catch (repairError) {
+                    // Continue with the next encoding candidate.
+                }
+            }
+        }
+
+        return null;
+    };
+
+
+    /**
      * Parses the streamed assistant text into Markdown and self-contained UI JSON markers.
      *
      * @param {string} content Accumulated assistant response.
+     * @param {{closeOpenContainers?: boolean}} renderOptions Rendering options.
      * @return {string} Rendered response HTML.
      */
-    const renderResponse = (content) => {
+    const renderResponse = (content, { closeOpenContainers = false } = {}) => {
         // Markdown and UI markers are accumulated separately. This allows an
         // inline component to be inserted into already-rendered Markdown while
         // block components stay outside the surrounding paragraph structure.
-        let html = '';
+        // Structural container markers are omitted until the next container or
+        // the final render replaces the already-rendered segment with one wrapper.
+        const renderedSegments = [];
         let markdown = '';
         const inlineComponents = new Map();
+        /** @type {{identifier: string, id: string, definition: Record<string, any>, values: Record<string, any>, startIndex: number}|null} */
+        let openContainer = null;
         let offset = 0;
         const usedIds = new Set();
         let marker;
@@ -503,9 +619,23 @@ export const useAiAssistantChat = (props, options = {}) => {
             inlineComponents.forEach((component, token) => {
                 rendered = rendered.replaceAll(token, component);
             });
-            html += rendered;
+            renderedSegments.push(rendered);
             markdown = '';
             inlineComponents.clear();
+        };
+
+        /** Closes the current container around the rendered segment collected since its marker. */
+        const closeOpenContainer = () => {
+            if (!openContainer) return;
+
+            const contentStart = openContainer.startIndex;
+            const containerContent = renderedSegments.slice(contentStart).join('');
+            renderedSegments.splice(
+                contentStart,
+                renderedSegments.length - contentStart,
+                renderContainer(openContainer, containerContent),
+            );
+            openContainer = null;
         };
 
         while ((marker = markerPattern.exec(content)) !== null) {
@@ -547,12 +677,11 @@ export const useAiAssistantChat = (props, options = {}) => {
                 break;
             }
 
-            let data;
-            try {
-                data = JSON.parse(content.slice(jsonStart, jsonEnd));
-            } catch (error) {
-                // Invalid marker JSON is treated as literal assistant text rather
-                // than making the complete response unusable.
+            const markerJson = content.slice(jsonStart, jsonEnd);
+            const data = parseMarkerJson(markerJson);
+            if (!data) {
+                // Invalid marker JSON is treated as literal assistant text
+                // rather than making the complete response unusable.
                 markdown += content.slice(offset, jsonEnd);
                 offset = jsonEnd;
                 markerPattern.lastIndex = jsonEnd;
@@ -577,6 +706,7 @@ export const useAiAssistantChat = (props, options = {}) => {
             }
             const definition = componentDefinitions[componentIdentifier]
                 || componentDefinitionsByType[componentType];
+            const renderMode = definition?.renderMode || '';
             const isInline = definition?.renderMode === 'inline';
             if (!isInline) flushMarkdown();
 
@@ -596,6 +726,26 @@ export const useAiAssistantChat = (props, options = {}) => {
             delete data.identifier;
             delete data.data;
             Object.assign(componentData, data);
+
+            if (renderMode === 'container') {
+                closeOpenContainer();
+                openContainer = {
+                    identifier: componentIdentifier,
+                    id,
+                    definition,
+                    values: getComponentValues({
+                        type: componentType,
+                        identifier: componentIdentifier,
+                        id,
+                        data: componentData,
+                    }, definition),
+                    startIndex: renderedSegments.length,
+                };
+                offset = jsonEnd;
+                markerPattern.lastIndex = jsonEnd;
+                continue;
+            }
+
             const component = renderComponent({
                 type: componentType,
                 identifier: componentIdentifier,
@@ -612,14 +762,17 @@ export const useAiAssistantChat = (props, options = {}) => {
                 // Block components terminate the current Markdown fragment and
                 // are appended as their own top-level HTML block.
                 flushMarkdown();
-                html += component;
+                renderedSegments.push(component);
             }
             offset = jsonEnd;
             markerPattern.lastIndex = jsonEnd;
         }
         markdown += content.slice(offset);
         flushMarkdown();
-        return html;
+        if (closeOpenContainers) {
+            closeOpenContainer();
+        }
+        return renderedSegments.join('');
     };
 
 
@@ -743,14 +896,24 @@ export const useAiAssistantChat = (props, options = {}) => {
                 const availableLength = force
                     ? answer.length
                     : Math.max(0, answer.length - renderLagCharacters);
-                if (availableLength <= renderedAnswer.length) return;
+                if (availableLength <= renderedAnswer.length) {
+                    if (force) {
+                        messages.value[messageIndex].html = renderResponse(renderedAnswer, {
+                            closeOpenContainers: true,
+                        });
+                        await notifyMessagesUpdated();
+                    }
+                    return;
+                }
                 while (renderedAnswer.length < availableLength) {
                     const nextLength = Math.min(
                         availableLength,
                         renderedAnswer.length + renderChunkCharacters,
                     );
                     renderedAnswer = answer.slice(0, nextLength);
-                    messages.value[messageIndex].html = renderResponse(renderedAnswer);
+                    messages.value[messageIndex].html = renderResponse(renderedAnswer, {
+                        closeOpenContainers: force,
+                    });
                     await notifyMessagesUpdated();
                     await waitForPaint();
                     if (renderedAnswer.length < availableLength) await wait(responseMessageDelay);
@@ -783,7 +946,7 @@ export const useAiAssistantChat = (props, options = {}) => {
                 // assistant answer.
                 messages.value[messageIndex].html = renderMarkdown(answer);
                 try {
-                    const renderedResponse = renderResponse(answer);
+                    const renderedResponse = renderResponse(answer, { closeOpenContainers: true });
                     if (renderedResponse !== '') {
                         messages.value[messageIndex].html = renderedResponse;
                     }
@@ -811,7 +974,9 @@ export const useAiAssistantChat = (props, options = {}) => {
                 ? error.message
                 : (props.errorMessage || labels.errorMessage || 'The answer could not be loaded.');
             if (sendOptions.showUserMessage === false && sendOptions.fallbackMessage) {
-                messages.value[messageIndex].html = renderResponse(sendOptions.fallbackMessage);
+                messages.value[messageIndex].html = renderResponse(sendOptions.fallbackMessage, {
+                    closeOpenContainers: true,
+                });
             } else {
                 messages.value[messageIndex].html = renderMarkdown(errorMessage);
                 statusMessage.value = errorMessage;

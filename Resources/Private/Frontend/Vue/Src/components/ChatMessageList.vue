@@ -18,7 +18,7 @@
                 <div v-html="message.html" v-if="message.html"/>
                 <span v-if="message.typing" class="chat-box-typing-placeholder" aria-label="Loading">
                     <LoadingMessages
-                        :message="message"
+                        :is-loading="message.typing"
                         :loading-messages="loadingMessages"
                         :loading-messages-timeout="loadingMessagesTimeout"
                     />

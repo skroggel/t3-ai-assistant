@@ -47,6 +47,9 @@
       <trans-unit id="preset.headline">
         <source>Headline</source>
       </trans-unit>
+      <trans-unit id="preset.container">
+        <source>Container</source>
+      </trans-unit>
       <trans-unit id="preset.custom">
         <source>Custom</source>
       </trans-unit>
@@ -63,13 +66,19 @@
         <source>Inline HTML</source>
       </trans-unit>
       <trans-unit id="render_mode.custom_element">
-        <source>Custom Element</source>
+        <source>Custom Element (Block)</source>
       </trans-unit>
-      <trans-unit id="element_name">
-        <source>Custom Element name</source>
+      <trans-unit id="render_mode.custom_element_inline">
+        <source>Custom Element (Inline)</source>
       </trans-unit>
-      <trans-unit id="element_name.description">
-        <source>Registered custom element tag, for example mv-card-slider.</source>
+      <trans-unit id="render_mode.container">
+        <source>Structural container</source>
+      </trans-unit>
+      <trans-unit id="tag_name">
+        <source>Tag name</source>
+      </trans-unit>
+      <trans-unit id="tag_name.description">
+        <source>Optional outer tag name. Use a standard HTML tag or a registered custom element tag.</source>
       </trans-unit>
       <trans-unit id="description">
         <source>Description for the AI</source>

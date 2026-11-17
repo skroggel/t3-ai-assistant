@@ -20,7 +20,7 @@ return [
     'types' => [
         '1' => [
             'showitem' => '
-                title, identifier, preset, render_mode, element_name, css_class, button_actions,
+                title, identifier, preset, render_mode, tag_name, css_class, button_actions,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_ui_component.xlf:definition_tab,
                     description, template, actions, data_schema, placeholders,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_ui_component.xlf:override_tab,
@@ -54,6 +54,7 @@ return [
                     ['label' => $ll . 'preset.progress_indicator', 'value' => 'progress-indicator'],
                     ['label' => $ll . 'preset.decorative', 'value' => 'decorative'],
                     ['label' => $ll . 'preset.headline', 'value' => 'headline'],
+                    ['label' => $ll . 'preset.container', 'value' => 'container'],
                     ['label' => $ll . 'preset.custom', 'value' => 'custom'],
                 ],
                 'default' => 'custom',
@@ -69,20 +70,19 @@ return [
                 'items' => [
                     ['label' => $ll . 'render_mode.block', 'value' => 'block'],
                     ['label' => $ll . 'render_mode.inline', 'value' => 'inline'],
-                    ['label' => $ll . 'render_mode.custom_element', 'value' => 'customElement'],
+                    ['label' => $ll . 'render_mode.container', 'value' => 'container'],
                 ],
                 'default' => 'block',
             ],
         ],
-        'element_name' => [
-            'label' => $ll . 'element_name',
-            'description' => $ll . 'element_name.description',
-            'displayCond' => 'FIELD:render_mode:=:customElement',
+        'tag_name' => [
+            'label' => $ll . 'tag_name',
+            'description' => $ll . 'tag_name.description',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim,lower',
                 'max' => 128,
-                'placeholder' => 'mv-card-slider',
+                'placeholder' => 'custom-card-slider',
             ],
         ],
         'css_class' => [
@@ -106,17 +106,26 @@ return [
         'template' => [
             'label' => $ll . 'template',
             'description' => $ll . 'template.description',
-            'displayCond' => 'FIELD:preset:=:custom',
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:preset:=:custom',
+                    'FIELD:render_mode:!=:container',
+                ],
+            ],
             'config' => [
                 'type' => 'text',
-                'required' => true,
                 'rows' => 10,
             ],
         ],
         'actions' => [
             'label' => $ll . 'actions',
             'description' => $ll . 'actions.description',
-            'displayCond' => 'FIELD:preset:=:custom',
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:preset:=:custom',
+                    'FIELD:render_mode:!=:container',
+                ],
+            ],
             'config' => [
                 'type' => 'text',
                 'rows' => 10,
@@ -147,7 +156,12 @@ return [
         'override_template' => [
             'label' => $ll . 'override_template',
             'description' => $ll . 'override_template.description',
-            'displayCond' => 'FIELD:preset:!=:custom',
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:preset:!=:custom',
+                    'FIELD:render_mode:!=:container',
+                ],
+            ],
             'config' => [
                 'type' => 'text',
                 'rows' => 10,
@@ -156,7 +170,12 @@ return [
         'override_actions' => [
             'label' => $ll . 'override_actions',
             'description' => $ll . 'override_actions.description',
-            'displayCond' => 'FIELD:preset:!=:custom',
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:preset:!=:custom',
+                    'FIELD:render_mode:!=:container',
+                ],
+            ],
             'config' => [
                 'type' => 'text',
                 'rows' => 10,
@@ -174,7 +193,12 @@ return [
         'override_placeholders' => [
             'label' => $ll . 'override_placeholders',
             'description' => $ll . 'override_placeholders.description',
-            'displayCond' => 'FIELD:preset:!=:custom',
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:preset:!=:custom',
+                    'FIELD:render_mode:!=:container',
+                ],
+            ],
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
@@ -193,7 +217,12 @@ return [
         'placeholders' => [
             'label' => $ll . 'placeholders',
             'description' => $ll . 'placeholders.description',
-            'displayCond' => 'FIELD:preset:=:custom',
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:preset:=:custom',
+                    'FIELD:render_mode:!=:container',
+                ],
+            ],
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',

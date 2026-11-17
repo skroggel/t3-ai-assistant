@@ -127,7 +127,7 @@ final readonly class UIComponentProvider implements UIComponentProviderInterface
                 $record->getRenderMode(),
                 '',
                 '',
-                $record->getElementName(),
+                $record->getTagName(),
             );
         } else {
             $definition = $preset === 'buttons'
@@ -140,6 +140,8 @@ final readonly class UIComponentProvider implements UIComponentProviderInterface
                     'actions' => $this->parseActions($record->getOverrideActions()),
                     'dataSchema' => $this->parseJson($record->getOverrideDataSchema()),
                     'placeholders' => $this->splitList($record->getOverridePlaceholders()),
+                    'renderMode' => $record->getRenderMode(),
+                    'tagName' => $record->getTagName(),
                     'cssClass' => $record->getCssClass(),
                 ])
                 ->withType($preset)
