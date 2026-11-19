@@ -203,6 +203,14 @@
         <source>Select reusable presentation rules available to the pipeline. Pipeline steps can override this selection.</source>
         <target>Wählen Sie wiederverwendbare Darstellungsregeln für die Pipeline aus. Pipeline-Schritte können diese Auswahl überschreiben.</target>
       </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_profile.glossary" resname="tx_aiassistant_assistant_profile.glossary">
+        <source>Glossary</source>
+        <target>Glossar</target>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_profile.glossary.description" resname="tx_aiassistant_assistant_profile.glossary.description">
+        <source>Localized source-to-target terminology mapping used for answer prompts.</source>
+        <target>Lokalisierte Zuordnung von Ausgangs- zu Zielbegriffen für Antwort-Prompts.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

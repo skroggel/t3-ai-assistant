@@ -35,3 +35,16 @@ Optional PSR log output is written to ``var/log/tx_aiassistant.log``. General
 TYPO3 errors are normally available in ``var/log/typo3_*.log``. Development
 systems can log complete prompts and responses. Production systems should
 minimize logging and mask sensitive content where possible.
+
+Full trace files
+----------------
+
+Enable ``Write full trace file`` under **AI Assistant > Configuration** to
+write one complete masked JSONL file per chat request below
+``var/log/ai-assistant/pipeline/``. These files intentionally do not use the
+database ``maxBytes`` limit. The regular database trace remains truncated and
+continues to use the configured limit.
+
+Full trace files can contain complete prompts, retrieval context and model
+responses. Keep the option disabled in production unless the files are secured,
+retained for a defined period and access is restricted.

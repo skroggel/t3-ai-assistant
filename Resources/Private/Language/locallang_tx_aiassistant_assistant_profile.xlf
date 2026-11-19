@@ -153,6 +153,12 @@
       <trans-unit id="tx_aiassistant_assistant_profile.presentation_rules.description" resname="tx_aiassistant_assistant_profile.presentation_rules.description">
         <source>Select reusable presentation rules available to the pipeline. Pipeline steps can override this selection.</source>
       </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_profile.glossary" resname="tx_aiassistant_assistant_profile.glossary">
+        <source>Glossary</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_profile.glossary.description" resname="tx_aiassistant_assistant_profile.glossary.description">
+        <source>Localized source-to-target terminology mapping used for answer prompts.</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

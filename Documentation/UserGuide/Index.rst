@@ -14,6 +14,7 @@ User guide
     RetrievalAndContext
     VectorFilters
     RetrievalSelection
+    Glossary
     UIComponents
     PipelineExport
     ManagingIndexer

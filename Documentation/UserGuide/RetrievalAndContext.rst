@@ -28,6 +28,22 @@ prompt_metadata_fields
     Comma-separated list of metadata fields included in the prompt context and
     exposed as answer sources in the frontend response.
 
+Backend field scope
+-------------------
+
+The TYPO3 backend keeps retrieval-specific limits on retriever steps:
+
+* ``max_context_chunks``;
+* ``max_chunk_characters``;
+* ``prompt_metadata_fields``.
+
+Answer generator and quality gate steps additionally expose
+``max_context_characters`` for the global answer-context character limit. The
+The quality gate also has the ``include_retrieval_context`` switch. Disable it
+to validate the answer candidate without passing retrieved documents or the
+derived retrieval context to that step. This is an explicit switch; setting a
+character limit to a very small value does not disable retrieval context.
+
 Recommended metadata fields
 ---------------------------
 

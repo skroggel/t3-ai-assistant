@@ -135,6 +135,9 @@ services:
   Madj2k\AiCore\Assistant\Presentation\UIComponents\UIComponentProviderInterface:
     alias: Madj2k\AiAssistant\Assistant\Presentation\UIComponents\UIComponentProvider
 
+  Madj2k\AiCore\Assistant\Glossary\GlossaryProviderInterface:
+    alias: Madj2k\AiAssistant\Assistant\Presentation\Glossary\GlossaryProvider
+
   Madj2k\AiCore\Connection\VectorStore\Filter\FilterValueResolverInterface:
     alias: Madj2k\AiAssistant\Connection\VectorStore\Filter\TYPO3FilterValueResolver
 

@@ -117,6 +117,13 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
     /** Stable identifiers of reusable presentation rules available to the pipeline. */
     protected string $presentationRules = '';
 
+    /**
+     * Localized source-to-target glossary assigned to the profile.
+     *
+     * @var Glossary|null
+     */
+    protected ?Glossary $glossary = null;
+
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Madj2k\AiAssistant\Assistant\Domain\Model\AssistantPipelineStep>
@@ -439,16 +446,46 @@ class AssistantProfile extends AbstractEntity implements AssistantConfigurationI
         $this->uiComponents = $uiComponents;
     }
 
-    /** @return array<int,string> */
+    /**
+     * Returns stable identifiers of the available presentation rules.
+     *
+     * @return array<int,string> Presentation rule identifiers.
+     */
     public function getPresentationRuleIdentifiers(): array
     {
         return array_values(array_filter(array_map('trim', explode(',', $this->presentationRules))));
     }
 
-    /** @param string $presentationRules Comma-separated stable identifiers. */
+    /**
+     * Sets the available presentation rule identifiers.
+     *
+     * @param string $presentationRules Comma-separated stable identifiers.
+     * @return void
+     */
     public function setPresentationRules(string $presentationRules): void
     {
         $this->presentationRules = $presentationRules;
+    }
+
+    /**
+     * Returns the assigned glossary.
+     *
+     * @return Glossary|null Localized glossary.
+     */
+    public function getGlossary(): ?Glossary
+    {
+        return $this->glossary;
+    }
+
+    /**
+     * Assigns a glossary to the profile.
+     *
+     * @param Glossary|null $glossary Glossary.
+     * @return void
+     */
+    public function setGlossary(?Glossary $glossary): void
+    {
+        $this->glossary = $glossary;
     }
 
     /**

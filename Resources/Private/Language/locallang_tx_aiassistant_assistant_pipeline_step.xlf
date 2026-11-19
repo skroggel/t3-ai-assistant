@@ -48,6 +48,9 @@
       <trans-unit id="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules" resname="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules">
         <source>Include Retrieval Rules</source>
       </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.include_retrieval_context" resname="tx_aiassistant_assistant_pipeline_step.include_retrieval_context">
+        <source>Include Retrieval Context</source>
+      </trans-unit>
       <trans-unit id="tx_aiassistant_assistant_pipeline_step.max_context_characters" resname="tx_aiassistant_assistant_pipeline_step.max_context_characters">
         <source>Max Context Characters</source>
       </trans-unit>
@@ -167,6 +170,9 @@
       </trans-unit>
       <trans-unit id="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules.description" resname="tx_aiassistant_assistant_pipeline_step.include_retrieval_rules.description">
         <source>Adds the assistant retrieval rules to this step. Use it for retrieval and context-related processors.</source>
+      </trans-unit>
+      <trans-unit id="tx_aiassistant_assistant_pipeline_step.include_retrieval_context.description" resname="tx_aiassistant_assistant_pipeline_step.include_retrieval_context.description">
+        <source>Includes retrieved documents and the derived retrieval context in this step's prompt.</source>
       </trans-unit>
       <trans-unit id="tx_aiassistant_assistant_pipeline_step.include_output_rules.description" resname="tx_aiassistant_assistant_pipeline_step.include_output_rules.description">
         <source>Adds the assistant output rules to this step. Use it when the processor creates or validates user-facing output.</source>

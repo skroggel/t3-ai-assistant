@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="messages" product-name="ai_assistant">
+    <body>
+      <trans-unit id="tx_aiassistant_glossary" resname="tx_aiassistant_glossary"><source>Glossary</source></trans-unit>
+      <trans-unit id="title" resname="title"><source>Title</source></trans-unit>
+      <trans-unit id="identifier" resname="identifier"><source>Identifier</source></trans-unit>
+      <trans-unit id="identifier.description" resname="identifier.description"><source>Stable identifier used to reference this glossary in prompt context.</source></trans-unit>
+      <trans-unit id="content" resname="content"><source>Source-to-target glossary mappings</source></trans-unit>
+      <trans-unit id="content.description" resname="content.description"><source>Keep one complete mapping list per language. Include source terms and their preferred target-language translations.</source></trans-unit>
+    </body>
+  </file>
+</xliff>

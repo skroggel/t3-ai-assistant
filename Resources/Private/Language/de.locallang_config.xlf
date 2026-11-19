@@ -1335,6 +1335,14 @@
         <source>Maximum serialized byte budget for pipeline logs. Message previews share this budget proportionally across all messages.</source>
         <target>Maximales serialisiertes Bytebudget für Pipeline-Logs. Message-Previews teilen dieses Budget proportional auf alle Messages auf.</target>
       </trans-unit>
+      <trans-unit id="registry.pipeline_log_write_full_trace_file.label" resname="registry.pipeline_log_write_full_trace_file.label">
+        <source>Write full trace file</source>
+        <target>Vollständige Trace-Datei schreiben</target>
+      </trans-unit>
+      <trans-unit id="registry.pipeline_log_write_full_trace_file.description" resname="registry.pipeline_log_write_full_trace_file.description">
+        <source>Writes one complete masked JSONL trace per chat to var/log/ai-assistant/pipeline without applying the database max-bytes limit.</source>
+        <target>Schreibt pro Chat einen vollständigen maskierten JSONL-Trace nach var/log/ai-assistant/pipeline, ohne das Datenbank-Byte-Limit anzuwenden.</target>
+      </trans-unit>
       <trans-unit id="registry.no" resname="registry.no">
         <source>no</source>
         <target>nein</target>

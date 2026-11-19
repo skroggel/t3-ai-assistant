@@ -5,6 +5,7 @@ use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantProfile;
 use Madj2k\AiAssistant\Assistant\Domain\Model\PipelineTrace;
 use Madj2k\AiAssistant\Assistant\Domain\Model\AssistantPipelineStep;
 use Madj2k\AiAssistant\Assistant\Domain\Model\PresentationRule;
+use Madj2k\AiAssistant\Assistant\Domain\Model\Glossary;
 use Madj2k\AiAssistant\Connection\Domain\Model\AiConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorStoreConnection;
 use Madj2k\AiAssistant\Connection\Domain\Model\VectorFilterCondition;
@@ -33,6 +34,9 @@ return [
     ],
     PresentationRule::class => [
         'tableName' => 'tx_aiassistant_presentation_rule',
+    ],
+    Glossary::class => [
+        'tableName' => 'tx_aiassistant_glossary',
     ],
     AssistantProfile::class => [
         'tableName' => 'tx_aiassistant_assistant_profile',

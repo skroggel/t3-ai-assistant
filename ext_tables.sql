@@ -40,7 +40,18 @@ CREATE TABLE `tx_aiassistant_assistant_profile` (
     `output_rules` text,
     `error_handling` varchar(16) DEFAULT 'default' NOT NULL,
     `ui_components` varchar(2048) DEFAULT '' NOT NULL,
-    `presentation_rules` varchar(2048) DEFAULT '' NOT NULL
+    `presentation_rules` varchar(2048) DEFAULT '' NOT NULL,
+    `glossary` int(11) unsigned DEFAULT '0' NOT NULL
+);
+
+CREATE TABLE `tx_aiassistant_glossary` (
+    `title` varchar(255) DEFAULT '' NOT NULL,
+    `identifier` varchar(128) DEFAULT '' NOT NULL,
+    `content` text,
+    `sys_language_uid` int(11) DEFAULT '0' NOT NULL,
+    `l10n_parent` int(11) DEFAULT '0' NOT NULL,
+    `l10n_source` int(11) DEFAULT '0' NOT NULL,
+    `l10n_diffsource` mediumblob
 );
 
 CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
@@ -49,7 +60,6 @@ CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
     `type` varchar(255) DEFAULT '' NOT NULL,
     `processor_identifier` varchar(255) DEFAULT '' NOT NULL,
     `retrieval_identifier` varchar(128) DEFAULT '' NOT NULL,
-    `contracts` text,
     `decision_contracts` text,
     `intent_selection_output_types` varchar(255) DEFAULT '' NOT NULL,
     `decision_payload_retrievers` text,
@@ -61,6 +71,7 @@ CREATE TABLE `tx_aiassistant_assistant_pipeline_step` (
     `include_identity_prompt` tinyint(4) unsigned DEFAULT '1' NOT NULL,
     `include_behavior_rules` tinyint(4) unsigned DEFAULT '0' NOT NULL,
     `include_retrieval_rules` tinyint(4) unsigned DEFAULT '1' NOT NULL,
+    `include_retrieval_context` tinyint(4) unsigned DEFAULT '1' NOT NULL,
     `include_output_rules` tinyint(4) unsigned DEFAULT '0' NOT NULL,
     `step_identity` text,
     `step_behavior_rules` text,
@@ -105,7 +116,7 @@ CREATE TABLE `tx_aiassistant_ui_component` (
     `title` varchar(255) DEFAULT '' NOT NULL,
     `preset` varchar(128) DEFAULT 'custom' NOT NULL,
     `render_mode` varchar(32) DEFAULT 'block' NOT NULL,
-    `element_name` varchar(128) DEFAULT '' NOT NULL,
+    `tag_name` varchar(128) DEFAULT '' NOT NULL,
     `css_class` varchar(255) DEFAULT '' NOT NULL,
     `identifier` varchar(128) DEFAULT '' NOT NULL,
     `description` text,

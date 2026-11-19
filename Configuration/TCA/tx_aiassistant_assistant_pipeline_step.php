@@ -48,7 +48,11 @@ return [
         ],
 
         'context' => [
-            'showitem' => 'max_context_chunks, --linebreak--, max_context_characters, --linebreak--, max_chunk_characters, --linebreak--, prompt_metadata_fields',
+            'showitem' => 'include_retrieval_context, --linebreak--, max_context_characters',
+        ],
+
+        'contextWithFrontendSources' => [
+            'showitem' => 'include_retrieval_context, --linebreak--, max_context_characters',
         ],
 
         'runtime' => [
@@ -399,6 +403,15 @@ return [
                 'type' => 'number',
                 'format' => 'integer',
                 'default' => 6,
+            ],
+        ],
+        'include_retrieval_context' => [
+            'label' => $ll . 'tx_aiassistant_assistant_pipeline_step.include_retrieval_context',
+            'description' => $ll . 'tx_aiassistant_assistant_pipeline_step.include_retrieval_context.description',
+            'displayCond' => 'FIELD:type:=:quality_gate',
+            'config' => [
+                'type' => 'check',
+                'default' => 1,
             ],
         ],
         'max_context_characters' => [

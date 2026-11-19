@@ -18,6 +18,8 @@ Create a ``UI component`` record and select a preset. The available presets are:
 * ``buttons``
 * ``progress-indicator``
 * ``decorative``
+* ``container``
+* ``headline``
 
 Preset templates, schemas and rendering behavior are supplied by ``ai-core``.
 The TYPO3 record only selects the preset, assigns it to a profile or pipeline

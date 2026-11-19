@@ -144,6 +144,19 @@ final class BackendRegistryFieldProvider
                 'maxLength' => 8,
                 'allowDelete' => false,
             ],
+            [
+                'key' => 'chat.pipelineLog.writeFullTraceFile',
+                'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.pipeline_log_write_full_trace_file.label',
+                'description' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.pipeline_log_write_full_trace_file.description',
+                'type' => 'select',
+                'default' => '0',
+                'maxLength' => 1,
+                'allowDelete' => false,
+                'options' => [
+                    ['value' => '0', 'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.no'],
+                    ['value' => '1', 'label' => 'LLL:EXT:ai_assistant/Resources/Private/Language/locallang_config.xlf:registry.yes'],
+                ],
+            ],
         ];
 
         foreach ($this->fieldContributors as $fieldContributor) {

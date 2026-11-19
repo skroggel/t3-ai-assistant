@@ -89,13 +89,6 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
     protected string $intentSelectionOutputTypes = '';
 
     /**
-     * Generic response contract identifiers stored as comma-separated values.
-     *
-     * @var string
-     */
-    protected string $contracts = '';
-
-    /**
      * Primary response contract identifier.
      *
      * @var string
@@ -157,6 +150,14 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
      * @var bool
      */
     protected bool $includeRetrievalRules = true;
+
+
+    /**
+     * Include retrieved context in the step prompt.
+     *
+     * @var bool
+     */
+    protected bool $includeRetrievalContext = true;
 
 
     /**
@@ -499,40 +500,6 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
     }
 
     /**
-     * Returns configured response contracts with legacy fallback.
-     *
-     * @return array<int,string> Contract identifiers.
-     */
-    public function getContracts(): array
-    {
-        $contracts = $this->parseContractList($this->contracts);
-        if ($contracts !== []) {
-            return $contracts;
-        }
-
-        return array_values(array_filter(array_map(
-            static fn (string $type): string => match ($type) {
-                'retriever' => 'retrieval',
-                'presentation_rules' => 'presentationRules',
-                'retriever_payload' => 'retrieverPayload',
-                default => '',
-            },
-            $this->getIntentSelectionOutputTypes(),
-        )));
-    }
-
-    /**
-     * Sets response contract identifiers.
-     *
-     * @param string $contracts Comma-separated contract identifiers.
-     * @return void
-     */
-    public function setContracts(string $contracts): void
-    {
-        $this->contracts = trim($contracts);
-    }
-
-    /**
      * Returns the explicitly selected primary response contract.
      *
      * @return string Contract identifier or an empty string for automatic resolution.
@@ -556,22 +523,6 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
     public function setDecisionContracts(string $decisionContracts): void
     {
         $this->decisionContracts = trim($decisionContracts);
-    }
-
-    /**
-     * Parses a comma- or line-separated contract list.
-     *
-     * @param string $value Contract list.
-     * @return array<int,string> Contract identifiers.
-     */
-    private function parseContractList(string $value): array
-    {
-        $contracts = preg_split('/[,\r\n]+/', trim($value)) ?: [];
-
-        return array_values(array_unique(array_filter(
-            array_map('trim', $contracts),
-            static fn (string $contract): bool => $contract !== '',
-        )));
     }
 
     /**
@@ -789,6 +740,29 @@ class AssistantPipelineStep extends AbstractEntity implements FilterAwarePipelin
     public function setIncludeRetrievalRules(bool $includeRetrievalRules): void
     {
         $this->includeRetrievalRules = $includeRetrievalRules;
+    }
+
+
+    /**
+     * Returns whether retrieved context is included.
+     *
+     * @return bool
+     */
+    public function getIncludeRetrievalContext(): bool
+    {
+        return $this->includeRetrievalContext;
+    }
+
+
+    /**
+     * Sets whether retrieved context is included.
+     *
+     * @param bool $includeRetrievalContext Include retrieved context.
+     * @return void
+     */
+    public function setIncludeRetrievalContext(bool $includeRetrievalContext): void
+    {
+        $this->includeRetrievalContext = $includeRetrievalContext;
     }
 
 

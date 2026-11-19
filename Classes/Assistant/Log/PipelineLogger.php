@@ -24,6 +24,7 @@ use Madj2k\AiCore\Exception\AppException;
 use Madj2k\AiAssistant\Assistant\Domain\Repository\PipelineTraceRepository;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Utility\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -335,7 +336,9 @@ class PipelineLogger implements PipelineLoggerInterface
         $payload = array_merge($logMetaData->toPayload(), $payload, [
             'logged_at_microtime' => microtime(true),
         ]);
+        $fullPayload = $this->sanitizeArray($payload, false);
         $payload = $this->sanitizeArray($payload);
+        $this->writeFullTraceFile($level, $eventName, $logMetaData, $fullPayload);
 
         try {
             $trace = new PipelineTrace();
@@ -469,11 +472,11 @@ class PipelineLogger implements PipelineLoggerInterface
      * @return array<string,mixed>
      * @throws AppException
      */
-    protected function sanitizeArray(array $payload): array
+    protected function sanitizeArray(array $payload, bool $truncate = true): array
     {
         $sanitized = [];
         foreach ($payload as $key => $value) {
-            $sanitized[$key] = $this->sanitizeValue((string)$key, $value);
+            $sanitized[$key] = $this->sanitizeValue((string)$key, $value, $truncate);
         }
 
         return $sanitized;
@@ -485,12 +488,12 @@ class PipelineLogger implements PipelineLoggerInterface
      * @return mixed Sanitized value.
      * @throws \Madj2k\AiCore\Exception\AppException
      */
-    protected function sanitizeValue(string $key, mixed $value): mixed
+    protected function sanitizeValue(string $key, mixed $value, bool $truncate = true): mixed
     {
         if (is_array($value)) {
             $sanitized = [];
             foreach ($value as $childKey => $childValue) {
-                $sanitized[$childKey] = $this->sanitizeValue((string)$childKey, $childValue);
+                $sanitized[$childKey] = $this->sanitizeValue((string)$childKey, $childValue, $truncate);
             }
 
             return $sanitized;
@@ -500,7 +503,9 @@ class PipelineLogger implements PipelineLoggerInterface
             return $value;
         }
 
-        $value = $this->truncate($value);
+        if ($truncate) {
+            $value = $this->truncate($value);
+        }
         if ((bool)Config::get('chat.pipelineLog.maskSensitive', true)) {
             $lowerKey = strtolower($key);
             if (preg_match('/(authorization|token|secret|password|apikey|api_key|client_secret)/', $lowerKey) === 1) {
@@ -512,6 +517,49 @@ class PipelineLogger implements PipelineLoggerInterface
         }
 
         return $value;
+    }
+
+
+    /**
+     * Writes one complete, masked event to the optional full trace file.
+     *
+     * @param string $level Log level.
+     * @param string $eventName Event name.
+     * @param PipelineLogMetaData $logMetaData Trace context.
+     * @param array<string,mixed> $payload Complete masked payload.
+     * @return void
+     */
+    protected function writeFullTraceFile(
+        string $level,
+        string $eventName,
+        PipelineLogMetaData $logMetaData,
+        array $payload,
+    ): void {
+        if (!(bool)Config::get('chat.pipelineLog.writeFullTraceFile', false)) {
+            return;
+        }
+
+        try {
+            $directory = \TYPO3\CMS\Core\Core\Environment::getVarPath() . '/log/ai-assistant/pipeline';
+            GeneralUtility::mkdir_deep($directory);
+            $traceId = $logMetaData->getTraceId();
+            $line = json_encode([
+                'trace_id' => $traceId,
+                'event_name' => $eventName,
+                'level' => $level,
+                'logged_at_microtime' => microtime(true),
+                'payload' => $payload,
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE);
+
+            if (is_string($line)) {
+                file_put_contents($directory . '/' . $traceId . '.jsonl', $line . PHP_EOL, FILE_APPEND | LOCK_EX);
+            }
+        } catch (\Throwable $exception) {
+            $this->logger->warning('Full chat pipeline log could not be written.', [
+                'event_name' => $eventName,
+                'exception_message' => $exception->getMessage(),
+            ]);
+        }
     }
 
 
