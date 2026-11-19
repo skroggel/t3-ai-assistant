@@ -350,14 +350,14 @@ export const useAiAssistantChat = (props, options = {}) => {
 
 
     /**
-     * Validates a configured custom element name.
+     * Validates a configured HTML or custom element name.
      *
      * @param {unknown} value Configured element name.
      * @return {string} Valid custom element name or an empty string.
      */
-    const normalizeCustomElementName = (value) => {
-        const elementName = String(value || '').trim().toLowerCase();
-        return /^[a-z][a-z0-9]*-[a-z0-9-]+$/.test(elementName) ? elementName : '';
+    const normalizeTagName = (value) => {
+        const tagName = String(value || '').trim().toLowerCase();
+        return /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(tagName) ? tagName : '';
     };
 
 
@@ -439,21 +439,19 @@ export const useAiAssistantChat = (props, options = {}) => {
 
 
     /**
-     * Renders a complete UI block as configured HTML.
+     * Builds the values available to a configured UI component template.
      *
      * @param {{identifier: string, id: string, data: Record<string, any>}} block UI block.
-     * @return {string} Rendered UI component.
+     * @param {Record<string, any>} definition Component definition.
+     * @return {Record<string, any>} Interpolation and action values.
      */
-    const renderComponent = (block) => {
-        const definition = componentDefinitions[block.identifier]
-            || componentDefinitionsByType[block.type];
-        if (!definition || typeof definition.template !== 'string') return '';
-
+    const getComponentValues = (block, definition) => {
         // Add action metadata to the values available to the host template.
         // Actions remain declarative and are executed through `send()` below.
         const values = {
             ...block.data,
             id: block.id,
+            tagName: definition.tagName || '',
             action: block.data.action || (definition.actions?.length === 1 ? definition.actions[0].identifier : ''),
             actions: (definition.actions || []).map((action) => ({
                 identifier: action.identifier,
@@ -464,9 +462,6 @@ export const useAiAssistantChat = (props, options = {}) => {
                 url: action.url || '',
             })),
         };
-<<<<<<< Updated upstream
-=======
-
         if (definition.identifier === 'headline' && !/^h[1-6]$/.test(values.type || '')) {
             values.type = 'h2';
         }
@@ -488,11 +483,10 @@ export const useAiAssistantChat = (props, options = {}) => {
         if (definition.renderMode === 'container') return '';
 
         const values = getComponentValues(block, definition);
->>>>>>> Stashed changes
         const html = sanitizeComponentTemplate(interpolateTemplate(definition.template, values));
         const cssClass = normalizeCssClass(definition.cssClass);
-        const customElement = definition.renderMode === 'customElement'
-            ? normalizeCustomElementName(definition.elementName)
+        const customElement = definition.tagName
+            ? normalizeTagName(definition.tagName)
             : '';
         const tag = customElement || (definition.renderMode === 'inline' ? 'span' : 'div');
         // Store the original block data on the wrapper. Click handling can then
