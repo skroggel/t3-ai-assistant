@@ -49,6 +49,13 @@ Links
 ``link-list`` and ``link`` render regular links. They use ``label`` and ``url``
 and open in a new tab with ``noopener noreferrer``. They do not submit a prompt.
 
+Headline
+--------
+
+The standard ``headline`` component accepts ``text`` and an optional ``type``.
+``type`` controls the semantic heading level and accepts ``h1`` through ``h6``.
+If ``type`` is missing or invalid, the renderer falls back to ``h2``.
+
 Pipeline scope
 --------------
 

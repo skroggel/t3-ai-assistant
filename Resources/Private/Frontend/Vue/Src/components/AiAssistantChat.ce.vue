@@ -31,6 +31,10 @@
  */
 import { ref } from 'vue';
 
+// Do not forward undeclared custom-element attributes to the nested root
+// component. Public values are passed explicitly through `v-bind="props"`.
+defineOptions({ inheritAttrs: false });
+
 // The shared prop definition keeps attribute handling identical between the
 // custom-element adapter and the regular Vue component.
 import { chatProps } from '../chatProps.js';

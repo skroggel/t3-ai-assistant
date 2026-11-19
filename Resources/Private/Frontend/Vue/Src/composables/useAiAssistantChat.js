@@ -464,6 +464,31 @@ export const useAiAssistantChat = (props, options = {}) => {
                 url: action.url || '',
             })),
         };
+<<<<<<< Updated upstream
+=======
+
+        if (definition.identifier === 'headline' && !/^h[1-6]$/.test(values.type || '')) {
+            values.type = 'h2';
+        }
+
+        return values;
+    };
+
+
+    /**
+     * Renders a complete UI block as configured HTML.
+     *
+     * @param {{identifier: string, id: string, type: string, data: Record<string, any>}} block UI block.
+     * @return {string} Rendered UI component.
+     */
+    const renderComponent = (block) => {
+        const definition = componentDefinitions[block.identifier]
+            || componentDefinitionsByType[block.type];
+        if (!definition || typeof definition.template !== 'string') return '';
+        if (definition.renderMode === 'container') return '';
+
+        const values = getComponentValues(block, definition);
+>>>>>>> Stashed changes
         const html = sanitizeComponentTemplate(interpolateTemplate(definition.template, values));
         const cssClass = normalizeCssClass(definition.cssClass);
         const customElement = definition.renderMode === 'customElement'

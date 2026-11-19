@@ -157,6 +157,26 @@ Use its template structure and the reusable child components as a reference for
 ``CustomerChat.vue``. The site component may change the markup and styles, but
 must keep the shared prop and composable contract.
 
+Preventing attribute fallthrough
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Custom-element adapters should opt out of Vue's automatic attribute fallthrough
+when they pass their declared properties explicitly to a nested root component:
+
+.. code-block:: vue
+
+   <script setup>
+   defineOptions({ inheritAttrs: false })
+
+   const props = defineProps(chatProps)
+   </script>
+
+``inheritAttrs: false`` prevents attributes that are not declared as component
+properties from being copied to the nested root component. Without it, browser
+attributes intended for the adapter can also appear on the root DOM element and
+be mistaken for presentation or component properties. Declared properties remain
+available because they are forwarded explicitly with ``v-bind="props"``.
+
 The custom component must follow this structure:
 
 1. Import ``chatProps`` and ``useAiAssistantChat`` from the configured
