@@ -20,7 +20,7 @@ return [
     'types' => [
         '1' => [
             'showitem' => '
-                title, identifier, preset, render_mode, element_name, css_class, button_actions,
+                title, identifier, preset, render_mode, tag_name, css_class, button_actions,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_ui_component.xlf:definition_tab,
                     description, template, actions, data_schema, placeholders,
                 --div--;LLL:EXT:ai_assistant/Resources/Private/Language/locallang_tx_aiassistant_ui_component.xlf:override_tab,
@@ -74,15 +74,14 @@ return [
                 'default' => 'block',
             ],
         ],
-        'element_name' => [
-            'label' => $ll . 'element_name',
-            'description' => $ll . 'element_name.description',
-            'displayCond' => 'FIELD:render_mode:=:customElement',
+        'tag_name' => [
+            'label' => $ll . 'tag_name',
+            'description' => $ll . 'tag_name.description',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim,lower',
                 'max' => 128,
-                'placeholder' => 'mv-card-slider',
+                'placeholder' => 'section or custom-slider',
             ],
         ],
         'css_class' => [

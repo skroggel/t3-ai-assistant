@@ -61,11 +61,11 @@ final class UIComponent extends AbstractEntity
     protected string $renderMode = 'block';
 
     /**
-     * Custom element tag name.
+     * Outer HTML or custom element tag name.
      *
      * @var string
      */
-    protected string $elementName = '';
+    protected string $tagName = '';
 
 
     /**
@@ -263,24 +263,24 @@ final class UIComponent extends AbstractEntity
     }
 
     /**
-     * Returns the custom element tag name.
+     * Returns the outer HTML or custom element tag name.
      *
      * @return string Custom element tag name.
      */
-    public function getElementName(): string
+    public function getTagName(): string
     {
-        return trim($this->elementName);
+        return trim($this->tagName);
     }
 
     /**
-     * Sets the custom element tag name.
+     * Sets the outer HTML or custom element tag name.
      *
-     * @param string $elementName Custom element tag name.
+     * @param string $tagName Outer HTML or custom element tag name.
      * @return void
      */
-    public function setElementName(string $elementName): void
+    public function setTagName(string $tagName): void
     {
-        $this->elementName = trim($elementName);
+        $this->tagName = trim($tagName);
     }
 
 

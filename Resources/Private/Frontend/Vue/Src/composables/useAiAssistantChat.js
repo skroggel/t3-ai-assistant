@@ -510,6 +510,7 @@ export const useAiAssistantChat = (props, options = {}) => {
         const inlineComponents = new Map();
         let offset = 0;
         const usedIds = new Set();
+        let openContainer = null;
         let marker;
         const markerPattern = /@@UI_COMPONENT[ \t]*/g;
 
@@ -594,10 +595,6 @@ export const useAiAssistantChat = (props, options = {}) => {
                 markerPattern.lastIndex = jsonEnd;
                 continue;
             }
-            const definition = componentDefinitions[componentIdentifier]
-                || componentDefinitionsByType[componentType];
-            const isInline = definition?.renderMode === 'inline';
-            if (!isInline) flushMarkdown();
 
             // IDs are supplied by the assistant when possible. Duplicate IDs in
             // one answer receive a deterministic suffix for stable Vue keys and
@@ -615,6 +612,34 @@ export const useAiAssistantChat = (props, options = {}) => {
             delete data.identifier;
             delete data.data;
             Object.assign(componentData, data);
+
+            const definition = componentDefinitions[componentIdentifier]
+                || componentDefinitionsByType[componentType];
+            const isContainer = definition?.renderMode === 'container';
+            if (isContainer) {
+                flushMarkdown();
+                if (openContainer) {
+                    html += `</${openContainer.tag}>`;
+                }
+
+                const containerBlock = {
+                    type: componentType,
+                    identifier: componentIdentifier,
+                    id,
+                    data: componentData,
+                };
+                const values = getComponentValues(containerBlock, definition);
+                const cssClass = normalizeCssClass(definition.cssClass);
+                const tag = normalizeTagName(definition.tagName) || 'div';
+                html += `<${tag} class="ai-ui-component${cssClass ? ` ${escapeHtml(cssClass)}` : ''}" data-ai-component="${escapeHtml(componentIdentifier)}" data-ai-component-id="${escapeHtml(id)}" data-ai-component-data="${escapeHtml(JSON.stringify(values))}">`;
+                openContainer = { tag };
+                offset = jsonEnd;
+                markerPattern.lastIndex = jsonEnd;
+                continue;
+            }
+            const isInline = definition?.renderMode === 'inline';
+            if (!isInline) flushMarkdown();
+
             const component = renderComponent({
                 type: componentType,
                 identifier: componentIdentifier,
@@ -638,6 +663,9 @@ export const useAiAssistantChat = (props, options = {}) => {
         }
         markdown += content.slice(offset);
         flushMarkdown();
+        if (openContainer) {
+            html += `</${openContainer.tag}>`;
+        }
         return html;
     };
 

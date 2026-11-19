@@ -86,13 +86,13 @@
         <source>Custom Element</source>
         <target>Custom Element</target>
       </trans-unit>
-      <trans-unit id="element_name">
-        <source>Custom Element name</source>
-        <target>Name des Custom Elements</target>
+      <trans-unit id="tag_name">
+        <source>Outer tag name</source>
+        <target>Name des äußeren Tags</target>
       </trans-unit>
-      <trans-unit id="element_name.description">
-        <source>Registered custom element tag, for example mv-card-slider.</source>
-        <target>Registrierter Custom-Element-Tag, zum Beispiel mv-card-slider.</target>
+      <trans-unit id="tag_name.description">
+        <source>Outer HTML or registered custom element tag, for example section or custom-slider.</source>
+        <target>Äußerer HTML- oder registrierter Custom-Element-Tag, zum Beispiel section oder custom-slider.</target>
       </trans-unit>
       <trans-unit id="description">
         <source>Description for the AI</source>

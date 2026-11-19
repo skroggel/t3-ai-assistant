@@ -65,11 +65,11 @@
       <trans-unit id="render_mode.custom_element">
         <source>Custom Element</source>
       </trans-unit>
-      <trans-unit id="element_name">
-        <source>Custom Element name</source>
+      <trans-unit id="tag_name">
+        <source>Outer tag name</source>
       </trans-unit>
-      <trans-unit id="element_name.description">
-        <source>Registered custom element tag, for example mv-card-slider.</source>
+      <trans-unit id="tag_name.description">
+        <source>Outer HTML or registered custom element tag, for example section or custom-slider.</source>
       </trans-unit>
       <trans-unit id="description">
         <source>Description for the AI</source>

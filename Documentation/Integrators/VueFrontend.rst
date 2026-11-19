@@ -59,7 +59,7 @@ existing ``configureWebpack`` object in ``vue.config.js``:
     // `resolve.alias` block into that existing configuration.
 
 The relative paths above are for a site package whose Vue project is located at
-``packages/mv_template/Resources/Private/build``. Other projects must adjust
+``packages/<site-package>/Resources/Private/build``. Other projects must adjust
 the filesystem path to their Composer ``vendor`` directory.
 
 After adding the aliases, imports are simple and stable:
